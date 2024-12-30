@@ -1,0 +1,32 @@
+.navbar_main{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 232px;
+    height: 100vh;
+    background-color: #2A3647;
+}
+.navbar_img{
+    width: 100.03px;
+    height: 121.97px;
+
+}
+.navbar_main_buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+    width: 232px;
+    height: 229px;
+}
+.navbar_buttons{
+    width: 232px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2A3647;
+    color: white;
+    border: 0;
+    gap: 8px;
+}

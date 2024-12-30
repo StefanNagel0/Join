@@ -2,7 +2,9 @@
     box-sizing: border-box;
     margin: 0;
     scroll-behavior: smooth;
-    font-size: 12px;
+    font-size: 16px;
+    font-family: Inter, serif;
+    font-weight: 400;
 }
 
 a {

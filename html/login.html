@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,23 +8,39 @@
 
     <!-- styles -->
     <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/standard.css">
 
     <!-- scripts -->
 
 </head>
+
 <body>
     <header>
         <img src="../assets/svg/logo.svg" alt="">
+        <div class="regiUser">
+            <a class="registerButton" href="registration.html">Not a Join user?</a>
+            <button class="SignUpButton">Sign up</button>
+        </div>
     </header>
-    <section>
-        <h1>Log In</h1>
-        <form onsubmit="login(); return false;">
-            <input type="email" id="email" placeholder="Mail" required>
-            <input type="password" id="password" placeholder="Passwort" required>
-            <button>Login</button>
-        </form>
-
+    <section class="sectionOne">
+        <div class="mainLogin">
+            <h1 class="loginHeaderH1">Log In</h1>
+            <form onsubmit="login(); return false;" class="loginForm">
+                <input class="loginInput" type="email" id="email" placeholder="Email" required>
+                <input class="loginInput" type="password" id="password" placeholder="Password" required>
+                <div class="loginButtons">
+                    <button class="loginButton">Login</button>
+                    <button class="guestButton">Guest Log In</button>
+                </div>
+            </form>
+        </div>
     </section>
-    
+<footer>
+    <div>
+        <a href="">Privacy Policy</a>
+        <a href="">Legal notice</a>
+    </div>
+</footer>
 </body>
+
 </html>

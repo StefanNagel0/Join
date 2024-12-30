@@ -3,8 +3,7 @@
     box-sizing: border-box;
     margin: 0;
     scroll-behavior: smooth;
-    scrollbar-width: auto;
-    scrollbar-color: rgb(56, 90, 239) rgb(0, 0, 0);
+    background-color: rgb(246, 247, 248);
 }
 
 a {
@@ -15,7 +14,165 @@ a {
     max-width: 1440px;
     margin: auto;
 }
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+}
+
 header img {
-    height: 50px;
-    width: 50px;
+    margin-top: 50px;
+    margin-left: 40px;
+    height: 100.00px;
+    width: 121.97px;
+
+}
+
+.regiUser {
+    width: 279px;
+    height: 49px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+}
+
+.registerButton {
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.SignUpButton {
+    width: Hug (91px)px;
+    height: Hug (49px)px;
+    padding: 15px 16px 15px 16px;
+    gap: 10px;
+    border-radius: 8px;
+    opacity: 0px;
+    color: #FFFFFF;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    background-color: rgb(42, 54, 71);
+}
+
+.sectionOne {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+}
+
+.mainLogin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 420px;
+    height: 350px;
+    padding: 48px 115px 48px 115px;
+    gap: 32px;
+    border-radius: 30px;
+    background-color: #ffffff;
+}
+
+.loginHeaderH1 {
+    text-align: center;
+    font-size: 48px;
+    background-color: #ffffff;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: Fill (422px)px;
+    height: Hug (152px)px;
+    gap: 20px;
+    opacity: 0px;
+
+    background-color: #ffffff;
+}
+
+.loginInput {
+    height: 40px;
+    width: 300px;
+    border-radius: 5px;
+    border-color: rgb(221, 221, 221);
+}
+
+#email {
+    background: url(../assets/svg/mail.svg) no-repeat scroll 270px center;
+    padding-left: 15px;
+    background-size: 20px;
+}
+
+#password {
+    background: url(../assets/svg/lock.svg) no-repeat scroll 270px center;
+    padding-left: 15px;
+    background-size: 20px;
+}
+
+.loginButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background-color: #ffffff;
+}
+
+.loginButton {
+    width: Hug (110px)px;
+    height: Fixed (48px)px;
+    padding: 15px 24px 15px 24px;
+    gap: 10px;
+    border-radius: 8px;
+    opacity: 0px;
+    color: #FFFFFF;
+    font-family: Inter;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    background-color: rgb(42, 54, 71);
+}
+
+.guestButton {
+    width: Hug (177px)px;
+    height: Fixed (48px)px;
+    padding: 15px 24px 15px 24px;
+    gap: 10px;
+    border-radius: 8px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    font-family: Inter;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    background-color: #FFFFFF;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

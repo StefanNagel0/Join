@@ -1,5 +1,5 @@
 const contacts = [
-    { name: "Taylan"},
+    { name: "Taylan", email: "email@test.com"},
     { name: "Stefan"},
     { name: "Florian"},
     { name: "Zepelin"},
@@ -33,6 +33,9 @@ const contacts = [
                   (contact, index) => `
                     <p>
                       ${contact.name}
+                    </p>
+                    <p>
+                    ${contact.email}
                     </p>
                   `
                 )

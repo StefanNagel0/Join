@@ -4,14 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./css/standard.css">
-    <link rel="icon" href="#">
-    <script src="./script.js" defer></script>
     <link rel="favicon" href="./assets/svg/logo.svg" type="image/x-icon">
+
+    <!-- styles -->
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/standard.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/contacts.css">
+
+    <!-- scripts -->
+    <script src="../script.js" defer></script>
+    <script src="../scripts/contacts.js" defer></script>
+
 </head>
 <body>
+    <nav class="navbar_main">
+        <div class="navbar_logo">
+            <img class="navbar_img" src="../assets/svg/logo_white.svg" alt="">
+        </div>
+        <div class="navbar_main_buttons">
+            <button class="navbar_buttons">
+                <div class="navbar_buttons_img">
+                    <img src="../assets/icons/navbar/summary.png" alt="summary">
+                </div>
+                <div class="navbar_buttons_text">
+                    <p>Summary</p>
+                </div>
+            </button>
+            <button class="navbar_buttons">
+                <div class="navbar_buttons_img">
+                    <img src="../assets/icons/navbar/add_task.png" alt="add_task">
+                </div>
+                <div class="navbar_buttons_text">
+                    <p>Add Task</p>
+                </div>
+            </button>
+            <button class="navbar_buttons">
+                <div class="navbar_buttons_img">
+                    <img src="../assets/icons/navbar/board.png" alt="board">
+                </div>
+                <div class="navbar_buttons_text">
+                    <p>Board</p>
+                </div>
+            </button>
+            <button class="navbar_buttons">
+                <div class="navbar_buttons_img">
+                    <img src="../assets/icons/navbar/contacts.png" alt="contacts">
+                </div>
+                <div class="navbar_buttons_text">
+                    <p>Contacts</p>
+                </div>
+            </button>
+        </div>
+        <div class="navbar_policy">
+        </div>
+    </nav>
+    
     <div id="contactlist"></div>
-    <div id ="contactdetails"></div>
 </body>
 </html>

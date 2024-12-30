@@ -1,3 +1,14 @@
 body {
     display: flex;
 }
+
+.cont {
+    max-height: 928px;
+    width: 456px;
+}
+
+.cont::-webkit-scrollbar {
+    width: 24px;
+    height: 928px;
+}
+

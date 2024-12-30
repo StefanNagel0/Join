@@ -1,17 +1,26 @@
 * {
-    font-family: Karla, sans-serif;
     box-sizing: border-box;
     margin: 0;
     scroll-behavior: smooth;
-    background-color: rgb(246, 247, 248);
+    font-family: Inter, serif;
+    font-weight: 400;
 }
 
 a {
     text-decoration: none;
 }
 
+button {
+    cursor: pointer;
+}
+
+.d-none {
+    display: none;
+}
+
 .max-width {
     max-width: 1440px;
+    max-height: 1024px;
     margin: auto;
 }
 
@@ -24,20 +33,25 @@ header {
 }
 
 header img {
-    margin-top: 50px;
-    margin-left: 40px;
-    height: 100.00px;
-    width: 121.97px;
-
+    width: 100.03px;
+    height: 121.97px;
+    margin-top: 80px;
+    margin-left: 77px;
+    gap: 0px;
+    opacity: 0px;
+    animation-timing-function: ease-in-out;
+    animation-duration: 100ms;
 }
 
 .regiUser {
-    width: 279px;
-    height: 49px;
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 20px;
+    width: Hug (279px)px;
+    height: Hug (49px)px;
+    top: 67px;
+    left: 1039px;
+    gap: 35px;
+    opacity: 0px;
 }
 
 .registerButton {
@@ -48,6 +62,7 @@ header img {
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
+
 }
 
 .SignUpButton {
@@ -57,7 +72,6 @@ header img {
     gap: 10px;
     border-radius: 8px;
     opacity: 0px;
-    color: #FFFFFF;
     font-family: Inter;
     font-size: 16px;
     font-weight: 700;
@@ -65,33 +79,41 @@ header img {
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
+    color: white;
     background-color: rgb(42, 54, 71);
+}
+
+body {
+    background-color: rgb(246, 247, 248);
 }
 
 .sectionOne {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    padding: 20px;
 }
 
 .mainLogin {
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 420px;
-    height: 350px;
+    width: Hug (652px)px;
+    height: Hug (449px)px;
+    top: 287.5px;
+    left: 394px;
     padding: 48px 115px 48px 115px;
     gap: 32px;
     border-radius: 30px;
+    opacity: 0px;
     background-color: #ffffff;
 }
 
 .loginHeaderH1 {
     text-align: center;
     font-size: 48px;
+    font-weight: bold;
     background-color: #ffffff;
 }
 
@@ -100,29 +122,47 @@ header img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: Fill (422px)px;
-    height: Hug (152px)px;
-    gap: 20px;
-    opacity: 0px;
+    width: 422px;
+    height: 152px;
+    gap: 32px;
+    opacity: 1;
 
     background-color: #ffffff;
 }
 
+.loginEmail {
+    width: 422px;
+    height: 48px;
+    gap: 8px;
+    opacity: 1;
+}
+
+.loginPassword {
+    width: 422px;
+    height: 48px;
+    gap: 8px;
+    opacity: 1;
+}
+
 .loginInput {
-    height: 40px;
-    width: 300px;
+    width: 100%;
+    height: 100%;
+    gap: 0;
+    justify-content: space-between;
+    opacity: 1;
+
     border-radius: 5px;
     border-color: rgb(221, 221, 221);
 }
 
 #email {
-    background: url(../assets/svg/mail.svg) no-repeat scroll 270px center;
+    background: url(../assets/svg/mail.svg) no-repeat scroll 380px center;
     padding-left: 15px;
     background-size: 20px;
 }
 
 #password {
-    background: url(../assets/svg/lock.svg) no-repeat scroll 270px center;
+    background: url(../assets/svg/lock.svg) no-repeat scroll 380px center;
     padding-left: 15px;
     background-size: 20px;
 }
@@ -131,42 +171,46 @@ header img {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 35px;
     background-color: #ffffff;
 }
 
 .loginButton {
-    width: Hug (110px)px;
-    height: Fixed (48px)px;
+    display: flex;
+    align-items: center;
+    width: 110px;
+    height: 48px;
     padding: 15px 24px 15px 24px;
     gap: 10px;
     border-radius: 8px;
-    opacity: 0px;
-    color: #FFFFFF;
+    opacity: 1;
+    color: #ffffff;
     font-family: Inter;
     font-size: 21px;
     font-weight: 700;
     line-height: 25.2px;
     text-align: left;
-    text-underline-position: from-font;
+    text-underline-position: auto;
     text-decoration-skip-ink: none;
     background-color: rgb(42, 54, 71);
 }
 
 .guestButton {
-    width: Hug (177px)px;
-    height: Fixed (48px)px;
+    display: flex;
+    align-items: center;
+    width: 177px;
+    height: 48px;
     padding: 15px 24px 15px 24px;
     gap: 10px;
     border-radius: 8px;
     border: 1px 0px 0px 0px;
-    opacity: 0px;
+    opacity: 1;
     font-family: Inter;
     font-size: 21px;
     font-weight: 700;
     line-height: 25.2px;
     text-align: left;
-    text-underline-position: from-font;
+    text-underline-position: auto;
     text-decoration-skip-ink: none;
     background-color: #FFFFFF;
 }
@@ -175,4 +219,15 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    color: #FFFFFF;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: center;
 }

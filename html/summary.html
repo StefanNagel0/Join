@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="../css/standard.css">
+    <link rel="stylesheet" href="../css/summary.css">
     <link rel="icon" href="#">
     <link rel="stylesheet" href="../css/navbar.css">
     <script src="../scripts/header.js"></script>
     <title>Join</title>
 </head>
+
 <body>
     <section class="template_nav_header">
         <nav class="navbar_main">
@@ -21,71 +26,112 @@
             </div>
             <div class="navbar_main_switches">
                 <div class="navbar_main_buttons">
-                <button class="navbar_buttons">
-                    <div class="navbar_buttons_img">
-                        <img src="../assets/icons/navbar/summary.png" alt="summary">
-                    </div>
-                    <div class="navbar_buttons_text">
-                        <p>Summary</p>
-                    </div>
-                </button>
-                <button class="navbar_buttons">
-                    <div class="navbar_buttons_img">
-                        <img src="../assets/icons/navbar/add_task.png" alt="add_task">
-                    </div>
-                    <div class="navbar_buttons_text">
-                        <p>Add Task</p>
-                    </div>
-                </button>
-                <button class="navbar_buttons">
-                    <div class="navbar_buttons_img">
-                        <img src="../assets/icons/navbar/board.png" alt="board">
-                    </div>
-                    <div class="navbar_buttons_text">
-                        <p>Board</p>
-                    </div>
-                </button>
-                <button class="navbar_buttons">
-                    <div class="navbar_buttons_img">
-                        <img src="../assets/icons/navbar/contacts.png" alt="contacts">
-                    </div>
-                    <div class="navbar_buttons_text">
-                        <p>Contacts</p>
-                    </div>
-                </button>
+                    <button class="navbar_buttons">
+                        <div class="navbar_buttons_img">
+                            <img src="../assets/icons/navbar/summary.png" alt="summary">
+                        </div>
+                        <div class="navbar_buttons_text">
+                            <p>Summary</p>
+                        </div>
+                    </button>
+                    <button class="navbar_buttons">
+                        <div class="navbar_buttons_img">
+                            <img src="../assets/icons/navbar/add_task.png" alt="add_task">
+                        </div>
+                        <div class="navbar_buttons_text">
+                            <p>Add Task</p>
+                        </div>
+                    </button>
+                    <button class="navbar_buttons">
+                        <div class="navbar_buttons_img">
+                            <img src="../assets/icons/navbar/board.png" alt="board">
+                        </div>
+                        <div class="navbar_buttons_text">
+                            <p>Board</p>
+                        </div>
+                    </button>
+                    <button class="navbar_buttons">
+                        <div class="navbar_buttons_img">
+                            <img src="../assets/icons/navbar/contacts.png" alt="contacts">
+                        </div>
+                        <div class="navbar_buttons_text">
+                            <p>Contacts</p>
+                        </div>
+                    </button>
                 </div>
                 <div class="navbar_policy">
-                <div class="privacy_policy">
-                    <button>
-                    <a href="#"> Privacy Policy</a>
-                    </button>
-                </div>
-                <div class="legal_notice">
-                    <button>
-                    <a href="#">Legal notice</a>                    
-                    </button>
-                </div>
+                    <div class="privacy_policy">
+                        <button>
+                            <a href="#"> Privacy Policy</a>
+                        </button>
+                    </div>
+                    <div class="legal_notice">
+                        <button>
+                            <a href="#">Legal notice</a>
+                        </button>
+                    </div>
                 </div>
             </div>
         </nav>
-        <section>
-        <header class="nav_header">
-            <div>
-                <p class="header_text">Kanban Project Management Tool</p>
-            </div>
-            <div class="header_help_user">
+        <section class="bg_grey">
+            <header class="nav_header">
                 <div>
-                    <img src="../assets/svg/help.svg" alt="help">
+                    <p class="header_text">Kanban Project Management Tool</p>
                 </div>
-                <div id="user-log-out-box">
+                <div class="header_help_user">
+                    <div>
+                        <img src="../assets/svg/help.svg" alt="help">
+                    </div>
+                    <div id="user-log-out-box">
 
+                    </div>
                 </div>
-            </div>
-        </header>
-        <section class="content">
-            <!--Code hier rein-->
-        </section>              
+            </header>
+            <section class="content">
+                <div class="summary_heading">
+                    <p class="join_360">Join 360</p>
+                    <img src="../assets/svg/vertical_line.svg" alt="line">
+                    <p class="heading_info">Key Metrics at a Glance</p>
+                </div>
+                <div class="summary_overview">
+                    <div class="summary_first_line_box">
+                        <div class="inner_first_line_box">
+                            <img src="../assets/svg/pencil.svg" alt="">
+                            <div class="to_do_infos">
+                                <div class="to_do_open" id="to_do_show">
+                                    1
+                                </div>
+                                <p>To-Do</p>
+                            </div>
+                        </div>
+                        <div class="inner_first_line_box">
+                            <img src="../assets/svg/done_img.svg" alt="done">
+                            <div class="to_do_infos">
+                                <div class="to_do_open" id="to_do_show">
+                                    1
+                                </div>
+                                <p>Done</p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </section>
         </section>
-        </section>
+    </section>
 </body>
+
 </html>

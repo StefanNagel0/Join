@@ -114,7 +114,6 @@ body {
     height: 89px;
     gap: 16px;
     opacity: 1;
-    margin-bottom: 55px;
 }
 
 .signUpArrow {
@@ -149,7 +148,8 @@ body {
     align-items: center;
     width: 400px;
     height: 326px;
-    gap: 15px;
+    margin-bottom: 100px;
+    gap: 20px;
     opacity: 1;
     background-color: #ffffff;
 }
@@ -190,6 +190,12 @@ body {
     color: rgb(221, 221, 221);
 }
 
+#name {
+    background: url(../assets/svg/mail.svg) no-repeat scroll 380px center;
+    padding-left: 15px;
+    background-size: 20px;
+}
+
 #email {
     background: url(../assets/svg/mail.svg) no-repeat scroll 380px center;
     padding-left: 15px;
@@ -197,6 +203,12 @@ body {
 }
 
 #password {
+    background: url(../assets/svg/lock.svg) no-repeat scroll 380px center;
+    padding-left: 15px;
+    background-size: 20px;
+}
+
+#confirmPassword {
     background: url(../assets/svg/lock.svg) no-repeat scroll 380px center;
     padding-left: 15px;
     background-size: 20px;
@@ -282,10 +294,13 @@ body {
 }
 
 .errorMessage {
-    position: fixed;
+    width: 300px;
+    height: 300px;
     color: red;
     font-size: 14px;
-    margin-top: 10px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
     text-align: center;
     display: none;
     z-index: 1000;
@@ -300,12 +315,8 @@ body {
 }
 
 footer {
-    position: absolute;
-    height: 35px;
+    height: 380px;
     bottom: 2px;
-    top: 970px;
-    left: 0px;
-    right: 0px;
     gap: 24px;
     opacity: 1;
     display: flex;

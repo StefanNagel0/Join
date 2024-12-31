@@ -10,26 +10,24 @@
     <link rel="stylesheet" href="../css/registration.css">
     <link rel="stylesheet" href="../css/font.css">
     <!-- scripts -->
-    <script src="../scripts/login.js"></script>
+    <script src="../scripts/registration.js"></script>
+    <script src="../scripts/users.js"></script>
 
 </head>
 
 <body class="max-width">
     <header>
         <img src="../assets/svg/logo.svg" alt="">
-        <!-- <div class="regiUser">
-            <p class="registerButton">Not a Join user?</p>
-            <button class="SignUpButton" onclick="window.location.href = 'registration.html';">Sign up</button>
-        </div> -->
     </header>
     <section class="sectionOne">
         <div class="mainLogin">
-            <img class="signUpArrow" onclick="window.location.href = 'login.html';" src="../assets/svg/arrow-left-line.svg" alt="">
+            <img class="signUpArrow" onclick="window.location.href = 'login.html';"
+                src="../assets/svg/arrow-left-line.svg" alt="">
             <div class="signUpCtn">
                 <h1 class="signUpHeaderH1">Sign up</h1>
                 <div class="signUpLine"></div>
             </div>
-            <form onsubmit="login(); return false;" class="loginForm">
+            <form onsubmit="signUp(event);" class="loginForm">
                 <div class="signUpInput"><input style="color: rgb(0, 0, 0);" class="signUpInput2" type="name" id="name"
                         placeholder="Name" required>
                 </div>
@@ -45,11 +43,11 @@
                     <label for="checkbox" class="checkboxInput">I accept the <a class="privacyLink"
                             href="../html/privacy.html">Privaty Policy</label>
                 </div>
+                <div class="signUpButtonMain">
+                    <button type="submit" class="signUpButton">Sign up</button>
+                </div>
             </form>
-            <div class="signUpButtonMain">
-                <button class="signUpButton" onclick="signUp()">Sign up</button>
-            </div>
-            <div id="loginError" class="errorMessage"></div>
+            <div id="signUpError" class="errorMessage"></div>
         </div>
     </section>
     <footer>

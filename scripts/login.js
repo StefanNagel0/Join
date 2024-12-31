@@ -1,7 +1,3 @@
-let = users = [
-    { 'email': 'test@test.de', 'password': 'test' }
-];
-
 function login() {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;

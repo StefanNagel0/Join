@@ -21,7 +21,6 @@ button {
 .max-width {
     max-width: 1440px;
     max-height: 1024px;
-    margin: auto;
 }
 
 header {
@@ -46,12 +45,12 @@ header img {
 .regiUser {
     display: flex;
     align-items: center;
-    width: Hug (279px)px;
-    height: Hug (49px)px;
+    width: 279px;
+    height: 49px;
     top: 67px;
     left: 1039px;
     gap: 35px;
-    opacity: 0px;
+    opacity: 1;
 }
 
 .registerButton {
@@ -66,12 +65,12 @@ header img {
 }
 
 .SignUpButton {
-    width: Hug (91px)px;
-    height: Hug (49px)px;
+    width: 91px;
+    height: 49px;
     padding: 15px 16px 15px 16px;
     gap: 10px;
     border-radius: 8px;
-    opacity: 0px;
+    opacity: 1;
     font-family: Inter;
     font-size: 16px;
     font-weight: 700;
@@ -94,27 +93,41 @@ body {
 }
 
 .mainLogin {
-    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: Hug (652px)px;
-    height: Hug (449px)px;
-    top: 287.5px;
-    left: 394px;
+    width: 652px;
+    height: 449px;
+    margin-top: 50px;
+    margin-left: 0px;
     padding: 48px 115px 48px 115px;
     gap: 32px;
     border-radius: 30px;
-    opacity: 0px;
+    opacity: 1;
     background-color: #ffffff;
 }
 
-.loginHeaderH1 {
+.LoginCtn {
+    width: 315px;
+    height: 73px;
     text-align: center;
-    font-size: 48px;
-    font-weight: bold;
-    background-color: #ffffff;
+    gap: 16px;
+}
+
+.loginHeaderH1 {
+    font-size: 61px;
+    font-weight: 700;
+    line-height: 73.2px;
+    text-align: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.loginLine {
+    border: 2px solid rgba(41, 171, 226, 1);
+    margin-right: 80.5px;
+    margin-left: 80.5px;
 }
 
 .loginForm {
@@ -126,7 +139,6 @@ body {
     height: 152px;
     gap: 32px;
     opacity: 1;
-
     background-color: #ffffff;
 }
 
@@ -215,7 +227,45 @@ body {
     background-color: #FFFFFF;
 }
 
+.privacy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
 footer {
+    position: absolute;
+    height: 35px;
+    bottom: 2px;
+    top: 970px;
+    left: 0px;
+    right: 0px;
+    gap: 24px;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+footer a {
+    margin: 0px;
+    color: rgba(168, 168, 168, 1);
+    font-size: 16px;
+    line-height: 19.2px;
+    font-weight: 400;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+footer a:hover {
+    cursor: pointer;
+    color: rgba(41, 171, 226, 1);
+    font-weight: 700;
+}
+
+/* footer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -230,4 +280,4 @@ footer {
     font-weight: 400;
     line-height: 19.2px;
     text-align: center;
-}
+} */

@@ -9,9 +9,9 @@
     <!-- styles -->
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="../css/font.css">
-
     <!-- scripts -->
-
+    <script src="../scripts/login.js"></script>
+    
 </head>
 
 <body class="max-width">
@@ -25,7 +25,7 @@
     <section class="sectionOne">
         <div class="mainLogin">
             <div class="LoginCtn">
-                <h1 class="loginHeaderH1">Log In</h1>
+                <h1 class="loginHeaderH1">Log in</h1>
                 <div class="loginLine"></div>
             </div>
             <form onsubmit="login(); return false;" class="loginForm">
@@ -35,9 +35,10 @@
                         placeholder="Password" required></div>
             </form>
             <div class="loginButtons">
-                <button class="loginButton">Log in</button>
-                <button class="guestButton">Guest Log In</button>
+                <button class="loginButton" onclick="login()">Log in</button>
+                <button class="guestButton" onclick="guestLogin()">Guest Log In</button>
             </div>
+            <div id="loginError" class="errorMessage"></div>
         </div>
     </section>
     <footer>

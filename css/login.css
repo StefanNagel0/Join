@@ -55,17 +55,16 @@ header img {
 
 .registerButton {
     font-family: Inter;
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 400;
     line-height: 24px;
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-
 }
 
 .SignUpButton {
-    width: 91px;
+    width: 95px;
     height: 49px;
     padding: 15px 16px 15px 16px;
     gap: 10px;
@@ -144,6 +143,21 @@ body {
     background-color: #ffffff;
 }
 
+.loginForm input {
+    width: 100%;
+    padding: 12px 40px 12px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    color: #333;
+}
+
+.loginForm input:focus {
+    border: 1px solid #020a02;
+    box-shadow: 0 0 3px rgba(23, 80, 26, 0.5);
+}
+
 .loginEmail {
     width: 422px;
     height: 48px;
@@ -164,7 +178,6 @@ body {
     gap: 0;
     justify-content: space-between;
     opacity: 1;
-
     border-radius: 5px;
     border-color: rgb(221, 221, 221);
 }
@@ -181,6 +194,10 @@ body {
     background-size: 20px;
 }
 
+::placeholder {
+    color: rgb(221, 221, 221);
+}
+
 .loginButtons {
     display: flex;
     justify-content: center;
@@ -192,7 +209,7 @@ body {
 .loginButton {
     display: flex;
     align-items: center;
-    width: 110px;
+    width: 115px;
     height: 48px;
     padding: 15px 24px 15px 24px;
     gap: 10px;
@@ -206,18 +223,22 @@ body {
     text-align: left;
     text-underline-position: auto;
     text-decoration-skip-ink: none;
-    background-color: rgb(42, 54, 71);
+    background: #2A3647;
+}
+
+.loginButton:hover {
+    background-color: #ffffff;
+    color: #2a3647;
 }
 
 .guestButton {
     display: flex;
     align-items: center;
-    width: 177px;
+    width: 180px;
     height: 48px;
     padding: 15px 24px 15px 24px;
     gap: 10px;
     border-radius: 8px;
-    border: 1px 0px 0px 0px;
     opacity: 1;
     font-family: Inter;
     font-size: 21px;
@@ -227,6 +248,22 @@ body {
     text-underline-position: auto;
     text-decoration-skip-ink: none;
     background-color: #FFFFFF;
+    border: 1px solid #2A3647
+}
+
+.guestButton:hover {
+    background-color: #2a3647;
+    color: #ffffff;
+}
+
+.errorMessage {
+    position: fixed;
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+    display: none;
+    z-index: 1000;
 }
 
 .privacy {
@@ -266,20 +303,3 @@ footer a:hover {
     color: rgba(41, 171, 226, 1);
     font-weight: 700;
 }
-
-/* footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    color: #FFFFFF;
-    font-family: Inter;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19.2px;
-    text-align: center;
-} */

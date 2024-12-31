@@ -1,23 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
 
     <!-- styles -->
-    <link rel="stylesheet" href="./css/registration.css">
-
+    <link rel="stylesheet" href="../css/registration.css">
+    <link rel="stylesheet" href="../css/font.css">
     <!-- scripts -->
+    <script src="../scripts/login.js"></script>
 
 </head>
-<body>
+
+<body class="max-width">
     <header>
-        <img src="./assets/svg/logo.svg" alt="">
+        <img src="../assets/svg/logo.svg" alt="">
+        <!-- <div class="regiUser">
+            <p class="registerButton">Not a Join user?</p>
+            <button class="SignUpButton" onclick="window.location.href = 'registration.html';">Sign up</button>
+        </div> -->
     </header>
-    <section>
-        <h1>Registration</h1>
+    <section class="sectionOne">
+        <div class="mainLogin">
+            <img class="signUpArrow" onclick="window.location.href = 'login.html';" src="../assets/svg/arrow-left-line.svg" alt="">
+            <div class="signUpCtn">
+                <h1 class="signUpHeaderH1">Sign up</h1>
+                <div class="signUpLine"></div>
+            </div>
+            <form onsubmit="login(); return false;" class="loginForm">
+                <div class="signUpInput"><input style="color: rgb(0, 0, 0);" class="signUpInput2" type="name" id="name"
+                        placeholder="Name" required>
+                </div>
+                <div class="signUpInput"><input class="signUpInput2" type="email" id="email" placeholder="Email"
+                        required>
+                </div>
+                <div class="signUpInput"><input class="signUpInput2" type="password" id="password"
+                        placeholder="Password" required></div>
+                <div class="signUpInput"><input class="signUpInput2" type="password" id="confirmPassword"
+                        placeholder="Confirm Password" required></div>
+                <div class="checkboxMain">
+                    <input type="checkbox" id="checkbox" class="checkboxBox">
+                    <label for="checkbox" class="checkboxInput">I accept the <a class="privacyLink"
+                            href="../html/privacy.html">Privaty Policy</label>
+                </div>
+            </form>
+            <div class="signUpButtonMain">
+                <button class="signUpButton" onclick="signUp()">Sign up</button>
+            </div>
+            <div id="loginError" class="errorMessage"></div>
+        </div>
     </section>
-    
+    <footer>
+        <div class="privacy">
+            <a href="">Privacy Policy</a>
+            <a href="">Legal notice</a>
+        </div>
+    </footer>
 </body>
+
 </html>

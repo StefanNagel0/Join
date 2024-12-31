@@ -45,7 +45,7 @@
     box-shadow: 0px 0px 4px 0px #0000001A;
 
 }
-.to_do_open{
+.summary_number{
     font-size: 64px;
     font-weight: 600;
 }
@@ -53,4 +53,38 @@
     font-size: 20px;
     font-weight: 400;
     color: #2A3647;
+}
+.urgent_box{
+    width: 560px;
+    height: 168px;
+    padding: 28px 48px;
+    background-color: white;
+    border-radius: 30px;
+    gap: 61px;
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+
+}
+.urgent_first_box{
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+.urgent_deadline_box{
+    width: 178px;
+    height: 57px;
+    gap: 13px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.date_line{
+    font-size: 21px;
+    font-weight: 700;
+    color: #2A3647;
+}
+.deadline_text{
+    font-size: 16px;
+    font-weight: 400;
 }

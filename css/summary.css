@@ -123,3 +123,24 @@ justify-content: space-between;
     font-weight: 400;
     color: #2A3647;
 }
+.flex_content{
+    display: flex;
+}
+.greetings_message_box{
+    height: 136px;
+    width: 385px;
+    margin-top: 451.5px;
+    margin-left: 80px;
+    gap: 3px;
+    display: flex;
+}
+.greeting_message{
+    font-size: 47px;
+    font-weight: 500;
+    color: #2A3647;
+}
+.greeting_message_name{
+    font-size: 64px;
+    font-weight: 700;
+    color: #29ABE2;
+}

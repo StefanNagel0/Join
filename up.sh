@@ -1,4 +1,4 @@
 git pull
 git add .
-git commit -m "favicon"
+git commit -m "update"
 git push

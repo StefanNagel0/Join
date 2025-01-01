@@ -1,4 +1,14 @@
-document.addEventListener('DOMContentLoaded', toggleSignUpButton);
+function Reginit() {
+    document.addEventListener('DOMContentLoaded', toggleSignUpButton);
+    toggleSignUpPage();
+    toggleSignUpButton();
+}
+
+function toggleSignUpPage() {
+    let overlayRef = document.getElementById("registrationPage");
+    overlayRef.innerHTML = registration();
+    overlayRef.style.display = "block";
+}
 
 function toggleSignUpButton() {
     const checkbox = document.getElementById('checkbox');
@@ -67,11 +77,11 @@ function userSuccessRegistration() {
     setTimeout(() => {
         // window.location.href = "login.html";
         overlayRef.style.display = "none";
-    } , 2000);
+    }, 2000);
 }
 
 function signUpSuccess() {
-    return`
+    return `
     <div class="signUpSuccessClass" id="signUpSuccessID">
         <p class="signUpSuccessP">Du bist jetzt erfolgreich registriert.</p>
     </div>

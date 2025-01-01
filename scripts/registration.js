@@ -3,9 +3,17 @@ document.addEventListener('DOMContentLoaded', toggleSignUpButton);
 function toggleSignUpButton() {
     const checkbox = document.getElementById('checkbox');
     const signUpButton = document.querySelector('.signUpButton');
-    if (checkbox && signUpButton) {
-        signUpButton.disabled = !checkbox.checked;
+    if (checkbox.checked) {
+        signUpButton.disabled = false;
+        signUpButton.style.cursor = 'pointer';
+        signUpButton.style.background = '#2A3647';
+        signUpButton.style.color = 'white';
+    } else {
+        signUpButton.disabled = true;
+        signUpButton.style.cursor = 'not-allowed';
+        signUpButton.style.background = '#808080';
     }
+    return;
 }
 
 function signUp(event) {
@@ -37,13 +45,8 @@ function signUp(event) {
         showError('Das Passwort muss mindestens 8 Zeichen lang sein, einen Großbuchstaben, einen Kleinbuchstaben und eine Zahl enthalten.');
         return;
     }
-    if (!checkbox.checked) {
-        showError('Bitte akzeptieren Sie die Datenschutzerklärung.');
-        return;
-    }
     users.push({ name, email, password });
-    console.log("Benutzer erfolgreich hinzugefügt:", users);
-    window.location.href = "login.html";
+    userSuccessRegistration();
 }
 
 function showError(message) {
@@ -55,4 +58,22 @@ function showError(message) {
             errorMessage.style.display = 'none';
         }, 2000);
     }
+}
+
+function userSuccessRegistration() {
+    let overlayRef = document.getElementById("signUpSuccess");
+    overlayRef.innerHTML = signUpSuccess();
+    overlayRef.style.display = "block";
+    setTimeout(() => {
+        // window.location.href = "login.html";
+        overlayRef.style.display = "none";
+    } , 2000);
+}
+
+function signUpSuccess() {
+    return`
+    <div class="signUpSuccessClass" id="signUpSuccessID">
+        <p class="signUpSuccessP">Du bist jetzt erfolgreich registriert.</p>
+    </div>
+    `
 }

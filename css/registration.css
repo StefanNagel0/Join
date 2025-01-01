@@ -293,16 +293,47 @@ body {
 }
 
 .errorMessage {
+    position: fixed;
+    left: 690px;
     width: 300px;
-    height: 300px;
+    height: 20px;
     color: red;
     font-size: 14px;
     margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    text-align: center;
+    margin-right: 150px;
     display: none;
     z-index: 1000;
+}
+
+.signUpSuccessClass {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 312px;
+    height: 74px;
+    padding: 0px 25px 0px 25px;
+    gap: 0px;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-left: 630px;
+    margin-bottom: -70px;
+    opacity: 1;
+    background: #2A3647;
+    box-shadow: 0px 0px 4px 0px #00000026;
+}
+
+.signUpSuccessP {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    width: 262px;
+    height: 24px;
+    gap: 0px;
+    color: #FFFFFF;
 }
 
 .privacy {

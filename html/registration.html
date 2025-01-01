@@ -20,6 +20,9 @@
     <header>
         <img src="../assets/svg/logo.svg" alt="">
     </header>
+    <section>
+        <div id="signUpSuccess"></div>
+    </section>
     <section class="sectionOne">
         <div class="mainLogin">
             <img class="signUpArrow" onclick="window.location.href = 'login.html';"
@@ -40,17 +43,19 @@
                 <div class="signUpInput"><input class="signUpInput2" type="password" id="confirmPassword"
                         placeholder="Confirm Password" required></div>
                 <div class="checkboxMain">
-                    <input type="checkbox" id="checkbox" class="checkboxBox" onchange="toggleSignUpButton();">
+                    <input type="checkbox" id="checkbox" class="checkboxBox" onchange="toggleSignUpButton();" required>
                     <label for="checkbox" class="checkboxInput">I accept the <a class="privacyLink"
                             href="../html/privacy.html">Privaty Policy</label>
                 </div>
                 <div class="signUpButtonMain">
                     <button type="submit" class="signUpButton" disabled>Sign up</button>
                 </div>
+                <div id="signUpError" class="errorMessage"></div>
             </form>
-            <div id="signUpError" class="errorMessage"></div>
+            
         </div>
     </section>
+    
     <footer>
         <div class="privacy">
             <a href="../html/privacy_policy.html">Privacy Policy</a>

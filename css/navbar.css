@@ -6,12 +6,11 @@
     align-items: center;
     flex-direction: column;
     width: 232px;
-    height: 100vh;
+    max-height: 1024px;
     background-color: #2A3647;
+    padding: 64px 0px;
 }
-.navbar_logo{
-    margin-top: 40px;
-}
+
 .navbar_img{
     width: 100.03px;
     height: 121.97px;
@@ -54,7 +53,7 @@
     height: 35px;
 }
 .navbar_policy a:hover{
-    color: white;
+    color: #29ABE2;
 }
 .navbar_policy button{
     border: 0;
@@ -79,4 +78,7 @@
     justify-content: space-between ;
     height: 100vh;
     margin-bottom: 52px;
+}
+.bg_grey{
+    background-color: #F6F7F8;
 }

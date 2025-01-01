@@ -1,0 +1,153 @@
+.content{
+    margin-left: 96px;
+}
+.summary_heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 625px;
+    height: 73px;
+    margin-top: 110px;
+    gap: 30px;
+}
+
+.join_360{
+    font-size: 61px;
+    font-weight: 700;
+}
+
+.heading_info{
+    font-size: 27px;
+    font-weight: 400;
+    color: #2A3647;
+}
+.summary_overview{
+    width: 560px;
+    height: 562px;
+    margin-top: 56px;
+}
+.summary_first_line_box{
+    width: 560px;
+    height: 168px;
+    display: flex;
+    justify-content: space-between;
+}
+.summary_to_board_button{
+    border: 0;
+    background-color:#F6F7F8;
+    border-radius: 30px;
+    padding: 0;
+    transition: transform 200ms ease-in-out;
+}
+.inner_first_line_box{
+    width: 264px;
+    height: 168px;
+    border-radius: 30px;
+    background-color: white;
+    padding: 38px 19px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+    transition: transform 200ms ease-in-out;
+}
+.inner_first_line_box:hover{
+    transform: scale(1.1);
+    background-color: #2A3647;
+    color: white;
+}
+.summary_number{
+    font-size: 64px;
+    font-weight: 600;
+    color: black;
+}
+.to_do_infos p{
+    font-size: 20px;
+    font-weight: 400;
+    color: #2A3647;
+}
+.urgent_box{
+    width: 560px;
+    height: 168px;
+    padding: 28px 48px;
+    background-color: white;
+    border-radius: 30px;
+    gap: 61px;
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+
+}
+.urgent_first_box{
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+.urgent_deadline_box{
+    width: 178px;
+    height: 57px;
+    gap: 13px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.date_line{
+    font-size: 21px;
+    font-weight: 700;
+    color: #2A3647;
+}
+.deadline_text{
+    font-size: 16px;
+    font-weight: 400;
+}
+.summary_overview_board{
+    width: 560px;
+    height: 170px;
+    margin-top: 28px;
+    display: flex;
+justify-content: space-between;
+}
+.summary_overview_board_box{
+    background-color: white;
+    border-radius: 30px;
+    padding: 25px 0px;
+    height: 168px;
+    width: 168px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 13px;
+    text-align: center;
+}
+.summary_overview_board_num{
+    font-size: 64px;
+    font-weight: 600;
+}
+.summary_overview_board_box p{
+    font-size: 20px;
+    font-weight: 400;
+    color: #2A3647;
+}
+.flex_content{
+    display: flex;
+}
+.greetings_message_box{
+    height: 136px;
+    width: 385px;
+    margin-top: 451.5px;
+    margin-left: 80px;
+    gap: 3px;
+    display: flex;
+}
+.greeting_message{
+    font-size: 47px;
+    font-weight: 500;
+    color: #2A3647;
+}
+.greeting_message_name{
+    font-size: 64px;
+    font-weight: 700;
+    color: #29ABE2;
+}

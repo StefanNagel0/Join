@@ -5,71 +5,71 @@
         </div>
         <div class="navbar_main_switches">
             <div class="navbar_main_buttons">
-            <button class="navbar_buttons">
-                <div class="navbar_buttons_img">
-                    <img src="../assets/icons/navbar/summary.png" alt="summary">
-                </div>
-                <div class="navbar_buttons_text">
-                    <p>Summary</p>
-                </div>
-            </button>
-            <button class="navbar_buttons">
-                <div class="navbar_buttons_img">
-                    <img src="../assets/icons/navbar/add_task.png" alt="add_task">
-                </div>
-                <div class="navbar_buttons_text">
-                    <p>Add Task</p>
-                </div>
-            </button>
-            <button class="navbar_buttons">
-                <div class="navbar_buttons_img">
-                    <img src="../assets/icons/navbar/board.png" alt="board">
-                </div>
-                <div class="navbar_buttons_text">
-                    <p>Board</p>
-                </div>
-            </button>
-            <button class="navbar_buttons">
-                <div class="navbar_buttons_img">
-                    <img src="../assets/icons/navbar/contacts.png" alt="contacts">
-                </div>
-                <div class="navbar_buttons_text">
-                    <p>Contacts</p>
-                </div>
-            </button>
+                <button onclick="navigateToSummary()" class="navbar_buttons">
+                    <div class="navbar_buttons_img">
+                        <img src="../assets/icons/navbar/summary.png" alt="summary">
+                    </div>
+                    <div class="navbar_buttons_text">
+                        <p>Summary</p>
+                    </div>
+                </button>
+                <button onclick="navigateToAddTask()" class="navbar_buttons">
+                    <div class="navbar_buttons_img">
+                        <img src="../assets/icons/navbar/add_task.png" alt="add_task">
+                    </div>
+                    <div class="navbar_buttons_text">
+                        <p>Add Task</p>
+                    </div>
+                </button>
+                <button onclick="navigateToBoard()" class="navbar_buttons">
+                    <div class="navbar_buttons_img">
+                        <img src="../assets/icons/navbar/board.png" alt="board">
+                    </div>
+                    <div class="navbar_buttons_text">
+                        <p>Board</p>
+                    </div>
+                </button>
+                <button onclick="navigateToContacts()" class="navbar_buttons">
+                    <div class="navbar_buttons_img">
+                        <img src="../assets/icons/navbar/contacts.png" alt="contacts">
+                    </div>
+                    <div class="navbar_buttons_text">
+                        <p>Contacts</p>
+                    </div>
+                </button>
             </div>
             <div class="navbar_policy">
-            <div class="privacy_policy">
-                <button>
-                <a href="#"> Privacy Policy</a>
-                </button>
-            </div>
-            <div class="legal_notice">
-                <button>
-                <a href="#">Legal notice</a>                    
-                </button>
-            </div>
+                <div class="privacy_policy">
+                    <button>
+                        <a href="../html/privacy_policy.html"> Privacy Policy</a>
+                    </button>
+                </div>
+                <div class="legal_notice">
+                    <button>
+                        <a href="../html/legal_notice.html">Legal notice</a>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
     <section>
-    <header class="nav_header">
-        <div>
-            <p class="header_text">Kanban Project Management Tool</p>
-        </div>
-        <div class="header_help_user">
+        <header class="nav_header">
             <div>
-                <img src="../assets/svg/help.svg" alt="help">
+                <p class="header_text">Kanban Project Management Tool</p>
             </div>
-            <div id="user-log-out-box">
-
+            <div class="header_help_user">
+                <a href="../html/help.html">
+                    <div>
+                        <img src="../assets/svg/help.svg" alt="help">
+                    </div>
+                </a>
+                <div id="user-log-out-box">
+                </div>
             </div>
-        </div>
+        </header>
 
-    </header>
-    
-    <section class="content">
-        <!--Code hier rein-->
-    </section>              
+        <section class="content">
+            <!--Code hier rein-->
+        </section>
     </section>
-    </section>
+</section>

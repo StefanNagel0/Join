@@ -1,4 +1,4 @@
-function registration() {
+function registrationTemplate() {
     return `
     <div class="sectionOne">
     <div class="mainLogin">
@@ -31,4 +31,12 @@ function registration() {
     </div>
 </div>
         `
+}
+
+function signUpSuccess() {
+    return `
+    <div class="signUpSuccessClass" id="signUpSuccessID">
+        <p class="signUpSuccessP">Du bist jetzt erfolgreich registriert.</p>
+    </div>
+    `
 }

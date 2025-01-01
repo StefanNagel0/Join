@@ -215,8 +215,6 @@ body {
     background-size: 20px;
 }
 
-.signUpButtonMain {}
-
 .signUpButton {
     display: flex;
     align-items: center;
@@ -276,7 +274,7 @@ body {
     height: 19px;
     top: 2.5px;
     left: 32px;
-    opacity: 0px;
+    opacity: 1;
 }
 
 .privacyLink {

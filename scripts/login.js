@@ -1,24 +1,12 @@
 function login() {
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
-    let errorMessage = document.getElementById('loginError');
-    errorMessage.style.display = 'none';
-    if (!email || !password) {
-        showError('Bitte geben Sie Ihre E-Mail und Ihr Passwort ein.');
+    const { email, password } = valueInput();
+    if (!inputValidation(email, password)) {
         return;
     }
-    let isValidUser = false;
-    for (let i = 0; i < users.length; i++) {
-        if (email === users[i].email && password === users[i].password) {
-            isValidUser = true;
-            break;
-        }
-    }
-    if (isValidUser) {
+    if (isValidUser(email, password)) {
         window.location.href = 'summary.html';
     } else {
-        errorMessage.textContent = 'E-Mail oder Passwort ist falsch.';
-        errorMessage.style.display = 'block';
+        showError('E-Mail oder Passwort falsch.');
     }
 }
 

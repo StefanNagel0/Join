@@ -90,24 +90,22 @@
             </header>
             <section class="content">
                 <section class="cont">
-                   <!-- Overlay -->
-                   <form id="add-contact-form">
-                    <input type="text" id="contact-name" placeholder="Name" required />
-                    <input type="text" id="contact-phone" placeholder="Telefonnummer" required />
-                    <button type="submit">Kontakt hinzufügen</button>
-                  </form>
-                  
-                  <div id="contactlist"></div>
-                  
-                  <div id="overlay" style="display: none;">
-                    <div class="overlay-content">
-                      <h2 id="overlay-title">Kontakt hinzufügen</h2>
-                      <form id="contact-form">
-                        <input type="text" id="contact-name-edit" placeholder="Name" required />
-                        <input type="text" id="contact-phone-edit" placeholder="Telefonnummer" required />
-                        <button type="submit">Speichern</button>
-                        <button type="button" onclick="closeOverlay()">Abbrechen</button>
-                      </form>
+        <div id="overlay" style="display: none;">
+        <div class="overlay-content">
+        <h2 id="overlay-title">Kontakt hinzufügen</h2>
+        <form id="contact-form">
+        <input type="text" id="contact-name" placeholder="Vor- und Nachname" required />
+        <input type="text" id="contact-phone" placeholder="Telefonnummer" required />
+        <input type="text" id="contact-phone" placeholder="Email" required />
+        <button type="submit">Speichern</button>
+        <button type="button" onclick="closeOverlay()">Abbrechen</button>
+      </form>
+    </div>
+  </div>
+  
+  <button onclick="openOverlay('new')">Neuen Kontakt hinzufügen</button>
+  
+  <div id="contactlist"></div>
                     </div>
                   </div>
                 </section>  

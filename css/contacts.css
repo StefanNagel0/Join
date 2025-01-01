@@ -18,3 +18,66 @@ body {
     line-height: 24px;
 
 }
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .overlay-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+  }
+  
+  .overlay-content input {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .overlay-content button {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .contact-group {
+    margin-bottom: 20px;
+  }
+  
+  .contact-group h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .contact {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .contact .circle {
+    width: 40px;
+    height: 40px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+  }

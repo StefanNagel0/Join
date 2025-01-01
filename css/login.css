@@ -21,6 +21,7 @@ button {
 .max-width {
     max-width: 1440px;
     max-height: 1024px;
+    margin: auto;
 }
 
 header {
@@ -98,8 +99,10 @@ body {
     align-items: center;
     width: 652px;
     height: 449px;
-    margin-top: 50px;
-    margin-left: 0px;
+    margin-top: 197px;
+    margin-left: 180px;
+    /* margin-top: 50px;
+    margin-left: 0px; */
     padding: 48px 115px 48px 115px;
     gap: 32px;
     border-radius: 30px;
@@ -270,21 +273,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-}
-
-footer {
-    position: absolute;
-    height: 35px;
+    height: 20px;
     bottom: 2px;
-    top: 970px;
-    left: 0px;
-    right: 0px;
     gap: 24px;
     opacity: 1;
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
+    margin-top: 150px;
+    margin-left: 100px;
 }
 
 footer a {

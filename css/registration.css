@@ -21,6 +21,7 @@ button {
 .max-width {
     max-width: 1440px;
     max-height: 1024px;
+    margin: auto;
 }
 
 header {
@@ -99,7 +100,7 @@ body {
     width: 598px;
     height: 600px;
     margin-top: 197px;
-    margin-left: 421px;
+    margin-left: 250px;
     padding-left: 88px;
     padding-right: 88px;
     gap: 32px;
@@ -310,18 +311,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 16px;
-    opacity: 1;
-}
-
-footer {
-    height: 380px;
+    height: 20px;
     bottom: 2px;
     gap: 24px;
     opacity: 1;
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
+    margin-top: 150px;
+
 }
 
 footer a {

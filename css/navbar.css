@@ -8,10 +8,9 @@
     width: 232px;
     max-height: 1024px;
     background-color: #2A3647;
+    padding: 64px 0px;
 }
-.navbar_logo{
-    margin-top: 40px;
-}
+
 .navbar_img{
     width: 100.03px;
     height: 121.97px;

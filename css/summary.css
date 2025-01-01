@@ -24,7 +24,7 @@
 .summary_overview{
     width: 560px;
     height: 562px;
-    margin-top: 129px;
+    margin-top: 56px;
 }
 .summary_first_line_box{
     width: 560px;
@@ -87,4 +87,33 @@
 .deadline_text{
     font-size: 16px;
     font-weight: 400;
+}
+.summary_overview_board{
+    width: 560px;
+    height: 170px;
+    margin-top: 28px;
+    display: flex;
+justify-content: space-between;
+}
+.summary_overview_board_box{
+    background-color: white;
+    border-radius: 30px;
+    padding: 25px 0px;
+    height: 168px;
+    width: 168px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 13px;
+    text-align: center;
+}
+.summary_overview_board_num{
+    font-size: 64px;
+    font-weight: 600;
+}
+.summary_overview_board_box p{
+    font-size: 20px;
+    font-weight: 400;
+    color: #2A3647;
 }

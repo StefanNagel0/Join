@@ -58,6 +58,8 @@ body {
     text-align: center;
     width: 745px;
     height: 594px;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
   }
   
   .overlay-content input {
@@ -172,6 +174,8 @@ body {
     flex-direction: column;
     gap: 12px;
     color: white;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
   }
 
   .overlay-left h1 {
@@ -190,4 +194,8 @@ body {
     width: 90px;
     color: #29ABE2;
     border-color: #29ABE2;
+  }
+
+  .overcontent {
+    display: flex;
   }

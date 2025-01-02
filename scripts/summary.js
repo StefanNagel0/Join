@@ -32,4 +32,3 @@ function getUserName() {
 }
 // Begrüßungsnachricht anzeigen lassen, wenn die Seite geladen wird
 document.addEventListener('DOMContentLoaded', setGreetingMessage);
-

@@ -37,7 +37,7 @@
     background-color:#F6F7F8;
     border-radius: 30px;
     padding: 0;
-    transition: transform 200ms ease-in-out;
+    transition: transform 80ms ease-out;
 }
 .inner_first_line_box{
     width: 264px;
@@ -50,22 +50,27 @@
     align-items: center;
     gap: 18px;
     box-shadow: 0px 0px 4px 0px #0000001A;
-    transition: transform 200ms ease-in-out;
+    transition: transform 80ms ease-out, background-color 80ms ease-out, color 80ms ease-out;
 }
 .inner_first_line_box:hover{
     transform: scale(1.1);
     background-color: #2A3647;
-    color: white;
 }
 .summary_number{
     font-size: 64px;
     font-weight: 600;
     color: black;
 }
+.inner_first_line_box:hover .summary_number {
+    color: white;
+}
 .to_do_infos p{
     font-size: 20px;
     font-weight: 400;
     color: #2A3647;
+}
+.inner_first_line_box:hover .to_do_infos p {
+    color: white;
 }
 .urgent_box{
     width: 560px;
@@ -150,4 +155,25 @@ justify-content: space-between;
     font-size: 64px;
     font-weight: 700;
     color: #29ABE2;
+}
+.inner_first_line_img{
+    width: 32px;
+    height: 32px;
+    filter: invert(0);
+    transition: filter 80ms ease;
+}
+.inner_first_line_box:hover .inner_first_line_img{
+    filter: invert(1);
+}
+.ellipse_box{
+    height: 69px;
+    width: 69px;
+    background-color: #2A3647;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inner_first_line_box:hover .ellipse_box{
+    background-color: white;
 }

@@ -149,3 +149,44 @@ body {
     width: 32px;
     height: 32px;
   }
+
+  .contdetail img{
+    margin-left: 743px;
+    margin-top: 206px;
+    gap: 30px;
+    position: absolute;
+  }
+
+  .logoover {
+    width: 55.6px;
+    height: 66.48px;
+  }
+
+  .overlay-left {
+    background-color: #2A3647;
+    padding: 66px 48px 66px 48px;
+    width: 467px;
+    display: flex;
+    height: 594px;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: white;
+  }
+
+  .overlay-left h1 {
+    font-weight: 700;
+    font-size: 61px;
+    font-family: Inter, sans-serif;
+  }
+
+  .overlay-left p {
+    line-height: 32.4px;
+    font-family: Inter, sans-serif;
+    font-size: 27px;
+  }
+
+  hr {
+    width: 90px;
+    color: #29ABE2;
+  }

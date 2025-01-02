@@ -73,43 +73,42 @@
                 </div>
             </div>
         </nav>
-        <section>
-            <header class="nav_header">
-                <div>
-                    <p class="header_text">Kanban Project Management Tool</p>
+        <section class="content">
+            <section class="cont">
+              <!-- Overlay -->
+              <div id="overlay" class="slide-in" style="display: none;">
+                <div class="overlay-content">
+                  <h2 id="overlay-title">Kontakt hinzufügen</h2>
+                  <form id="contact-form">
+                    <input type="text" id="contact-name" placeholder="Vor- und Nachname" required />
+                    <input type="text" id="contact-phone" placeholder="Telefonnummer" required />
+                    <input type="email" id="contact-email" placeholder="E-Mail-Adresse" required />
+                    <button type="submit">Speichern</button>
+                    <button type="button" onclick="closeOverlay()">Abbrechen</button>
+                  </form>
                 </div>
-                <div class="header_help_user">
-                    <a href="../html/help.html">
-                        <div>
-                            <img src="../assets/svg/help.svg" alt="help">
-                        </div>
-                    </a>
-                    <div id="user-log-out-box">
-                    </div>
-                </div>
-            </header>
-            <section class="content">
-                <section class="cont">
-        <div id="overlay" style="display: none;">
-        <div class="overlay-content">
-        <h2 id="overlay-title">Kontakt hinzufügen</h2>
-        <form id="contact-form">
-        <input type="text" id="contact-name" placeholder="Vor- und Nachname" required />
-        <input type="text" id="contact-phone" placeholder="Telefonnummer" required />
-        <input type="text" id="contact-phone" placeholder="Email" required />
-        <button type="submit">Speichern</button>
-        <button type="button" onclick="closeOverlay()">Abbrechen</button>
-      </form>
-    </div>
-  </div>
-  
-  <button onclick="openOverlay('new')">Neuen Kontakt hinzufügen</button>
-  
-  <div id="contactlist"></div>
-                    </div>
-                  </div>
-                </section>  
+              </div>
+          
+              <!-- Button zum Öffnen des Overlays -->
+              <div class="btnclass">
+                <button class="btncont" onclick="openOverlay('new')">
+                  <p class="btnp">Add new Contact</p>
+                  <img class="imgcont" src="../assets/icons/contact/person_add.png">
+                </button>
+              </div>
+          
+              <!-- Kontaktliste -->
+              <div id="contactlist"></div>
+          
+              <!-- Bereich für Kontaktdetails -->
+              <div id="contact-details" style="display: none; margin-top: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px;">
+                <h3>Kontaktdetails</h3>
+                <p id="details-name"></p>
+                <p id="details-phone"></p>
+                <p id="details-email"></p>
+              </div>
             </section>
+          </section>
         </section>
     </section>
 </body>

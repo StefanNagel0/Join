@@ -1,0 +1,12 @@
+.content{
+    margin-left: 96px;
+}
+.content_heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 625px;
+    height: 73px;
+    margin-top: 110px;
+    gap: 30px;
+}

@@ -1,16 +1,6 @@
 .content{
     margin-left: 96px;
 }
-.summary_heading{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 625px;
-    height: 73px;
-    margin-top: 110px;
-    gap: 30px;
-}
-
 .join_360{
     font-size: 61px;
     font-weight: 700;

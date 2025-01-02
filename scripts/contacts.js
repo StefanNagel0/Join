@@ -34,7 +34,6 @@ let contacts = [
       emailInput.value = contact.email || "";
       editIndex = index;
     } else {
-      title.textContent = "Neuen Kontakt hinzufügen";
       nameInput.value = "";
       phoneInput.value = "";
       emailInput.value = "";

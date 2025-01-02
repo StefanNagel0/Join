@@ -55,9 +55,9 @@ body {
   .overlay-content {
     background: white;
     padding: 20px;
-    border-radius: 10px;
     text-align: center;
-    width: 300px;
+    width: 745px;
+    height: 594px;
   }
   
   .overlay-content input {
@@ -186,7 +186,8 @@ body {
     font-size: 27px;
   }
 
-  hr {
+  .line {
     width: 90px;
     color: #29ABE2;
+    border-color: #29ABE2;
   }

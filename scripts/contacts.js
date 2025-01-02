@@ -46,11 +46,10 @@ function openOverlay(mode, index = null) {
     circleDiv.style.backgroundColor = getRandomColor();
     editIndex = index;
   } else {
-    title.textContent = "Neuen Kontakt hinzufügen";
     nameInput.value = "";
     phoneInput.value = "";
     emailInput.value = "";
-    circleDiv.innerHTML = `<img src="../assets/icons/default-avatar.png" alt="Default Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+    circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
     circleDiv.style.backgroundColor = "";
     editIndex = null;
   }
@@ -110,7 +109,7 @@ function showContacts() {
 
         contactDiv.innerHTML = `
           <div class="circle" style="background-color: ${color};">
-            ${initials || `<img src="../assets/icons/default-avatar.png" alt="Default Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`}
+            ${initials || `<img class="concircle" src="../assets/icons/contact/circledefault.png">`}
           </div>
           <div>
             <p class="name" onclick="showContactDetails(${contacts.indexOf(contact)})" style="cursor: pointer;">
@@ -134,7 +133,7 @@ document.getElementById("contact-name").addEventListener("input", function (e) {
     circleDiv.textContent = getInitials(name);
     circleDiv.style.backgroundColor = getRandomColor();
   } else {
-    circleDiv.innerHTML = `<img src="../assets/icons/contact/circledefault.png">`;
+    circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
     circleDiv.style.backgroundColor = "";
   }
 });

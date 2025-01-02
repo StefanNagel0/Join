@@ -75,8 +75,13 @@ body {
     cursor: pointer;
   }
 
+  .name {
+    text-decoration: none;
+  }
+
   .contact-group {
     margin-bottom: 20px;
+    width: 352px;
   }
   
   .contact-group h2 {

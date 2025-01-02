@@ -10,6 +10,7 @@ let contacts = [
         email: "test@example.com"
       }
   ];
+
   let editIndex = null;
   
   function getInitials(name) {
@@ -57,9 +58,16 @@ let contacts = [
   function showContactDetails(index) {
     const contact = contacts[index];
     const detailsDiv = document.getElementById("contact-details");
-    document.getElementById("details-name").textContent = `Name: ${contact.name}`;
-    document.getElementById("details-phone").textContent = `Telefon: ${contact.phone}`;
-    document.getElementById("details-email").textContent = `E-Mail: ${contact.email}`;
+  
+    // Fülle die Kontaktdetails
+    detailsDiv.innerHTML = `
+      <h3>Kontaktdetails</h3>
+      <p>Name: ${contact.name}</p>
+      <p>Telefon: ${contact.phone}</p>
+      <p>E-Mail: ${contact.email}</p>
+    `;
+  
+    // Zeige den Details-Bereich
     detailsDiv.style.display = "block";
   }
   
@@ -80,17 +88,17 @@ let contacts = [
       .map(
         letter => `
           <div class="contact-group">
-            <h2>${letter}</h2>
+            <h2 class="bigletter">${letter}</h2>
+            <hr>
             ${groupedContacts[letter]
               .map(
-                (contact, index) => `
+                contact => `
                   <div class="contact">
                     <div class="circle">${getInitials(contact.name)}</div>
                     <div>
-                      <p onclick="showContactDetails(${index})" style="cursor: pointer; text-decoration: underline; color: blue;">
+                      <p class="name" onclick="showContactDetails(${contacts.indexOf(contact)})">
                         ${contact.name}
                       </p>
-                      <button onclick="openOverlay('edit', ${index})">Bearbeiten</button>
                     </div>
                   </div>
                 `

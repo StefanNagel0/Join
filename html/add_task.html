@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/standard.css">
-    <link rel="stylesheet" href="/css/style.css">  
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/add.task.css">
     <script src="../scripts/header.js"></script>
     <script src="../scripts/navbar.js"></script>
+    <script src="../scripts/add_task.js"></script>
     <title>Join</title>
 </head>
+
 <body>
     <section class="template_nav_header">
         <nav class="navbar_main">
@@ -66,7 +70,7 @@
                 </div>
             </div>
         </nav>
-        <section>
+        <section class="bg_grey">
             <header class="nav_header">
                 <div>
                     <p class="header_text">Kanban Project Management Tool</p>
@@ -78,13 +82,78 @@
                         </div>
                     </a>
                     <div id="user-log-out-box">
+                        <button id="user-initials-button"></button>
+                        <div id="user-popup" class="d-none">
+                            <a href="./legal_notice.html" class="popup-link">Legal Notice</a>
+                            <a href="./privacy_policy.html" class="popup-link">Privacy Policy</a>
+                            <a href="./login.html" class="popup-link">Log out</a>
+                        </div>
                     </div>
                 </div>
             </header>
             <section class="content">
-                <!--Code hier rein-->
+                <form id="task-form" onsubmit="saveTask(event)">
+                    <div class="content_heading">
+                        <h2>Add Task</h2>
+                    </div>
+
+
+                    <section class="add_task_form_box">
+                        <div class="add_task_left_box">
+                            <!-- Title -->
+                            <label for="task-title">Title *</label>
+                            <input type="text" id="task-title" name="title" placeholder="Enter task title" required>
+
+                            <!-- Description -->
+                            <label for="task-desc">Description</label>
+                            <textarea id="task-desc" name="description" placeholder="Enter task description"></textarea>
+
+                            <!-- Assigned To -->
+                            <label for="task-assigned">Assigned To *</label>
+                            <select id="task-assigned" name="assignedTo" required>
+                                <!-- Dynamically populated -->
+                            </select>
+                        </div>
+                        <div class="add_task_mid_box">
+                            <img src="../assets/svg/add_tastk_vertical_line.svg" alt="">
+                        </div>
+                        <div class="add_task_right_box">
+                            <!-- Due Date -->
+                            <label for="task-date">Due Date *</label>
+                            <input type="date" id="task-date" name="dueDate" required>
+
+                            <!-- Priority -->
+                            <div>
+                                <p>Priority *</p>
+                                <div id="task-priority">
+                                    <button type="button" class="prio-btn" data-prio="Urgent">Urgent</button>
+                                    <button type="button" class="prio-btn" data-prio="Medium">Medium</button>
+                                    <button type="button" class="prio-btn" data-prio="Low">Low</button>
+                                </div>
+                                <input type="hidden" id="task-priority-hidden" name="priority" required>
+                            </div>
+
+                            <!-- Category -->
+                            <label for="task-category">Category *</label>
+                            <input type="text" id="task-category" name="category" placeholder="Enter category" required>
+
+                            <!-- Subtasks -->
+                            <label for="task-subtasks">Subtasks</label>
+                            <div id="subtask-container">
+                                <input type="text" id="new-subtask" placeholder="Add subtask">
+                                <button type="button" id="add-subtask">Add</button>
+                            </div>
+                            <ul id="subtask-list"></ul>
+                        </div>
+                    </section>
+
+                    <!-- Submit Button -->
+                    <button type="submit">Save Task</button>
+                </form>
             </section>
+
         </section>
     </section>
 </body>
+
 </html>

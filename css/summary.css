@@ -64,6 +64,9 @@
 .inner_first_line_box:hover .summary_number {
     color: white;
 }
+.urgent_box:hover .summary_number{
+    color: white;
+}
 .to_do_infos p{
     font-size: 20px;
     font-weight: 400;
@@ -82,12 +85,20 @@
     margin-top: 28px;
     display: flex;
     align-items: center;
-
+    box-shadow: 0px 0px 4px 0px #0000001A;
+    transition: transform 80ms ease-out, color 80ms ease-out;
+}
+.urgent_box:hover{
+    transform: scale(1.1);
+    background-color: #2A3647;
 }
 .urgent_first_box{
     display: flex;
     gap: 18px;
     align-items: center;
+}
+.urgent_box:hover .urgent_text{
+    color: white;
 }
 .urgent_deadline_box{
     width: 178px;
@@ -102,9 +113,15 @@
     font-weight: 700;
     color: #2A3647;
 }
+.urgent_box:hover .date_line{
+    color: white;
+}
 .deadline_text{
     font-size: 16px;
     font-weight: 400;
+}
+.urgent_box:hover .deadline_text{
+    color: white;
 }
 .summary_overview_board{
     width: 560px;
@@ -125,15 +142,27 @@ justify-content: space-between;
     align-items: center;
     gap: 13px;
     text-align: center;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+    transition: transform 80ms ease-out, background-color 80ms ease-out, color 80ms ease-out;
+}
+.summary_overview_board_box:hover{
+    transform: scale(1.1);
+    background-color: #2A3647;
 }
 .summary_overview_board_num{
     font-size: 64px;
     font-weight: 600;
 }
+.summary_overview_board_box:hover .summary_overview_board_num{
+    color: white;
+}
 .summary_overview_board_box p{
     font-size: 20px;
     font-weight: 400;
     color: #2A3647;
+}
+.summary_overview_board_box:hover p{
+    color: white;
 }
 .flex_content{
     display: flex;
@@ -177,3 +206,4 @@ justify-content: space-between;
 .inner_first_line_box:hover .ellipse_box{
     background-color: white;
 }
+

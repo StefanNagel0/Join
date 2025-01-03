@@ -1,14 +1,24 @@
 let contacts = [
-  {
-    name: "Taylan Umucu",
-    phone: "017612345678",
-    email: "taylan.umucu@example.com"
-  },
-  {
-    name: "Bert Klaus",
-    phone: "017612345678",
-    email: "test@example.com"
-  }
+  { name: "Max Mustermann", phone: "017612345678", email: "max.mustermann@example.com" },
+  { name: "Anna Müller", phone: "017799988877", email: "anna.mueller@example.com" },
+  { name: "Peter Schmidt", phone: "015612345678", email: "peter.schmidt@example.com" },
+  { name: "Julia Hoffmann", phone: "015799988877", email: "julia.hoffmann@example.com" },
+  { name: "Lukas Maier", phone: "016612345678", email: "lukas.maier@example.com" },
+  { name: "Sophia Fischer", phone: "016799988877", email: "sophia.fischer@example.com" },
+  { name: "Nina Braun", phone: "017633345555", email: "nina.braun@example.com" },
+  { name: "Felix Wagner", phone: "015722244477", email: "felix.wagner@example.com" },
+  { name: "Tom Richter", phone: "016622333111", email: "tom.richter@example.com" },
+  { name: "Mia Neumann", phone: "017811122233", email: "mia.neumann@example.com" },
+  { name: "Paul Weiß", phone: "016699988877", email: "paul.weiss@example.com" },
+  { name: "Clara Becker", phone: "015722233344", email: "clara.becker@example.com" },
+  { name: "Jonas Zimmer", phone: "017633344455", email: "jonas.zimmer@example.com" },
+  { name: "Emma Hoffmann", phone: "016811223344", email: "emma.hoffmann@example.com" },
+  { name: "Leon Maier", phone: "015799911122", email: "leon.maier@example.com" },
+  { name: "Maria Lange", phone: "017811122333", email: "maria.lange@example.com" },
+  { name: "Tom Schäfer", phone: "016722244455", email: "tom.schaefer@example.com" },
+  { name: "Laura Klein", phone: "015622233344", email: "laura.klein@example.com" },
+  { name: "Tim Braun", phone: "017899933322", email: "tim.braun@example.com" },
+  { name: "Nina Wagner", phone: "016799911123", email: "nina.wagner@example.com" }
 ];
 
 let editIndex = null;
@@ -104,7 +114,7 @@ function showContacts() {
       groupedContacts[letter].forEach(contact => {
         const contactDiv = document.createElement("div");
         contactDiv.classList.add("contact");
-        const color = getRandomColor(); // Zufällige Farbe
+        const color = getRandomColor();
         const initials = getInitials(contact.name);
 
         contactDiv.innerHTML = `

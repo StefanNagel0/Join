@@ -45,7 +45,7 @@ function boardTemplate() {
             <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">Await feedback</h3>
-                    <input class="boardAddTaskInput" type="image" src="../assets/svg/plusButton.svg" alt="">
+                    <input onclick="add_task.js()" class="boardAddTaskInput" type="image" src="../assets/svg/plusButton.svg" alt="">
                 </div>
             </div>
             <div class="board_column">

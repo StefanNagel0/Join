@@ -1,3 +1,7 @@
+function initBoard() {
+    toggleBoardPage()
+}
+
 // Function to initialize the user button and popup
 function initializeUserButton() {
     const userInitialsButton = document.getElementById('user-initials-button');
@@ -36,3 +40,9 @@ function initializeUserButton() {
     });
 }
 document.addEventListener('DOMContentLoaded', initializeUserButton);
+
+function toggleBoardPage() {
+    let boardPage = document.getElementById('content');
+    boardPage.innerHTML = boardTemplate();
+    boardPage.style.display = 'block';
+}

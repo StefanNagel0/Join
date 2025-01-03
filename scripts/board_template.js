@@ -6,9 +6,15 @@ function boardTemplate() {
                 <div>
                     <h2 class="contentHeadingH2">Board</h2>
                 </div>
-                <div class="contenHeadingSearchMain">
-                    <input class="contentHeadingSearch" type="search" id="search" placeholder="Search Task">
-                    <img class="contentHeadingSearchImg" src="../assets/svg/searching.svg" alt="search">
+                <div class="contentHeadingSearchMain">
+                    <div class="contentHeadingSearchSecond">
+                        <div class="contenHeadingSearchMain">
+                            <input class="contentHeadingSearch" type="search" id="search" placeholder="Search Task">
+                        </div>
+                        <div>
+                            <img class="contentHeadingSearchImg" src="../assets/svg/searching.svg" alt="search">
+                        </div>
+                    </div>
                 </div>
                 <div class="content_headingRight">
                     <button class="addBoard" id="add_board" onclick="navigateToAddTask()">

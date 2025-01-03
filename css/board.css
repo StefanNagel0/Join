@@ -17,7 +17,7 @@
 
 .contentHeadingMain {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     width: 1056px;
     height: 73px;
@@ -44,6 +44,13 @@
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
 
+}
+
+.contentHeadingOrder {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
 }
 
 .contentHeadingSearchMain {
@@ -100,6 +107,47 @@
     height: 48px;
     gap: 16px;
     opacity: 1;
+}
+
+.addTaskButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 48px;
+    padding: 8px 16px 8px 16px;
+    gap: 4px;
+    border-radius: 10px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    background: #2A3647;
+    border: 1px solid #2A3647;
+}
+
+.addTaskButtonText {
+    width: 110px;
+    height: 24px;
+    gap: 0px;
+    opacity: 1;
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 25.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #FFFFFF;
+}
+
+.addTaskButtonImg {
+    width: 32px;
+    height: 32px;
+    top: 8px;
+    left: 112px;
+    gap: 0px;
+    opacity: 1;
+    color: white;
+
 }
 
 .contentHeadingRight {

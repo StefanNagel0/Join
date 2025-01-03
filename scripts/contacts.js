@@ -78,67 +78,88 @@ function closeOverlay() {
   }, 300);
 }
 
-function showContactDetails(index) {
-  const contact = contacts[index];
-  const detailsDiv = document.getElementById("contact-details");
-
-  detailsDiv.innerHTML = `
-    <p>Name: ${contact.name}</p>
-    <p>Telefon: ${contact.phone}</p>
-    <p>E-Mail: ${contact.email}</p>
-  `;
-
-  detailsDiv.style.display = "block";
-}
-
 function showContacts() {
   const contactlist = document.getElementById("contactlist");
   contactlist.innerHTML = "";
+  const groupedContacts = groupContactsByLetter(contacts);
+  displayGroupedContacts(groupedContacts, contactlist);
+}
 
-  contacts.sort((a, b) => a.name.localeCompare(b.name));
-
-  const groupedContacts = contacts.reduce((groups, contact) => {
+function groupContactsByLetter(contacts) {
+  return contacts.reduce((groups, contact) => {
     const letter = contact.name.charAt(0).toUpperCase();
     if (!groups[letter]) groups[letter] = [];
     groups[letter].push(contact);
     return groups;
   }, {});
+}
 
+function displayGroupedContacts(groupedContacts, contactlist) {
   Object.keys(groupedContacts)
     .sort()
     .forEach(letter => {
-      const groupDiv = document.createElement("div");
-      groupDiv.classList.add("contact-group");
-      groupDiv.innerHTML = `<h2 class="bigletter">${letter}</h2><hr>`;
-
-      groupedContacts[letter].forEach(contact => {
-        const contactDiv = document.createElement("div");
-        contactDiv.classList.add("contact");
-        const color = getRandomColor();
-        const initials = getInitials(contact.name);
-
-        contactDiv.innerHTML = `
-          <div class="circle" style="background-color: ${color};">
-            ${initials || `<img class="concircle" src="../assets/icons/contact/circledefault.png">`}
-          </div>
-          <div>
-            <p class="name" onclick="showContactDetails(${contacts.indexOf(contact)})" style="cursor: pointer;">
-              ${contact.name}
-            </p>
-          </div>
-        `;
-
-        groupDiv.appendChild(contactDiv);
-      });
-
+      const groupDiv = createGroupDiv(letter);
+      groupedContacts[letter].forEach(contact => appendContact(contact, groupDiv));
       contactlist.appendChild(groupDiv);
     });
 }
 
-document.getElementById("contact-name").addEventListener("input", function (e) {
-  const name = e.target.value.trim();
-  const circleDiv = document.querySelector(".overlay-content .circle");
+function createGroupDiv(letter) {
+  const groupDiv = document.createElement("div");
+  groupDiv.classList.add("contact-group");
+  groupDiv.innerHTML = `<h2 class="bigletter">${letter}</h2><hr>`;
+  return groupDiv;
+}
 
+function appendContact(contact, groupDiv) {
+  if (!contact.color) contact.color = getRandomColor();
+  const contactDiv = createContactDiv(contact);
+  groupDiv.appendChild(contactDiv);
+}
+
+function createContactDiv(contact) {
+  const contactDiv = document.createElement("div");
+  contactDiv.classList.add("contact");
+  const initials = getInitials(contact.name);
+
+  contactDiv.innerHTML = `
+    <div class="circle" style="background-color: ${contact.color};">
+      ${initials || `<img class="concircle" src="../assets/icons/contact/circledefault.png">`}
+    </div>
+    <div>
+      <p class="name" onclick="showContactDetails(${contacts.indexOf(contact)})" style="cursor: pointer;">
+        ${contact.name}
+      </p>
+    </div>
+  `;
+  return contactDiv;
+}
+
+function showContactDetails(index) {
+  const contact = contacts[index];
+  const detailsDiv = document.getElementById("contact-details");
+  detailsDiv.innerHTML = createContactDetails(contact);
+  detailsDiv.style.display = "block";
+}
+
+function createContactDetails(contact) {
+  return `
+    <div class="circle circlecont" style="background-color: ${contact.color};">
+      ${getInitials(contact.name)}
+    </div>
+    <p><strong>Name:</strong> ${contact.name}</p>
+    <p><strong>Telefon:</strong> <a href="tel:${contact.phone}">${contact.phone}</a></p>
+    <p><strong>E-Mail:</strong> <a href="mailto:${contact.email}">${contact.email}</a></p>
+  `;
+}
+
+function handleNameInput(event) {
+  const name = event.target.value.trim();
+  const circleDiv = document.querySelector(".overlay-content .circle");
+  updateCirclePreview(name, circleDiv);
+}
+
+function updateCirclePreview(name, circleDiv) {
   if (name) {
     circleDiv.textContent = getInitials(name);
     circleDiv.style.backgroundColor = getRandomColor();
@@ -146,10 +167,10 @@ document.getElementById("contact-name").addEventListener("input", function (e) {
     circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
     circleDiv.style.backgroundColor = "";
   }
-});
+}
 
-document.getElementById("contact-form").addEventListener("submit", function (e) {
-  e.preventDefault();
+function handleFormSubmit(event) {
+  event.preventDefault();
   const name = document.getElementById("contact-name").value.trim();
   const phone = document.getElementById("contact-phone").value.trim();
   const email = document.getElementById("contact-email").value.trim();
@@ -158,15 +179,20 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
     alert("Bitte Name und Telefonnummer eingeben!");
     return;
   }
-
-  if (editIndex !== null) {
-    contacts[editIndex] = { name, phone, email };
-  } else {
-    contacts.push({ name, phone, email });
-  }
-
+  saveContact(name, phone, email);
   closeOverlay();
   showContacts();
-});
+}
+
+function saveContact(name, phone, email) {
+  if (editIndex !== null) {
+    contacts[editIndex] = { ...contacts[editIndex], name, phone, email };
+  } else {
+    contacts.push({ name, phone, email, color: getRandomColor() });
+  }
+}
+
+document.getElementById("contact-name").addEventListener("input", handleNameInput);
+document.getElementById("contact-form").addEventListener("submit", handleFormSubmit);
 
 showContacts();

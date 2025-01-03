@@ -222,3 +222,7 @@ body {
     color: white;
     backdrop-filter: blur(4px);
   }
+
+  .contact:focus {
+    background-color: #007bff;
+  }

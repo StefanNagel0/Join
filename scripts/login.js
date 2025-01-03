@@ -1,10 +1,32 @@
 function loginInit() {
-    toggleLoginPage()
+    animateLogo();
 }
+
+function animateLogo() {
+    const logo = document.getElementById('logo');
+    setTimeout(() => {
+        logo.style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+        logo.style.top = '10%';
+        logo.style.left = '20%';
+        logo.style.transform = 'translate(0, 0)';
+    }, 1000);
+    setTimeout(() => {
+        logo.style.opacity = '0';
+    }, 2000);
+    setTimeout(() => {
+        toggleLoginPage();
+    }, 3500);
+}
+
+window.onload = animateLogo;
 
 function toggleLoginPage() {
     let OverlayloginPage = document.getElementById('loginPage');
+    let OverlayLogo = document.getElementById('logo');
     OverlayloginPage.innerHTML = loginTemplate();
+    OverlayLogo.style.display = 'none';
     OverlayloginPage.style.display = 'block';
 }
 

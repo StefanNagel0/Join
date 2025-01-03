@@ -224,5 +224,23 @@ body {
   }
 
   .contact:focus {
-    background-color: #007bff;
+    background-color: #007bff !important;
+  }
+
+  .detailshead {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-left: 55px;
+    margin-top: 110px;
+}
+
+  .detailshead h1 {
+    font-size: 61px;
+    font-weight: 700;
+  }
+
+  .detailshead p {
+    font-size: 27px;
+    font-weight: 400;
   }

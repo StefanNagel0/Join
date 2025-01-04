@@ -15,6 +15,7 @@ function createInitialsCircle(contactName) {
 }
 
 // Hilfsfunktion zur Erstellung eines Kontakt-Divs
+
 function createContactDiv(contact) {
     const initialsCircle = createInitialsCircle(contact.name);
     const contactLabel = document.createElement('span');
@@ -29,18 +30,73 @@ function createContactDiv(contact) {
     const contactDiv = document.createElement('div');
     contactDiv.classList.add('contact-item');
     contactDiv.append(contactCircleLabelDiv, checkbox);
+    // Klick-Event für Styling und Zustand
     contactDiv.addEventListener('click', () => {
-        checkbox.checked = !checkbox.checked;
+        checkbox.checked = !checkbox.checked; // Checkbox-Zustand toggeln
+
+        if (checkbox.checked) {
+            // Styling anwenden, wenn ausgewählt
+            contactDiv.style.backgroundColor = '#2A3647';
+            contactLabel.style.color = 'white';
+            checkbox.style.accentColor = 'white';
+            checkbox.style.backgroundColor = "#2A3647";
+            initialsCircle.style.border = "1px solid white";
+        } else {
+            // Styling entfernen, wenn nicht ausgewählt
+            contactDiv.style.backgroundColor = '';
+            contactLabel.style.color = '';
+            checkbox.style.accentColor = '';
+            checkbox.style.backgroundColor='';
+            initialsCircle.style.border='';
+        }
+        // Optionale Funktion: Kontakt hinzufügen/entfernen
         toggleContactSelection(contact, checkbox.checked, document.getElementById('selected-contacts'));
     });
     return contactDiv;
 }
 
+
+// function createContactDiv(contact) {
+//     const initialsCircle = createInitialsCircle(contact.name);
+//     const contactLabel = document.createElement('span');
+//     contactLabel.textContent = contact.name;
+//     contactLabel.classList.add('contact-label');
+//     const checkbox = document.createElement('input');
+//     checkbox.type = 'checkbox';
+//     checkbox.classList.add('checkbox');
+//     const contactCircleLabelDiv = document.createElement('div');
+//     contactCircleLabelDiv.classList.add('contact-circle-label');
+//     contactCircleLabelDiv.append(initialsCircle, contactLabel);
+//     const contactDiv = document.createElement('div');
+//     contactDiv.classList.add('contact-item');
+//     contactDiv.append(contactCircleLabelDiv, checkbox);
+//     contactDiv.addEventListener('click', () => {
+//         checkbox.checked = !checkbox.checked;
+//         if (checkbox.checked) {
+//             contactDiv.classList.add('active'); // Hintergrund und Schriftfarbe ändern
+//         } else {
+//             contactDiv.classList.remove('active'); // Standard-Styling zurücksetzen
+//         }
+//         toggleContactSelection(contact, checkbox.checked, document.getElementById('selected-contacts'));
+//     });
+//     return contactDiv;
+// }
+
+
 // Hilfsfunktion zur Erstellung des Dropdown-Menüs
+
 function createDropdownToggle(dropdownContent) {
     const dropdownToggle = document.createElement('div');
     dropdownToggle.id = 'dropdown-toggle';
-    dropdownToggle.textContent = 'Select contacts to assign';
+
+    const textSpan = document.createElement('span');
+    textSpan.textContent = 'Select contacts to assign';
+
+    const arrowSpan = document.createElement('span');
+    arrowSpan.classList.add('dropdown-arrow');
+
+    dropdownToggle.append(textSpan, arrowSpan);
+
     dropdownToggle.addEventListener('click', () => {
         dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
     });

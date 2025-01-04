@@ -184,6 +184,7 @@ function createContactDetails(contact) {
     <div>
     <p class="infom"><strong class="topic">E-Mail</strong><a class="mail">${contact.email}</a></p>
     <p class="infom"><strong class="topic">Phone</strong>${contact.phone}</p>
+    <div class="success"></div>
     </div>
     </div>
   `;
@@ -245,6 +246,34 @@ function saveContact(name, phone, email) {
     contacts[editIndex] = { ...contacts[editIndex], name, phone, email };
   } else {
     contacts.push({ name, phone, email, color: getRandomColor() });
+  }
+}
+
+function saveContact(name, phone, email) {
+  if (editIndex !== null) {
+    contacts[editIndex] = { ...contacts[editIndex], name, phone, email };
+    createSuccessMessage("Kontakt erfolgreich aktualisiert!"); 
+  } else {
+    contacts.push({ name, phone, email, color: getRandomColor() });
+    createSuccessMessage("Kontakt erfolgreich hinzugefügt!"); 
+  }
+}
+
+function createSuccessMessage(message) {
+  const successDiv = document.querySelector(".success");
+  
+  if (successDiv) {
+    
+    successDiv.textContent = message;
+    successDiv.classList.add("show");
+
+    
+    setTimeout(() => {
+      successDiv.classList.remove("show");
+      successDiv.classList.add("hide");
+    }, 3000);
+  } else {
+    console.error("Keine `div` mit der Klasse 'success' gefunden.");
   }
 }
 

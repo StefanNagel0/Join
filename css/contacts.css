@@ -391,3 +391,26 @@ body {
     display: flex;
     flex-direction: column;
   }
+
+  .success {
+    position: fixed;
+    top: 20px;
+    right: -300px; /* Startpunkt außerhalb des sichtbaren Bereichs */
+    background-color: #4caf50; /* Grüner Hintergrund für Erfolgsmeldung */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    z-index: 1000;
+    transition: transform 0.5s ease, right 0.5s ease;
+  }
+  
+  .success.show {
+    right: 20px; /* Endposition innerhalb des sichtbaren Bereichs */
+  }
+  
+  .success.hide {
+    right: -300px; /* Zurück zur Ausgangsposition */
+  }

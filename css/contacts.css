@@ -312,3 +312,16 @@ body {
   .hide {
     display: none;
   }
+
+  .delete-button {
+    background-color: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contbtn {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }

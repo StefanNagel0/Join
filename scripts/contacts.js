@@ -167,16 +167,22 @@ function createContactDetails(contact) {
     <div class="circle circlecont" style="background-color: ${contact.color};">
       ${getInitials(contact.name)}
     </div>
+    <div class="editdelete">
     <p class="contactnames">${contact.name}</p>
-    </div>
-    <p><strong>Telefon:</strong>${contact.phone}</p>
-    <p><strong>E-Mail:</strong>${contact.email}</p>
+    <div class="contbtn">
     <button class="edit-button" onclick="openOverlay('edit', ${contacts.indexOf(contact)})">
-      Bearbeiten
+      <img src="../assets/icons/contact/edit.png">Edit
     </button>
     <button class="delete-button" onclick="deleteContact(${contacts.indexOf(contact)})">
-      Löschen
+      <img src="../assets/icons/contact/delete.png">Delete
     </button>
+    </div>
+    </div>
+    </div>
+    <div>
+    <p><strong>Telefon:</strong>${contact.phone}</p>
+    <p><strong>E-Mail:</strong>${contact.email}</p>
+    </div>
   `;
 }
 

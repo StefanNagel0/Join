@@ -185,7 +185,6 @@ function createContactDetails(contact) {
     <p class="infom"><strong class="topic">E-Mail</strong><a class="mail">${contact.email}</a></p>
     <p class="infom"><strong class="topic">Phone</strong>${contact.phone}</p>
     <div class="successedit"></div>
-    <div class="successcreate"></div>
     </div>
     </div>
   `;
@@ -255,10 +254,12 @@ function createSuccessMessage(message, targetClass) {
   const successDiv = document.querySelector(`.${targetClass}`);
   
   if (successDiv) {
-   
+    // Setze die Nachricht und zeige die Div an
     successDiv.textContent = message;
+    successDiv.classList.remove("hide"); // Entferne vorherige Ausgangsanimation
     successDiv.classList.add("show");
 
+    // Nach 3 Sekunden: Ausblenden mit der Klasse 'hide'
     setTimeout(() => {
       successDiv.classList.remove("show");
       successDiv.classList.add("hide");
@@ -267,7 +268,6 @@ function createSuccessMessage(message, targetClass) {
     console.error(`Keine \`div\` mit der Klasse '${targetClass}' gefunden.`);
   }
 }
-
 
 document.getElementById("contact-name").addEventListener("input", handleNameInput);
 document.getElementById("contact-form").addEventListener("submit", handleFormSubmit);

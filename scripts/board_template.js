@@ -17,10 +17,10 @@ function boardTemplate() {
                         </div>
                     </div>
                 </div>
-                <div class="content_headingRight">
+                <div class="contentHeadingRight">
                     <div>
                         <Button class="addTaskButton">
-                            <a href="add_task.html" class="addTaskButtonText" >Add Task</a>
+                        <a href="add_task.html" class="addTaskButtonText">Add Task</a>
                             <img class="addTaskButtonImg" src="../assets/svg/add_task.svg" alt="">
                         </Button>
                     </div>
@@ -32,17 +32,25 @@ function boardTemplate() {
         <div class="board">
             <div class="boardColumn">
                 <div class="boardColumnHeader">
-                    <h3>Backlog</h3>
+                    <h3 class="boardColumnHeaderH3">To do</h3>
+                    <input class="boardAddTaskInput" type="image" src="../assets/svg/plusButton.svg" alt="">
                 </div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">
-                    <h3>In Progress</h3>
+                    <h3 class="boardColumnHeaderH3">In progress</h3>
+                    <input class="boardAddTaskInput" type="image" src="../assets/svg/plusButton.svg" alt="">
+                </div>
+            </div>
+            <div class="boardColumn">
+                <div class="boardColumnHeader">
+                    <h3 class="boardColumnHeaderH3">Await feedback</h3>
+                    <input onclick="add_task.js()" class="boardAddTaskInput" type="image" src="../assets/svg/plusButton.svg" alt="">
                 </div>
             </div>
             <div class="board_column">
                 <div class="boardColumnHeader">
-                    <h3>Done</h3>
+                    <h3 class="boardColumnHeaderH3">Done</h3>
                 </div>
             </div>
         </div>

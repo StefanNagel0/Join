@@ -40,33 +40,52 @@ function getRandomColor() {
 
 function openOverlay(mode, index = null) {
   const overlay = document.getElementById("overlay");
+  overlay.classList.remove("hide");
+  overlay.classList.add("show");
+  overlay.style.display = "flex";
+
+  if (mode === "edit") {
+    setupEditContact(index);
+  } else {
+    setupNewContact();
+  }
+}
+
+function setupEditContact(index) {
   const title = document.querySelector(".overlay-left h1");
+  const description = document.querySelector(".description");
   const nameInput = document.getElementById("contact-name");
   const phoneInput = document.getElementById("contact-phone");
   const emailInput = document.getElementById("contact-email");
   const circleDiv = document.querySelector(".overlay-content .circle");
 
-  if (mode === "edit") {
-    title.textContent = "Kontakt bearbeiten";
-    const contact = contacts[index];
-    nameInput.value = contact.name;
-    phoneInput.value = contact.phone;
-    emailInput.value = contact.email || "";
-    circleDiv.textContent = getInitials(contact.name);
-    circleDiv.style.backgroundColor = getRandomColor();
-    editIndex = index;
-  } else {
-    nameInput.value = "";
-    phoneInput.value = "";
-    emailInput.value = "";
-    circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
-    circleDiv.style.backgroundColor = "";
-    editIndex = null;
-  }
+  const contact = contacts[index];
+  title.textContent = "Edit Contact";
+  description.textContent = "";
+  nameInput.value = contact.name;
+  phoneInput.value = contact.phone;
+  emailInput.value = contact.email || "";
+  circleDiv.textContent = getInitials(contact.name);
+  circleDiv.style.backgroundColor = contact.color || getRandomColor();
+  editIndex = index;
+}
 
-  overlay.classList.remove("hide");
-  overlay.classList.add("show");
-  overlay.style.display = "flex";
+function setupNewContact() {
+  const title = document.querySelector(".overlay-left h1");
+  const description = document.querySelector(".description");
+  const nameInput = document.getElementById("contact-name");
+  const phoneInput = document.getElementById("contact-phone");
+  const emailInput = document.getElementById("contact-email");
+  const circleDiv = document.querySelector(".overlay-content .circle");
+
+  title.textContent = "Add contact";
+  description.textContent = "Tasks are better with a team!";
+  nameInput.value = "";
+  phoneInput.value = "";
+  emailInput.value = "";
+  circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
+  circleDiv.style.backgroundColor = "";
+  editIndex = null;
 }
 
 function closeOverlay() {
@@ -144,13 +163,41 @@ function showContactDetails(index) {
 
 function createContactDetails(contact) {
   return `
+    <div class="detailscircle">
     <div class="circle circlecont" style="background-color: ${contact.color};">
       ${getInitials(contact.name)}
     </div>
-    <p><strong>Name:</strong> ${contact.name}</p>
-    <p><strong>Telefon:</strong> <a href="tel:${contact.phone}">${contact.phone}</a></p>
-    <p><strong>E-Mail:</strong> <a href="mailto:${contact.email}">${contact.email}</a></p>
+    <p class="contactnames">${contact.name}</p>
+    </div>
+    <p><strong>Telefon:</strong>${contact.phone}</p>
+    <p><strong>E-Mail:</strong>${contact.email}</p>
+    <button class="edit-button" onclick="openOverlay('edit', ${contacts.indexOf(contact)})">
+      Bearbeiten
+    </button>
+    <button class="delete-button" onclick="deleteContact(${contacts.indexOf(contact)})">
+      Löschen
+    </button>
   `;
+}
+
+function deleteContact(index) {
+  const overlay = document.getElementById("confirm-overlay");
+  const yesButton = document.getElementById("confirm-yes");
+  const noButton = document.getElementById("confirm-no");
+
+  overlay.classList.remove("hide");
+
+  yesButton.onclick = () => {
+    contacts.splice(index, 1); 
+    showContacts(); 
+    document.getElementById("contact-details").style.display = "none";
+    overlay.classList.add("hide"); 
+  };
+
+
+  noButton.onclick = () => {
+    overlay.classList.add("hide");
+  };
 }
 
 function handleNameInput(event) {

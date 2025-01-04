@@ -244,3 +244,71 @@ body {
     font-size: 27px;
     font-weight: 400;
   }
+
+  .detailscircle {
+    display: flex;
+    align-items: center;
+    gap: 54px;
+  }
+
+  .contactnames {
+    font-size: 47px;
+    font-weight: 500;
+  }
+
+  .confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: white;
+  }
+  
+  .confirm-box {
+    background-color: #2A3647;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+  }
+  
+  .confirm-buttons {
+    margin-top: 20px;
+  }
+  
+  .confirm-buttons button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .yes-button {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .yes-button:hover {
+    background-color: #45a049;
+  }
+  
+  .no-button {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .no-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  .hide {
+    display: none;
+  }

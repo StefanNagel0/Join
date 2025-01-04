@@ -1,7 +1,3 @@
-body {
-    display: flex;
-}
-
 .cont {
     max-height: 928px;
     width: 456px;
@@ -392,25 +388,53 @@ body {
     flex-direction: column;
   }
 
-  .success {
+  .successedit {
+    position: relative; 
+    background-color: #4caf50;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    width: max-content;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.5s ease-in, opacity 0.5s ease-in-out;
+  }
+  
+  .successedit.show {
+    transform: translateX(0); 
+    opacity: 1;
+  }
+  
+  .successedit.hide {
+    transform: translateX(100%);
+    opacity: 1;
+  }
+
+  .successcreate {
     position: fixed;
-    top: 20px;
-    right: -300px; /* Startpunkt außerhalb des sichtbaren Bereichs */
-    background-color: #4caf50; /* Grüner Hintergrund für Erfolgsmeldung */
+    bottom: 20px; 
+    right: -300px; 
+    background-color: #4caf50; 
     color: white;
     padding: 15px 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     font-family: Arial, sans-serif;
     font-size: 16px;
-    z-index: 1000;
-    transition: transform 0.5s ease, right 0.5s ease;
+    z-index: 1001;
+    transition: right 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0; 
   }
   
-  .success.show {
-    right: 20px; /* Endposition innerhalb des sichtbaren Bereichs */
+  .successcreate.show {
+    right: 20px; 
+    opacity: 1; 
   }
   
-  .success.hide {
-    right: -300px; /* Zurück zur Ausgangsposition */
+  .successcreate.hide {
+    right: -300px; 
+    opacity: 0;
   }

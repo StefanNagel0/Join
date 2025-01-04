@@ -184,7 +184,8 @@ function createContactDetails(contact) {
     <div>
     <p class="infom"><strong class="topic">E-Mail</strong><a class="mail">${contact.email}</a></p>
     <p class="infom"><strong class="topic">Phone</strong>${contact.phone}</p>
-    <div class="success"></div>
+    <div class="successedit"></div>
+    <div class="successcreate"></div>
     </div>
     </div>
   `;
@@ -203,7 +204,6 @@ function deleteContact(index) {
     document.getElementById("contact-details").style.display = "none";
     overlay.classList.add("hide"); 
   };
-
 
   noButton.onclick = () => {
     overlay.classList.add("hide");
@@ -244,38 +244,30 @@ function handleFormSubmit(event) {
 function saveContact(name, phone, email) {
   if (editIndex !== null) {
     contacts[editIndex] = { ...contacts[editIndex], name, phone, email };
+    createSuccessMessage("Contact successfully updated", "successedit");
   } else {
     contacts.push({ name, phone, email, color: getRandomColor() });
+    createSuccessMessage("Contact successfully created", "successcreate");
   }
 }
 
-function saveContact(name, phone, email) {
-  if (editIndex !== null) {
-    contacts[editIndex] = { ...contacts[editIndex], name, phone, email };
-    createSuccessMessage("Kontakt erfolgreich aktualisiert!"); 
-  } else {
-    contacts.push({ name, phone, email, color: getRandomColor() });
-    createSuccessMessage("Kontakt erfolgreich hinzugefügt!"); 
-  }
-}
-
-function createSuccessMessage(message) {
-  const successDiv = document.querySelector(".success");
+function createSuccessMessage(message, targetClass) {
+  const successDiv = document.querySelector(`.${targetClass}`);
   
   if (successDiv) {
-    
+   
     successDiv.textContent = message;
     successDiv.classList.add("show");
 
-    
     setTimeout(() => {
       successDiv.classList.remove("show");
       successDiv.classList.add("hide");
     }, 3000);
-  } else {
-    console.error("Keine `div` mit der Klasse 'success' gefunden.");
+  } else {  
+    console.error(`Keine \`div\` mit der Klasse '${targetClass}' gefunden.`);
   }
 }
+
 
 document.getElementById("contact-name").addEventListener("input", handleNameInput);
 document.getElementById("contact-form").addEventListener("submit", handleFormSubmit);

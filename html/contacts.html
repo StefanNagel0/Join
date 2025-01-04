@@ -109,9 +109,11 @@
                   <div class="overlay-content">
                     <form id="contact-form">
                       <div class="circle"></div>
+                      <div class="form">
                       <input type="text" id="contact-name" placeholder="Name" required />
-                      <input type="text" id="contact-phone" placeholder="Telefonnummer" required />
                       <input type="email" id="contact-email" placeholder="Email" required />
+                      <input type="text" id="contact-phone" placeholder="Phone" required />
+                    </div>
                       <button type="button" onclick="closeOverlay()">Abbrechen</button>
                       <button type="submit">Speichern</button>
                     </form>
@@ -120,6 +122,7 @@
               </div>
             <section class="flex_content">
                 <section class="cont">
+                    <div class="scrolllist">
                     <div class="btnclass">
                       <button class="btncont" onclick="openOverlay('new')">
                         <p class="btnp">Add new Contact</p>
@@ -127,6 +130,7 @@
                       </button>
                     </div>
                       <div id="contactlist"></div>
+                    </div>
                       </section>
                  <div class="flexdetails">     
                 <div class="detailshead">

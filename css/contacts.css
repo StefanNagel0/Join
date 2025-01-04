@@ -333,3 +333,10 @@ body {
     display: flex;
     flex-direction: column;
   }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 59px;
+    margin-top: 59px;
+  }

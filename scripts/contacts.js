@@ -179,9 +179,12 @@ function createContactDetails(contact) {
     </div>
     </div>
     </div>
+    <div class="info">
+    <p>Contact Information</p>
     <div>
     <p><strong>Telefon:</strong>${contact.phone}</p>
     <p><strong>E-Mail:</strong>${contact.email}</p>
+    </div>
     </div>
   `;
 }

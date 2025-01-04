@@ -21,7 +21,7 @@ function boardTemplate() {
                     <div>
                         <Button id="addTaskButton" class="addTaskButton" onclick="boardAddTask()">
                         <p class="addTaskButtonText">Add Task</p>
-                        <img class="addTaskButtonImg" src="../assets/svg/add_task.svg" alt="">
+                        <img class="addTaskButtonImg" src="../assets/svg/add_task/add_task.svg" alt="">
                         </Button>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ function boardAddTaskTemplate() {
             </select>
         </div>
         <div class="add_task_mid_box">
-            <img src="../assets/svg/add_tastk_vertical_line.svg" alt="">
+            <img src="../assets/svg/add_task/add_tastk_vertical_line.svg" alt="">
         </div>
         <div class="add_task_right_box">
             <!-- Due Date -->

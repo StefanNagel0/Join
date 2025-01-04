@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="../css/standard.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="../css/font.css">
-    <link rel="stylesheet" href="../css/add.task.css">
+    <link rel="stylesheet" href="../css/add_task.css">
     <script src="../scripts/header.js"></script>
     <script src="../scripts/navbar.js"></script>
+    <script src="../scripts/contacts.js"></script>
     <script src="../scripts/add_task.js"></script>
     <title>Join</title>
 </head>
@@ -110,9 +111,9 @@
 
                             <!-- Assigned To -->
                             <label for="task-assigned">Assigned To *</label>
-                            <select id="task-assigned" name="assignedTo" required>
+                            <div id="task-assigned" style="border: 1px solid #ccc; padding: 10px;">
                                 <!-- Dynamically populated -->
-                            </select>
+                            </div>
                         </div>
                         <div class="add_task_mid_box">
                             <img src="../assets/svg/add_tastk_vertical_line.svg" alt="">
@@ -121,7 +122,6 @@
                             <!-- Due Date -->
                             <label for="task-date">Due Date *</label>
                             <input type="date" id="task-date" name="dueDate" required>
-
                             <!-- Priority -->
                             <div>
                                 <p>Priority *</p>
@@ -151,7 +151,6 @@
                     <button type="submit">Save Task</button>
                 </form>
             </section>
-
         </section>
     </section>
 </body>

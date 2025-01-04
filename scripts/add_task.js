@@ -1,19 +1,106 @@
+let tasks = []
+const contactColors = new Map();
+
 document.addEventListener('DOMContentLoaded', () => {
-    const contacts = ['John Doe', 'Jane Smith', 'Guest']; // Example contact list
-    populateAssignedTo(contacts);
-    initializePriorityButtons();
-    initializeSubtasks();
+    initializeContactsDropdown();
 });
 
-// Populate the Assigned To dropdown
-function populateAssignedTo(contacts) {
-    const assignedToSelect = document.getElementById('task-assigned');
-    contacts.forEach(contact => {
-        const option = document.createElement('option');
-        option.value = contact;
-        option.textContent = contact;
-        assignedToSelect.appendChild(option);
+// Hilfsfunktion zur Erstellung eines Initials-Kreises
+function createInitialsCircle(contactName) {
+    const initialsCircle = document.createElement('div');
+    initialsCircle.classList.add('initials-circle');
+    initialsCircle.textContent = getInitials(contactName);
+    initialsCircle.style.backgroundColor = getContactColor(contactName);
+    return initialsCircle;
+}
+
+// Hilfsfunktion zur Erstellung eines Kontakt-Divs
+function createContactDiv(contact) {
+    const initialsCircle = createInitialsCircle(contact.name);
+    const contactLabel = document.createElement('span');
+    contactLabel.textContent = contact.name;
+    contactLabel.classList.add('contact-label');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.classList.add('checkbox');
+    const contactCircleLabelDiv = document.createElement('div');
+    contactCircleLabelDiv.classList.add('contact-circle-label');
+    contactCircleLabelDiv.append(initialsCircle, contactLabel);
+    const contactDiv = document.createElement('div');
+    contactDiv.classList.add('contact-item');
+    contactDiv.append(contactCircleLabelDiv, checkbox);
+    contactDiv.addEventListener('click', () => {
+        checkbox.checked = !checkbox.checked;
+        toggleContactSelection(contact, checkbox.checked, document.getElementById('selected-contacts'));
     });
+    return contactDiv;
+}
+
+// Hilfsfunktion zur Erstellung des Dropdown-Menüs
+function createDropdownToggle(dropdownContent) {
+    const dropdownToggle = document.createElement('div');
+    dropdownToggle.id = 'dropdown-toggle';
+    dropdownToggle.textContent = 'Select contacts to assign';
+    dropdownToggle.addEventListener('click', () => {
+        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+    });
+    return dropdownToggle;
+}
+
+// Hilfsfunktion zur Schließung des Dropdown-Menüs beim Klick außerhalb
+function addOutsideClickListener(dropdownWrapper, dropdownContent) {
+    document.addEventListener('click', event => {
+        if (!dropdownWrapper.contains(event.target)) {
+            dropdownContent.style.display = 'none';
+        }
+    });
+}
+
+// Hauptfunktion zur Initialisierung des Dropdown-Menüs
+function initializeContactsDropdown() {
+    const dropdownContainer = document.getElementById('task-assigned');
+    const selectedContactsContainer = document.createElement('div');
+    selectedContactsContainer.id = 'selected-contacts';
+    dropdownContainer.parentElement.appendChild(selectedContactsContainer);
+    const dropdownWrapper = document.createElement('div');
+    dropdownWrapper.id = 'dropdown-wrapper';
+    const dropdownContent = document.createElement('div');
+    dropdownContent.id = 'dropdown-content';
+    contacts.forEach(contact => dropdownContent.appendChild(createContactDiv(contact)));
+    dropdownWrapper.append(createDropdownToggle(dropdownContent), dropdownContent);
+    addOutsideClickListener(dropdownWrapper, dropdownContent);
+    dropdownContainer.parentElement.replaceChild(dropdownWrapper, dropdownContainer);
+}
+
+function getInitials(name) {
+    const [firstName, lastName] = name.split(' ');
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+}
+
+function getSelectedDiv(container, initials) {
+    return Array.from(container.children).find(child => child.textContent === initials);
+}
+
+function addOrRemoveSelectedDiv(contact, isSelected, container) {
+    const initials = getInitials(contact.name);
+    const selectedDiv = getSelectedDiv(container, initials);
+    if (isSelected) {
+        if (!selectedDiv) {
+            const newDiv = document.createElement('div');
+            newDiv.classList.add('selected-contact');
+            newDiv.textContent = initials;
+            newDiv.style.backgroundColor = getContactColor(contact.name);
+            container.appendChild(newDiv);
+        }
+    } else {
+        if (selectedDiv) {
+            container.removeChild(selectedDiv);
+        }
+    }
+}
+
+function toggleContactSelection(contact, isSelected, container) {
+    addOrRemoveSelectedDiv(contact, isSelected, container);
 }
 
 // Initialize priority buttons
@@ -35,7 +122,7 @@ function initializeSubtasks() {
     const subtaskInput = document.getElementById('new-subtask');
     const addSubtaskButton = document.getElementById('add-subtask');
     const subtaskList = document.getElementById('subtask-list');
-    
+
     addSubtaskButton.addEventListener('click', () => {
         const subtask = subtaskInput.value.trim();
         if (subtask) {
@@ -50,7 +137,7 @@ function initializeSubtasks() {
 // Save task
 function saveTask(event) {
     event.preventDefault();
-    
+
     const formData = new FormData(document.getElementById('task-form'));
     const task = {
         title: formData.get('title'),
@@ -71,4 +158,11 @@ function saveTask(event) {
     document.getElementById('task-form').reset();
     document.getElementById('subtask-list').innerHTML = '';
     alert('Task saved!');
+}
+
+function getContactColor(contactName) {
+    if (!contactColors.has(contactName)) {
+        contactColors.set(contactName, getRandomColor());
+    }
+    return contactColors.get(contactName);
 }

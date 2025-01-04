@@ -19,9 +19,9 @@ function boardTemplate() {
                 </div>
                 <div class="contentHeadingRight">
                     <div>
-                        <Button class="addTaskButton">
-                        <a href="add_task.html" class="addTaskButtonText">Add Task</a>
-                            <img class="addTaskButtonImg" src="../assets/svg/add_task.svg" alt="">
+                        <Button id="addTaskButton" class="addTaskButton" onclick="boardAddTask()">
+                        <p class="addTaskButtonText">Add Task</p>
+                        <img class="addTaskButtonImg" src="../assets/svg/add_task.svg" alt="">
                         </Button>
                     </div>
                 </div>
@@ -56,5 +56,60 @@ function boardTemplate() {
         </div>
     </div>
 </div>
+    `
+}
+
+function boardAddTaskTemplate() {
+    return `
+<section>
+    <section class="add_task_form_box">
+        <div class="add_task_left_box">
+            <!-- Title -->
+            <label for="task-title">Title *</label>
+            <input type="text" id="task-title" name="title" placeholder="Enter task title" required>
+
+            <!-- Description -->
+            <label for="task-desc">Description</label>
+            <textarea id="task-desc" name="description" placeholder="Enter task description"></textarea>
+
+            <!-- Assigned To -->
+            <label for="task-assigned">Assigned To *</label>
+            <select id="task-assigned" name="assignedTo" required>
+                <!-- Dynamically populated -->
+            </select>
+        </div>
+        <div class="add_task_mid_box">
+            <img src="../assets/svg/add_tastk_vertical_line.svg" alt="">
+        </div>
+        <div class="add_task_right_box">
+            <!-- Due Date -->
+            <label for="task-date">Due Date *</label>
+            <input type="date" id="task-date" name="dueDate" required>
+
+            <!-- Priority -->
+            <div>
+                <p>Priority *</p>
+                <div id="task-priority">
+                    <button type="button" class="prio-btn" data-prio="Urgent">Urgent</button>
+                    <button type="button" class="prio-btn" data-prio="Medium">Medium</button>
+                    <button type="button" class="prio-btn" data-prio="Low">Low</button>
+                </div>
+                <input type="hidden" id="task-priority-hidden" name="priority" required>
+            </div>
+
+            <!-- Category -->
+            <label for="task-category">Category *</label>
+            <input type="text" id="task-category" name="category" placeholder="Enter category" required>
+
+            <!-- Subtasks -->
+            <label for="task-subtasks">Subtasks</label>
+            <div id="subtask-container">
+                <input type="text" id="new-subtask" placeholder="Add subtask">
+                <button type="button" id="add-subtask">Add</button>
+            </div>
+            <ul id="subtask-list"></ul>
+        </div>
+    </section>
+</section>
     `
 }

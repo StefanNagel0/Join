@@ -1,0 +1,34 @@
+.boardAddTaskOverlay {
+    position: fixed;
+    top: 60px;
+    right: -100%;
+    width: 1116px;
+    height: 870px;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    ;
+    z-index: 9999;
+    transition: right 0.3s ease;
+}
+
+.boardAddTaskOverlay.show {
+    right: 550px;
+}
+
+.darkOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.231);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 9998;
+}
+
+.darkOverlay.show {
+    opacity: 1;
+    visibility: visible;
+}

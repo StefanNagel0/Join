@@ -313,15 +313,23 @@ body {
     display: none;
   }
 
-  .delete-button {
-    background-color: none;
+  .delete-button, .edit-button {
+    background-color: white;
     display: flex;
-    justify-content: center;
     align-items: center;
+    border: 0;
+    cursor: pointer;
+    gap: 13px;
   }
 
   .contbtn {
     display: flex;
     gap: 10px;
-    justify-content: center;
+    justify-content: flex-start;
+  }
+
+  .editdelete {
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
   }

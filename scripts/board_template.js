@@ -112,7 +112,7 @@ function boardAddTaskTemplate() {
     </section>
     <p class="requiredFields">* Required fields</p>
     <div class="addTaskBottomBox">
-        <Button id="addTaskButton" class="addTaskButton" onclick="boardAddTask()">
+        <Button id="addTaskButton" class="addTaskButton" onclick="addTaskButton()">
             <p class="addTaskButtonText">Add Task</p>
             <img class="addTaskButtonImgBottomBox" src="../assets/svg/add_task/check.svg" alt="">
         </Button>
@@ -121,5 +121,13 @@ function boardAddTaskTemplate() {
         </Button>
     </div>
 </section>
+    `
+}
+
+function addTaskSuccessTemplate() {
+    return `
+    <div class="addTaskSuccess" "id="signUpSuccessID">
+        <p class="addTaskSuccessP">Task added to board  <img src="../assets/svg/add_task/addedTask.svg" alt=""></p>
+    </div>
     `
 }

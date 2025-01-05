@@ -6,8 +6,7 @@
     height: 870px;
     border-radius: 30px;
     background-color: #FFFFFF;
-    ;
-    z-index: 9999;
+    z-index: 9991;
     transition: right 0.3s ease;
 }
 
@@ -25,7 +24,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
-    z-index: 9998;
+    z-index: 9990;
 }
 
 .darkOverlay.show {
@@ -35,4 +34,49 @@
 
 .addTaskLeftBoxBoard {
     padding-left: 30px;
+}
+
+.addTaskSuccess {
+    position: fixed;
+    width: 326px;
+    height: 74px;
+    padding: 0px 25px 0px 25px;
+    border-radius: 20px;
+    margin-top: 200px;
+    margin-left: 550px;
+    margin-bottom: 670px;
+    background-color: #2A3647;
+    box-shadow: 0px 0px 4px 0px #00000026;
+    z-index: 9992;
+}
+
+.addTaskSuccessP {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 260px;
+    height: 24px;
+    padding-top: 35px;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    gap: 40px;
+    color: #FFFFFF;
+}
+
+.addTaskSuccessImg {
+    width: 30px;
+    height: 30px;
+    gap: 10px;
+}
+
+.addTaskSuccessImg img {
+    width: 25;
+    height: 29.55px;
+    rotate: 90deg;
+    color: #FFFFFF;
 }

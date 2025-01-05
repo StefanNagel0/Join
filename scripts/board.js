@@ -2,10 +2,26 @@ function initBoardReloaded() {
     toggleBoardPage();
 }
 
+function addTaskButton() {
+    boardAddTask();
+    addTaskSuccess();
+}
+
 function toggleBoardPage() {
     let boardPage = document.getElementById('content');
     boardPage.innerHTML = boardTemplate();
     boardPage.style.display = 'block';
+}
+
+function addTaskSuccess() {
+    let overlayRef = document.getElementById('addTaskSuccess');
+    overlayRef.innerHTML = addTaskSuccessTemplate();
+    overlayRef.style.display = "block";
+
+    setTimeout(() => {
+        overlayRef.style.display = "none";
+        closeBoardAddTask();
+    }, 2000);
 }
 
 function boardAddTask() {

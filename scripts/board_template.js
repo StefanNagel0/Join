@@ -116,7 +116,7 @@ function boardAddTaskTemplate() {
             <p class="addTaskButtonText">Add Task</p>
             <img class="addTaskButtonImgBottomBox" src="../assets/svg/add_task/check.svg" alt="">
         </Button>
-        <Button id="cancelTaskButton" class="cancelAddTaskButton" onclick="cancelAddTask()">
+        <Button id="cancelTaskButton" class="cancelAddTaskButton" onclick="closeBoardAddTask()">
             <p class="cancelTaskButtonText">Cancel X</p>
         </Button>
     </div>

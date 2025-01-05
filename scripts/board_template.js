@@ -63,7 +63,7 @@ function boardAddTaskTemplate() {
     return `
 <section>
     <section class="add_task_form_box">
-        <div class="add_task_left_box">
+        <div class="add_task_left_box addTaskLeftBoxBoard">
             <!-- Title -->
             <label for="task-title">Title *</label>
             <input type="text" id="task-title" name="title" placeholder="Enter task title" required>

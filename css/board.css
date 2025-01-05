@@ -82,7 +82,7 @@
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-    color: #D1D1D1;
+    color: black;
 }
 
 /* .contentHeadingSearch {
@@ -97,10 +97,19 @@
 } */
 
 .contentHeadingSearchImg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 5px;
     width: 48px;
     height: 48px;
-    gap: 16px;
     opacity: 1;
+    cursor: pointer;
+}
+
+.contentHeadingSearchImg:hover {
+    background-color: rgb(180, 181, 182);
+    border-radius: 50px;
 }
 
 .addTaskButton {
@@ -291,7 +300,8 @@
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     border: 2px solid #2A3647;
-    color: #2A3647
+    color: #2A3647;
+    cursor: pointer;
 }
 
 .boardAddTaskText:hover {

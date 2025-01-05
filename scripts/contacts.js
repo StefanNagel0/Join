@@ -254,12 +254,9 @@ function createSuccessMessage(message, targetClass) {
   const successDiv = document.querySelector(`.${targetClass}`);
   
   if (successDiv) {
-    // Setze die Nachricht und zeige die Div an
     successDiv.textContent = message;
-    successDiv.classList.remove("hide"); // Entferne vorherige Ausgangsanimation
+    successDiv.classList.remove("hide"); 
     successDiv.classList.add("show");
-
-    // Nach 3 Sekunden: Ausblenden mit der Klasse 'hide'
     setTimeout(() => {
       successDiv.classList.remove("show");
       successDiv.classList.add("hide");
@@ -267,7 +264,7 @@ function createSuccessMessage(message, targetClass) {
   } else {  
     console.error(`Keine \`div\` mit der Klasse '${targetClass}' gefunden.`);
   }
-}
+} 
 
 document.getElementById("contact-name").addEventListener("input", handleNameInput);
 document.getElementById("contact-form").addEventListener("submit", handleFormSubmit);

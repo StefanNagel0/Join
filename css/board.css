@@ -113,15 +113,39 @@
     gap: 4px;
     border-radius: 10px;
     border: 1px 0px 0px 0px;
-    opacity: 0px;
+    opacity: 1;
     background: #2A3647;
     border: 1px solid #2A3647;
+}
+
+.addTaskButton:hover {
+    background-color: rgb(41, 171, 226);
+    border: 1px solid rgb(41, 171, 226);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.requiredFields {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 310px;
+    padding-left: 30px;
+    color: red;
+}
+
+.addTaskBottomBox {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    margin-left: 650px;
+    gap: 20px;
+    overflow: hidden;
 }
 
 .addTaskButtonText {
     width: 110px;
     height: 24px;
-    gap: 0px;
     opacity: 1;
     font-family: Inter;
     font-size: 18px;
@@ -138,10 +162,53 @@
     height: 32px;
     top: 8px;
     left: 112px;
-    gap: 0px;
     opacity: 1;
     color: white;
+}
 
+.addTaskButtonImgBottomBox {
+    width: 20px;
+    height: 20px;
+}
+
+.cancelAddTaskButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 120px;
+    height: 48px;
+    padding: 8px 16px 8px 16px;
+    border-radius: 10px;
+    border: 1px 0px 0px 0px;
+    opacity: 1;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    color: #000000;
+}
+
+.cancelTaskButtonText {
+    width: 100px;
+    height: 24px;
+    opacity: 1;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.cancelTaskButtonImg {
+    width: 28px;
+    height: 28px;
+    opacity: 1;
+}
+
+.cancelAddTaskButton:hover {
+    color: rgb(41, 171, 226);
+    border: 1px solid rgb(41, 171, 226);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 /* .contentHeadingRight {
@@ -208,16 +275,35 @@
     color: #42526E;
 }
 
-.boardAddTaskInput {
+.boardAddTaskText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 24px;
     height: 24px;
+    border-radius: 8px;
+    opacity: 1;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 25.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    border: 2px solid #2A3647;
+    color: #2A3647
 }
 
-.baordAddTaskButtonImg {
+.boardAddTaskText:hover {
+    color: rgb(41, 171, 226);
+    border: 2px solid rgb(41, 171, 226);
+}
+
+/* .baordAddTaskButtonImg {
     width: 32px;
     height: 32px;
     top: 8px;
     left: 112px;
     opacity: 1;
     color: white;
-}
+} */

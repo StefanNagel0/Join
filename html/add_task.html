@@ -114,8 +114,8 @@
                         <div class="add_task_right_box">
                             <label for="task-date">Due Date *</label>
                             <input type="date" id="task-date" name="dueDate"required>
-                            <div>
-                                <p>Prio</p>
+                            <div >
+                                <p class="prio_text">Prio</p>
                                 <div id="task-priority">
                                     <button type="button" class="prio-btn" data-prio="Urgent">Urgent <img src="../assets/svg/add_task/prio_urgent.svg" alt=""></button>
                                     <button type="button" class="prio-btn" data-prio="Medium">Medium <img src="../assets/svg/add_task/prio_medium.svg" alt=""></button>
@@ -124,7 +124,11 @@
                                 <input type="hidden" id="task-priority-hidden" name="priority" required>
                             </div>
                             <label for="task-category">Category *</label>
-                            <input type="text" id="task-category" name="category" placeholder="Enter category" required>
+                            <select id="task-category" name="category" required>
+                                <option value="" disabled selected>Select task category</option>
+                                <option value="User Story">User Story</option>
+                                <option value="Technical Task">Technical Task</option>
+                            </select>
                             <label for="task-subtasks">Subtasks</label>
                             <div id="subtask-container">
                                 <input type="text" id="new-subtask" placeholder="Add subtask">

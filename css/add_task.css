@@ -193,3 +193,11 @@ textarea::placeholder {
     font-size: 20px;
     font-weight: 400;
 }
+#task-category:invalid {
+    color: #D1D1D1;
+}
+.prio_text{
+    font-size: 20px;
+    font-weight: 400;
+    
+}

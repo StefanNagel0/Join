@@ -112,7 +112,7 @@ function boardAddTaskTemplate() {
     </section>
     <p class="requiredFields">* Required fields</p>
     <div class="addTaskBottomBox">
-        <Button id="addTaskButton" class="addTaskButton" onclick="addTaskButton()">
+        <Button id="addTaskButton" class="addTaskButton" onclick="postTask()">
             <p class="addTaskButtonText">Add Task</p>
             <img class="addTaskButtonImgBottomBox" src="../assets/svg/add_task/check.svg" alt="">
         </Button>

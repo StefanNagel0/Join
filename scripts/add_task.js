@@ -32,8 +32,7 @@ function createContactDiv(contact) {
     contactDiv.append(contactCircleLabelDiv, checkbox);
     // Klick-Event für Styling und Zustand
     contactDiv.addEventListener('click', () => {
-        checkbox.checked = !checkbox.checked; // Checkbox-Zustand toggeln
-
+        checkbox.checked = !checkbox.checked;
         if (checkbox.checked) {
             // Styling anwenden, wenn ausgewählt
             contactDiv.style.backgroundColor = '#2A3647';

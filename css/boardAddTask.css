@@ -80,3 +80,79 @@
     rotate: 90deg;
     color: #FFFFFF;
 }
+
+.taskContainer {
+    display: flex;
+    flex-direction: column;
+    width: 252px;
+    height: 263px;
+    padding: 16px;
+    gap: 10px;
+    border-radius: 24px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px 3px #00000014;
+}
+
+.taskChildContainer {
+    width: 220px;
+    height: 231px;
+    gap: 24px;
+}
+
+.taskTitleContainer {
+    width: 220px;
+    height: 84px;
+    gap: 8px;
+    border-radius: 10px;
+}
+
+.taskTitle {
+    width: 220px;
+    height: 38px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #2A3647;
+}
+
+.taskDescription {
+    width: 220px;
+    height: 38px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #A8A8A8;
+}
+
+.taskSubtask {
+    width: 220px;
+    height: 16px;
+}
+
+.taskAssignedMain {
+    display: flex;
+    justify-content: space-between;
+    width: 220px;
+    height: 32px;
+}
+
+.taskAssigned {
+    width: 80px;
+    height: 32px;
+}
+
+.taskPriority {
+    width: 32px;
+    height: 32px;
+    padding: 10px 18px 10px 18px;
+    gap: 10px;
+    opacity: 0px;
+    rotate: -0 deg;
+}

@@ -35,6 +35,7 @@ function boardTemplate() {
                     <h3 class="boardColumnHeaderH3">To do</h3>
                     <p onclick="boardAddTask()" class="boardAddTaskText">+</p>
                     </div>
+                    <div id="tasksToDo"></div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">
@@ -130,4 +131,41 @@ function addTaskSuccessTemplate() {
         <p class="addTaskSuccessP">Task added to board  <img src="../assets/svg/add_task/addedTask.svg" alt=""></p>
     </div>
     `
+}
+
+function getTasksTemplate(tasks) {
+    return `
+    ${tasks.map(task => `
+    <div class="task">
+        <div class="taskTitle">
+            <p class="taskTitleP">${task.title}</p>
+            <p class="taskTitleP">${task.priority}</p>
+        </div>
+        <div class="taskDescription">
+            <p class="taskDescriptionP">${task.description}</p>
+        </div>
+        <div class="taskAssigned">
+            <p class="taskAssignedP">${task.assignedTo}</p>
+        </div>
+        <div class="taskCategory">
+            <p class="taskCategoryP">${task.category}</p>
+        </div>
+        <div class="taskDueDate">
+            <p class="taskDueDateP">${task.dueDate}</p>
+        </div>
+    </div>
+    `).join('')}
+    `
+}
+
+function getTaskTemplate2(task) {
+    return `
+    <h3>${task.title}</h3>
+            <p><strong>Description:</strong> ${task.description}</p>
+            <p><strong>Category:</strong> ${task.category || "None"}</p>
+            <p><strong>Assigned To:</strong> ${task.assignedTo || "Not Assigned"}</p>
+            <p><strong>Due Date:</strong> ${task.dueDate || "No Date"}</p>
+            <p><strong>Priority:</strong> ${task.priority || "Normal"}</p>
+            <p><strong>Status:</strong> ${task.status}</p>
+        `;
 }

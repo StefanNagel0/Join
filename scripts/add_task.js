@@ -53,35 +53,6 @@ function createContactDiv(contact) {
     });
     return contactDiv;
 }
-
-
-// function createContactDiv(contact) {
-//     const initialsCircle = createInitialsCircle(contact.name);
-//     const contactLabel = document.createElement('span');
-//     contactLabel.textContent = contact.name;
-//     contactLabel.classList.add('contact-label');
-//     const checkbox = document.createElement('input');
-//     checkbox.type = 'checkbox';
-//     checkbox.classList.add('checkbox');
-//     const contactCircleLabelDiv = document.createElement('div');
-//     contactCircleLabelDiv.classList.add('contact-circle-label');
-//     contactCircleLabelDiv.append(initialsCircle, contactLabel);
-//     const contactDiv = document.createElement('div');
-//     contactDiv.classList.add('contact-item');
-//     contactDiv.append(contactCircleLabelDiv, checkbox);
-//     contactDiv.addEventListener('click', () => {
-//         checkbox.checked = !checkbox.checked;
-//         if (checkbox.checked) {
-//             contactDiv.classList.add('active'); // Hintergrund und Schriftfarbe ändern
-//         } else {
-//             contactDiv.classList.remove('active'); // Standard-Styling zurücksetzen
-//         }
-//         toggleContactSelection(contact, checkbox.checked, document.getElementById('selected-contacts'));
-//     });
-//     return contactDiv;
-// }
-
-
 // Hilfsfunktion zur Erstellung des Dropdown-Menüs
 
 function createDropdownToggle(dropdownContent) {
@@ -171,39 +142,89 @@ function initializePriorityButtons() {
     });
 }
 
-// Subtasks functionality
+
 function initializeSubtasks() {
-    const subtaskContainer = document.getElementById('subtask-container');
     const subtaskInput = document.getElementById('new-subtask');
     const addSubtaskButton = document.getElementById('add-subtask');
+    const clearSubtaskButton = document.getElementById('clear-subtask');
     const subtaskList = document.getElementById('subtask-list');
 
-    addSubtaskButton.addEventListener('click', () => {
+    // Funktion, um das Eingabefeld zu leeren und den Placeholder anzuzeigen
+    function clearInput() {
+        subtaskInput.value = '';
+        clearSubtaskButton.classList.add('d-none');
+    }
+
+    // Eingabeüberwachung für das Erscheinen/Verschwinden des "x"-Symbols
+    subtaskInput.addEventListener('input', () => {
+        if (subtaskInput.value.trim() !== '') {
+            clearSubtaskButton.classList.remove('d-none');
+        } else {
+            clearSubtaskButton.classList.add('d-none');
+        }
+    });
+
+    // "x"-Symbol klickt: Eingabefeld leeren
+    clearSubtaskButton.addEventListener('click', clearInput);
+
+    // Subtask hinzufügen bei "+" Klick oder Enter-Taste
+    function addSubtask() {
         const subtask = subtaskInput.value.trim();
         if (subtask) {
             const li = document.createElement('li');
             li.textContent = subtask;
             subtaskList.appendChild(li);
-            subtaskInput.value = '';
+            clearInput(); // Eingabefeld leeren
+        }
+    }
+
+    // Klick auf das "+" Symbol
+    addSubtaskButton.addEventListener('click', addSubtask);
+
+    // Hinzufügen bei Enter-Taste
+    subtaskInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            addSubtask();
         }
     });
 }
 
-// Save task
+// Initialisierung der Subtasks beim Laden der Seite
+document.addEventListener('DOMContentLoaded', initializeSubtasks);
+
+
+
+
 function saveTask(event) {
     event.preventDefault();
 
     const formData = new FormData(document.getElementById('task-form'));
+
+    // Hole die ausgewählte Kategorie aus dem Dropdown
+    const categoryElement = document.querySelector('#dropdown-toggle-prio span');
+    const category = categoryElement ? categoryElement.textContent : null;
+
+    // Hole die zugewiesenen Personen (volle Namen)
+    const assignedTo = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
+        .map(selectedContact => {
+            // Finde den entsprechenden Namen aus den Kontaktdaten
+            const initials = selectedContact.textContent;
+            const contact = contacts.find(contact => getInitials(contact.name) === initials);
+            return contact ? contact.name : null; // Rückgabe des vollständigen Namens, wenn gefunden
+        })
+        .filter(name => name !== null); // Filtere mögliche Null-Werte aus
+
     const task = {
         title: formData.get('title'),
         description: formData.get('description'),
-        assignedTo: formData.get('assignedTo'),
+        assignedTo: assignedTo.length > 0 ? assignedTo : null,
         dueDate: formData.get('dueDate'),
         priority: formData.get('priority'),
-        category: formData.get('category'),
+        category: category && category !== 'Select task category' ? category : null,
         subtasks: Array.from(document.querySelectorAll('#subtask-list li')).map(li => li.textContent)
     };
-
+    console.log(task);
+    
     // Save task to local storage
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     tasks.push(task);
@@ -221,3 +242,45 @@ function getContactColor(contactName) {
     }
     return contactColors.get(contactName);
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const dropdownToggle = document.getElementById("dropdown-toggle-prio");
+    const dropdownOptions = document.getElementById("dropdown-options");
+
+    if (!dropdownToggle || !dropdownOptions) {
+        console.error("Dropdown-Elemente nicht gefunden. Überprüfen Sie Ihre HTML-Struktur.");
+        return;
+    }
+
+    // Dropdown öffnen/schließen
+    dropdownToggle.addEventListener("click", (event) => {
+        event.stopPropagation(); // Verhindert das Schließen durch Klick außerhalb
+        const isVisible = dropdownOptions.classList.contains("visible");
+        dropdownOptions.classList.toggle("visible", !isVisible);
+        dropdownOptions.classList.toggle("hidden", isVisible);
+        dropdownToggle.classList.toggle("open", !isVisible);
+    });
+
+    // Option auswählen
+    dropdownOptions.addEventListener("click", (event) => {
+        if (event.target.classList.contains("dropdown-option")) {
+            const selectedText = event.target.textContent;
+            dropdownToggle.querySelector("span").textContent = selectedText; // Text aktualisieren
+            dropdownOptions.classList.remove("visible");
+            dropdownOptions.classList.add("hidden");
+            dropdownToggle.classList.remove("open");
+        }
+    });
+
+    // Schließen des Dropdowns bei Klick außerhalb
+    document.addEventListener("click", (event) => {
+        if (!dropdownToggle.contains(event.target) && dropdownOptions.classList.contains("visible")) {
+            dropdownOptions.classList.remove("visible");
+            dropdownOptions.classList.add("hidden");
+            dropdownToggle.classList.remove("open");
+        }
+    });
+});
+
+

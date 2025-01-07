@@ -3,15 +3,23 @@
     display: flex;
     gap: 8px;
 }
-
+.gap_8{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 .prio-btn {
     width: 136px;
     padding: 16px 10px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    background-color: #f0f0f0;
+    background-color: #FFFFFF;
     transition: background-color 0.3s;
     box-shadow: 0px 0px 4px 0px #0000001A;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
 }
 
 .prio-btn.active {
@@ -38,13 +46,14 @@
     justify-content: space-between;
 }
 .add_task_left_box label{
-    font-size: 20px;
     font-weight: 400;
+    color: #2A3647;
 }
 #task-desc{
     height: 132px;
     padding: 18px 16px;
     border-radius: 10px;
+    border: 1px solid #D1D1D1
 }
 #task-title{
     height: 48px;
@@ -52,13 +61,14 @@
     padding: 12px 21px;
     gap: 10px;
     display: flex;
+    border: 1px solid #D1D1D1
 }
 .add_task_right_box{
     display: flex;
     flex-direction: column;
     height: 416px;
     justify-content: space-between;
-    width: 440px;
+    max-width: 440px;
 }
 
 #dropdown-wrapper {
@@ -76,6 +86,7 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
+    border: 1px solid #D1D1D1
 }
 
 .dropdown-arrow {
@@ -83,7 +94,11 @@
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 5px solid #333; 
+    border-top: 5px solid #333;
+    transition: transform 0.3s ease;
+}
+.custom-dropdown.open .dropdown-arrow{
+    transform: rotate(180deg);
 }
 #dropdown-content {
     position: absolute;
@@ -188,16 +203,125 @@ textarea::placeholder {
 #task-date{
     height: 48px;
     padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    color: #D1D1D1;
 }
 .add_task_right_box label{
-    font-size: 20px;
     font-weight: 400;
+    color: #2A3647;
 }
 #task-category:invalid {
     color: #D1D1D1;
 }
 .prio_text{
-    font-size: 20px;
     font-weight: 400;
-    
+    color: #2A3647;
+}
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+.custom-dropdown {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+.dropdown-options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.dropdown-options.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.dropdown-options.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+.dropdown-option {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.dropdown-option:hover {
+    background-color: #f0f0f0;
+}
+#subtask-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+#add-subtask, #clear-subtask {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: gray;
+}
+#new-subtask {
+    width: 100%;
+    padding: 10px 40px 10px 10px;
+    font-size: 16px;
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+}
+#clear-subtask {
+    right: 40px; /* Position links vom "+" */
+}
+
+#add-subtask {
+    right: 10px; /* Ganz rechts */
+}
+#add-subtask:hover, #clear-subtask:hover {
+    opacity: 0.8;
+}
+.add_task_required_info_box{
+    display: flex;
+    justify-content: space-between;
+    max-width: 1920px;
+    margin-top: 122px;
+}
+.red_star{
+color: red;
+}
+.add_task_required_info{
+    font-size: 16px;
+}
+.clear_save_btns{
+    display: flex;
+}
+.add_task_clear_btn{
+    display: flex;
+    background-color: #F6F7F8;
+    border: 1px solid #2A3647;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    width: 110px;
+    color: #2A3647;
+}
+.add_task_submit_btn{
+    background-color: #2A3647;
 }

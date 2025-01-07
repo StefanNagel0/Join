@@ -18,13 +18,14 @@ function displayTasks(tasks) {
         const taskElement = document.createElement("div");
         taskElement.className = "task";
         taskElement.innerHTML = `
-        <div class="taskContainer">
+        <div class="taskContainer" onclick="openTaskOverlay()">
             <div class="taskChildContainer">
                 ${taskCategoryTemplate(task)}
                 <div class="taskTitleContainer">
                     ${taskTitleTemplate(task)}
                     ${taskDescriptionTemplate(task)}
                 </div>
+                ${taskSubtasksTemplate(task)}
                 <div class="taskAssignedMain">
                     ${taskAssignedTemplate(task)}
                     ${taskPriorityTemplate(task)}

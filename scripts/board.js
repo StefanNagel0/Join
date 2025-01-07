@@ -39,3 +39,14 @@ function closeBoardAddTask() {
     overlayRef.classList.remove("show");
     darkOverlay.classList.remove("show");
 }
+
+function openTaskOverlay() {
+    let overlayRef = document.getElementById("taskOverlay");
+    overlayRef.innerHTML = taskOverlayTemplate();
+    overlayRef.classList.add("show");
+}
+
+function closeTaskOverlay() {
+    let overlayRef = document.getElementById("taskOverlay");
+    overlayRef.classList.remove("show");
+}

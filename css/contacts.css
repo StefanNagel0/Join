@@ -489,3 +489,35 @@
   font-size: 47px;
   font-weight: 400;
 }
+
+.submit {
+  font-size: 21px;
+  font-weight: 700;
+  text-align: center;
+  padding: 16px;
+  border-radius: 10px;
+  gap: 4px;
+  background-color: #2A3647;
+}
+
+.btns {
+  padding-left: 171px;
+  display: flex;
+  gap: 25px;
+}
+
+.submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.cancel {
+  background-color: transparent;
+  border: 1px solid #2A3647;
+  padding: 15px 24px;
+  gap: 10px;
+  border-radius: 8px; 
+
+}

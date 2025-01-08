@@ -81,6 +81,5 @@ async function postTaskToServer(data) {
     if (!response.ok) {
         throw new Error(`Folgende Aufgabe konnte nicht geladen werden: ${response.statusText}`);
     }
-
     return await response.json();
 }

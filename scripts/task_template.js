@@ -54,7 +54,7 @@ function taskSubtasksTemplate(task) {
     `
 }
 
-function taskOverlayTemplate(task) {
+function taskOverlayTemplate(task, taskId) {
     return `
     <div class="taskOverlay">
             <div class="taskChildContainer">
@@ -71,6 +71,7 @@ function taskOverlayTemplate(task) {
                 <!-- ${taskStatusTemplate(task)} -->
                 <!-- ${taskDateTemplate(task)} -->
             </div>
+            <button onclick="deleteTask('${taskId}')">Löschen</button>
             <button onclick="closeTaskOverlay()">Schließen</button>
         </div>
     `

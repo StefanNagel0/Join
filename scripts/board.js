@@ -30,7 +30,6 @@ function boardAddTask() {
     overlayRef.innerHTML = boardAddTaskTemplate();
     darkOverlay.classList.add("show");
     overlayRef.classList.add("show");
-    populateAssignedToDropdown();
 }
 
 function closeBoardAddTask() {
@@ -48,7 +47,7 @@ function openTaskOverlay(taskId) {
         return;
     }
     const overlayRef = document.getElementById("taskOverlay");
-    overlayRef.innerHTML = taskOverlayTemplate(task);
+    overlayRef.innerHTML = taskOverlayTemplate(task, taskId);
     overlayRef.classList.add("show");
 }
 
@@ -58,15 +57,28 @@ function closeTaskOverlay() {
     overlayRef.innerHTML = "";
 }
 
-function populateAssignedToDropdown() {
-    const assignedToDropdown = document.getElementById("task-assigned");
-    const users = [];
-
-    assignedToDropdown.innerHTML = "";
-    users.forEach(user => {
-        const option = document.createElement("option");
-        option.value = user;
-        option.textContent = user;
-        assignedToDropdown.appendChild(option);
-    });
+async function deleteTask(taskId) {
+    if (!globalTasks || typeof globalTasks !== "object") {
+        console.error("globalTasks ist nicht definiert oder hat das falsche Format.");
+        return;
+    }
+    const task = globalTasks[taskId];
+    if (!task) {
+        console.error("Task mit ID", taskId, "nicht gefunden.");
+        return;
+    }
+    try {
+        const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+            method: "DELETE"
+        });
+        if (!response.ok) {
+            throw new Error(`Fehler beim Löschen der Aufgabe: ${response.statusText}`);
+        }
+        delete globalTasks[taskId];
+        console.log("Task mit ID", taskId, "erfolgreich gelöscht.");
+        displayTasks(globalTasks);
+    } catch (error) {
+        console.error("Fehler beim Löschen des Tasks:", error);
+    }
+    closeTaskOverlay();
 }

@@ -87,6 +87,7 @@
     width: 252px;
     height: 263px;
     padding: 16px;
+    margin-top: 15px;
     gap: 10px;
     border-radius: 24px;
     background: #FFFFFF;
@@ -169,4 +170,48 @@
     box-shadow: 0px 0px 4px 0px #00000029;
     background-color: #FFFFFF;
     z-index: 9991;
+}
+
+.taskCategoryUserStory {
+    width: 113px;
+    height: 27px;
+    padding: 4px 16px 4px 16px;
+    gap: 10px;
+    border-radius: 8px;
+    background: #0038FF;
+}
+
+.taskCategoryUserStoryText {
+    width: 81px;
+    height: 19px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #FFFFFF;
+}
+
+.taskCategoryTechnical {
+    width: 144px;
+    height: 27px;
+    padding: 4px 16px 4px 16px;
+    gap: 10px;
+    border-radius: 8px 0px 0px 0px;
+    background: #1FD7C1;
+}
+
+.taskCategoryTechnicalText {
+    width: 81px;
+    height: 19px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #FFFFFF;
 }

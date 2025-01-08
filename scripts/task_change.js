@@ -63,6 +63,7 @@ async function postTask() {
     try {
         const result = await postTaskToServer(taskData);
         console.log("Tast hinzugefügt:", result);
+        addTaskSuccess();
         closeBoardAddTask();
     } catch (error) {
         console.error("Task fehlerhaft:", error);

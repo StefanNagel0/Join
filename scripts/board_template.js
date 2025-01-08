@@ -65,50 +65,60 @@ function boardAddTaskTemplate() {
 <section>
     <section class="add_task_form_box">
         <div class="add_task_left_box addTaskLeftBoxBoard">
-            <!-- Title -->
-            <label for="task-title">Title *</label>
-            <input type="text" id="task-title" name="title" placeholder="Enter task title" required>
-
-            <!-- Description -->
-            <label for="task-desc">Description</label>
-            <textarea id="task-desc" name="description" placeholder="Enter task description"></textarea>
-
-            <!-- Assigned To -->
-            <label for="task-assigned">Assigned To *</label>
-            <select id="task-assigned" name="assignedTo" required>
-                <!-- Dynamically populated -->
-            </select>
+            <div class="gap_8">
+                <label for="task-title">Title <span class="red_star">*</span></label>
+                <input type="text" id="task-title" name="title" placeholder="Enter a title" required>
+            </div>
+            <div class="gap_8">
+                <label for="task-desc">Description</label>
+                <textarea id="task-desc" name="description" placeholder="Enter a Description"></textarea>
+            </div>
+            <div class="gap_8">
+                <label for="task-assigned">Assigned to</label>
+                <div id="task-assigned" style="border: 1px solid #ccc; padding: 10px;"></div>
+            </div>
         </div>
         <div class="add_task_mid_box">
             <img src="../assets/svg/add_task/add_tastk_vertical_line.svg" alt="">
         </div>
         <div class="add_task_right_box">
-            <!-- Due Date -->
-            <label for="task-date">Due Date *</label>
-            <input type="date" id="task-date" name="dueDate" required>
-
-            <!-- Priority -->
-            <div>
-                <p>Priority *</p>
+            <div class="gap_8">
+                <label for="task-date">Due Date <span class="red_star">*</span></label>
+                <input type="date" id="task-date" name="dueDate" required>
+            </div>
+            <div class="gap_8">
+                <p class="prio_text">Prio</p>
                 <div id="task-priority">
-                    <button type="button" class="prio-btn" data-prio="Urgent">Urgent</button>
-                    <button type="button" class="prio-btn" data-prio="Medium">Medium</button>
-                    <button type="button" class="prio-btn" data-prio="Low">Low</button>
+                    <button type="button" class="prio-btn" data-prio="Urgent">Urgent <img
+                            src="../assets/svg/add_task/prio_urgent.svg" alt=""></button>
+                    <button type="button" class="prio-btn" data-prio="Medium">Medium <img
+                            src="../assets/svg/add_task/prio_medium.svg" alt=""></button>
+                    <button type="button" class="prio-btn" data-prio="Low">Low <img
+                            src="../assets/svg/add_task/prio_low.svg" alt=""></button>
                 </div>
-                <input type="hidden" id="task-priority-hidden" name="priority" required>
             </div>
-
-            <!-- Category -->
-            <label for="task-category">Category *</label>
-            <input type="text" id="task-category" name="category" placeholder="Enter category" required>
-
-            <!-- Subtasks -->
-            <label for="task-subtasks">Subtasks</label>
-            <div id="subtask-container">
-                <input type="text" id="new-subtask" placeholder="Add subtask">
-                <button type="button" id="add-subtask">Add</button>
+            <div class="dropdown-container">
+                <div class="gap_8">
+                    <label for="task-category">Category <span class="red_star">*</span></label>
+                    <div class="custom-dropdown" id="dropdown-toggle-prio">
+                        <span>Select task category</span>
+                        <div class="dropdown-arrow"></div>
+                    </div>
+                    <ul class="dropdown-options hidden" id="dropdown-options">
+                        <li class="dropdown-option">User Story</li>
+                        <li class="dropdown-option">Technical Task</li>
+                    </ul>
+                </div>
             </div>
-            <ul id="subtask-list"></ul>
+            <div class="gap_8">
+                <label for="task-subtasks">Subtasks</label>
+                <div id="subtask-container">
+                    <input type="text" id="new-subtask" placeholder="Add new subtask">
+                    <img id="clear-subtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg" alt="">
+                    <img id="add-subtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
+                </div>
+                <ul id="subtask-list"></ul>
+            </div>
         </div>
     </section>
     <p class="requiredFields">* Required fields</p>
@@ -122,5 +132,5 @@ function boardAddTaskTemplate() {
         </Button>
     </div>
 </section>
-    `
+`
 }

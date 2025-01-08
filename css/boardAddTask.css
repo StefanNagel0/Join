@@ -122,6 +122,7 @@
 .taskDescription {
     width: 220px;
     height: 38px;
+    margin-bottom: 10px;
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
@@ -178,12 +179,6 @@
     padding: 4px 16px 4px 16px;
     gap: 10px;
     border-radius: 8px;
-    background: #0038FF;
-}
-
-.taskCategoryUserStoryText {
-    width: 81px;
-    height: 19px;
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
@@ -192,6 +187,7 @@
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     color: #FFFFFF;
+    background: #0038FF;
 }
 
 .taskCategoryTechnical {
@@ -199,13 +195,7 @@
     height: 27px;
     padding: 4px 16px 4px 16px;
     gap: 10px;
-    border-radius: 8px 0px 0px 0px;
-    background: #1FD7C1;
-}
-
-.taskCategoryTechnicalText {
-    width: 81px;
-    height: 19px;
+    border-radius: 8px;
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
@@ -214,4 +204,5 @@
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     color: #FFFFFF;
+    background: #1FD7C1;
 }

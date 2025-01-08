@@ -7,9 +7,16 @@ function addTaskSuccessTemplate() {
 }
 
 function taskCategoryTemplate(task) {
-    return `
-    <p>${task.category || "None"}</p>
+    if (task.category) {
+        task.category = task.category == "User Story" ? "User Story" : "Technical Task";
+        return `
+    <p class="taskDescription taskCategoryUserStory">${task.category}</p>
     `
+    } else {
+        return `
+    <p class="taskDescription taskCategoryTechnical">Technical Task</p>
+    `
+    }
 }
 
 function taskTitleTemplate(task) {

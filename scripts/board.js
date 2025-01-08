@@ -1,4 +1,4 @@
-function initBoardReloaded() {
+function initBoard() {
     toggleBoardPage();
 }
 
@@ -30,6 +30,7 @@ function boardAddTask() {
     overlayRef.innerHTML = boardAddTaskTemplate();
     darkOverlay.classList.add("show");
     overlayRef.classList.add("show");
+    populateAssignedToDropdown();
 }
 
 function closeBoardAddTask() {
@@ -40,13 +41,32 @@ function closeBoardAddTask() {
     darkOverlay.classList.remove("show");
 }
 
-function openTaskOverlay() {
-    let overlayRef = document.getElementById("taskOverlay");
-    overlayRef.innerHTML = displayTaskOverlay();
+function openTaskOverlay(taskId) {
+    const task = globalTasks[taskId];
+    if (!task) {
+        console.error("Task mit ID", taskId, "nicht gefunden.");
+        return;
+    }
+    const overlayRef = document.getElementById("taskOverlay");
+    overlayRef.innerHTML = taskOverlayTemplate(task);
     overlayRef.classList.add("show");
 }
 
 function closeTaskOverlay() {
     let overlayRef = document.getElementById("taskOverlay");
     overlayRef.classList.remove("show");
+    overlayRef.innerHTML = "";
+}
+
+function populateAssignedToDropdown() {
+    const assignedToDropdown = document.getElementById("task-assigned");
+    const users = [];
+
+    assignedToDropdown.innerHTML = "";
+    users.forEach(user => {
+        const option = document.createElement("option");
+        option.value = user;
+        option.textContent = user;
+        assignedToDropdown.appendChild(option);
+    });
 }

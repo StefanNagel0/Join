@@ -82,3 +82,17 @@ async function deleteTask(taskId) {
     }
     closeTaskOverlay();
 }
+
+function searchTask() {
+    const searchTerm = document.getElementById("search").value.toLowerCase();
+    if (!globalTasks || typeof globalTasks !== "object") {
+        console.error("globalTasks ist nicht definiert oder hat das falsche Format.");
+        return;
+    }
+    const filteredTasks = Object.entries(globalTasks).filter(([id, task]) => {
+        const title = task.title?.toLowerCase() || "";
+        const description = task.description?.toLowerCase() || "";
+        return title.includes(searchTerm) || description.includes(searchTerm);
+    });
+    displayTasks(Object.fromEntries(filteredTasks));
+}

@@ -10,7 +10,7 @@ function boardTemplate() {
                 <div class="contentHeadingSearchMain">
                     <div class="contentHeadingSearchSecond">
                         <div class="contenHeadingSearchMain">
-                            <input class="contentHeadingSearch" type="search" id="search" placeholder="Search Task">
+                            <input oninput="searchTask()" class="contentHeadingSearch" type="search" id="search" placeholder="Search Task">
                         </div>
                         <div>
                             <img class="contentHeadingSearchImg" src="../assets/svg/searching.svg" alt="search">

@@ -39,6 +39,36 @@ function displayTasks(tasks) {
     }
 }
 
+function displayTaskOverlay(tasks) {
+    const tasksContainer = document.getElementById("taskOverlay");
+    tasksContainer.innerHTML = "";
+    for ( const taskId in tasks) {
+        const task = tasks[taskId];
+        const taskElement = document.createElement("div");
+        taskElement.className = "taskOverlay";
+        taskElement.innerHTML = `
+        <div class="taskOverlay">
+            <div class="taskChildContainer">
+                ${taskCategoryTemplate(task)}
+                <div class="taskTitleContainer">
+                    ${taskTitleTemplate(task)}
+                    ${taskDescriptionTemplate(task)}
+                </div>
+                ${taskSubtasksTemplate(task)}
+                <div class="taskAssignedMain">
+                    ${taskAssignedTemplate(task)}
+                    ${taskPriorityTemplate(task)}
+                </div>
+                <!-- ${taskStatusTemplate(task)} -->
+                <!-- ${taskDateTemplate(task)} -->
+            </div>
+        </div>
+        `;
+        tasksContainer.appendChild(taskElement);
+    }
+}
+
+
 // async function postTask(path = "/tasks", data = {}) {
 //         let url = await fetch(BASE_URL + path + ".json", {
 //             method: "POST",

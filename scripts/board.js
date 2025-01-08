@@ -42,7 +42,7 @@ function closeBoardAddTask() {
 
 function openTaskOverlay() {
     let overlayRef = document.getElementById("taskOverlay");
-    overlayRef.innerHTML = taskOverlayTemplate();
+    overlayRef.innerHTML = displayTaskOverlay();
     overlayRef.classList.add("show");
 }
 

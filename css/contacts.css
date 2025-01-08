@@ -64,7 +64,6 @@
   .overlay-content input {
     display: block;
     width: 100%;
-    margin: 10px 0;
     padding: 10px;
     font-size: 16px;
   }
@@ -519,5 +518,21 @@
   padding: 15px 24px;
   gap: 10px;
   border-radius: 8px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+
+.cancelicon, .check {
+  width: 24px;
+  height: 24px;
+}
+
+.formtext {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 32px;
 }

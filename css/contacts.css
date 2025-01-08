@@ -56,6 +56,9 @@
     height: 594px;
     border-bottom-right-radius: 30px;
     border-top-right-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .overlay-content input {
@@ -117,6 +120,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #F6F7F8;
+    position: sticky;
+    z-index: 1000;
+    top: 0;
   }
 
   .btncont {
@@ -200,7 +207,7 @@
     width: 120px;
     height: 120px;
     border-radius: 70px;
-    border: 3px solid;
+    border: 6px solid;
     border-color: white;
     gap: 10px;
     font-size: 47px;
@@ -302,7 +309,7 @@
   }
 
   .delete-button, .edit-button {
-    background-color: white;
+    background-color: #F6F7F8;
     display: flex;
     align-items: center;
     border: 0;
@@ -360,13 +367,6 @@
     overflow-y: auto;
   }
 
-  .btnclass {
-    position: sticky;
-    z-index: 1000;
-    top: 0;
-    background-color: white;
-  }
-
   .flexdetails {
     padding-left: 55px;
     padding-top: 110px;
@@ -384,7 +384,9 @@
     padding: 13px 21px;
     gap: 32px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 
   .successedit {
@@ -472,4 +474,18 @@
   justify-content: center;
   flex-direction: column;
   cursor: pointer;
+}
+
+.overlaycirc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 70px;
+  border: 2px solid white;
+  box-shadow: 1px 15px 21px 0px rgba(0, 0, 0, 0.4);
+  width: 120px !important;
+  height: 120px !important;
+  color: white;
+  font-size: 47px;
+  font-weight: 400;
 }

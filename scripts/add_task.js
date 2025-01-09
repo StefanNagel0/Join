@@ -15,7 +15,6 @@ function createInitialsCircle(contactName) {
 }
 
 // Hilfsfunktion zur Erstellung eines Kontakt-Divs
-
 function createContactDiv(contact) {
     const initialsCircle = createInitialsCircle(contact.name);
     const contactLabel = document.createElement('span');

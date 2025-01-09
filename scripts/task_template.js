@@ -82,20 +82,22 @@ function taskSubtasksTemplate(task) {
 
 function taskOverlayTemplate(task, taskId) {
     return `
-    <div class="taskOverlay">
-            <div class="taskChildContainer">
+    <div class="openTaskOverlayMain">
+            <div class="openTaskOverlayChildContainer">
                 ${taskCategoryTemplate(task)}
-                <div class="taskTitleContainer">
+                <div class="openTaskOverlayTitle">
                     ${taskTitleTemplate(task)}
                     ${taskDescriptionTemplate(task)}
                 </div>
                 ${taskSubtasksTemplate(task)}
-                <div class="taskAssignedMain">
+                <div class="openTaskOverlayAssigned">
                     ${taskAssignedTemplate(task)}
                     ${taskPriorityTemplate(task)}
                 </div>
+                <div class="openTaskOverlayDate">
                 <!-- ${taskStatusTemplate(task)} -->
-                <!-- ${taskDateTemplate(task)} -->
+                Due Date: ${taskDateTemplate(task)}
+                </div>
             </div>
             <button onclick="deleteTask('${taskId}')">Löschen</button>
             <button onclick="closeTaskOverlay()">Schließen</button>

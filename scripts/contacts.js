@@ -70,7 +70,7 @@ function setupEditContact(index) {
   circleDiv.style.backgroundColor = contact.color || getRandomColor();
   submitButton.innerHTML = `Save <img class="check" src="../assets/icons/contact/check.png">`; 
 
-  cancelButton.innerHTML = `Delete <img class="cancelicon" src="../assets/icons/contact/cancel.png">`;
+  cancelButton.innerHTML = `Delete`;
   cancelButton.setAttribute("onclick", `deleteContact(${index})`);
   editIndex = index;
 }
@@ -210,7 +210,7 @@ function deleteContact(index) {
     const yesButton = document.getElementById("confirm-yes");
     const noButton = document.getElementById("confirm-no");
     overlay.classList.remove("hide");
-    
+
     yesButton.onclick = () => {
         contacts.splice(index, 1); 
         showContacts();

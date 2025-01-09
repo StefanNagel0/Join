@@ -95,6 +95,7 @@
 }
 
 .taskChildContainer {
+    position: relative;
     width: 220px;
     height: 231px;
     gap: 24px;
@@ -139,10 +140,13 @@
 }
 
 .taskAssignedMain {
+    position: absolute;
     display: flex;
     justify-content: space-between;
+    bottom: 0;
     width: 220px;
     height: 32px;
+    margin-bottom: 10px;
 }
 
 .taskAssigned {
@@ -151,12 +155,11 @@
 }
 
 .taskPriority {
+    justify-content: left;
     width: 32px;
     height: 32px;
     padding: 10px 18px 10px 18px;
     gap: 10px;
-    opacity: 0px;
-    rotate: -0 deg;
 }
 
 .taskOverlay {

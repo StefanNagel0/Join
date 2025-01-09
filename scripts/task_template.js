@@ -31,23 +31,38 @@ function taskDescriptionTemplate(task) {
     `
 }
 
-function taskAssignedTemplate(task) {
-    return `
-    <p class="taskAssigned">${task.assignedTo || "Not Assigned"}</p>
-    `
-}
-
 function taskDateTemplate(task) {
     return `
     <p class="taskDate">${task.dueDate || "No Date"}</p>
     `
 }
 
-function taskPriorityTemplate(task) {
-    return `
-    <p class="taskPriority">${task.priority || "Normal"}</p>
-    `
+function taskAssignedTemplate(task) {
+    if (task.assignedTo) {
+        return `
+        <p class="taskAssigned">${task.assignedTo}</p>
+        `
+    } else {
+        return ``
+    }
 }
+
+function taskPriorityTemplate(task) {
+    if (task.priority == "Urgent") {
+        return `
+        <p class="taskPriority taskPriorityUrgent"><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
+        `
+    } else if (task.priority == "Medium") {
+        return `
+        <p class="taskPriority taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
+        `
+    } else if (task.priority == "Low") {
+        return `
+        <p class="taskPriority taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
+        `
+    }
+}
+
 
 function taskStatusTemplate(task) {
     return `
@@ -56,9 +71,13 @@ function taskStatusTemplate(task) {
 }
 
 function taskSubtasksTemplate(task) {
-    return `
-    <p class="taskSubtasks">${task.subtasks || ""}</p>
-    `
+    if (!task.subtasks) {
+        return ``
+    } else {
+        return `
+        <p class="taskSubtasks">${task.subtasks}</p>
+        `
+    }
 }
 
 function taskOverlayTemplate(task, taskId) {

@@ -15,7 +15,6 @@ function createInitialsCircle(contactName) {
 }
 
 // Hilfsfunktion zur Erstellung eines Kontakt-Divs
-
 function createContactDiv(contact) {
     const initialsCircle = createInitialsCircle(contact.name);
     const contactLabel = document.createElement('span');
@@ -129,20 +128,23 @@ function addOrRemoveSelectedDiv(contact, isSelected, container) {
 function toggleContactSelection(contact, isSelected, container) {
     addOrRemoveSelectedDiv(contact, isSelected, container);
 }
-
-// Initialize priority buttons
+let selectedPriority = null; 
 function initializePriorityButtons() {
     const priorityButtons = document.querySelectorAll('.prio-btn');
-    const priorityHiddenInput = document.getElementById('task-priority-hidden');
+
     priorityButtons.forEach(button => {
         button.addEventListener('click', () => {
+            // Entferne die "active"-Klasse von allen Buttons
             priorityButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Setze die "active"-Klasse für den aktuellen Button
             button.classList.add('active');
-            priorityHiddenInput.value = button.dataset.prio;
+
+            // Aktualisiere die ausgewählte Priorität
+            selectedPriority = button.dataset.prio;
         });
     });
 }
-
 
 function initializeSubtasks() {
     const subtaskInput = document.getElementById('new-subtask');
@@ -201,41 +203,47 @@ function saveTask(event) {
 
     const formData = new FormData(document.getElementById('task-form'));
 
-    // Hole die ausgewählte Kategorie aus dem Dropdown
+    // Hole die ausgewählte Kategorie
     const categoryElement = document.querySelector('#dropdown-toggle-prio span');
     const category = categoryElement ? categoryElement.textContent : null;
 
-    // Hole die zugewiesenen Personen (volle Namen)
+    // Hole die zugewiesenen Kontakte
     const assignedTo = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
         .map(selectedContact => {
-            // Finde den entsprechenden Namen aus den Kontaktdaten
             const initials = selectedContact.textContent;
             const contact = contacts.find(contact => getInitials(contact.name) === initials);
-            return contact ? contact.name : null; // Rückgabe des vollständigen Namens, wenn gefunden
+            return contact ? contact.name : null;
         })
-        .filter(name => name !== null); // Filtere mögliche Null-Werte aus
+        .filter(name => name !== null);
 
+    // Erstelle das Task-Objekt
     const task = {
         title: formData.get('title'),
         description: formData.get('description'),
         assignedTo: assignedTo.length > 0 ? assignedTo : null,
         dueDate: formData.get('dueDate'),
-        priority: formData.get('priority'),
+        priority: selectedPriority, // Priorität aus der globalen Variable
         category: category && category !== 'Select task category' ? category : null,
         subtasks: Array.from(document.querySelectorAll('#subtask-list li')).map(li => li.textContent)
     };
+
     console.log(task);
-    
-    // Save task to local storage
+
+    // Speichere den Task
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     tasks.push(task);
     localStorage.setItem('tasks', JSON.stringify(tasks));
 
-    // Clear form and confirm
+    // Formular zurücksetzen
     document.getElementById('task-form').reset();
     document.getElementById('subtask-list').innerHTML = '';
     alert('Task saved!');
 }
+
+// Initialisiere die Prioritätsbuttons und andere Event-Listener beim Laden der Seite
+document.addEventListener('DOMContentLoaded', () => {
+    initializePriorityButtons();
+});
 
 function getContactColor(contactName) {
     if (!contactColors.has(contactName)) {

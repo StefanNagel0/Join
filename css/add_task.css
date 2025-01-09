@@ -14,7 +14,7 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #FFFFFF;
-    transition: background-color 0.3s;
+    transition: background-color 100ms;
     box-shadow: 0px 0px 4px 0px #0000001A;
     align-items: center;
     display: flex;
@@ -299,14 +299,19 @@ textarea::placeholder {
 .add_task_required_info_box{
     display: flex;
     justify-content: space-between;
-    max-width: 1920px;
+    max-width: 959px;
     margin-top: 122px;
+    align-items: end;
 }
 .red_star{
 color: red;
 }
 .add_task_required_info{
     font-size: 16px;
+}
+.add_task_buttons_box{
+    display: flex;
+    gap: 16px;
 }
 .clear_save_btns{
     display: flex;
@@ -330,11 +335,15 @@ color: red;
     border-radius: 10px;
     gap: 4px;
     padding: 10px;
-    justify-content: center;
-    align-items: center;
     background-color: #2A3647;
     color: white;
     border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.add_task_submit_btn span{
+    font-size: 18px;
 }
 .add_task_submit_btn img{
     height: 24px;

@@ -323,5 +323,20 @@ color: red;
     color: #2A3647;
 }
 .add_task_submit_btn{
+    display: flex;
+}
+.add_task_submit_btn button{
+    height: 56px;
+    border-radius: 10px;
+    gap: 4px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
     background-color: #2A3647;
+    color: white;
+    border: 0;
+}
+.add_task_submit_btn img{
+    height: 24px;
+    width: 24px;
 }

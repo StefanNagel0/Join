@@ -1,5 +1,4 @@
 let contacts = [
-  { name: "Max Mustermann", phone: "017612345678", email: "max.mustermann@example.com" },
   { name: "Anna Müller", phone: "017799988877", email: "anna.mueller@example.com" },
   { name: "Peter Schmidt", phone: "015612345678", email: "peter.schmidt@example.com" },
   { name: "Julia Hoffmann", phone: "015799988877", email: "julia.hoffmann@example.com" },
@@ -142,13 +141,17 @@ function createContactDiv(contact) {
   const initials = getInitials(contact.name);
 
   contactDiv.innerHTML = `
+    <div class="contactmain">
     <div class="circle" style="background-color: ${contact.color};">
       ${initials || `<img class="concircle" src="../assets/icons/contact/circledefault.png">`}
     </div>
-    <div>
+    <div class="listdesign">
       <p class="name" onclick="showContactDetails(${contacts.indexOf(contact)})" style="cursor: pointer;">
         ${contact.name}
+        </p>
+      <p class="emails">${contact.email}
       </p>
+    </div>
     </div>
   `;
   return contactDiv;

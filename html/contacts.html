@@ -109,14 +109,17 @@
                   <div class="overlay-content">
                     <form id="contact-form">
                       <div class="form">
-                      <div class="circle"></div>
+                      <div class="circle overlaycirc"></div>
+                      <div class="formtext">
                       <input type="text" id="contact-name" placeholder="Name" required />
                       <input type="email" id="contact-email" placeholder="Email" required />
                       <input type="text" id="contact-phone" placeholder="Phone" required />
-                    
                     </div>
-                      <button type="button" onclick="closeOverlay()">Abbrechen</button>
-                      <button type="submit">Speichern</button>
+                    </div>
+                    <div class="btns">
+                      <button class="cancel" type="button" onclick="closeOverlay()">Cancel <img class="cancelicon" src="../assets/icons/contact/cancel.png"></button>
+                      <button class="submit" type="submit">Create contact <img class="check" src="../assets/icons/contact/check.png"></button>
+                    </div>
                     </form>
                   </div>
                 </div>

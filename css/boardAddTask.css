@@ -87,6 +87,7 @@
     width: 252px;
     height: 263px;
     padding: 16px;
+    margin-top: 15px;
     gap: 10px;
     border-radius: 24px;
     background: #FFFFFF;
@@ -94,6 +95,7 @@
 }
 
 .taskChildContainer {
+    position: relative;
     width: 220px;
     height: 231px;
     gap: 24px;
@@ -121,6 +123,7 @@
 .taskDescription {
     width: 220px;
     height: 38px;
+    margin-bottom: 10px;
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
@@ -137,10 +140,13 @@
 }
 
 .taskAssignedMain {
+    position: absolute;
     display: flex;
     justify-content: space-between;
+    bottom: 0;
     width: 220px;
     height: 32px;
+    margin-bottom: 10px;
 }
 
 .taskAssigned {
@@ -149,12 +155,11 @@
 }
 
 .taskPriority {
+    justify-content: left;
     width: 32px;
     height: 32px;
     padding: 10px 18px 10px 18px;
     gap: 10px;
-    opacity: 0px;
-    rotate: -0 deg;
 }
 
 .taskOverlay {
@@ -169,4 +174,89 @@
     box-shadow: 0px 0px 4px 0px #00000029;
     background-color: #FFFFFF;
     z-index: 9991;
+}
+
+.taskCategoryUserStory {
+    width: 113px;
+    height: 27px;
+    padding: 4px 16px 4px 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #FFFFFF;
+    background: #0038FF;
+}
+
+.taskCategoryTechnical {
+    width: 144px;
+    height: 27px;
+    padding: 4px 16px 4px 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #FFFFFF;
+    background: #1FD7C1;
+}
+
+/* Overlay */
+
+.openTaskOverlayMain {
+    width: 525px;
+    height: 931px;
+    margin-top: 0px;
+    margin-left: 550px;
+    padding: 48px 40px 48px 40px;
+    gap: 24px;
+    border-radius: 30px;
+    position: fixed;
+    z-index: 9995;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 4px 0px #00000029;
+}
+
+.openTaskOverlayChildContainer {
+    position: relative;
+    width: 220px;
+    height: 231px;
+    gap: 24px;
+}
+
+.openTaskOverlayTitle {
+    width: 220px;
+    height: 38px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #2A3647;
+}
+
+.openTaskOverlayAssigned {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    bottom: 0;
+    width: 220px;
+    height: 32px;
+    margin-bottom: 10px;
+}
+
+.openTaskOverlayDate {
+    width: 220px;
+    height: 32px;
+    margin-bottom: 10px;
 }

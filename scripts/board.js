@@ -30,6 +30,10 @@ function boardAddTask() {
     overlayRef.innerHTML = boardAddTaskTemplate();
     darkOverlay.classList.add("show");
     overlayRef.classList.add("show");
+
+    initializeContactsDropdown();
+    initializeSubtasks();
+    initializePriorityButtons();
 }
 
 function closeBoardAddTask() {

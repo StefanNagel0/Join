@@ -57,6 +57,8 @@ function setupEditContact(index) {
   const phoneInput = document.getElementById("contact-phone");
   const emailInput = document.getElementById("contact-email");
   const circleDiv = document.querySelector(".overlay-content .circle");
+  const submitButton = document.querySelector(".submit"); 
+  const cancelButton = document.querySelector(".cancel"); 
 
   const contact = contacts[index];
   title.textContent = "Edit Contact";
@@ -66,6 +68,10 @@ function setupEditContact(index) {
   emailInput.value = contact.email || "";
   circleDiv.textContent = getInitials(contact.name);
   circleDiv.style.backgroundColor = contact.color || getRandomColor();
+  submitButton.innerHTML = `Save <img class="check" src="../assets/icons/contact/check.png">`; 
+
+  cancelButton.innerHTML = `Delete`;
+  cancelButton.setAttribute("onclick", `deleteContact(${index})`);
   editIndex = index;
 }
 
@@ -76,14 +82,20 @@ function setupNewContact() {
   const phoneInput = document.getElementById("contact-phone");
   const emailInput = document.getElementById("contact-email");
   const circleDiv = document.querySelector(".overlay-content .circle");
+  const submitButton = document.querySelector(".submit"); 
+  const cancelButton = document.querySelector(".cancel"); 
 
-  title.textContent = "Add contact";
+  title.textContent = "Add Contact";
   description.textContent = "Tasks are better with a team!";
   nameInput.value = "";
   phoneInput.value = "";
   emailInput.value = "";
   circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
   circleDiv.style.backgroundColor = "";
+  submitButton.innerHTML = `Create contact <img class="check" src="../assets/icons/contact/check.png">`; 
+
+  cancelButton.innerHTML = `Cancel <img class="cancelicon" src="../assets/icons/contact/cancel.png">`;
+  cancelButton.setAttribute("onclick", "closeOverlay()");
   editIndex = null;
 }
 
@@ -194,22 +206,22 @@ function createContactDetails(contact) {
 }
 
 function deleteContact(index) {
-  const overlay = document.getElementById("confirm-overlay");
-  const yesButton = document.getElementById("confirm-yes");
-  const noButton = document.getElementById("confirm-no");
+    const overlay = document.getElementById("confirm-overlay");
+    const yesButton = document.getElementById("confirm-yes");
+    const noButton = document.getElementById("confirm-no");
+    overlay.classList.remove("hide");
 
-  overlay.classList.remove("hide");
+    yesButton.onclick = () => {
+        contacts.splice(index, 1); 
+        showContacts();
+        document.getElementById("contact-details").style.display = "none"; 
+        closeOverlay();
+        overlay.classList.add("hide"); 
+    };
 
-  yesButton.onclick = () => {
-    contacts.splice(index, 1); 
-    showContacts(); 
-    document.getElementById("contact-details").style.display = "none";
-    overlay.classList.add("hide"); 
-  };
-
-  noButton.onclick = () => {
-    overlay.classList.add("hide");
-  };
+    noButton.onclick = () => {
+        overlay.classList.add("hide");
+    };
 }
 
 function handleNameInput(event) {

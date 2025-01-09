@@ -1,5 +1,5 @@
-function Reginit() {
-    document.addEventListener('DOMContentLoaded', toggleSignUpButton);
+function reginit() {
+    // document.addEventListener('DOMContentLoaded', toggleSignUpButton);
     toggleSignUpPage();
     toggleSignUpButton();
 }

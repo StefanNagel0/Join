@@ -96,6 +96,7 @@ function initializeContactsDropdown() {
     dropdownWrapper.append(createDropdownToggle(dropdownContent), dropdownContent);
     addOutsideClickListener(dropdownWrapper, dropdownContent);
     dropdownContainer.parentElement.replaceChild(dropdownWrapper, dropdownContainer);
+    
 }
 
 function getInitials(name) {

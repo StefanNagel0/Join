@@ -63,7 +63,6 @@ function taskPriorityTemplate(task) {
     }
 }
 
-
 function taskStatusTemplate(task) {
     return `
     <p class="taskStatus">${task.status}</p>

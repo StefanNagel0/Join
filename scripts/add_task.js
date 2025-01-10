@@ -84,6 +84,10 @@ function addOutsideClickListener(dropdownWrapper, dropdownContent) {
 // Hauptfunktion zur Initialisierung des Dropdown-Menüs
 function initializeContactsDropdown() {
     const dropdownContainer = document.getElementById('task-assigned');
+    if (!dropdownContainer) {
+        console.error("Element '#task-assigned' nicht gefunden. Überprüfen Sie die HTML-Struktur.");
+        return;
+    }
     const selectedContactsContainer = document.createElement('div');
     selectedContactsContainer.id = 'selected-contacts';
     dropdownContainer.parentElement.appendChild(selectedContactsContainer);
@@ -291,5 +295,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-
-

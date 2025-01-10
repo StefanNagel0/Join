@@ -144,7 +144,8 @@
     display: flex;
     justify-content: space-between;
     bottom: 0;
-    width: 220px;
+    right: 20px;
+    /* width: 220px; */
     height: 32px;
     margin-bottom: 10px;
 }

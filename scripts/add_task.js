@@ -1,297 +1,207 @@
-let tasks = []
+let tasks = [];
 const contactColors = new Map();
 
-document.addEventListener('DOMContentLoaded', () => {
+function initializeApp() {
     initializeContactsDropdown();
-});
+    initializePriorityButtons();
+    initializeSubtasks();
+}
 
-// Hilfsfunktion zur Erstellung eines Initials-Kreises
+// Hilfsfunktion: Initials-Kreis erstellen
 function createInitialsCircle(contactName) {
-    const initialsCircle = document.createElement('div');
-    initialsCircle.classList.add('initials-circle');
-    initialsCircle.textContent = getInitials(contactName);
-    initialsCircle.style.backgroundColor = getContactColor(contactName);
-    return initialsCircle;
+    const circle = document.createElement('div');
+    circle.classList.add('initials-circle');
+    circle.textContent = getInitials(contactName);
+    circle.style.backgroundColor = getContactColor(contactName);
+    return circle;
 }
 
-// Hilfsfunktion zur Erstellung eines Kontakt-Divs
+// Hilfsfunktion: Kontakt-Div erstellen
 function createContactDiv(contact) {
-    const initialsCircle = createInitialsCircle(contact.name);
-    const contactLabel = document.createElement('span');
-    contactLabel.textContent = contact.name;
-    contactLabel.classList.add('contact-label');
-    const checkbox = document.createElement('input');
+    const circle = createInitialsCircle(contact.name);
+    const label = createElementWithClass('span', 'contact-label', contact.name);
+    const checkbox = createElementWithClass('input', 'checkbox');
     checkbox.type = 'checkbox';
-    checkbox.classList.add('checkbox');
-    const contactCircleLabelDiv = document.createElement('div');
-    contactCircleLabelDiv.classList.add('contact-circle-label');
-    contactCircleLabelDiv.append(initialsCircle, contactLabel);
-    const contactDiv = document.createElement('div');
-    contactDiv.classList.add('contact-item');
-    contactDiv.append(contactCircleLabelDiv, checkbox);
-    // Klick-Event für Styling und Zustand
-    contactDiv.addEventListener('click', () => {
-        checkbox.checked = !checkbox.checked;
-        if (checkbox.checked) {
-            // Styling anwenden, wenn ausgewählt
-            contactDiv.style.backgroundColor = '#2A3647';
-            contactLabel.style.color = 'white';
-            checkbox.style.accentColor = 'white';
-            checkbox.style.backgroundColor = "#2A3647";
-            initialsCircle.style.border = "1px solid white";
-        } else {
-            // Styling entfernen, wenn nicht ausgewählt
-            contactDiv.style.backgroundColor = '';
-            contactLabel.style.color = '';
-            checkbox.style.accentColor = '';
-            checkbox.style.backgroundColor='';
-            initialsCircle.style.border='';
-        }
-        // Optionale Funktion: Kontakt hinzufügen/entfernen
-        toggleContactSelection(contact, checkbox.checked, document.getElementById('selected-contacts'));
-    });
-    return contactDiv;
-}
-// Hilfsfunktion zur Erstellung des Dropdown-Menüs
-
-function createDropdownToggle(dropdownContent) {
-    const dropdownToggle = document.createElement('div');
-    dropdownToggle.id = 'dropdown-toggle';
-
-    const textSpan = document.createElement('span');
-    textSpan.textContent = 'Select contacts to assign';
-
-    const arrowSpan = document.createElement('span');
-    arrowSpan.classList.add('dropdown-arrow');
-
-    dropdownToggle.append(textSpan, arrowSpan);
-
-    dropdownToggle.addEventListener('click', () => {
-        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-    });
-    return dropdownToggle;
+    const container = createElementWithClass('div', 'contact-item');
+    const circleLabelDiv = createElementWithClass('div', 'contact-circle-label', '', [circle, label]);
+    container.append(circleLabelDiv, checkbox);
+    container.onclick = () => toggleContactDiv(container, checkbox, label, circle, contact);
+    return container;
 }
 
-// Hilfsfunktion zur Schließung des Dropdown-Menüs beim Klick außerhalb
-function addOutsideClickListener(dropdownWrapper, dropdownContent) {
-    document.addEventListener('click', event => {
-        if (!dropdownWrapper.contains(event.target)) {
-            dropdownContent.style.display = 'none';
-        }
-    });
+// Hilfsfunktion: Styling und Auswahl toggeln
+function toggleContactDiv(container, checkbox, label, circle, contact) {
+    checkbox.checked = !checkbox.checked;
+    container.classList.toggle('selected', checkbox.checked);
+    toggleContactSelection(contact, checkbox.checked, document.getElementById('selected-contacts'));
 }
 
-// Hauptfunktion zur Initialisierung des Dropdown-Menüs
-function initializeContactsDropdown() {
-    const dropdownContainer = document.getElementById('task-assigned');
-    if (!dropdownContainer) {
-        console.error("Element '#task-assigned' nicht gefunden. Überprüfen Sie die HTML-Struktur.");
-        return;
-    }
-    const selectedContactsContainer = document.createElement('div');
-    selectedContactsContainer.id = 'selected-contacts';
-    dropdownContainer.parentElement.appendChild(selectedContactsContainer);
-    const dropdownWrapper = document.createElement('div');
-    dropdownWrapper.id = 'dropdown-wrapper';
-    const dropdownContent = document.createElement('div');
-    dropdownContent.id = 'dropdown-content';
-    contacts.forEach(contact => dropdownContent.appendChild(createContactDiv(contact)));
-    dropdownWrapper.append(createDropdownToggle(dropdownContent), dropdownContent);
-    addOutsideClickListener(dropdownWrapper, dropdownContent);
-    dropdownContainer.parentElement.replaceChild(dropdownWrapper, dropdownContainer);
-    
-}
+// Hilfsfunktion: Kontakt-Auswahl toggeln
+function toggleContactSelection(contact, isSelected, selectedContactsContainer) {
+    const circle = createInitialsCircle(contact.name);
 
-function getInitials(name) {
-    const [firstName, lastName] = name.split(' ');
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-}
-
-function getSelectedDiv(container, initials) {
-    return Array.from(container.children).find(child => child.textContent === initials);
-}
-
-function addOrRemoveSelectedDiv(contact, isSelected, container) {
-    const initials = getInitials(contact.name);
-    const selectedDiv = getSelectedDiv(container, initials);
     if (isSelected) {
-        if (!selectedDiv) {
-            const newDiv = document.createElement('div');
-            newDiv.classList.add('selected-contact');
-            newDiv.textContent = initials;
-            newDiv.style.backgroundColor = getContactColor(contact.name);
-            container.appendChild(newDiv);
-        }
+        const selectedContact = createElementWithClass('div', 'selected-contact');
+        selectedContact.append(circle);
+        selectedContactsContainer.append(selectedContact);
     } else {
-        if (selectedDiv) {
-            container.removeChild(selectedDiv);
-        }
-    }
-}
-
-function toggleContactSelection(contact, isSelected, container) {
-    addOrRemoveSelectedDiv(contact, isSelected, container);
-}
-let selectedPriority = null; 
-function initializePriorityButtons() {
-    const priorityButtons = document.querySelectorAll('.prio-btn');
-
-    priorityButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Entferne die "active"-Klasse von allen Buttons
-            priorityButtons.forEach(btn => btn.classList.remove('active'));
-
-            // Setze die "active"-Klasse für den aktuellen Button
-            button.classList.add('active');
-
-            // Aktualisiere die ausgewählte Priorität
-            selectedPriority = button.dataset.prio;
+        const selectedCircles = selectedContactsContainer.querySelectorAll('.selected-contact');
+        selectedCircles.forEach(contactElement => {
+            if (contactElement.querySelector('.initials-circle').textContent === circle.textContent) {
+                selectedContactsContainer.removeChild(contactElement);
+            }
         });
-    });
+    }
 }
 
+// Hilfsfunktion: Dropdown-Inhalte und Wrapper erstellen
+function createDropdownWrapper() {
+    const wrapper = createElementWithClass('div', 'dropdown-wrapper');
+    const content = createElementWithClass('div', 'dropdown-content');
+    const toggle = createDropdownToggle(content);
+    wrapper.append(toggle, content);
+    return { wrapper, content };
+}
+
+// Hilfsfunktion: Dropdown-Toggle erstellen
+function createDropdownToggle(dropdownContent) {
+    const toggle = createElementWithClass('div', 'dropdown-toggle');
+    const textSpan = createElementWithClass('span', '', 'Select contacts to assign');
+    const arrowSpan = createElementWithClass('span', 'dropdown-arrow');
+    toggle.append(textSpan, arrowSpan);
+    toggle.onclick = () => {
+        const isVisible = dropdownContent.style.display === 'block';
+        dropdownContent.style.display = isVisible ? 'none' : 'block';
+    };
+    return toggle;
+}
+
+// Hilfsfunktion: Dropdown-Initialisierung
+function initializeContactsDropdown() {
+    const container = document.getElementById('task-assigned');
+    if (!container) return console.error("#task-assigned nicht gefunden.");
+    const { wrapper, content } = createDropdownWrapper();
+    const selectedContacts = createElementWithClass('div', 'selected-contacts', '', [], 'selected-contacts');
+    contacts.forEach(contact => content.append(createContactDiv(contact)));
+    addOutsideClickListener(wrapper, content);
+    container.replaceWith(wrapper);
+    wrapper.append(selectedContacts);
+}
+
+// Hilfsfunktion: Kontaktfarbe generieren
+function getContactColor(name) {
+    if (!contactColors.has(name)) contactColors.set(name, getRandomColor());
+    return contactColors.get(name);
+}
+
+// Hilfsfunktion: Event-Delegation für Outside-Klick
+function addOutsideClickListener(wrapper, content) {
+    document.onclick = event => {
+        if (!wrapper.contains(event.target)) content.style.display = 'none';
+    };
+}
+
+// Hilfsfunktion: Subtasks initialisieren
 function initializeSubtasks() {
-    const subtaskInput = document.getElementById('new-subtask');
-    const addSubtaskButton = document.getElementById('add-subtask');
-    const clearSubtaskButton = document.getElementById('clear-subtask');
-    const subtaskList = document.getElementById('subtask-list');
-
-    // Funktion, um das Eingabefeld zu leeren und den Placeholder anzuzeigen
-    function clearInput() {
-        subtaskInput.value = '';
-        clearSubtaskButton.classList.add('d-none');
-    }
-
-    // Eingabeüberwachung für das Erscheinen/Verschwinden des "x"-Symbols
-    subtaskInput.addEventListener('input', () => {
-        if (subtaskInput.value.trim() !== '') {
-            clearSubtaskButton.classList.remove('d-none');
-        } else {
-            clearSubtaskButton.classList.add('d-none');
-        }
-    });
-
-    // "x"-Symbol klickt: Eingabefeld leeren
-    clearSubtaskButton.addEventListener('click', clearInput);
-
-    // Subtask hinzufügen bei "+" Klick oder Enter-Taste
-    function addSubtask() {
-        const subtask = subtaskInput.value.trim();
-        if (subtask) {
-            const li = document.createElement('li');
-            li.textContent = subtask;
-            subtaskList.appendChild(li);
-            clearInput(); // Eingabefeld leeren
-        }
-    }
-
-    // Klick auf das "+" Symbol
-    addSubtaskButton.addEventListener('click', addSubtask);
-
-    // Hinzufügen bei Enter-Taste
-    subtaskInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            addSubtask();
-        }
-    });
+    const input = document.getElementById('new-subtask');
+    const addBtn = document.getElementById('add-subtask');
+    const clearBtn = document.getElementById('clear-subtask');
+    const list = document.getElementById('subtask-list');
+    input.oninput = () => clearBtn.classList.toggle('d-none', !input.value.trim());
+    clearBtn.onclick = () => (input.value = '') && clearBtn.classList.add('d-none');
+    addBtn.onclick = () => addSubtask(input, list);
+    input.onkeydown = e => e.key === 'Enter' && addSubtask(input, list);
 }
 
-// Initialisierung der Subtasks beim Laden der Seite
-document.addEventListener('DOMContentLoaded', initializeSubtasks);
+// Hilfsfunktion: Subtask hinzufügen
+function addSubtask(input, list) {
+    const task = input.value.trim();
+    if (!task) return;
+    list.append(createElementWithClass('li', '', task));
+    input.value = '';
+    input.nextElementSibling.classList.add('d-none');
+}
 
+// Hilfsfunktion: Prioritätsbuttons initialisieren
+function initializePriorityButtons() {
+    document.querySelectorAll('.prio-btn').forEach(btn =>
+        btn.onclick = () => {
+            document.querySelectorAll('.prio-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedPriority = btn.dataset.prio;
+        }
+    );
+}
 
+// Hilfsfunktion: Dropdown toggeln
+function toggleDropdown(event, toggle, options) {
+    event.stopPropagation();
+    const visible = options.classList.contains('visible');
+    options.classList.toggle('visible', !visible);
+    options.classList.toggle('hidden', visible);
+    toggle.classList.toggle('open', !visible);
+}
 
+// Dropdown-Option auswählen
+function selectDropdownOption(event, toggle, option) {
+    const category = option.textContent;
+    toggle.querySelector('span').textContent = category;
+    option.parentElement.classList.remove('visible');
+    option.parentElement.classList.add('hidden');
+    toggle.classList.remove('open');
+    document.querySelector('#dropdown-toggle-category span').textContent = category;
+}
 
+// Hilfsfunktion: Aufgabe speichern
 function saveTask(event) {
     event.preventDefault();
-
-    const formData = new FormData(document.getElementById('task-form'));
-
-    // Hole die ausgewählte Kategorie
-    const categoryElement = document.querySelector('#dropdown-toggle-prio span');
-    const category = categoryElement ? categoryElement.textContent : null;
-
-    // Hole die zugewiesenen Kontakte
-    const assignedTo = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
-        .map(selectedContact => {
-            const initials = selectedContact.textContent;
-            const contact = contacts.find(contact => getInitials(contact.name) === initials);
-            return contact ? contact.name : null;
-        })
-        .filter(name => name !== null);
-
-    // Erstelle das Task-Objekt
+    const form = document.getElementById('task-form');
+    const formData = new FormData(form);
+    const category = document.querySelector('#dropdown-toggle-category span')?.textContent || null;
+    const assignedTo = getSelectedContacts();
     const task = {
         title: formData.get('title'),
         description: formData.get('description'),
-        assignedTo: assignedTo.length > 0 ? assignedTo : null,
         dueDate: formData.get('dueDate'),
-        priority: selectedPriority, // Priorität aus der globalen Variable
-        category: category && category !== 'Select task category' ? category : null,
-        subtasks: Array.from(document.querySelectorAll('#subtask-list li')).map(li => li.textContent)
+        priority: selectedPriority,
+        category: category,
+        assignedTo: assignedTo,
+        subtasks: Array.from(document.querySelectorAll('#subtask-list li')).map(li => li.textContent),
     };
-
-    console.log(task);
-
-    // Speichere den Task
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     tasks.push(task);
     localStorage.setItem('tasks', JSON.stringify(tasks));
-
-    // Formular zurücksetzen
-    document.getElementById('task-form').reset();
-    document.getElementById('subtask-list').innerHTML = '';
+    form.reset();
     alert('Task saved!');
 }
 
-// Initialisiere die Prioritätsbuttons und andere Event-Listener beim Laden der Seite
-document.addEventListener('DOMContentLoaded', () => {
-    initializePriorityButtons();
-});
-
-function getContactColor(contactName) {
-    if (!contactColors.has(contactName)) {
-        contactColors.set(contactName, getRandomColor());
-    }
-    return contactColors.get(contactName);
+// Hilfsfunktion: Ausgewählte Kontakte holen
+function getSelectedContacts() {
+    return Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
+        .map(el => {
+            const initialsCircle = el.querySelector('.initials-circle');
+            const contactName = contacts.find(contact => getInitials(contact.name) === initialsCircle.textContent)?.name;
+            return contactName || '';
+        })
+        .filter(Boolean);
 }
 
+// Utility: Initialen aus Namen generieren
+function getInitials(name) {
+    const [firstName, lastName] = name.split(' ');
+    return `${firstName[0]}${lastName[0]}`.toUpperCase();
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-    const dropdownToggle = document.getElementById("dropdown-toggle-prio");
-    const dropdownOptions = document.getElementById("dropdown-options");
+// Utility: Element mit Klasse erstellen
+function createElementWithClass(tag, className, text = '', children = [], id = '') {
+    const el = document.createElement(tag);
+    if (className) el.classList.add(className);
+    if (text) el.textContent = text;
+    if (id) el.id = id;
+    children.forEach(child => el.appendChild(child));
+    return el;
+}
 
-    if (!dropdownToggle || !dropdownOptions) {
-        console.error("Dropdown-Elemente nicht gefunden. Überprüfen Sie Ihre HTML-Struktur.");
-        return;
-    }
-
-    // Dropdown öffnen/schließen
-    dropdownToggle.addEventListener("click", (event) => {
-        event.stopPropagation(); // Verhindert das Schließen durch Klick außerhalb
-        const isVisible = dropdownOptions.classList.contains("visible");
-        dropdownOptions.classList.toggle("visible", !isVisible);
-        dropdownOptions.classList.toggle("hidden", isVisible);
-        dropdownToggle.classList.toggle("open", !isVisible);
-    });
-
-    // Option auswählen
-    dropdownOptions.addEventListener("click", (event) => {
-        if (event.target.classList.contains("dropdown-option")) {
-            const selectedText = event.target.textContent;
-            dropdownToggle.querySelector("span").textContent = selectedText; // Text aktualisieren
-            dropdownOptions.classList.remove("visible");
-            dropdownOptions.classList.add("hidden");
-            dropdownToggle.classList.remove("open");
-        }
-    });
-
-    // Schließen des Dropdowns bei Klick außerhalb
-    document.addEventListener("click", (event) => {
-        if (!dropdownToggle.contains(event.target) && dropdownOptions.classList.contains("visible")) {
-            dropdownOptions.classList.remove("visible");
-            dropdownOptions.classList.add("hidden");
-            dropdownToggle.classList.remove("open");
-        }
-    });
-});
+// Utility: Zufällige Farbe generieren
+function getRandomColor() {
+    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+}

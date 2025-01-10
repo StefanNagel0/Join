@@ -76,7 +76,7 @@
     position: relative;
 }
 
-#dropdown-toggle {
+.dropdown-toggle {
     padding: 10px;
     border: 1px solid #ccc;
     cursor: pointer;
@@ -100,18 +100,19 @@
 .custom-dropdown.open .dropdown-arrow{
     transform: rotate(180deg);
 }
-#dropdown-content {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+
+.dropdown-content {
     border: 1px solid #ccc;
     background-color: #fff;
-    max-height: 200px;
+    max-height: 340px;
     overflow-y: auto;
-    display: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: sticky;
     z-index: 10;
+}
+
+.dropdown-content.visible{
+    display: block;
 }
 
 .contact-item {
@@ -120,12 +121,28 @@
     justify-content: space-between;
     padding: 10px;
     cursor: pointer;
-    border-bottom: 1px solid #e0e0e0;
     transition: all 100ms ease-in-out;
 }
 
+.contact-item.selected {
+    background-color: #2A3647;
+    color: white;
+}
+
+.contact-item.selected .checkbox {
+    accent-color: white;
+}
+
 .contact-item:hover {
-    background-color: #f9f9f9;
+    background-color: #D1D1D1;
+}
+
+.contact-item.selected:hover{
+    background-color: #2A3647;
+}
+
+.contact-item.selected .initials-circle {
+    border: 1px solid white;
 }
 
 .initials-circle {
@@ -155,6 +172,12 @@
     margin: 5px;
     background-color: #007bff;
 }
+
+.selected-contacts {
+    margin-top: 10px;
+    display: flex;
+}
+
 
 .contact-label {
     flex-grow: 1;
@@ -195,6 +218,7 @@
     align-items: center;
     margin-right: 10px;
 }
+
 input::placeholder,
 textarea::placeholder {
     color: #D1D1D1;
@@ -287,11 +311,11 @@ textarea::placeholder {
     border-radius: 10px;
 }
 #clear-subtask {
-    right: 40px; /* Position links vom "+" */
+    right: 40px;
 }
 
 #add-subtask {
-    right: 10px; /* Ganz rechts */
+    right: 10px;
 }
 #add-subtask:hover, #clear-subtask:hover {
     opacity: 0.8;

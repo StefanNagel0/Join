@@ -46,10 +46,10 @@ function displayTasks(tasks) {
 async function postTask() {
     const title = document.getElementById("task-title").value;
     const description = document.getElementById("task-desc").value;
-    const assignedTo = document.getElementById("task-assigned").value;
+    const assignedTo = document.getElementById("task-assigned").textContent.trim();
     const dueDate = document.getElementById("task-date").value;
-    const priority = document.getElementById("task-priority-hidden").value;
-    const category = document.getElementById("task-category").value;
+    const priority = document.querySelector('.prio-btn.active')?.dataset.prio || '';
+    const category = document.querySelector('#dropdown-toggle-prio span').textContent;
     const subtasks = Array.from(document.querySelectorAll("#subtask-list li")).map(li => li.textContent);
     const taskData = {
         title,

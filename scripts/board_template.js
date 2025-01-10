@@ -62,7 +62,7 @@ function boardTemplate() {
 
 function boardAddTaskTemplate() {
     return `
-<section class="content">
+<section class="content addTaskLeftBoxBoard">
                 <form id="task-form" onsubmit="saveTask(event)">
                     <div class="content_heading">
                         <h2>Add Task</h2>

@@ -1,3 +1,4 @@
+// Funktion, um die Begrüßung basierend auf der Uhrzeit zu setzen
 function setGreetingMessage() {
     const greetingMessageDiv = document.getElementById('greeting-message');
     const userNameGreetingDiv = document.getElementById('user-name-greeting');
@@ -18,7 +19,7 @@ function setGreetingMessage() {
     if (userName && userName.toLowerCase() !== 'guest') {
         // Benutzer ist kein Gast: Begrüßung mit Komma und Name anzeigen
         greetingMessageDiv.textContent = `${greeting},`;
-        userNameGreetingDiv.textContent = `${userName}`;
+        userNameGreetingDiv.textContent = `Welcome, ${userName}!`;
     } else {
         // Benutzer ist ein Gast: Nur Begrüßung ohne Komma
         greetingMessageDiv.textContent = greeting;

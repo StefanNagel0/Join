@@ -5,9 +5,10 @@ function initializeApp() {
     initializeContactsDropdown();
     initializePriorityButtons();
     initializeSubtasks();
+    setDateValidation();
 }
 
-// Hilfsfunktion: Initials-Kreis erstellen
+// Helper function: Create initials circle
 function createInitialsCircle(contactName) {
     const circle = document.createElement('div');
     circle.classList.add('initials-circle');
@@ -16,7 +17,7 @@ function createInitialsCircle(contactName) {
     return circle;
 }
 
-// Hilfsfunktion: Kontakt-Div erstellen
+// Helper function: Create contact div
 function createContactDiv(contact) {
     const circle = createInitialsCircle(contact.name);
     const label = createElementWithClass('span', 'contact-label', contact.name);
@@ -29,17 +30,16 @@ function createContactDiv(contact) {
     return container;
 }
 
-// Hilfsfunktion: Styling und Auswahl toggeln
+// Helper function: Toggle styling and selection
 function toggleContactDiv(container, checkbox, label, circle, contact) {
     checkbox.checked = !checkbox.checked;
     container.classList.toggle('selected', checkbox.checked);
     toggleContactSelection(contact, checkbox.checked, document.getElementById('selected-contacts'));
 }
 
-// Hilfsfunktion: Kontakt-Auswahl toggeln
+// Helper function: Toggle contact selection
 function toggleContactSelection(contact, isSelected, selectedContactsContainer) {
     const circle = createInitialsCircle(contact.name);
-
     if (isSelected) {
         const selectedContact = createElementWithClass('div', 'selected-contact');
         selectedContact.append(circle);
@@ -54,7 +54,7 @@ function toggleContactSelection(contact, isSelected, selectedContactsContainer) 
     }
 }
 
-// Hilfsfunktion: Dropdown-Inhalte und Wrapper erstellen
+// Helper function: Create dropdown contents and wrapper
 function createDropdownWrapper() {
     const wrapper = createElementWithClass('div', 'dropdown-wrapper');
     const content = createElementWithClass('div', 'dropdown-content');
@@ -63,7 +63,7 @@ function createDropdownWrapper() {
     return { wrapper, content };
 }
 
-// Hilfsfunktion: Dropdown-Toggle erstellen
+// Helper function: Create dropdown toggle
 function createDropdownToggle(dropdownContent) {
     const toggle = createElementWithClass('div', 'dropdown-toggle');
     const textSpan = createElementWithClass('span', '', 'Select contacts to assign');
@@ -76,32 +76,54 @@ function createDropdownToggle(dropdownContent) {
     return toggle;
 }
 
-// Hilfsfunktion: Dropdown-Initialisierung
 function initializeContactsDropdown() {
     const container = document.getElementById('task-assigned');
-    if (!container) return console.error("#task-assigned nicht gefunden.");
+    if (!container) return console.error("#task-assigned not found.");
     const { wrapper, content } = createDropdownWrapper();
     const selectedContacts = createElementWithClass('div', 'selected-contacts', '', [], 'selected-contacts');
     contacts.forEach(contact => content.append(createContactDiv(contact)));
+    const dropdownToggle = wrapper.querySelector('.dropdown-toggle');
+    dropdownToggle.onclick = () => {
+        const dropdownContent = wrapper.querySelector('.dropdown-content');
+        const isVisible = dropdownContent.style.display === 'block';
+        dropdownContent.style.display = isVisible ? 'none' : 'block';
+        dropdownToggle.classList.toggle('open', !isVisible);
+    };
     addOutsideClickListener(wrapper, content);
     container.replaceWith(wrapper);
     wrapper.append(selectedContacts);
 }
 
-// Hilfsfunktion: Kontaktfarbe generieren
+function addOutsideClickListener(wrapper, content) {
+    document.onclick = event => {
+        if (!wrapper.contains(event.target)) {
+            content.style.display = 'none';
+            wrapper.querySelector('.dropdown-toggle').classList.remove('open'); // Pfeil zurückdrehen
+        }
+    };
+}
+
+// Helper function: Generate contact color
 function getContactColor(name) {
     if (!contactColors.has(name)) contactColors.set(name, getRandomColor());
     return contactColors.get(name);
 }
 
-// Hilfsfunktion: Event-Delegation für Outside-Klick
-function addOutsideClickListener(wrapper, content) {
-    document.onclick = event => {
-        if (!wrapper.contains(event.target)) content.style.display = 'none';
+// Helper function: Validate date in input field and set the min attribute
+function setDateValidation() {
+    const today = new Date().toISOString().split('T')[0];
+    const dateInput = document.getElementById('task-date');
+    dateInput.setAttribute('min', today);
+    dateInput.oninput = function () {
+        if (dateInput.value) {
+            dateInput.style.color = 'black';
+        } else {
+            dateInput.style.color = '';
+        }
     };
 }
 
-// Hilfsfunktion: Subtasks initialisieren
+// Helper function: Initialize subtasks
 function initializeSubtasks() {
     const input = document.getElementById('new-subtask');
     const addBtn = document.getElementById('add-subtask');
@@ -113,7 +135,7 @@ function initializeSubtasks() {
     input.onkeydown = e => e.key === 'Enter' && addSubtask(input, list);
 }
 
-// Hilfsfunktion: Subtask hinzufügen
+// Helper function: Add a subtask
 function addSubtask(input, list) {
     const task = input.value.trim();
     if (!task) return;
@@ -122,7 +144,7 @@ function addSubtask(input, list) {
     input.nextElementSibling.classList.add('d-none');
 }
 
-// Hilfsfunktion: Prioritätsbuttons initialisieren
+// Helper function: Initialize priority buttons
 function initializePriorityButtons() {
     document.querySelectorAll('.prio-btn').forEach(btn =>
         btn.onclick = () => {
@@ -133,7 +155,7 @@ function initializePriorityButtons() {
     );
 }
 
-// Hilfsfunktion: Dropdown toggeln
+// Helper function: Toggle dropdown
 function toggleDropdown(event, toggle, options) {
     event.stopPropagation();
     const visible = options.classList.contains('visible');
@@ -142,7 +164,20 @@ function toggleDropdown(event, toggle, options) {
     toggle.classList.toggle('open', !visible);
 }
 
-// Dropdown-Option auswählen
+// Helper function: Initialize Category Dropdown
+function initializeCategoryDropdown() {
+    const categoryToggle = document.getElementById('dropdown-toggle-category');
+    const categoryContent = document.getElementById('dropdown-options-category');
+    categoryToggle.onclick = (event) => {
+        event.stopPropagation();
+        const isVisible = categoryContent.classList.contains('visible');
+        categoryContent.classList.toggle('visible', !isVisible);
+        categoryContent.classList.toggle('hidden', isVisible);
+        categoryToggle.classList.toggle('open', !isVisible);
+    };
+}
+
+// Helper function: Select dropdown option
 function selectDropdownOption(event, toggle, option) {
     const category = option.textContent;
     toggle.querySelector('span').textContent = category;
@@ -156,17 +191,16 @@ async function postTaskToDatabase(event) {
     event.preventDefault();
     const form = document.getElementById('task-form');
     const task = createTaskObject(form);
-
     try {
         await uploadTaskToFirebase(task);
         resetFormAndNotify(form);
     } catch (error) {
-        console.error('Fehler beim Hochladen der Aufgabe', error);
-        alert('Fehler beim Speichern der Aufgabe.');
+        console.error('Error uploading task', error);
+        alert('Error saving the task.');
     }
 }
 
-// Hilfsfunktion: Erstellt das Task-Objekt
+// Helper function: Create the task object
 function createTaskObject(form) {
     const formData = new FormData(form);
     return {
@@ -180,7 +214,7 @@ function createTaskObject(form) {
     };
 }
 
-// Hilfsfunktion: Aufgabe in Firebase hochladen
+// Helper function: Upload task to Firebase
 async function uploadTaskToFirebase(task) {
     const response = await fetch(`${BASE_URL}/tasks.json`, {
         method: 'POST',
@@ -188,17 +222,17 @@ async function uploadTaskToFirebase(task) {
         body: JSON.stringify(task),
     });
     if (!response.ok) {
-        throw new Error(`Fehler beim Speichern der Aufgabe: ${response.statusText}`);
+        throw new Error(`Error saving task: ${response.statusText}`);
     }
 }
 
-// Hilfsfunktion: Formular zurücksetzen und Benachrichtigung anzeigen
+// Helper function: Reset form and show notification
 function resetFormAndNotify(form) {
     form.reset();
-    alert('Task erfolgreich in Firebase gespeichert!');
+    alert('Task successfully saved to Firebase!');
 }
 
-// Hilfsfunktion: Ausgewählte Kontakte holen
+// Helper function: Get selected contacts
 function getSelectedContacts() {
     return Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
         .map(el => {
@@ -209,13 +243,13 @@ function getSelectedContacts() {
         .filter(Boolean);
 }
 
-// Utility: Initialen aus Namen generieren
+// Utility function: Generate initials from name
 function getInitials(name) {
     const [firstName, lastName] = name.split(' ');
     return `${firstName[0]}${lastName[0]}`.toUpperCase();
 }
 
-// Utility: Element mit Klasse erstellen
+// Utility function: Create an element with a class
 function createElementWithClass(tag, className, text = '', children = [], id = '') {
     const el = document.createElement(tag);
     if (className) el.classList.add(className);
@@ -225,7 +259,7 @@ function createElementWithClass(tag, className, text = '', children = [], id = '
     return el;
 }
 
-// Utility: Zufällige Farbe generieren
+// Utility function: Generate a random color
 function getRandomColor() {
     return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }

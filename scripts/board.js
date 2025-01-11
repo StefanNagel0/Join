@@ -52,8 +52,33 @@ function openTaskOverlay(taskId) {
     }
     const overlayRef = document.getElementById("taskOverlay");
     overlayRef.innerHTML = taskOverlayTemplate(task, taskId);
+
+    const removeClass = document.getElementById("taskTitleID");
+    const removeClassTemplate = document.getElementById("taskDescriptionID");
+    const removeClassDate = document.getElementById("taskDateID");
+    const removeClassSubtasks = document.getElementById("taskSubtasksID");
+    const removeClassAssigned = document.getElementById("taskAssignedID");
+    const removeClassPriority = document.getElementById("taskPriorityIDName");
+    const removeClassStatus = document.getElementById("taskStatusID");
+    if (removeClass, removeClassTemplate) {
+        removeClass.classList.remove("taskTitle")
+        removeClass.classList.add("openTaskOverlayTitle")
+        removeClassTemplate.classList.remove("taskDescription")
+        removeClassTemplate.classList.add("openTaskOverlayDescription")
+        removeClassDate.classList.remove("taskDate")
+        removeClassDate.classList.add("openTaskOverlayDate")
+        removeClassSubtasks.classList.remove("taskSubtasks")
+        removeClassSubtasks.classList.add("openTaskOverlaySubtasks")
+        removeClassAssigned.classList.remove("taskAssigned")
+        removeClassAssigned.classList.add("openTaskOverlayAssigned")
+        removeClassPriority.classList.remove("taskPriority")
+        removeClassPriority.classList.add("openTaskOverlayPriority")
+        removeClassStatus.classList.remove("taskStatus")
+        removeClassStatus.classList.add("openTaskOverlayStatus")
+    }
     overlayRef.classList.add("show");
 }
+
 
 function closeTaskOverlay() {
     let overlayRef = document.getElementById("taskOverlay");

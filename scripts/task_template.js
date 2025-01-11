@@ -9,38 +9,59 @@ function addTaskSuccessTemplate() {
 function taskCategoryTemplate(task) {
     if (task.category) {
         task.category = task.category == "User Story" ? "User Story" : "Technical Task";
+        const categoryClass = task.category == "User Story" ? "taskCategoryUserStory" : "taskCategoryTechnical";
         return `
-    <p class="taskDescription taskCategoryUserStory">${task.category}</p>
-    `
+        <p id="taskCategoryID" class="taskDescription ${categoryClass}">${task.category}</p>
+        `;
     } else {
         return `
-    <p class="taskDescription taskCategoryTechnical">Technical Task</p>
-    `
+        <p id="taskCategoryID" class="taskDescription taskCategoryTechnical">Technical Task</p>
+        `;
     }
 }
 
 function taskTitleTemplate(task) {
     return `
-    <h3 class="taskTitle">${task.title}</h3>
+    <h3 id="taskTitleID" class="taskTitle">${task.title}</h3>
     `
 }
 
 function taskDescriptionTemplate(task) {
     return `
-    <p class="taskDescription">${task.description}</p>
+    <p id="taskDescriptionID" class="taskDescription">${task.description}</p>
     `
 }
 
 function taskDateTemplate(task) {
     return `
-    <p class="taskDate">${task.dueDate || "No Date"}</p>
+    <p id="taskDateID" class="taskDate">${task.dueDate || "No Date"}</p>
     `
+}
+
+function taskSubtasksTemplate(task) {
+    if (!task.subtasks) {
+        return ``
+    } else {
+        return `
+        <p id="taskSubtasksID" class="taskSubtasks">${task.subtasks}</p>
+        `
+    }
 }
 
 function taskAssignedTemplate(task) {
     if (task.assignedTo) {
         return `
-        <p class="taskAssigned">${task.assignedTo}</p>
+        <p id="taskAssignedID" class="taskAssigned">${task.assignedTo}</p>
+        `
+    } else {
+        return ``
+    }
+}
+
+function taskAssignedTemplateOverlay(task) {
+    if (task.assignedTo) {
+        return `
+        <p id="taskAssignedID" class="taskAssigned">${task.assignedTo}</p>
         `
     } else {
         return ``
@@ -50,56 +71,63 @@ function taskAssignedTemplate(task) {
 function taskPriorityTemplate(task) {
     if (task.priority == "Urgent") {
         return `
-        <p class="taskPriority taskPriorityUrgent"><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
+        <p id="taskPriorityID" class="taskPriority taskPriorityUrgent"><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
         `
     } else if (task.priority == "Medium") {
         return `
-        <p class="taskPriority taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
+        <p id="taskPriorityID" class="taskPriority taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
         `
     } else if (task.priority == "Low") {
         return `
-        <p class="taskPriority taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
+        <p id="taskPriorityID" class="taskPriority taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
+        `
+    }
+}
+
+function taskPriorityTemplateName(task) {
+    if (task.priority == "Urgent") {
+        return `
+        <p id="taskPriorityIDName">Urgent</p>
+        <p id="taskPriorityIDName" class=""><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
+        `
+    } else if (task.priority == "Medium") {
+        return `
+        <p id="taskPriorityIDName">Medium</p>
+        <p id="taskPriorityIDName" class="taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
+        `
+    } else if (task.priority == "Low") {
+        return `
+        <p id="taskPriorityIDName">Low</p>
+        <p id="taskPriorityIDName" class="taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
         `
     }
 }
 
 function taskStatusTemplate(task) {
     return `
-    <p class="taskStatus">${task.status}</p>
+    <p id="taskStatusID" class="taskStatus">${task.status}</p>
     `
-}
-
-function taskSubtasksTemplate(task) {
-    if (!task.subtasks) {
-        return ``
-    } else {
-        return `
-        <p class="taskSubtasks">${task.subtasks}</p>
-        `
-    }
 }
 
 function taskOverlayTemplate(task, taskId) {
     return `
     <div class="openTaskOverlayMain">
-            <div class="openTaskOverlayChildContainer">
-                ${taskCategoryTemplate(task)}
-                <div class="openTaskOverlayTitle">
-                    ${taskTitleTemplate(task)}
-                    ${taskDescriptionTemplate(task)}
-                </div>
-                ${taskSubtasksTemplate(task)}
-                <div class="openTaskOverlayAssigned">
-                    ${taskAssignedTemplate(task)}
-                    ${taskPriorityTemplate(task)}
-                </div>
-                <div class="openTaskOverlayDate">
-                <!-- ${taskStatusTemplate(task)} -->
-                Due Date: ${taskDateTemplate(task)}
-                </div>
-            </div>
-            <button onclick="deleteTask('${taskId}')">Löschen</button>
-            <button onclick="closeTaskOverlay()">Schließen</button>
+        ${taskCategoryTemplate(task)}
+        ${taskTitleTemplate(task)}
+        ${taskDescriptionTemplate(task)}
+        <div class="openTaskOverlayDateContainer">
+            Due Date: ${taskDateTemplate(task)}
         </div>
+        <div class="openTaskOverlayPriorityContainer">
+            Priority: ${taskPriorityTemplateName(task)}
+        </div>
+        <div class="openTaskOverlayAssignedContainer">
+            Assigned to: ${taskAssignedTemplate(task)}
+        </div>
+        ${taskStatusTemplate(task)}
+        ${taskSubtasksTemplate(task)}
+        <button onclick="deleteTask('${taskId}')">Löschen</button>
+        <button onclick="closeTaskOverlay()">Schließen</button>
+    </div>
     `
 }

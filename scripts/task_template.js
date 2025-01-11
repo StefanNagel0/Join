@@ -48,6 +48,8 @@ function taskSubtasksTemplate(task) {
     }
 }
 
+
+//Nur Bild mit Kürzel anzeigen
 function taskAssignedTemplate(task) {
     if (task.assignedTo) {
         return `
@@ -58,6 +60,8 @@ function taskAssignedTemplate(task) {
     }
 }
 
+
+// Benutzer nicht mit komma trennen und Vor/Nachname + Bild mit Kürzel anzeigen
 function taskAssignedTemplateOverlay(task) {
     if (task.assignedTo) {
         return `

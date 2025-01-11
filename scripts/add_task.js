@@ -155,60 +155,48 @@ function selectDropdownOption(event, toggle, option) {
 async function postTaskToDatabase(event) {
     event.preventDefault();
     const form = document.getElementById('task-form');
+    const task = createTaskObject(form);
+
+    try {
+        await uploadTaskToFirebase(task);
+        resetFormAndNotify(form);
+    } catch (error) {
+        console.error('Fehler beim Hochladen der Aufgabe', error);
+        alert('Fehler beim Speichern der Aufgabe.');
+    }
+}
+
+// Hilfsfunktion: Erstellt das Task-Objekt
+function createTaskObject(form) {
     const formData = new FormData(form);
-    const category = document.querySelector('#dropdown-toggle-category span')?.textContent || null;
-    const assignedTo = getSelectedContacts();
-    const task = {
+    return {
         title: formData.get('title'),
         description: formData.get('description'),
         dueDate: formData.get('dueDate'),
         priority: selectedPriority,
-        category: category,
-        assignedTo: assignedTo,
+        category: document.querySelector('#dropdown-toggle-category span')?.textContent || null,
+        assignedTo: getSelectedContacts(),
         subtasks: Array.from(document.querySelectorAll('#subtask-list li')).map(li => li.textContent),
     };
+}
 
-    try {
-        const response = await fetch(`${BASE_URL}/tasks.json`, {
-            method:'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(task),
-        });
-        if (!response.ok) {
-            throw new Error(`Fehler beim Speichern der Aufgabe: ${response.statusText}`);
-        }
-        form.reset();
-        alert('Task erfolgreich in Firebase gespeichert!');
-    } catch (error) {
-        console.error("Fehler beim Hochladen der Aufgabe",error);
-        alert("Fehler beim Speichern der Aufgabe.");
+// Hilfsfunktion: Aufgabe in Firebase hochladen
+async function uploadTaskToFirebase(task) {
+    const response = await fetch(`${BASE_URL}/tasks.json`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(task),
+    });
+    if (!response.ok) {
+        throw new Error(`Fehler beim Speichern der Aufgabe: ${response.statusText}`);
     }
 }
 
-
-// // Hilfsfunktion: Aufgabe speichern
-// function saveTask(event) {
-//     event.preventDefault();
-//     const form = document.getElementById('task-form');
-//     const formData = new FormData(form);
-//     const category = document.querySelector('#dropdown-toggle-category span')?.textContent || null;
-//     const assignedTo = getSelectedContacts();
-//     const task = {
-//         title: formData.get('title'),
-//         description: formData.get('description'),
-//         dueDate: formData.get('dueDate'),
-//         priority: selectedPriority,
-//         category: category,
-//         assignedTo: assignedTo,
-//         subtasks: Array.from(document.querySelectorAll('#subtask-list li')).map(li => li.textContent),
-//     };
-//     tasks.push(task);
-//     localStorage.setItem('tasks', JSON.stringify(tasks));
-//     form.reset();
-//     alert('Task saved!');
-// }
+// Hilfsfunktion: Formular zurücksetzen und Benachrichtigung anzeigen
+function resetFormAndNotify(form) {
+    form.reset();
+    alert('Task erfolgreich in Firebase gespeichert!');
+}
 
 // Hilfsfunktion: Ausgewählte Kontakte holen
 function getSelectedContacts() {

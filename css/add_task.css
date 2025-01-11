@@ -320,6 +320,35 @@ textarea::placeholder {
 #add-subtask:hover, #clear-subtask:hover {
     opacity: 0.8;
 }
+
+.subtask-controls {
+    display: none;
+    gap: 8px;
+    align-items: center;
+}
+
+.subtask-item{
+display: flex;
+justify-content: space-between;
+}
+
+.subtask-item:hover .subtask-controls {
+    display: flex;
+}
+#subtask-list:hover{
+    background-color: #eaeaeaa9;
+}
+.subtask-edit, .subtask-trash, .subtask-check {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.subtask-edit,
+.subtask-check {
+    filter: grayscale(100%) brightness(0) sepia(100%) hue-rotate(180deg) saturate(1000%) contrast(100%) drop-shadow(0 0 0 #2A3647);
+}
+
 .add_task_required_info_box{
     display: flex;
     justify-content: space-between;

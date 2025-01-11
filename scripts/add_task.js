@@ -135,13 +135,68 @@ function initializeSubtasks() {
     input.onkeydown = e => e.key === 'Enter' && addSubtask(input, list);
 }
 
-// Helper function: Add a subtask
+// Helper function: Create an image element with specified attributes
+function createIcon(src, alt, className) {
+    const icon = document.createElement('img');
+    icon.src = src;
+    icon.alt = alt;
+    icon.classList.add(className);
+    return icon;
+}
+
+// Helper function: Toggle visibility of icons (Pencil, Trash, Check)
+function toggleIcons(pencilIcon, trashIcon, checkIcon, editMode) {
+    if (editMode) {
+        pencilIcon.classList.add('d-none');
+        trashIcon.classList.add('d-none');
+        checkIcon.classList.remove('d-none');
+    } else {
+        pencilIcon.classList.remove('d-none');
+        trashIcon.classList.remove('d-none');
+        checkIcon.classList.add('d-none');
+    }
+}
+
+// Helper function: Edit the subtask
+function editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
+    pencilIcon.classList.add('d-none');
+    checkIcon.classList.remove('d-none');
+    subtaskElement.contentEditable = 'true';
+    subtaskElement.focus();
+}
+
+// Helper function: Save the edited subtask
+function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
+    pencilIcon.classList.remove('d-none');
+    checkIcon.classList.add('d-none');
+    subtaskElement.contentEditable = 'false';
+}
+
+// Helper function: Add a subtask to the list
 function addSubtask(input, list) {
     const task = input.value.trim();
     if (!task) return;
-    list.append(createElementWithClass('li', '', task));
-    input.value = '';
-    input.nextElementSibling.classList.add('d-none');
+    const subtaskElement = document.createElement('li');
+    subtaskElement.classList.add('subtask-item');
+    subtaskElement.textContent = task;
+    const controlsContainer = document.createElement('div');
+    controlsContainer.classList.add('subtask-controls');
+    const pencilIcon = createIcon("../assets/svg/summary/pencil2.svg", "Edit", 'subtask-edit');
+    const trashIcon = createIcon("../assets/svg/add_task/trash.svg", "Delete", 'subtask-trash');
+    const checkIcon = createIcon("../assets/svg/add_task/check_create_task.svg", "Save", 'subtask-check');
+    checkIcon.classList.add('d-none');
+    controlsContainer.append(pencilIcon, trashIcon, checkIcon);
+    subtaskElement.appendChild(controlsContainer);
+    list.appendChild(subtaskElement);
+    trashIcon.onclick = () => subtaskElement.remove();
+    pencilIcon.onclick = () => editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon);
+    checkIcon.onclick = () => saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon);
+    subtaskElement.onmouseover = () => controlsContainer.classList.remove('d-none');
+    subtaskElement.onmouseleave = () => {
+        if (subtaskElement.contentEditable !== 'true') {
+            controlsContainer.classList.add('d-none');
+        }
+    };
 }
 
 // Helper function: Initialize priority buttons

@@ -63,7 +63,7 @@ function boardTemplate() {
 function boardAddTaskTemplate() {
     return `
 <section class="content addTaskLeftBoxBoard">
-                <form id="task-form" onsubmit="saveTask(event)">
+                <form id="task-form" onsubmit="postTaskToDatabase(event)">
                     <div class="content_heading">
                         <h2>Add Task</h2>
                     </div>

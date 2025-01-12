@@ -51,24 +51,43 @@ function taskSubtasksTemplate(task) {
 
 //Nur Bild mit Kürzel anzeigen
 function taskAssignedTemplate(task) {
-    if (task.assignedTo) {
+    if (task.assignedTo && task.assignedTo.length > 0) {
         return `
-        <p id="taskAssignedID" class="taskAssigned">${task.assignedTo}</p>
-        `
+        <div id="taskAssignedID" class="taskAssigned">
+            ${task.assignedTo
+                .map(name => {
+                    const initials = name
+                        .split(" ")
+                        .map(part => part.charAt(0))
+                        .join("");
+                    return `<p class="initialsTemplate">${initials}</p>`;
+                })
+                .join("")}
+        </div>
+        `;
     } else {
-        return ``
+        return ``;
     }
 }
 
-
 // Benutzer nicht mit komma trennen und Vor/Nachname + Bild mit Kürzel anzeigen
 function taskAssignedTemplateOverlay(task) {
-    if (task.assignedTo) {
+    if (task.assignedTo && task.assignedTo.length > 0) {
         return `
-        <p id="taskAssignedID" class="taskAssigned">${task.assignedTo}</p>
-        `
+        <div id="taskAssignedID" class="taskAssigned">
+            ${task.assignedTo
+                .map(name => {
+                    const initials = name
+                        .split(" ")
+                        .map(part => part.charAt(0))
+                        .join("");
+                    return `<p><span class="initialsOverlay">${initials}</span> - ${name}</p>`;
+                })
+                .join("")}
+        </div>
+        `;
     } else {
-        return ``
+        return ``;
     }
 }
 
@@ -126,7 +145,7 @@ function taskOverlayTemplate(task, taskId) {
             Priority: ${taskPriorityTemplateName(task)}
         </div>
         <div class="openTaskOverlayAssignedContainer">
-            Assigned to: ${taskAssignedTemplate(task)}
+            Assigned to: ${taskAssignedTemplateOverlay(task)}
         </div>
         ${taskStatusTemplate(task)}
         ${taskSubtasksTemplate(task)}

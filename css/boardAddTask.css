@@ -151,7 +151,13 @@
     margin-bottom: 10px;
 }
 
+.initialsTemplate {
+    display: flex;
+}
+
 .taskAssigned {
+    display: flex;
+    gap: 5px;
     width: 80px;
     height: 32px;
 }
@@ -305,6 +311,13 @@
     height: 148px;
     gap: 8px;
     color: #42526E;
+}
+
+.initialsOverlay {
+    width: 25px;
+    height: 29.55px;
+    rotate: 90deg;
+    color: #000000;
 }
 
 .openTaskOverlayAssigned {

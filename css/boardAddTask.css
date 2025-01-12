@@ -140,6 +140,29 @@
     height: 16px;
 }
 
+.progressBarContainer {
+    display: flex;
+    justify-content: center;
+
+    width: 50%;
+    height: 5px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progressBar {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.3s ease-in-out;
+}
+
+.progressText {
+    font-size: 14px;
+    color: #333;
+    text-align: right;
+}
+
 .taskAssignedMain {
     position: absolute;
     display: flex;
@@ -343,11 +366,74 @@
     color: #A8A8A8;
 }
 
+.openTaskOverlayButtonContainer {
+    display: flex;
+    justify-content: right;
+    width: 450px;
+    height: 32px;
+    gap: 5px;
+    margin-top: 0px;
+}
 
+.openTaskOverlayDeleteButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100px;
+    height: 32px;
+    margin-bottom: 10px;
+    background-color: transparent;
+    border: transparent;
+}
+
+.openTaskOverlayEditButton {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100px;
+    height: 32px;
+    margin-bottom: 10px;
+    background-color: transparent;
+    border: transparent;
+}
+
+.openTaskOverlaySubtaskContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.openTaskOverlaySubtaskTitle {
+    width: 220px;
+    height: 32px;
+    margin-top: 150px;
+    margin-bottom: 5px;
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #000000 !important;
+}
+.openTaskOverlaySubtask {
+    display: flex;
+    gap: 20px;
+    color: black !important;
+}
 
 .openTaskOverlayStatus {
     width: 220px;
     height: 32px;
     margin-bottom: 10px;
     display: none;
+}
+
+.taskSubtaskContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
 }

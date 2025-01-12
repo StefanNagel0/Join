@@ -38,18 +38,62 @@ function taskDateTemplate(task) {
     `
 }
 
+// Subtask als Balken darstellen
+
 function taskSubtasksTemplate(task) {
-    if (!task.subtasks) {
-        return ``
-    } else {
+    if (task.subtasks && task.subtasks.length > 0) {
+        const completedSubtasks = task.subtasks.filter(subtask => subtask.completed).length;
+        const totalSubtasks = task.subtasks.length;
+        const progressPercent = (completedSubtasks / totalSubtasks) * 100;
         return `
-        <p id="taskSubtasksID" class="taskSubtasks">${task.subtasks}</p>
-        `
+        <div class="taskSubtaskContainer">
+            <div class="progressBarContainer">
+                <div class="progressBar" style="width: ${progressPercent}%;"></div>
+            </div>
+            <p class="progressText">${completedSubtasks}/${totalSubtasks} Subtasks</p>
+        </div>
+        `;
+    } else {
+        return `<p>No Subtasks available</p>`;
     }
 }
 
+// function taskSubtasksTemplate(task) {
+//     if (task.subtasks && task.subtasks.length > 0) {
+//         const subtasksHtml = task.subtasks.map(subtask => `
+//             <p class="taskSubtasks">
+//              ${subtask}
+//             </p>
+//         `).join("");
+//         return `
+//         <div class="TaskSubtaskContainer">
+//             ${subtasksHtml}
+//         </div>
+//         `;
+//     } else {
+//         return ``;
+//     }
+// }
 
-//Nur Bild mit Kürzel anzeigen
+function taskSubtasksTemplateOverlay(task) {
+    if (task.subtasks && task.subtasks.length > 0) {
+        const subtasksHtml = task.subtasks.map(subtask => `
+            <p id="taskSubtasksID" class="openTaskOverlaySubtask">
+                <input type="checkbox" required/> ${subtask}
+            </p>
+        `).join("");
+        return `
+        <div class="openTaskOverlaySubtaskContainer">
+        <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
+            ${subtasksHtml}
+        </div>
+        `;
+    } else {
+        return ``;
+    }
+}
+
+//Nur Farbe mit Kürzel anzeigen
 function taskAssignedTemplate(task) {
     if (task.assignedTo && task.assignedTo.length > 0) {
         return `
@@ -70,7 +114,7 @@ function taskAssignedTemplate(task) {
     }
 }
 
-// Benutzer nicht mit komma trennen und Vor/Nachname + Bild mit Kürzel anzeigen
+// Benutzer nicht mit komma trennen und Vor/Nachname + Farbe mit Kürzel anzeigen
 function taskAssignedTemplateOverlay(task) {
     if (task.assignedTo && task.assignedTo.length > 0) {
         return `
@@ -148,9 +192,12 @@ function taskOverlayTemplate(task, taskId) {
             Assigned to: ${taskAssignedTemplateOverlay(task)}
         </div>
         ${taskStatusTemplate(task)}
-        ${taskSubtasksTemplate(task)}
-        <button onclick="deleteTask('${taskId}')">Löschen</button>
-        <button onclick="closeTaskOverlay()">Schließen</button>
+        
+        ${taskSubtasksTemplateOverlay(task)}
+        <div class="openTaskOverlayButtonContainer">
+            <button class="openTaskOverlayDeleteButton" onclick="deleteTask('${taskId}')"><img src="../assets/svg/delete.svg" alt=""> Delete</button>
+            <button class="openTaskOverlayEditButton" onclick="closeTaskOverlay()"><img src="../assets/svg/edit.svg" alt=""> Edit</button>
+        </div>
     </div>
     `
 }

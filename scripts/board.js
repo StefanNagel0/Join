@@ -56,7 +56,7 @@ function openTaskOverlay(taskId) {
     const removeClass = document.getElementById("taskTitleID");
     const removeClassTemplate = document.getElementById("taskDescriptionID");
     const removeClassDate = document.getElementById("taskDateID");
-    const removeClassSubtasks = document.getElementById("taskSubtasksID");
+    // const removeClassSubtasks = document.getElementById("taskSubtasksID");
     const removeClassAssigned = document.getElementById("taskAssignedID");
     const removeClassPriority = document.getElementById("taskPriorityIDName");
     const removeClassStatus = document.getElementById("taskStatusID");

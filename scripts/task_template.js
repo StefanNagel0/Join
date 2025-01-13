@@ -50,7 +50,6 @@ function taskSubtasksTemplate(task) {
         const completedSubtasks = task.subtasks.filter(subtask => subtask.completed).length;
         const totalSubtasks = task.subtasks.length;
         const progressPercent = (completedSubtasks / totalSubtasks) * 100;
-        console.log(task.subtasks[1]);
         return `
         <div class="taskSubtaskContainer">
             <div class="progressBarContainer">

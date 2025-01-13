@@ -1,18 +1,22 @@
+/* initalizes the board */
 function initBoard() {
     toggleBoardPage();
 }
 
+/* Initailization of the Add Task function */
 function addTaskButton() {
     boardAddTask();
     addTaskSuccess();
 }
 
+/* The board is loaded */
 function toggleBoardPage() {
     let boardPage = document.getElementById('content');
     boardPage.innerHTML = boardTemplate();
     boardPage.style.display = 'block';
 }
 
+/* Task successfully added */
 function addTaskSuccess() {
     let overlayRef = document.getElementById('addTaskSuccess');
     overlayRef.innerHTML = addTaskSuccessTemplate();
@@ -24,6 +28,7 @@ function addTaskSuccess() {
     }, 2000);
 }
 
+/* Task has been badged */
 function boardAddTask() {
     let overlayRef = document.getElementById("boardAddTask");
     let darkOverlay = document.getElementById("darkOverlay");
@@ -36,6 +41,7 @@ function boardAddTask() {
     initializePriorityButtons();
 }
 
+/* Closure of the task */
 function closeBoardAddTask() {
     let overlayRef = document.getElementById("boardAddTask");
     let darkOverlay = document.getElementById("darkOverlay");
@@ -44,6 +50,7 @@ function closeBoardAddTask() {
     darkOverlay.classList.remove("show");
 }
 
+/* Opening the task */
 function openTaskOverlay(taskId) {
     const task = globalTasks[taskId];
     if (!task) {
@@ -79,13 +86,14 @@ function openTaskOverlay(taskId) {
     overlayRef.classList.add("show");
 }
 
-
+/* Closes the task that is open in the overlay */
 function closeTaskOverlay() {
     let overlayRef = document.getElementById("taskOverlay");
     overlayRef.classList.remove("show");
     overlayRef.innerHTML = "";
 }
 
+/* Delete a task */
 async function deleteTask(taskId) {
     if (!globalTasks || typeof globalTasks !== "object") {
         console.error("globalTasks ist nicht definiert oder hat das falsche Format.");
@@ -112,6 +120,7 @@ async function deleteTask(taskId) {
     closeTaskOverlay();
 }
 
+/* Task search */
 function searchTask() {
     const searchTerm = document.getElementById("search").value.toLowerCase();
     if (!globalTasks || typeof globalTasks !== "object") {

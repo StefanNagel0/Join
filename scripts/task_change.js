@@ -14,7 +14,7 @@ async function loadTask(path = "/tasks") {
 }
 
 function displayTasks(tasks) {
-    const tasksContainer = document.getElementById("tasksContainer");
+    const tasksContainer = document.getElementById("tasksContainerToDo");
     tasksContainer.innerHTML = "";
 
     for (const taskId in tasks) {

@@ -45,6 +45,8 @@ function taskSubtasksTemplate(task) {
         const completedSubtasks = task.subtasks.filter(subtask => subtask.completed).length;
         const totalSubtasks = task.subtasks.length;
         const progressPercent = (completedSubtasks / totalSubtasks) * 100;
+        console.log(task.subtasks[0]);
+        
         return `
         <div class="taskSubtaskContainer">
             <div class="progressBarContainer">
@@ -57,23 +59,6 @@ function taskSubtasksTemplate(task) {
         return `<p>No Subtasks available</p>`;
     }
 }
-
-// function taskSubtasksTemplate(task) {
-//     if (task.subtasks && task.subtasks.length > 0) {
-//         const subtasksHtml = task.subtasks.map(subtask => `
-//             <p class="taskSubtasks">
-//              ${subtask}
-//             </p>
-//         `).join("");
-//         return `
-//         <div class="TaskSubtaskContainer">
-//             ${subtasksHtml}
-//         </div>
-//         `;
-//     } else {
-//         return ``;
-//     }
-// }
 
 function taskSubtasksTemplateOverlay(task) {
     if (task.subtasks && task.subtasks.length > 0) {

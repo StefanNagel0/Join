@@ -19,9 +19,24 @@
 }
 
 .prio-btn.active {
-    background-color: #2A3647;
     color: white;
     border: none;
+}
+
+.prio-btn.urgent.active {
+    background-color: rgb(255, 61, 0);
+}
+
+.prio-btn.medium.active {
+    background-color: #FFA800;
+}
+
+.prio-btn.low.active {
+    background-color: #7AE229;
+}
+
+.prio-btn.active img {
+    filter: brightness(0) invert(1);
 }
 
 .content_heading h2 {

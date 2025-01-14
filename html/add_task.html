@@ -95,7 +95,7 @@
                 </div>
             </header>
             <section class="content">
-                <form id="task-form" onsubmit="return false;">
+                <form id="task-form" onsubmit="postTaskToDatabase(event)">
                     <div class="content_heading">
                         <h2>Add Task</h2>
                     </div>
@@ -112,18 +112,16 @@
                             </div>
                             <div class="gap_8">
                                 <label for="task-assigned">Assigned to</label>
-                                <div id="task-assigned"> <!-- Hier die ID hinzugefügt -->
+                                <div id="task-assigned">
                                     <div id="dropdown-wrapper">
                                         <div id="dropdown-toggle">
                                             <span>Select contacts to assign</span>
                                             <div class="dropdown-arrow"></div>
                                         </div>
                                         <div id="dropdown-content">
-                                            <!-- Hier werden Kontakte dynamisch eingefügt -->
                                         </div>
                                     </div>
                                     <div id="selected-contacts">
-                                        <!-- Ausgewählte Kontakte werden hier angezeigt -->
                                     </div>
                                 </div>
                             </div>
@@ -139,11 +137,11 @@
                             <div class="gap_8">
                                 <p class="prio_text">Prio</p>
                                 <div id="task-priority">
-                                    <button type="button" class="prio-btn" data-prio="Urgent">Urgent <img
+                                    <button type="button" class="prio-btn urgent" data-prio="urgent">Urgent <img
                                             src="../assets/svg/add_task/prio_urgent.svg" alt=""></button>
-                                    <button type="button" class="prio-btn" data-prio="Medium">Medium <img
+                                    <button type="button" class="prio-btn medium" data-prio="medium">Medium <img
                                             src="../assets/svg/add_task/prio_medium.svg" alt=""></button>
-                                    <button type="button" class="prio-btn" data-prio="Low">Low <img
+                                    <button type="button" class="prio-btn low" data-prio="low">Low <img
                                             src="../assets/svg/add_task/prio_low.svg" alt=""></button>
                                 </div>
                             </div>
@@ -155,10 +153,9 @@
                                             <span>Select task category</span>
                                             <div class="dropdown-arrow"></div>
                                         </div>
-                                        <ul class="dropdown-options hidden" id="dropdown-options-category">
+                                        <ul required class="dropdown-options hidden" id="dropdown-options-category">
                                             <li class="dropdown-option" data-category="User Story" onclick="selectDropdownOption(event, document.getElementById('dropdown-toggle-category'), this)">User Story</li>
                                             <li class="dropdown-option" data-category="Technical Task" onclick="selectDropdownOption(event, document.getElementById('dropdown-toggle-category'), this)">Technical Task</li>
-                                            <!-- Weitere Kategorien können hier hinzugefügt werden -->
                                         </ul>
                                     </div>
                                 </div>
@@ -174,7 +171,6 @@
                             </div>
                         </div>
                     </section>
-                </form>
                     <div class="add_task_required_info_box">
                         <div>
                             <span class="add_task_required_info">
@@ -185,20 +181,21 @@
                         <div class="add_task_buttons_box">
                             <div class="clear_save_btns">
                                 <div>
-                                    <button class="add_task_clear_btn">
+                                    <button class="add_task_clear_btn" type="button">
                                         <span>Clear</span>
                                         <img src="..//assets/svg/add_task/closeXSymbol.svg" alt="X">
                                     </button>
                                 </div>
                             </div>
                             <div class="add_task_submit_btn">
-                                <button type="submit">
+                                <button id="submit-task-btn" type="submit">
                                     <span>Create Task</span>
                                     <img src="../assets/svg/add_task/check_create_task.svg" alt="check">
                                 </button>
                             </div>
                         </div>
-                    </div>                
+                    </div>  
+                </form>          
             </section>
         </section>
     </section>

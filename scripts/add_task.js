@@ -1,5 +1,6 @@
 let tasks = [];
 const contactColors = new Map();
+let selectedPriority = null;
 
 function initializeApp() {
     initializeContactsDropdown();
@@ -7,7 +8,7 @@ function initializeApp() {
     initializeSubtasks();
     setDateValidation();
     initializeClearButton();
-    document.querySelector('.add_task_submit_btn button').onclick = postTaskToDatabase;
+    preventFormSubmissionOnEnter();
 }
 
 // Helper function: Create initials circle
@@ -217,6 +218,11 @@ function initializePriorityButtons() {
             selectedPriority = btn.dataset.prio;
         }
     );
+    const mediumBtn = document.querySelector('.prio-btn[data-prio="medium"]');
+    if (mediumBtn) {
+        mediumBtn.classList.add('active');
+        selectedPriority = mediumBtn.dataset.prio; // Ensure the variable is updated
+    }
 }
 
 // Helper function: Toggle dropdown
@@ -254,6 +260,12 @@ function selectDropdownOption(event, toggle, option) {
 async function postTaskToDatabase(event) {
     event.preventDefault();
     const form = document.getElementById('task-form');
+    const category = document.querySelector('#dropdown-toggle-category span')?.textContent;
+    if (!category || category === 'Select task category') {
+        alert('Please select a category.');
+        return;
+    }
+
     const task = createTaskObject(form);
     try {
         await uploadTaskToFirebase(task);
@@ -262,6 +274,15 @@ async function postTaskToDatabase(event) {
         console.error('Error uploading task', error);
         alert('Error saving the task.');
     }
+}
+
+function preventFormSubmissionOnEnter() {
+    const form = document.getElementById('task-form');
+    form.onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    };
 }
 
 // Helper function: Create the task object
@@ -336,6 +357,11 @@ function clearForm() {
     const taskDate = document.getElementById('task-date');
     if (taskDate) taskDate.value = '';
     document.querySelectorAll('.prio-btn').forEach(btn => btn.classList.remove('active'));
+    const mediumBtn = document.querySelector('.prio-btn[data-prio="medium"]');
+    if (mediumBtn) {
+        mediumBtn.classList.add('active');
+        selectedPriority = mediumBtn.dataset.prio;
+    }
     const categoryText = document.querySelector('#dropdown-toggle-category span');
     if (categoryText) categoryText.textContent = 'Select task category';
     const subtaskList = document.getElementById('subtask-list');

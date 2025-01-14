@@ -1,18 +1,22 @@
+/* initalizes the board */
 function initBoard() {
     toggleBoardPage();
 }
 
+/* Initailization of the Add Task function */
 function addTaskButton() {
     boardAddTask();
     addTaskSuccess();
 }
 
+/* The board is loaded */
 function toggleBoardPage() {
     let boardPage = document.getElementById('content');
     boardPage.innerHTML = boardTemplate();
     boardPage.style.display = 'block';
 }
 
+/* Task successfully added */
 function addTaskSuccess() {
     let overlayRef = document.getElementById('addTaskSuccess');
     overlayRef.innerHTML = addTaskSuccessTemplate();
@@ -24,6 +28,7 @@ function addTaskSuccess() {
     }, 2000);
 }
 
+/* Task has been badged */
 function boardAddTask() {
     let overlayRef = document.getElementById("boardAddTask");
     let darkOverlay = document.getElementById("darkOverlay");
@@ -32,6 +37,7 @@ function boardAddTask() {
     overlayRef.classList.add("show");
 }
 
+/* Closure of the task */
 function closeBoardAddTask() {
     let overlayRef = document.getElementById("boardAddTask");
     let darkOverlay = document.getElementById("darkOverlay");
@@ -40,6 +46,7 @@ function closeBoardAddTask() {
     darkOverlay.classList.remove("show");
 }
 
+/* Opening the task */
 function openTaskOverlay(taskId) {
     const task = globalTasks[taskId];
     if (!task) {
@@ -48,8 +55,33 @@ function openTaskOverlay(taskId) {
     }
     const overlayRef = document.getElementById("taskOverlay");
     overlayRef.innerHTML = taskOverlayTemplate(task, taskId);
+
+    const removeClass = document.getElementById("taskTitleID");
+    const removeClassTemplate = document.getElementById("taskDescriptionID");
+    const removeClassDate = document.getElementById("taskDateID");
+    const removeClassSubtasks = document.getElementById("taskSubtasksID");
+    const removeClassAssigned = document.getElementById("taskAssignedID");
+    const removeClassPriority = document.getElementById("taskPriorityIDName");
+    const removeClassStatus = document.getElementById("taskStatusID");
+    if (removeClass, removeClassTemplate) {
+        removeClass.classList.remove("taskTitle")
+        removeClass.classList.add("openTaskOverlayTitle")
+        removeClassTemplate.classList.remove("taskDescription")
+        removeClassTemplate.classList.add("openTaskOverlayDescription")
+        removeClassDate.classList.remove("taskDate")
+        removeClassDate.classList.add("openTaskOverlayDate")
+        // removeClassSubtasks.classList.remove("taskSubtasks")
+        // removeClassSubtasks.classList.add("openTaskOverlaySubtask")
+        removeClassAssigned.classList.remove("taskAssigned")
+        removeClassAssigned.classList.add("openTaskOverlayAssigned")
+        removeClassPriority.classList.remove("taskPriority")
+        removeClassPriority.classList.add("openTaskOverlayPriority")
+        removeClassStatus.classList.remove("taskStatus")
+        removeClassStatus.classList.add("openTaskOverlayStatus")
+    }
     overlayRef.classList.add("show");
 }
+
 
 function closeTaskOverlay() {
     let overlayRef = document.getElementById("taskOverlay");
@@ -57,6 +89,7 @@ function closeTaskOverlay() {
     overlayRef.innerHTML = "";
 }
 
+/* Delete a task */
 async function deleteTask(taskId) {
     if (!globalTasks || typeof globalTasks !== "object") {
         console.error("globalTasks ist nicht definiert oder hat das falsche Format.");
@@ -83,6 +116,7 @@ async function deleteTask(taskId) {
     closeTaskOverlay();
 }
 
+/* Task search */
 function searchTask() {
     const searchTerm = document.getElementById("search").value.toLowerCase();
     if (!globalTasks || typeof globalTasks !== "object") {

@@ -84,7 +84,7 @@
 .add_task_right_box {
     display: flex;
     flex-direction: column;
-    height: 416px;
+    height: 516px;
     justify-content: space-between;
     max-width: 440px;
 }
@@ -310,6 +310,10 @@ textarea::placeholder {
     align-items: center;
 }
 
+.subtask-marker{
+    margin-right: 4px;
+}
+
 #add-subtask,
 #clear-subtask {
     position: absolute;
@@ -361,6 +365,11 @@ textarea::placeholder {
     justify-content: space-between;
     align-items: center;
     height: 32px;
+    padding: 0px 8px 0 20px;
+}
+.subtask-item:hover {
+    background-color: #eaeaeaa9;
+    border-radius: 10px;
 }
 
 .subtask-item:hover .subtask-controls {
@@ -372,13 +381,15 @@ textarea::placeholder {
     border-radius: 0;
     border-bottom: 1px solid #28ABE2;
 }
+#subtask-list-container {
+    max-height: 100px;
+    overflow-y: auto;
+    margin-top: 8px;
+}
 
 #subtask-list {
     border-radius: 10px;
-}
-
-#subtask-list:hover {
-    background-color: #eaeaeaa9;
+    padding: 0;
 }
 
 .subtask-edit, .subtask-trash, .subtask-check {

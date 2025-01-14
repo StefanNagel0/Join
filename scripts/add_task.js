@@ -173,6 +173,8 @@ function editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     subtaskElement.contentEditable = 'true';
     subtaskElement.focus();
     trashIcon.classList.add('editing')
+    const marker = subtaskElement.querySelector('.subtask-marker');
+    if(marker) marker.style.display = "none";
 }
 
 // Helper function: Save the edited subtask
@@ -182,14 +184,20 @@ function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     checkIcon.classList.add('d-none');
     subtaskElement.contentEditable = 'false';
     trashIcon.classList.remove('editing');
+    const marker = subtaskElement.querySelector('.subtask-marker');
+    if(marker) marker.style.display = 'inline';
 }
 
 function createSubtaskHTML(task) {
-    return `${task}<div class="subtask-controls">
-        <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
-        <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
-        <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
-    </div>`;
+    return `
+    <div>
+    <span class="subtask-marker">•</span>${task}
+    </div>
+        <div class="subtask-controls">
+            <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
+            <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
+            <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
+        </div>`;
 }
 
 // Helper function: Add a subtask to the list

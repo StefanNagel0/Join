@@ -10,12 +10,15 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #FFFFFF;
-    transition: background-color 100ms;
     box-shadow: 0px 0px 4px 0px #0000001A;
     align-items: center;
     display: flex;
     justify-content: center;
     gap: 8px;
+    transition: box-shadow 0.1s ease;
+}
+.prio-btn:hover{
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.4);
 }
 
 .prio-btn.active {
@@ -61,7 +64,6 @@
 }
 
 .add_task_left_box label {
-    font-weight: 400;
     color: #2A3647;
 }
 
@@ -235,7 +237,6 @@ textarea::placeholder {
 }
 
 .add_task_right_box label {
-    font-weight: 400;
     color: #2A3647;
 }
 
@@ -244,7 +245,6 @@ textarea::placeholder {
 }
 
 .prio_text {
-    font-weight: 400;
     color: #2A3647;
 }
 
@@ -381,8 +381,13 @@ textarea::placeholder {
     border-radius: 0;
     border-bottom: 1px solid #28ABE2;
 }
+
+.subtask-item.editing .subtask-check {
+    border: none;
+}
 #subtask-list-container {
     max-height: 100px;
+    min-height: 100px;
     overflow-y: auto;
     margin-top: 8px;
 }

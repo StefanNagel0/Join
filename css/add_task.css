@@ -30,6 +30,7 @@
     border: none;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .prio-btn.urgent.active {
     background-color: rgb(255, 61, 0);
@@ -51,6 +52,9 @@
 =======
 .content_heading h2{
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
+=======
+.content_heading h2{
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
     font-size: 61px;
     font-weight: 700;
 }
@@ -69,9 +73,12 @@
     justify-content: space-between;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .add_task_left_box label {
 =======
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 .add_task_left_box label{
     font-weight: 400;
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
@@ -260,9 +267,12 @@ textarea::placeholder {
     color: #D1D1D1;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .add_task_right_box label {
 =======
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 .add_task_right_box label{
     font-weight: 400;
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
@@ -272,9 +282,12 @@ textarea::placeholder {
     color: #D1D1D1;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .prio_text {
 =======
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 .prio_text{
     font-weight: 400;
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
@@ -335,6 +348,7 @@ textarea::placeholder {
     align-items: center;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .subtask-marker{
     margin-right: 4px;
@@ -342,6 +356,9 @@ textarea::placeholder {
 
 #add-subtask,
 #clear-subtask {
+=======
+#add-subtask, #clear-subtask {
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 =======
 #add-subtask, #clear-subtask {
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
@@ -376,6 +393,7 @@ textarea::placeholder {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .subtask-item {
     display: flex;
     justify-content: space-between;
@@ -391,11 +409,17 @@ textarea::placeholder {
 display: flex;
 justify-content: space-between;
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
+=======
+.subtask-item{
+display: flex;
+justify-content: space-between;
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 }
 
 .subtask-item:hover .subtask-controls {
     display: flex;
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 .subtask-item.editing {
@@ -418,6 +442,8 @@ justify-content: space-between;
     border-radius: 10px;
     padding: 0;
 =======
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 #subtask-list:hover{
     background-color: #eaeaeaa9;
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)

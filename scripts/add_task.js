@@ -8,8 +8,11 @@ function initializeApp() {
     initializeSubtasks();
     setDateValidation();
 <<<<<<< HEAD
+<<<<<<< HEAD
     initializeClearButton();
     preventFormSubmissionOnEnter();
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 =======
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 }
@@ -170,9 +173,12 @@ function editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     subtaskElement.contentEditable = 'true';
     subtaskElement.focus();
 <<<<<<< HEAD
+<<<<<<< HEAD
     trashIcon.classList.add('editing')
     const marker = subtaskElement.querySelector('.subtask-marker');
     if(marker) marker.style.display = "none";
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 =======
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 }
@@ -182,6 +188,7 @@ function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     pencilIcon.classList.remove('d-none');
     checkIcon.classList.add('d-none');
     subtaskElement.contentEditable = 'false';
+<<<<<<< HEAD
 <<<<<<< HEAD
     trashIcon.classList.remove('editing');
     const marker = subtaskElement.querySelector('.subtask-marker');
@@ -198,6 +205,8 @@ function createSubtaskHTML(task) {
             <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
             <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
         </div>`;
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 =======
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 }
@@ -369,6 +378,7 @@ function getRandomColor() {
     return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 function clearForm() {
     const taskTitle = document.getElementById('task-title');
@@ -406,5 +416,7 @@ function initializeClearButton() {
         clearForm();
     };
 }
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 =======
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)

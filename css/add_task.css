@@ -29,32 +29,8 @@
     color: white;
     border: none;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-.prio-btn.urgent.active {
-    background-color: rgb(255, 61, 0);
-}
-
-.prio-btn.medium.active {
-    background-color: #FFA800;
-}
-
-.prio-btn.low.active {
-    background-color: #7AE229;
-}
-
-.prio-btn.active img {
-    filter: brightness(0) invert(1);
-}
 
 .content_heading h2 {
-=======
-.content_heading h2{
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
-=======
-.content_heading h2{
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
     font-size: 61px;
     font-weight: 700;
 }
@@ -72,14 +48,8 @@
     height: 376px;
     justify-content: space-between;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 .add_task_left_box label {
-=======
-=======
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
-.add_task_left_box label{
     font-weight: 400;
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
     color: #2A3647;
@@ -266,14 +236,8 @@ textarea::placeholder {
     border: 1px solid #D1D1D1;
     color: #D1D1D1;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 .add_task_right_box label {
-=======
-=======
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
-.add_task_right_box label{
     font-weight: 400;
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
     color: #2A3647;
@@ -281,14 +245,8 @@ textarea::placeholder {
 #task-category:invalid {
     color: #D1D1D1;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 .prio_text {
-=======
-=======
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
-.prio_text{
     font-weight: 400;
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
     color: #2A3647;
@@ -347,21 +305,9 @@ textarea::placeholder {
     display: flex;
     align-items: center;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-.subtask-marker{
-    margin-right: 4px;
-}
 
 #add-subtask,
 #clear-subtask {
-=======
-#add-subtask, #clear-subtask {
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
-=======
-#add-subtask, #clear-subtask {
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -392,35 +338,16 @@ textarea::placeholder {
     align-items: center;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 .subtask-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 32px;
-    padding: 0px 8px 0 20px;
-}
-.subtask-item:hover {
-    background-color: #eaeaeaa9;
-    border-radius: 10px;
-=======
-.subtask-item{
-display: flex;
-justify-content: space-between;
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
-=======
-.subtask-item{
-display: flex;
-justify-content: space-between;
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 }
 
 .subtask-item:hover .subtask-controls {
     display: flex;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 .subtask-item.editing {
     background-color: white;
@@ -428,23 +355,11 @@ justify-content: space-between;
     border-bottom: 1px solid #28ABE2;
 }
 
-.subtask-item.editing .subtask-check {
-    border: none;
-}
-#subtask-list-container {
-    max-height: 100px;
-    min-height: 100px;
-    overflow-y: auto;
-    margin-top: 8px;
-}
-
 #subtask-list {
     border-radius: 10px;
-    padding: 0;
-=======
-=======
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
-#subtask-list:hover{
+}
+
+#subtask-list:hover {
     background-color: #eaeaeaa9;
 >>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 }

@@ -2,6 +2,7 @@ let tasks = [];
 const contactColors = new Map();
 let selectedPriority = null;
 
+/** Initialize the application by setting up necessary components */
 function initializeApp() {
     initializeContactsDropdown();
     initializePriorityButtons();
@@ -11,7 +12,7 @@ function initializeApp() {
     document.querySelector('.add_task_submit_btn button').onclick = postTaskToDatabase;
 }
 
-// Helper function: Create initials circle
+/** Create an element with initials circle based on contact's name */
 function createInitialsCircle(contactName) {
     const circle = document.createElement('div');
     circle.classList.add('initials-circle');
@@ -20,7 +21,7 @@ function createInitialsCircle(contactName) {
     return circle;
 }
 
-// Helper function: Create contact div
+/** Create a contact div with a circle, label, and checkbox */
 function createContactDiv(contact) {
     const circle = createInitialsCircle(contact.name);
     const label = createElementWithClass('span', 'contact-label', contact.name);
@@ -33,14 +34,14 @@ function createContactDiv(contact) {
     return container;
 }
 
-// Helper function: Toggle styling and selection
+/** Toggle contact selection and update UI */
 function toggleContactDiv(container, checkbox, label, circle, contact) {
     checkbox.checked = !checkbox.checked;
     container.classList.toggle('selected', checkbox.checked);
     toggleContactSelection(contact, checkbox.checked, document.getElementById('selected-contacts'));
 }
 
-// Helper function: Toggle contact selection
+/** Update the list of selected contacts */
 function toggleContactSelection(contact, isSelected, selectedContactsContainer) {
     const circle = createInitialsCircle(contact.name);
     if (isSelected) {
@@ -57,7 +58,7 @@ function toggleContactSelection(contact, isSelected, selectedContactsContainer) 
     }
 }
 
-// Helper function: Create dropdown contents and wrapper
+/** Create a dropdown wrapper element */
 function createDropdownWrapper() {
     const wrapper = createElementWithClass('div', 'dropdown-wrapper');
     const content = createElementWithClass('div', 'dropdown-content');
@@ -66,7 +67,7 @@ function createDropdownWrapper() {
     return { wrapper, content };
 }
 
-// Helper function: Create dropdown toggle
+/** Create the dropdown toggle button */
 function createDropdownToggle(dropdownContent) {
     const toggle = createElementWithClass('div', 'dropdown-toggle');
     const textSpan = createElementWithClass('span', '', 'Select contacts to assign');
@@ -79,6 +80,7 @@ function createDropdownToggle(dropdownContent) {
     return toggle;
 }
 
+/** Initialize the contacts dropdown with the contact list*/
 function initializeContactsDropdown() {
     const container = document.getElementById('task-assigned');
     if (!container) return console.error("#task-assigned not found.");
@@ -97,22 +99,23 @@ function initializeContactsDropdown() {
     wrapper.append(selectedContacts);
 }
 
+/** Add an event listener for clicks outside the dropdown to close it */
 function addOutsideClickListener(wrapper, content) {
     document.onclick = event => {
         if (!wrapper.contains(event.target)) {
             content.style.display = 'none';
-            wrapper.querySelector('.dropdown-toggle').classList.remove('open'); // Pfeil zurückdrehen
+            wrapper.querySelector('.dropdown-toggle').classList.remove('open');
         }
     };
 }
 
-// Helper function: Generate contact color
+/** Generate a random color for a contact*/
 function getContactColor(name) {
     if (!contactColors.has(name)) contactColors.set(name, getRandomColor());
     return contactColors.get(name);
 }
 
-// Helper function: Validate date in input field and set the min attribute
+/** Set validation for the date input to ensure it's not in the past */
 function setDateValidation() {
     const today = new Date().toISOString().split('T')[0];
     const dateInput = document.getElementById('task-date');
@@ -126,7 +129,7 @@ function setDateValidation() {
     };
 }
 
-// Helper function: Initialize subtasks
+/** Initialize the subtasks input, add button, and clear button behaviors */
 function initializeSubtasks() {
     const input = document.getElementById('new-subtask');
     const addBtn = document.getElementById('add-subtask');
@@ -138,7 +141,7 @@ function initializeSubtasks() {
     input.onkeydown = e => e.key === 'Enter' && addSubtask(input, list);
 }
 
-// Helper function: Create an image element with specified attributes
+/**Create an icon element with specified attributes */
 function createIcon(src, alt, className) {
     const icon = document.createElement('img');
     icon.src = src;
@@ -147,7 +150,7 @@ function createIcon(src, alt, className) {
     return icon;
 }
 
-// Helper function: Toggle visibility of icons (Pencil, Trash, Check)
+/** Toggle visibility of edit, delete, and save icons for subtasks */
 function toggleIcons(pencilIcon, trashIcon, checkIcon, editMode) {
     if (editMode) {
         pencilIcon.classList.add('d-none');
@@ -160,7 +163,7 @@ function toggleIcons(pencilIcon, trashIcon, checkIcon, editMode) {
     }
 }
 
-// Helper function: Edit the subtask
+/** Edit the subtask in the subtask list */
 function editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     pencilIcon.classList.add('d-none');
     checkIcon.classList.remove('d-none');
@@ -169,7 +172,7 @@ function editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     trashIcon.classList.add('editing')
 }
 
-// Helper function: Save the edited subtask
+/** Save the edited subtask */
 function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     pencilIcon.classList.remove('d-none');
     checkIcon.classList.add('d-none');
@@ -177,15 +180,25 @@ function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     trashIcon.classList.remove('editing');
 }
 
+/** Create the HTML for a subtask element */
 function createSubtaskHTML(task) {
     return `${task}<div class="subtask-controls">
         <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
         <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
         <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
     </div>`;
+    return `
+        <div>
+            <span class="subtask-marker">•</span>${task}
+        </div>
+        <div class="subtask-controls">
+            <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
+            <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
+            <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
+        </div>`;
 }
 
-// Helper function: Add a subtask to the list
+/** Add a subtask to the list */
 function addSubtask(input, list) {
     const task = input.value.trim();
     if (!task) return;
@@ -212,7 +225,7 @@ function addSubtask(input, list) {
     };
 }
 
-// Helper function: Initialize priority buttons
+/** Initialize the priority buttons */
 function initializePriorityButtons() {
     document.querySelectorAll('.prio-btn').forEach(btn =>
         btn.onclick = () => {
@@ -224,11 +237,11 @@ function initializePriorityButtons() {
     const mediumBtn = document.querySelector('.prio-btn[data-prio="medium"]');
     if (mediumBtn) {
         mediumBtn.classList.add('active');
-        selectedPriority = mediumBtn.dataset.prio; // Ensure the variable is updated
+        selectedPriority = mediumBtn.dataset.prio;
     }
 }
 
-// Helper function: Toggle dropdown
+/** Toggle dropdown visibility */
 function toggleDropdown(event, toggle, options) {
     event.stopPropagation();
     const visible = options.classList.contains('visible');
@@ -237,7 +250,7 @@ function toggleDropdown(event, toggle, options) {
     toggle.classList.toggle('open', !visible);
 }
 
-// Helper function: Initialize Category Dropdown
+/** Initialize the category dropdown functionality */
 function initializeCategoryDropdown() {
     const categoryToggle = document.getElementById('dropdown-toggle-category');
     const categoryContent = document.getElementById('dropdown-options-category');
@@ -250,7 +263,7 @@ function initializeCategoryDropdown() {
     };
 }
 
-// Helper function: Select dropdown option
+/** Select a dropdown option */
 function selectDropdownOption(event, toggle, option) {
     const category = option.textContent;
     toggle.querySelector('span').textContent = category;
@@ -260,6 +273,7 @@ function selectDropdownOption(event, toggle, option) {
     document.querySelector('#dropdown-toggle-category span').textContent = category;
 }
 
+/** Handle the task submission to the database */
 async function postTaskToDatabase(event) {
     event.preventDefault();
     const form = document.getElementById('task-form');
@@ -279,6 +293,7 @@ async function postTaskToDatabase(event) {
     }
 }
 
+/** Prevent form submission when Enter is pressed */
 function preventFormSubmissionOnEnter() {
     const form = document.getElementById('task-form');
     form.onkeydown = function(event) {
@@ -288,7 +303,7 @@ function preventFormSubmissionOnEnter() {
     };
 }
 
-// Helper function: Create the task object
+/** Create the task object from the form data */
 function createTaskObject(form) {
     const formData = new FormData(form);
     return {
@@ -302,7 +317,7 @@ function createTaskObject(form) {
     };
 }
 
-// Helper function: Upload task to Firebase
+/** Upload the task object to Firebase */
 async function uploadTaskToFirebase(task) {
     const response = await fetch(`${BASE_URL}/tasks.json`, {
         method: 'POST',
@@ -314,44 +329,37 @@ async function uploadTaskToFirebase(task) {
     }
 }
 
-// Helper function: Reset form and show notification
+/** Reset the form and show a notification */
 function resetFormAndNotify(form) {
     form.reset();
     alert('Task successfully saved to Firebase!');
 }
 
-// Helper function: Get selected contacts
+/** Get the selected contacts from the task form */
 function getSelectedContacts() {
     return Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
         .map(el => {
             const initialsCircle = el.querySelector('.initials-circle');
-            const contactName = contacts.find(contact => getInitials(contact.name) === initialsCircle.textContent)?.name;
-            return contactName || '';
-        })
-        .filter(Boolean);
+            return initialsCircle?.textContent || '';
+        });
 }
 
-// Utility function: Generate initials from name
-function getInitials(name) {
-    const [firstName, lastName] = name.split(' ');
-    return `${firstName[0]}${lastName[0]}`.toUpperCase();
+/** Utility function to create an element with class */
+function createElementWithClass(tagName, className, textContent = '', children = [], id = '') {
+    const element = document.createElement(tagName);
+    if (className) element.classList.add(className);
+    if (textContent) element.textContent = textContent;
+    if (id) element.id = id;
+    children.forEach(child => element.appendChild(child));
+    return element;
 }
 
-// Utility function: Create an element with a class
-function createElementWithClass(tag, className, text = '', children = [], id = '') {
-    const el = document.createElement(tag);
-    if (className) el.classList.add(className);
-    if (text) el.textContent = text;
-    if (id) el.id = id;
-    children.forEach(child => el.appendChild(child));
-    return el;
-}
-
-// Utility function: Generate a random color
+/** Utility function: Generate a random color */
 function getRandomColor() {
     return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 
+/** Clear the task form by resetting all form fields and UI elements to their initial state */
 function clearForm() {
     const taskTitle = document.getElementById('task-title');
     if (taskTitle) taskTitle.value = '';
@@ -375,7 +383,7 @@ function clearForm() {
     if (dropdownContent) dropdownContent.style.display = 'none';
 }
 
-// Initialize the "Clear" button behavior
+/** Initialize the "Clear" button behavior*/
 function initializeClearButton() {
     const clearButton = document.querySelector('.add_task_clear_btn');
     clearButton.onclick = (event) => {

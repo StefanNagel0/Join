@@ -1,15 +1,11 @@
-/* Tasks are loaded in */
 function onload() {
     loadTask("/tasks");
 }
 
-/* Global definition of task */
 let globalTasks = {};
 
-/* Define Firebase URL */
 const BASE_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/";
 
-/* Tasks are loaded from the database */
 async function loadTask(path = "/tasks") {
     let response = await fetch(BASE_URL + path + ".json");
     let tasks = await response.json();
@@ -17,9 +13,8 @@ async function loadTask(path = "/tasks") {
     displayTasks(tasks);
 }
 
-/* Rendering from the task */
 function displayTasks(tasks) {
-    const tasksContainer = document.getElementById("tasksContainerToDo");
+    const tasksContainer = document.getElementById("tasksContainer");
     tasksContainer.innerHTML = "";
 
     for (const taskId in tasks) {
@@ -48,7 +43,6 @@ function displayTasks(tasks) {
     }
 }
 
-/* Add task */
 async function postTask() {
     const title = document.getElementById("task-title").value;
     const description = document.getElementById("task-desc").value;
@@ -77,7 +71,6 @@ async function postTask() {
     onload();
 }
 
-/* Send task to server */
 async function postTaskToServer(data) {
     const response = await fetch(`${BASE_URL}/tasks.json`, {
         method: "POST",

@@ -7,8 +7,11 @@ function initializeApp() {
     initializePriorityButtons();
     initializeSubtasks();
     setDateValidation();
+<<<<<<< HEAD
     initializeClearButton();
     preventFormSubmissionOnEnter();
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 }
 
 // Helper function: Create initials circle
@@ -131,16 +134,11 @@ function initializeSubtasks() {
     const input = document.getElementById('new-subtask');
     const addBtn = document.getElementById('add-subtask');
     const clearBtn = document.getElementById('clear-subtask');
-
     const list = document.getElementById('subtask-list');
     input.oninput = () => clearBtn.classList.toggle('d-none', !input.value.trim());
     clearBtn.onclick = () => (input.value = '') && clearBtn.classList.add('d-none');
     addBtn.onclick = () => addSubtask(input, list);
-    input.onkeydown = e => {
-        if (e.key === 'Enter') {
-            addSubtask(input, list);
-        }
-    };
+    input.onkeydown = e => e.key === 'Enter' && addSubtask(input, list);
 }
 
 // Helper function: Create an image element with specified attributes
@@ -167,22 +165,24 @@ function toggleIcons(pencilIcon, trashIcon, checkIcon, editMode) {
 
 // Helper function: Edit the subtask
 function editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
-    subtaskElement.classList.add('editing');
     pencilIcon.classList.add('d-none');
     checkIcon.classList.remove('d-none');
     subtaskElement.contentEditable = 'true';
     subtaskElement.focus();
+<<<<<<< HEAD
     trashIcon.classList.add('editing')
     const marker = subtaskElement.querySelector('.subtask-marker');
     if(marker) marker.style.display = "none";
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 }
 
 // Helper function: Save the edited subtask
 function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
-    subtaskElement.classList.remove('editing')
     pencilIcon.classList.remove('d-none');
     checkIcon.classList.add('d-none');
     subtaskElement.contentEditable = 'false';
+<<<<<<< HEAD
     trashIcon.classList.remove('editing');
     const marker = subtaskElement.querySelector('.subtask-marker');
     if(marker) marker.style.display = 'inline';
@@ -198,23 +198,35 @@ function createSubtaskHTML(task) {
             <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
             <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
         </div>`;
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 }
 
 // Helper function: Add a subtask to the list
 function addSubtask(input, list) {
     const task = input.value.trim();
     if (!task) return;
-    const subtask = document.createElement('li');
-    subtask.className = 'subtask-item';
-    subtask.innerHTML = createSubtaskHTML(task);
-    list.appendChild(subtask);
-    subtask.querySelector('.subtask-trash').onclick = () => subtask.remove();
-    subtask.querySelector('.subtask-edit').onclick = () => editSubtask(subtask, ...subtask.querySelectorAll('img'));
-    subtask.querySelector('.subtask-check').onclick = () => saveSubtask(subtask, ...subtask.querySelectorAll('img'));
-    subtask.onmouseenter = () => subtask.querySelector('.subtask-controls').classList.remove('d-none');
-    subtask.onmouseleave = () => subtask.contentEditable !== 'true' && subtask.querySelector('.subtask-controls').classList.add('d-none');
-    input.value = '';
-    document.getElementById('clear-subtask').classList.add('d-none');
+    const subtaskElement = document.createElement('li');
+    subtaskElement.classList.add('subtask-item');
+    subtaskElement.textContent = task;
+    const controlsContainer = document.createElement('div');
+    controlsContainer.classList.add('subtask-controls');
+    const pencilIcon = createIcon("../assets/svg/summary/pencil2.svg", "Edit", 'subtask-edit');
+    const trashIcon = createIcon("../assets/svg/add_task/trash.svg", "Delete", 'subtask-trash');
+    const checkIcon = createIcon("../assets/svg/add_task/check_create_task.svg", "Save", 'subtask-check');
+    checkIcon.classList.add('d-none');
+    controlsContainer.append(pencilIcon, trashIcon, checkIcon);
+    subtaskElement.appendChild(controlsContainer);
+    list.appendChild(subtaskElement);
+    trashIcon.onclick = () => subtaskElement.remove();
+    pencilIcon.onclick = () => editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon);
+    checkIcon.onclick = () => saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon);
+    subtaskElement.onmouseover = () => controlsContainer.classList.remove('d-none');
+    subtaskElement.onmouseleave = () => {
+        if (subtaskElement.contentEditable !== 'true') {
+            controlsContainer.classList.add('d-none');
+        }
+    };
 }
 
 // Helper function: Initialize priority buttons
@@ -356,6 +368,7 @@ function createElementWithClass(tag, className, text = '', children = [], id = '
 function getRandomColor() {
     return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
+<<<<<<< HEAD
 
 function clearForm() {
     const taskTitle = document.getElementById('task-title');
@@ -393,3 +406,5 @@ function initializeClearButton() {
         clearForm();
     };
 }
+=======
+>>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)

@@ -35,6 +35,10 @@ function boardAddTask() {
     overlayRef.innerHTML = boardAddTaskTemplate();
     darkOverlay.classList.add("show");
     overlayRef.classList.add("show");
+
+    initializeContactsDropdown();
+    initializeSubtasks();
+    initializePriorityButtons();
 }
 
 /* Closure of the task */
@@ -130,4 +134,3 @@ function searchTask() {
     });
     displayTasks(Object.fromEntries(filteredTasks));
 }
-

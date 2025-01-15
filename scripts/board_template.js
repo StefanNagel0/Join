@@ -35,7 +35,7 @@ function boardTemplate() {
                     <h3 class="boardColumnHeaderH3">To do</h3>
                     <p onclick="boardAddTask()" class="boardAddTaskText">+</p>
                     </div>
-                <div id="tasksContainer" draggable="true" id="to-do-tasks"></div>
+                <div id="tasksContainer"></div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">

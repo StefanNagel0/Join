@@ -383,3 +383,4 @@ function initializeClearButton() {
         clearForm();
     };
 }
+    

@@ -281,6 +281,13 @@ function createSuccessMessage(message, targetClass) {
   }
 } 
 
+function validatePhoneInput(event) {
+  const input = event.target;
+  input.value = input.value.replace(/[^0-9]/g, '');
+}
+
+document.getElementById("contact-phone").addEventListener("input", validatePhoneInput);
+
 document.getElementById("contact-name").addEventListener("input", handleNameInput);
 document.getElementById("contact-form").addEventListener("submit", handleFormSubmit);
 

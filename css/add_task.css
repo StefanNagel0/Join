@@ -51,7 +51,6 @@
 
 .add_task_left_box label {
     font-weight: 400;
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
     color: #2A3647;
 }
 #task-desc{
@@ -239,7 +238,6 @@ textarea::placeholder {
 
 .add_task_right_box label {
     font-weight: 400;
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
     color: #2A3647;
 }
 #task-category:invalid {
@@ -248,7 +246,6 @@ textarea::placeholder {
 
 .prio_text {
     font-weight: 400;
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
     color: #2A3647;
 }
 .dropdown-container {
@@ -361,7 +358,6 @@ textarea::placeholder {
 
 #subtask-list:hover {
     background-color: #eaeaeaa9;
->>>>>>> parent of 2680358 (Merge branch 'main' of https://github.com/StefanNagel0/Join into main)
 }
 .subtask-edit, .subtask-trash, .subtask-check {
     width: 20px;
@@ -427,3 +423,4 @@ color: red;
     height: 24px;
     width: 24px;
 }
+

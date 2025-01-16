@@ -9,7 +9,8 @@ function initializeApp() {
     initializeSubtasks();
     setDateValidation();
     initializeClearButton();
-    document.querySelector('.add_task_submit_btn button').onclick = postTaskToDatabase;
+    preventFormSubmissionOnEnter();
+    // document.querySelector('.add_task_submit_btn button').onclick = postTaskToDatabase;
 }
 
 /** Create an element with initials circle based on contact's name */
@@ -165,11 +166,14 @@ function toggleIcons(pencilIcon, trashIcon, checkIcon, editMode) {
 
 /** Edit the subtask in the subtask list */
 function editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
+    
     pencilIcon.classList.add('d-none');
     checkIcon.classList.remove('d-none');
     subtaskElement.contentEditable = 'true';
     subtaskElement.focus();
     trashIcon.classList.add('editing')
+    const marker = subtaskElement.querySelector('.subtask-marker');
+    if(marker) marker.style.display = "none";
 }
 
 /** Save the edited subtask */
@@ -178,19 +182,16 @@ function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     checkIcon.classList.add('d-none');
     subtaskElement.contentEditable = 'false';
     trashIcon.classList.remove('editing');
+    const marker = subtaskElement.querySelector('.subtask-marker');
+    if(marker) marker.style.display = 'inline';
 }
 
 /** Create the HTML for a subtask element */
 function createSubtaskHTML(task) {
-    return `${task}<div class="subtask-controls">
-        <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
-        <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
-        <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
-    </div>`;
     return `
-        <div>
-            <span class="subtask-marker">•</span>${task}
-        </div>
+    <div>
+    <span class="subtask-marker">•</span>${task}
+    </div>
         <div class="subtask-controls">
             <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
             <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
@@ -367,6 +368,10 @@ function clearForm() {
     const taskDate = document.getElementById('task-date');
     if (taskDate) taskDate.value = '';
     document.querySelectorAll('.prio-btn').forEach(btn => btn.classList.remove('active'));
+    const mediumBtn = document.querySelector('.prio-btn[data-prio="medium"]');
+    if (mediumBtn) {
+        mediumBtn.classList.add('active');
+        selectedPriority = mediumBtn.dataset.prio;}
     const categoryText = document.querySelector('#dropdown-toggle-category span');
     if (categoryText) categoryText.textContent = 'Select task category';
     const subtaskList = document.getElementById('subtask-list');
@@ -376,8 +381,7 @@ function clearForm() {
     const dropdownToggle = document.getElementById('dropdown-toggle');
     if (dropdownToggle) {
         const span = dropdownToggle.querySelector('span');
-        if (span) span.textContent = 'Select contacts to assign';
-    }
+        if (span) span.textContent = 'Select contacts to assign';}
     const dropdownContent = document.getElementById('dropdown-content');
     if (dropdownContent) dropdownContent.style.display = 'none';
 }

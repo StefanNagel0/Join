@@ -47,6 +47,7 @@
     font-size: 61px;
     font-weight: 700;
 }
+
 .add_task_form_box{
     display: flex;
     justify-content: left;
@@ -54,6 +55,7 @@
     margin-top: 48px;
     gap:47px;
 }
+
 .add_task_left_box{
     display: flex;
     flex-direction: column;
@@ -331,8 +333,19 @@ textarea::placeholder {
     border: 1px solid #D1D1D1;
     border-radius: 10px;
 }
+
+#new-subtask:focus {
+    outline: none;
+    border: 1px solid #28ABE2;
+    border-bottom: 2px solid #28ABE2;    
+    border-radius: 10px;
+    transition: box-shadow 0.1s ease-in-out, border 0.1s ease-in-out;
+}
+
 #clear-subtask {
     right: 40px;
+    border-right: 1px solid #2A3647;
+    padding-right: 4px;
 }
 
 #add-subtask {
@@ -394,14 +407,20 @@ textarea::placeholder {
     background-color: #eaeaeaa9;
 }
 .subtask-edit, .subtask-trash, .subtask-check {
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
     cursor: pointer;
 }
 
 .subtask-edit,
 .subtask-check {
     filter: grayscale(100%) brightness(0) sepia(100%) hue-rotate(180deg) saturate(1000%) contrast(100%) drop-shadow(0 0 0 #2A3647);
+    border-right: 1px solid #2A3647;
+    padding-right: 8px;
+}
+
+.subtask-trash.editing {
+    border-right: 1px solid #2A3647;
 }
 
 .add_task_required_info_box{

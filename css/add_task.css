@@ -401,11 +401,10 @@ textarea::placeholder {
 
 #subtask-list {
     border-radius: 10px;
+    padding: 0;
 }
 
-#subtask-list:hover {
-    background-color: #eaeaeaa9;
-}
+
 .subtask-edit, .subtask-trash, .subtask-check {
     width: 26px;
     height: 26px;

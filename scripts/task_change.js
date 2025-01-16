@@ -19,8 +19,12 @@ async function loadTask(path = "/tasks") {
 
 /* Rendering from the task */
 function displayTasks(tasks) {
-    const tasksContainer = document.getElementById("tasksContainerToDo");
-    tasksContainer.innerHTML = "";
+    document.getElementById("tasksContainerToDo").innerHTML = "";
+    document.getElementById("tasksContainerInProgress").innerHTML = "";
+    document.getElementById("tasksContainerAwaitFeedback").innerHTML = "";
+    document.getElementById("tasksContainerDone").innerHTML = "";
+    // const tasksContainer = document.getElementById("tasksContainerToDo");
+    // tasksContainer.innerHTML = "";
 
     for (const taskId in tasks) {
         const task = tasks[taskId];
@@ -44,7 +48,22 @@ function displayTasks(tasks) {
             </div>
         </div>
         `;
-        tasksContainer.appendChild(taskElement);
+
+        if (task.mainCategory === "To-Do") {
+            document.getElementById("tasksContainerToDo").appendChild(taskElement);
+        } else if (task.mainCategory === "In Progress") {
+            document.getElementById("tasksContainerInProgress").appendChild(taskElement);
+        } else if (task.mainCategory === "AwaitFeedback") {
+            document.getElementById("tasksContainerAwaitFeedback").appendChild(taskElement);
+        } else if (task.mainCategory === "Done") {
+            document.getElementById("tasksContainerDone").appendChild(taskElement);
+        }
+        // tasksContainer.appendChild(taskElement);
+
+        for (const taskId in tasks) {
+            const task = tasks[taskId];
+            console.log(`Task ID: ${taskId}, Mainkategorie: ${task.mainCategory}`);
+        }
     }
 }
 

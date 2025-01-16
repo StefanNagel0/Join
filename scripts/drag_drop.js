@@ -23,11 +23,11 @@ function drop(event, newStatus) {
 /* Updates the task in the data structure and database */
 function moveTaskToNewStatus(taskId, newStatus) {
     const task = globalTasks[taskId];
-    if (!task) {
-        console.error(`Task mit ID ${taskId} nicht gefunden.`);
-        return;
-    }
-    task.category = newStatus;
+    // if (!task) {
+    //     console.error(`Task mit ID ${taskId} nicht gefunden.`);
+    //     return;
+    // }
+    task.mainCategory = newStatus;
     updateTaskInDatabase(taskId, task);
     displayTasks(globalTasks);
 }

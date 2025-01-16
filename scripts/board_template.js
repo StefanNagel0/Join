@@ -51,7 +51,7 @@ function boardTemplate() {
                 </div>
                 <div id="tasksContainerAwaitFeedback" ondrop="drop(event, 'AwaitFeedback')" ondragover="allowDrop(event)"></div>
             </div>
-            <div class="board_column">
+            <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">Done</h3>
                 </div>

@@ -27,7 +27,7 @@ function displayTasks(tasks) {
         const taskElement = document.createElement("div");
         taskElement.className = "task";
         taskElement.innerHTML = `
-        <div class="taskContainer" onclick="openTaskOverlay('${taskId}')">
+        <div draggable="true" ondragstart="dragInit(event, '${taskId}')" class="taskContainer" onclick="openTaskOverlay('${taskId}')">
             <div class="taskChildContainer">
                 ${taskCategoryTemplate(task)}
                 <div class="taskTitleContainer">

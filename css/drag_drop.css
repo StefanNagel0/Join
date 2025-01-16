@@ -1,0 +1,23 @@
+.task.dragging {
+    opacity: 0.5;
+    border: 2px dashed #000;
+}
+
+.boardColumn.dragover {
+    background-color: #f0f8ff;
+}
+
+.boardColumn.dragover {
+    border: 2px dashed #007bff;
+    background-color: #f0f8ff;
+}
+
+#tasksContainerToDo,
+#tasksContainerInProgress,
+#tasksContainerAwaitFeedback,
+#tasksContainerDone {
+    height: 100hv;
+    border: 1px solid #ccc;
+    padding: 0px;
+    background-color: #f9f9f9;
+}

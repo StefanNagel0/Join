@@ -35,27 +35,27 @@ function boardTemplate() {
                     <h3 class="boardColumnHeaderH3">To do</h3>
                     <p onclick="boardAddTask()" class="boardAddTaskText">+</p>
                     </div>
-                <div id="tasksContainerToDo"></div>
+                <div id="tasksContainerToDo" ondrop="drop(event, 'ToDo')" ondragover="allowDrop(event)"></div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">In progress</h3>
                     <p onclick="boardAddTask()" class="boardAddTaskText">+</p>
                 </div>
-                <div id="tasksContainerInProgress"></div>
+                <div id="tasksContainerInProgress" ondrop="drop(event, 'InProgress')" ondragover="allowDrop(event)"></div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">Await feedback</h3>
                     <p onclick="boardAddTask()" class="boardAddTaskText">+</p>
                 </div>
-                <div id="tasksContainerAwaitFeedback"></div>
+                <div id="tasksContainerAwaitFeedback" ondrop="drop(event, 'AwaitFeedback')" ondragover="allowDrop(event)"></div>
             </div>
             <div class="board_column">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">Done</h3>
                 </div>
-                <div id="tasksContainerDone"></div>
+                <div id="tasksContainerDone" ondrop="drop(event, 'Done')" ondragover="allowDrop(event)"></div>
             </div>
         </div>
     </div>

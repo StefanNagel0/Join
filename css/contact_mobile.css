@@ -20,6 +20,34 @@
         padding: 0;
     }
 
+    .flexdetails {
+        display: none;
+    }
+
+    .header_help_user {
+        padding: 0;
+    }
+
+    .overcontent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .overlay-left {
+    background-color: #2A3647;
+    padding: 66px 48px 66px 48px;
+    width: 396px;
+    display: flex;
+    height: 594px;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: white;
+    border-bottom-left-radius: 30px;
+    }
+
     .nav_header {
         padding: 20px 16px;
         width: 428px;

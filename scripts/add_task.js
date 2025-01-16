@@ -9,7 +9,8 @@ function initializeApp() {
     initializeSubtasks();
     setDateValidation();
     initializeClearButton();
-    document.querySelector('.add_task_submit_btn button').onclick = postTaskToDatabase;
+    preventFormSubmissionOnEnter();
+    // document.querySelector('.add_task_submit_btn button').onclick = postTaskToDatabase;
 }
 
 /** Create an element with initials circle based on contact's name */
@@ -165,32 +166,33 @@ function toggleIcons(pencilIcon, trashIcon, checkIcon, editMode) {
 
 /** Edit the subtask in the subtask list */
 function editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
+    subtaskElement.classList.add('editing');
     pencilIcon.classList.add('d-none');
     checkIcon.classList.remove('d-none');
     subtaskElement.contentEditable = 'true';
     subtaskElement.focus();
     trashIcon.classList.add('editing')
+    const marker = subtaskElement.querySelector('.subtask-marker');
+    if(marker) marker.style.display = "none";
 }
 
 /** Save the edited subtask */
 function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
+    subtaskElement.classList.remove('editing');
     pencilIcon.classList.remove('d-none');
     checkIcon.classList.add('d-none');
     subtaskElement.contentEditable = 'false';
     trashIcon.classList.remove('editing');
+    const marker = subtaskElement.querySelector('.subtask-marker');
+    if(marker) marker.style.display = 'inline';
 }
 
 /** Create the HTML for a subtask element */
 function createSubtaskHTML(task) {
-    return `${task}<div class="subtask-controls">
-        <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
-        <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
-        <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
-    </div>`;
     return `
-        <div>
-            <span class="subtask-marker">•</span>${task}
-        </div>
+    <div>
+    <span class="subtask-marker">•</span>${task}
+    </div>
         <div class="subtask-controls">
             <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
             <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
@@ -198,31 +200,24 @@ function createSubtaskHTML(task) {
         </div>`;
 }
 
+
 /** Add a subtask to the list */
 function addSubtask(input, list) {
     const task = input.value.trim();
     if (!task) return;
     const subtaskElement = document.createElement('li');
     subtaskElement.classList.add('subtask-item');
-    subtaskElement.textContent = task;
-    const controlsContainer = document.createElement('div');
-    controlsContainer.classList.add('subtask-controls');
-    const pencilIcon = createIcon("../assets/svg/summary/pencil2.svg", "Edit", 'subtask-edit');
-    const trashIcon = createIcon("../assets/svg/add_task/trash.svg", "Delete", 'subtask-trash');
-    const checkIcon = createIcon("../assets/svg/add_task/check_create_task.svg", "Save", 'subtask-check');
-    checkIcon.classList.add('d-none');
-    controlsContainer.append(pencilIcon, trashIcon, checkIcon);
-    subtaskElement.appendChild(controlsContainer);
-    list.appendChild(subtaskElement);
-    trashIcon.onclick = () => subtaskElement.remove();
+    subtaskElement.innerHTML = createSubtaskHTML(task);
+    const pencilIcon = subtaskElement.querySelector('.subtask-edit');
+    const trashIcon = subtaskElement.querySelector('.subtask-trash');
+    const checkIcon = subtaskElement.querySelector('.subtask-check');
     pencilIcon.onclick = () => editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon);
     checkIcon.onclick = () => saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon);
-    subtaskElement.onmouseover = () => controlsContainer.classList.remove('d-none');
-    subtaskElement.onmouseleave = () => {
-        if (subtaskElement.contentEditable !== 'true') {
-            controlsContainer.classList.add('d-none');
-        }
-    };
+    trashIcon.onclick = () => subtaskElement.remove();
+    list.appendChild(subtaskElement);
+    input.value = '';
+    const clearBtn = document.getElementById('clear-subtask');
+    if (clearBtn) clearBtn.classList.add('d-none');
 }
 
 /** Initialize the priority buttons */
@@ -367,6 +362,10 @@ function clearForm() {
     const taskDate = document.getElementById('task-date');
     if (taskDate) taskDate.value = '';
     document.querySelectorAll('.prio-btn').forEach(btn => btn.classList.remove('active'));
+    const mediumBtn = document.querySelector('.prio-btn[data-prio="medium"]');
+    if (mediumBtn) {
+        mediumBtn.classList.add('active');
+        selectedPriority = mediumBtn.dataset.prio;}
     const categoryText = document.querySelector('#dropdown-toggle-category span');
     if (categoryText) categoryText.textContent = 'Select task category';
     const subtaskList = document.getElementById('subtask-list');
@@ -376,8 +375,7 @@ function clearForm() {
     const dropdownToggle = document.getElementById('dropdown-toggle');
     if (dropdownToggle) {
         const span = dropdownToggle.querySelector('span');
-        if (span) span.textContent = 'Select contacts to assign';
-    }
+        if (span) span.textContent = 'Select contacts to assign';}
     const dropdownContent = document.getElementById('dropdown-content');
     if (dropdownContent) dropdownContent.style.display = 'none';
 }
@@ -390,4 +388,3 @@ function initializeClearButton() {
         clearForm();
     };
 }
-    

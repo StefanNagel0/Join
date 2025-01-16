@@ -1,47 +1,134 @@
+.navbar_img_mobile {
+    display: none;
+}
+
+
 @media screen and (max-width: 700px) {
-    .btnclass {
-        display: none;
+    /* Navbar */
+    .navbar_main {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        background-color: #2A3647;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 1000;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional: Schatteneffekt */
     }
 
+    .nav_header {
+        padding: 20px 16px;
+    }
+
+    .navbar_img_mobile {
+        display: flex;
+    }
+
+    #user-initials-button {
+        height: 40px;
+        width: 40px;
+    }
+
+    /* Buttons in der Navbar */
+    .navbar_main_buttons {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    /* Navbar-Buttons */
+    .navbar_buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+        color: #CDCDCD;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .navbar_buttons:hover {
+        background-color: #1a2533;
+        border-radius: 10px; /* Optional: abgerundete Ecken beim Hover */
+        padding: 5px;
+    }
+
+    /* Icons in den Buttons */
+    .navbar_buttons_img img {
+        height: 24px;
+        width: 24px;
+    }
+
+    /* Text in den Buttons */
+    .navbar_buttons_text p {
+        margin: 0;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    /* Scrollbereich */
+    .scrolllist {
+        margin-bottom: 70px; /* Platz schaffen, damit die Navbar den Inhalt nicht verdeckt */
+    }
+
+    /* Buttons in der mobilen Ansicht */
     .btnmobile {
         display: flex;
-        z-index: 1005;
+        align-items: center;
+        justify-content: center;
         position: fixed;
-        bottom: 20px;
+        bottom: 90px; /* Über der Navbar platzieren */
         right: 20px;
+        z-index: 1005;
     }
 
     .btnmob {
+        width: 56px;
+        height: 56px;
         background-color: #2A3647;
         color: white;
-        height: 56px;
-        width: 56px;
-        border-radius: 46px;
-        gap: 10px;
-        border-color: transparent;
-    }
-
-    /* Navbar */
-    .navbar_main {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    display: flex;
-    background-color: #2A3647;
-    z-index: 1000;
-    }
-
-    .navbar_main_switches {
+        font-size: 16px;
+        border-radius: 50%;
+        border: none;
         display: flex;
-        padding-top: 0;
-        margin-top: 0;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .btnmob:hover {
+        transform: scale(1.1);
+    }
+
+    .header_text {
+        display:none;
+    }
+
+    #user-popup {
+        z-index: 1001;
     }
 
     .navbar_main_buttons {
         display: flex;
-        flex-direction: row;
+;
+    justify-content: center;
+    /* margin: 0; */
+    padding: 0;
+    display: flex
+    ;
+        justify-content: center;
+        /* margin: 0; */
+        padding: 0;
+        height: 80px;
+        margin: 0;
     }
 
     .navbar_img {

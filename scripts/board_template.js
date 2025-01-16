@@ -107,7 +107,7 @@ function boardAddTaskTemplate() {
                         <span>Select task category</span>
                         <div class="dropdown-arrow"></div>
                     </div>
-                                            	    <ul class="dropdown-options hidden" id="dropdown-options">
+                    <ul class="dropdown-options hidden" id="dropdown-options">
                         <li class="dropdown-option">User Story</li>
                         <li class="dropdown-option">Technical Task</li>
                     </ul>

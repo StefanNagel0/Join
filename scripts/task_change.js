@@ -64,8 +64,9 @@ function displayTasks(tasks) {
             const task = tasks[taskId];
             // console.log(`Task ID: ${taskId}, Mainkategorie: ${task.mainCategory}`);
         }
-        emptyTaskContainer();
+
     }
+    emptyTaskContainer();
 }
 
 /*  */
@@ -130,21 +131,27 @@ async function postTaskToServer(data) {
     return await response.json();
 }
 
+
 function emptyTaskContainer() {
-    const container = document.getElementById("tasksContainerAwaitFeedback");
-    if (container.innerHTML === "") {
-        container.innerHTML = `<h1>Keine Aufgaben</h1>`;
+    const containers = [
+        "tasksContainerAwaitFeedback",
+        "tasksContainerInProgress",
+        "tasksContainerDone",
+        "tasksContainerToDo"
+    ];
+
+    containers.forEach(containerId => {
+        const container = document.getElementById(containerId);
+        if (container.innerHTML.trim() === "") {
+            container.innerHTML = `<div class='noTasksParent'><p class='noTasksChild'>No tasks To do</p></div>`;
+        }
+    });
+}
+
+function addTaskToContainer(containerId, taskHTML) {
+    const container = document.getElementById(containerId);
+    if (container.innerHTML.trim() === `<div class='noTasksParent'><p class='noTasksChild'>No tasks To do</p></div>`) {
+        container.innerHTML = "";
     }
-    const container2 = document.getElementById("tasksContainerInProgress");
-    if (container2.innerHTML === "") {
-        container2.innerHTML = `<h1>Keine Aufgaben</h1>`;
-    }
-    const container3 = document.getElementById("tasksContainerDone");
-    if (container3.innerHTML === "") {
-        container3.innerHTML = `<h1>Keine Aufgaben</h1>`;
-    }
-    const container4 = document.getElementById("tasksContainerToDo");
-    if (container4.innerHTML === "") {
-        container4.innerHTML = `<h1>Keine Aufgaben</h1>`;
-    }
+    container.innerHTML += taskHTML;
 }

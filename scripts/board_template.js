@@ -33,21 +33,21 @@ function boardTemplate() {
             <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">To do</h3>
-                    <p onclick="boardAddTask()" class="boardAddTaskText">+</p>
+                    <p onclick="getToDoButton()" class="boardAddTaskText">+</p>
                     </div>
                 <div id="tasksContainerToDo" ondrop="drop(event, 'ToDo')" ondragover="allowDrop(event)"></div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">In progress</h3>
-                    <p onclick="boardAddTask()" class="boardAddTaskText">+</p>
+                    <p onclick="getInProgressButton()" class="boardAddTaskText">+</p>
                 </div>
                 <div id="tasksContainerInProgress" ondrop="drop(event, 'InProgress')" ondragover="allowDrop(event)"></div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">Await feedback</h3>
-                    <p onclick="boardAddTask()" class="boardAddTaskText">+</p>
+                    <p onclick="getAwaitFeedbackButton()" class="boardAddTaskText">+</p>
                 </div>
                 <div id="tasksContainerAwaitFeedback" ondrop="drop(event, 'AwaitFeedback')" ondragover="allowDrop(event)"></div>
             </div>

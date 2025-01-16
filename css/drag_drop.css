@@ -16,8 +16,7 @@
 #tasksContainerInProgress,
 #tasksContainerAwaitFeedback,
 #tasksContainerDone {
-    height: 100hv;
-    border: 1px solid #ccc;
-    padding: 0px;
-    background-color: #f9f9f9;
+    min-height: 100hv;
+    /* border: 1px solid #ccc; */
+    background-color: rgb(246,247,248);
 }

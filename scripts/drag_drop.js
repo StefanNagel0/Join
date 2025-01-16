@@ -16,17 +16,12 @@ function drop(event, newStatus) {
     event.preventDefault();
     const taskId = event.dataTransfer.getData("text/plain");
     console.log(`Task ID: ${taskId}, New Status: ${newStatus}`);
-    
     moveTaskToNewStatus(taskId, newStatus);
 }
 
 /* Updates the task in the data structure and database */
 function moveTaskToNewStatus(taskId, newStatus) {
     const task = globalTasks[taskId];
-    // if (!task) {
-    //     console.error(`Task mit ID ${taskId} nicht gefunden.`);
-    //     return;
-    // }
     task.mainCategory = newStatus;
     updateTaskInDatabase(taskId, task);
     displayTasks(globalTasks);

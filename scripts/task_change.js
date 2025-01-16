@@ -6,6 +6,9 @@ function onload() {
 /* Global definition of task */
 let globalTasks = {};
 
+/* Global definition of mainCategory */
+let mainCategory = '';
+
 /* Define Firebase URL */
 const BASE_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/";
 
@@ -59,16 +62,34 @@ function displayTasks(tasks) {
         // tasksContainer.appendChild(taskElement);
         for (const taskId in tasks) {
             const task = tasks[taskId];
-            console.log(`Task ID: ${taskId}, Mainkategorie: ${task.mainCategory}`);
+            // console.log(`Task ID: ${taskId}, Mainkategorie: ${task.mainCategory}`);
         }
+        emptyTaskContainer();
     }
+}
+
+/*  */
+function getToDoButton() {
+    mainCategory = "ToDo";
+    boardAddTask();
+}
+
+function getInProgressButton() {
+    mainCategory = "InProgress";
+    boardAddTask();
+}
+
+function getAwaitFeedbackButton() {
+    mainCategory = "AwaitFeedback";
+    boardAddTask();
 }
 
 /* Add task */
 async function postTask() {
     const title = document.getElementById("task-title").value;
     const description = document.getElementById("task-desc").value;
-    const assignedTo = document.getElementById("task-assigned").textContent.trim();
+    const assignedToElement = document.getElementById("task-assigned");
+    const assignedTo = assignedToElement ? assignedToElement.textContent.trim() : '';
     const dueDate = document.getElementById("task-date").value;
     const priority = document.querySelector('.prio-btn.active')?.dataset.prio || '';
     const category = document.querySelector('#dropdown-toggle-prio span').textContent;
@@ -80,7 +101,8 @@ async function postTask() {
         dueDate,
         priority,
         category,
-        subtasks
+        subtasks,
+        mainCategory
     };
     try {
         const result = await postTaskToServer(taskData);
@@ -108,9 +130,21 @@ async function postTaskToServer(data) {
     return await response.json();
 }
 
-/*  */
-
-function getAwaitFeedbackButton() {
-    mainCategory = "AwaitFeedback";
-    boardAddTask();
+function emptyTaskContainer() {
+    const container = document.getElementById("tasksContainerAwaitFeedback");
+    if (container.innerHTML === "") {
+        container.innerHTML = `<h1>Keine Aufgaben</h1>`;
+    }
+    const container2 = document.getElementById("tasksContainerInProgress");
+    if (container2.innerHTML === "") {
+        container2.innerHTML = `<h1>Keine Aufgaben</h1>`;
+    }
+    const container3 = document.getElementById("tasksContainerDone");
+    if (container3.innerHTML === "") {
+        container3.innerHTML = `<h1>Keine Aufgaben</h1>`;
+    }
+    const container4 = document.getElementById("tasksContainerToDo");
+    if (container4.innerHTML === "") {
+        container4.innerHTML = `<h1>Keine Aufgaben</h1>`;
+    }
 }

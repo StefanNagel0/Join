@@ -30,6 +30,19 @@
     border: none;
 }
 
+.prio-btn.urgent.active {
+    background-color: rgb(255, 61, 0);
+}
+.prio-btn.medium.active {
+    background-color: #FFA800;
+}
+.prio-btn.low.active {
+    background-color: #7AE229;
+}
+.prio-btn.active img {
+    filter: brightness(0) invert(1);
+}
+
 .content_heading h2 {
     font-size: 61px;
     font-weight: 700;
@@ -340,6 +353,16 @@ textarea::placeholder {
     justify-content: space-between;
     align-items: center;
     height: 32px;
+    padding: 0px 8px 0 20px;
+}
+
+.subtask-marker{
+    margin-right: 4px;
+}
+
+.subtask-item:hover {
+    background-color: #eaeaeaa9;
+    border-radius: 10px;
 }
 
 .subtask-item:hover .subtask-controls {
@@ -350,6 +373,17 @@ textarea::placeholder {
     background-color: white;
     border-radius: 0;
     border-bottom: 1px solid #28ABE2;
+}
+
+.subtask-item.editing .subtask-check {
+    border: none;
+}
+
+#subtask-list-container {
+    max-height: 100px;
+    min-height: 100px;
+    overflow-y: auto;
+    margin-top: 8px;
 }
 
 #subtask-list {
@@ -423,4 +457,3 @@ color: red;
     height: 24px;
     width: 24px;
 }
-

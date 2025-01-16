@@ -1,18 +1,18 @@
-/* Tasks are loaded in */
+/* tasks are loaded in */
 function onload() {
     loadTask("/tasks");
 }
 
-/* Global definition of task */
+/* global definition of task */
 let globalTasks = {};
 
-/* Global definition of mainCategory */
+/* global definition of mainCategory */
 let mainCategory = '';
 
-/* Define Firebase URL */
+/* define Firebase URL */
 const BASE_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/";
 
-/* Tasks are loaded from the database */
+/* tasks are loaded from the database */
 async function loadTask(path = "/tasks") {
     let response = await fetch(BASE_URL + path + ".json");
     let tasks = await response.json();
@@ -20,14 +20,12 @@ async function loadTask(path = "/tasks") {
     displayTasks(tasks);
 }
 
-/* Rendering from the task */
+/* rendering from the task */
 function displayTasks(tasks) {
     document.getElementById("tasksContainerToDo").innerHTML = "";
     document.getElementById("tasksContainerInProgress").innerHTML = "";
     document.getElementById("tasksContainerAwaitFeedback").innerHTML = "";
     document.getElementById("tasksContainerDone").innerHTML = "";
-    // const tasksContainer = document.getElementById("tasksContainerToDo");
-    // tasksContainer.innerHTML = "";
     for (const taskId in tasks) {
         const task = tasks[taskId];
         const taskElement = document.createElement("div");
@@ -59,33 +57,33 @@ function displayTasks(tasks) {
         } else if (task.mainCategory === "Done") {
             document.getElementById("tasksContainerDone").appendChild(taskElement);
         }
-        // tasksContainer.appendChild(taskElement);
         for (const taskId in tasks) {
             const task = tasks[taskId];
-            // console.log(`Task ID: ${taskId}, Mainkategorie: ${task.mainCategory}`);
         }
 
     }
     emptyTaskContainer();
 }
 
-/*  */
+/* mainCategory assign */
 function getToDoButton() {
     mainCategory = "ToDo";
     boardAddTask();
 }
 
+/* mainCategory assign */
 function getInProgressButton() {
     mainCategory = "InProgress";
     boardAddTask();
 }
 
+/* mainCategory assign */
 function getAwaitFeedbackButton() {
     mainCategory = "AwaitFeedback";
     boardAddTask();
 }
 
-/* Add task */
+/* add task */
 async function postTask() {
     const title = document.getElementById("task-title").value;
     const description = document.getElementById("task-desc").value;
@@ -116,7 +114,7 @@ async function postTask() {
     onload();
 }
 
-/* Send task to server */
+/* send task to server */
 async function postTaskToServer(data) {
     const response = await fetch(`${BASE_URL}/tasks.json`, {
         method: "POST",
@@ -131,7 +129,7 @@ async function postTaskToServer(data) {
     return await response.json();
 }
 
-
+/* empty task container */
 function emptyTaskContainer() {
     const containers = [
         "tasksContainerAwaitFeedback",
@@ -148,6 +146,7 @@ function emptyTaskContainer() {
     });
 }
 
+/* add task to container */
 function addTaskToContainer(containerId, taskHTML) {
     const container = document.getElementById(containerId);
     if (container.innerHTML.trim() === `<div class='noTasksParent'><p class='noTasksChild'>No tasks To do</p></div>`) {

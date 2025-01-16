@@ -100,19 +100,26 @@ function boardAddTaskTemplate() {
                             src="../assets/svg/add_task/prio_low.svg" alt=""></button>
                 </div>
             </div>
-            <div class="dropdown-container">
-                <div class="gap_8">
-                    <label for="task-category">Category <span class="red_star">*</span></label>
-                    <div class="custom-dropdown" id="dropdown-toggle-prio">
-                        <span>Select task category</span>
-                        <div class="dropdown-arrow"></div>
-                    </div>
-                    <ul class="dropdown-options hidden" id="dropdown-options">
-                        <li class="dropdown-option">User Story</li>
-                        <li class="dropdown-option">Technical Task</li>
-                    </ul>
-                </div>
-            </div>
+                 <div class="dropdown-container">
+                                <div class="gap_8">
+                                    <label for="task-category">Category <span class="red_star">*</span></label>
+                                    <div class="dropdown-container">
+                                        <div class="custom-dropdown" id="dropdown-toggle-category"
+                                            onclick="toggleDropdown(event, this, document.getElementById('dropdown-options-category'))">
+                                            <span>Select task category</span>
+                                            <div class="dropdown-arrow"></div>
+                                        </div>
+                                        <ul required class="dropdown-options hidden" id="dropdown-options-category">
+                                            <li class="dropdown-option" data-category="User Story"
+                                                onclick="selectDropdownOption(event, document.getElementById('dropdown-toggle-category'), this)">
+                                                User Story</li>
+                                            <li class="dropdown-option" data-category="Technical Task"
+                                                onclick="selectDropdownOption(event, document.getElementById('dropdown-toggle-category'), this)">
+                                                Technical Task</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
             <div class="gap_8">
                 <label for="task-subtasks">Subtasks</label>
                 <div id="subtask-container">

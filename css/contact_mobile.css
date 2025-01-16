@@ -4,7 +4,6 @@
 
 
 @media screen and (max-width: 430px) {
-    /* Navbar */
     .navbar_main {
         position: fixed;
         bottom: 0;
@@ -70,7 +69,6 @@
         width: 40px;
     }
 
-    /* Buttons in der Navbar */
     .navbar_main_buttons {
         display: flex;
         flex-direction: row;
@@ -90,7 +88,6 @@
         width: 428px;
     }
 
-    /* Navbar-Buttons */
     .navbar_buttons {
         display: flex;
         flex-direction: column;
@@ -107,34 +104,30 @@
 
     .navbar_buttons:hover {
         background-color: #1a2533;
-        border-radius: 10px; /* Optional: abgerundete Ecken beim Hover */
+        border-radius: 10px;
     }
 
-    /* Icons in den Buttons */
     .navbar_buttons_img img {
         height: 24px;
         width: 24px;
     }
 
-    /* Text in den Buttons */
     .navbar_buttons_text p {
         margin: 0;
         font-size: 12px;
         text-align: center;
     }
 
-    /* Scrollbereich */
     .scrolllist {
-        margin-bottom: 70px; /* Platz schaffen, damit die Navbar den Inhalt nicht verdeckt */
+        margin-bottom: 70px; 
     }
-
-    /* Buttons in der mobilen Ansicht */
+    
     .btnmobile {
         display: flex;
         align-items: center;
         justify-content: center;
         position: fixed;
-        bottom: 90px; /* Über der Navbar platzieren */
+        bottom: 90px;
         right: 20px;
         z-index: 1005;
     }
@@ -166,18 +159,13 @@
     }
 
     .navbar_main_buttons {
-        display: flex;
-;
+    display: flex;
     justify-content: center;
-    /* margin: 0; */
     padding: 0;
-    display: flex
-    ;
-        justify-content: center;
-        /* margin: 0; */
-        padding: 0;
-        height: 80px;
-        margin: 0;
+    justify-content: center;
+    padding: 0;
+    height: 80px;
+    margin: 0;
     }
 
     .navbar_img {

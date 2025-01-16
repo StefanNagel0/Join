@@ -537,3 +537,7 @@
   flex-direction: column;
   gap: 32px;
 }
+
+.btnmobile {
+  display: none;
+}

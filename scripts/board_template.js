@@ -35,27 +35,27 @@ function boardTemplate() {
                     <h3 class="boardColumnHeaderH3">To do</h3>
                     <p onclick="boardAddTask()" class="boardAddTaskText">+</p>
                     </div>
-                <div id="tasksContainer"></div>
+                <div id="tasksContainerToDo"></div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">In progress</h3>
                     <p onclick="boardAddTask()" class="boardAddTaskText">+</p>
                 </div>
-                <div id="tasksContainer"></div>
+                <div id="tasksContainerInProgress"></div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">Await feedback</h3>
                     <p onclick="boardAddTask()" class="boardAddTaskText">+</p>
                 </div>
-               <div id="tasksContainer"></div>
+                <div id="tasksContainerAwaitFeedback"></div>
             </div>
             <div class="board_column">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">Done</h3>
                 </div>
-               <div id="tasksContainer"></div>
+                <div id="tasksContainerDone"></div>
             </div>
         </div>
     </div>

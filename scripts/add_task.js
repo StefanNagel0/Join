@@ -282,7 +282,6 @@ async function postTaskToDatabase(event) {
         alert('Please select a category.');
         return;
     }
-
     const task = createTaskObject(form);
     try {
         await uploadTaskToFirebase(task);

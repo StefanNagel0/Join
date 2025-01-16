@@ -21,66 +21,8 @@
         border-color: transparent;
     }
 
+    /* Navbar */
     .navbar_main {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 70px;
-        max-height: none;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0;
-        background-color: #2A3647;
-        z-index: 1002;
-    }
-
-    .navbar_img {
-        display: none; /* Logo ausblenden auf kleinen Geräten */
-    }
-
-    .navbar_main_buttons {
-        flex-direction: row;
-        width: auto;
-        margin-top: 0;
-        gap: 8px;
-    }
-
-    .navbar_buttons {
-        flex-direction: column;
-        width: 60px;
-        height: 60px;
-        justify-content: center;
-        align-items: center;
-        padding: 0;
-        background-color: transparent;
-        color: #CDCDCD;
-        gap: 4px;
-    }
-
-    .navbar_buttons:hover {
-        background-color: #1a2533;
-    }
-
-    .navbar_buttons img {
-        width: 24px;
-        height: 24px;
-    }
-
-    .navbar_policy {
-        display: none; /* Datenschutz und Impressum ausblenden */
-    }
-
-    .header_help_user {
-        display: none; /* Benutzer-Header ausblenden */
-    }
-
-    .nav_header {
-        display: none; /* Header ausblenden */
-    }
-
-    .bg_grey {
-        margin-bottom: 70px; /* Abstand schaffen, damit Inhalte nicht vom Menü verdeckt werden */
+        display: flex;
     }
 }

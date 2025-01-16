@@ -3,7 +3,7 @@
 }
 
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 430px) {
     /* Navbar */
     .navbar_main {
         position: fixed;
@@ -22,6 +22,15 @@
 
     .nav_header {
         padding: 20px 16px;
+        width: 428px;
+    }
+
+    .scrolllist, .navbar_main, .navbar_main_buttons {
+        width: 428px;
+    }
+
+    .btnclass {
+        display: none;
     }
 
     .navbar_img_mobile {
@@ -49,6 +58,10 @@
         justify-content: space-between;
     }
 
+    .cont {
+        width: 428px;
+    }
+
     /* Navbar-Buttons */
     .navbar_buttons {
         display: flex;
@@ -61,7 +74,7 @@
         border: none;
         cursor: pointer;
         text-align: center;
-        padding: 0;
+        padding: 0; 
     }
 
     .navbar_buttons:hover {

@@ -25,7 +25,6 @@ function displayTasks(tasks) {
     document.getElementById("tasksContainerDone").innerHTML = "";
     // const tasksContainer = document.getElementById("tasksContainerToDo");
     // tasksContainer.innerHTML = "";
-
     for (const taskId in tasks) {
         const task = tasks[taskId];
         const taskElement = document.createElement("div");
@@ -48,10 +47,9 @@ function displayTasks(tasks) {
             </div>
         </div>
         `;
-
-        if (task.mainCategory === "To-Do") {
+        if (task.mainCategory === "ToDo") {
             document.getElementById("tasksContainerToDo").appendChild(taskElement);
-        } else if (task.mainCategory === "In Progress") {
+        } else if (task.mainCategory === "InProgress") {
             document.getElementById("tasksContainerInProgress").appendChild(taskElement);
         } else if (task.mainCategory === "AwaitFeedback") {
             document.getElementById("tasksContainerAwaitFeedback").appendChild(taskElement);
@@ -59,7 +57,6 @@ function displayTasks(tasks) {
             document.getElementById("tasksContainerDone").appendChild(taskElement);
         }
         // tasksContainer.appendChild(taskElement);
-
         for (const taskId in tasks) {
             const task = tasks[taskId];
             console.log(`Task ID: ${taskId}, Mainkategorie: ${task.mainCategory}`);
@@ -109,4 +106,11 @@ async function postTaskToServer(data) {
         throw new Error(`Folgende Aufgabe konnte nicht geladen werden: ${response.statusText}`);
     }
     return await response.json();
+}
+
+/*  */
+
+function getAwaitFeedbackButton() {
+    mainCategory = "AwaitFeedback";
+    boardAddTask();
 }

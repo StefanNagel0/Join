@@ -139,7 +139,12 @@ function initializeSubtasks() {
     input.oninput = () => clearBtn.classList.toggle('d-none', !input.value.trim());
     clearBtn.onclick = () => (input.value = '') && clearBtn.classList.add('d-none');
     addBtn.onclick = () => addSubtask(input, list);
-    input.onkeydown = e => e.key === 'Enter' && addSubtask(input, list);
+    input.onkeydown = function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            addSubtask(input, list);
+        }
+    };
 }
 
 /**Create an icon element with specified attributes */

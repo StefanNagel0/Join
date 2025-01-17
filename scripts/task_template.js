@@ -1,7 +1,7 @@
 /* Displays a confirmation when a task has been added. */
 function addTaskSuccessTemplate() {
     return `
-    <div class="addTaskSuccess" "id="signUpSuccessID">
+    <div class="addTaskSuccess" id="signUpSuccessID">
         <p class="addTaskSuccessP">Task added to board  <img src="../assets/svg/add_task/addedTask.svg" alt=""></p>
     </div>
     `
@@ -39,7 +39,7 @@ function taskDescriptionTemplate(task) {
 /* Renders the date of the task */
 function taskDateTemplate(task) {
     return `
-    <p id="taskDateID" class="taskDate">${task.dueDate || "No Date"}</p>
+    <p id="taskDateID" class="taskDate"> data-due-date="${task.dueDate || "No Date"}"</p>
     `
 }
 
@@ -128,18 +128,19 @@ function taskAssignedTemplateOverlay(task) {
 
 /* Renders the priority of the task */
 function taskPriorityTemplate(task) {
+    console.log('Rendering priority for task:', task);
     if (task.priority == "Urgent") {
         return `
-        <p id="taskPriorityID" class="taskPriority taskPriorityUrgent"><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
+        <p id="taskPriorityID" class="taskPriority  taskPriorityUrgent"><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
         `
     } else if (task.priority == "Medium") {
         return `
-        <p id="taskPriorityID" class="taskPriority taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
+        <p id="taskPriorityID" class="taskPriority data-priority taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
         `
     } else if (task.priority == "Low") {
         return `
-        <p id="taskPriorityID" class="taskPriority taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
-        `
+        <p id="taskPriorityID" class="taskPriority data-priority taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
+        `;
     }
 }
 
@@ -148,17 +149,17 @@ function taskPriorityTemplateName(task) {
     if (task.priority == "Urgent") {
         return `
         <p id="taskPriorityIDName">Urgent</p>
-        <p id="taskPriorityIDName" class=""><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
+        <p id="taskPriorityIDName" data-priority="Urgent" class=""><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
         `
     } else if (task.priority == "Medium") {
         return `
         <p id="taskPriorityIDName">Medium</p>
-        <p id="taskPriorityIDName" class="taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
+        <p id="taskPriorityIDName" data-priority="Medium" class="taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
         `
     } else if (task.priority == "Low") {
         return `
         <p id="taskPriorityIDName">Low</p>
-        <p id="taskPriorityIDName" class="taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
+        <p id="taskPriorityIDName" data-priority="Low" class="taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
         `
     }
 }

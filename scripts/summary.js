@@ -2,9 +2,12 @@
 function setGreetingMessage() {
     const greetingMessageDiv = document.getElementById('greeting-message');
     const userNameGreetingDiv = document.getElementById('user-name-greeting');
-    // Aktuelle Uhrzeit abrufen
+
+    if (!greetingMessageDiv || !userNameGreetingDiv) {
+        console.error('Greeting elements not found in the DOM');
+        return;
+    }
     const currentHour = new Date().getHours();
-    // Begrüßung basierend auf der Uhrzeit setzen
     let greeting = '';
     if (currentHour >= 5 && currentHour < 12) {
         greeting = 'Good Morning';
@@ -13,8 +16,7 @@ function setGreetingMessage() {
     } else {
         greeting = 'Good Evening';
     }
-    // Beispiel: Benutzername abrufen (kann z. B. aus einer Session oder einem Eingabeformular stammen)
-    const userName = getUserName(); // Diese Funktion simuliert die Benutzerdaten
+    const userName = getUserName();
     // Überprüfen, ob der Benutzer "Guest" ist
     if (userName && userName.toLowerCase() !== 'guest') {
         // Benutzer ist kein Gast: Begrüßung mit Komma und Name anzeigen
@@ -35,44 +37,60 @@ function getUserName() {
 document.addEventListener('DOMContentLoaded', setGreetingMessage);
 
 
+async function fetchTasks() {
+    try {
+        // Daten von Firebase abrufen
+        const response = await fetch(`${BASE_URL}tasks.json`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch tasks');
+        }
 
+        const data = await response.json();
 
-function updateSummary() {
-    // Zähle die Anzahl der Aufgaben (div.task) in den jeweiligen Containern
-    const toDoCount = document.querySelectorAll('#tasksContainerToDo .task').length;
-    const inProgressCount = document.querySelectorAll('#tasksContainerInProgress .task').length;
-    const awaitingFeedbackCount = document.querySelectorAll('#tasksContainerAwaitFeedback .task').length;
-    const doneCount = document.querySelectorAll('#tasksContainerDone .task').length;
+        // MainCategories zählen
+        const counts = countMainCategories(data);
 
-    // Aktualisiere die entsprechenden HTML-Elemente mit den gezählten Werten
-    document.getElementById('to_do_show').textContent = toDoCount;
-    document.getElementById('tasks-in-progress').textContent = inProgressCount;
-    document.getElementById('tasks-in-awaiting').textContent = awaitingFeedbackCount;
-    document.getElementById('done_show').textContent = doneCount;
-
-    // Gesamtanzahl der Tasks (in allen Containern zusammen)
-    const totalTasks = toDoCount + inProgressCount + awaitingFeedbackCount + doneCount;
-    document.getElementById('tasks-in-board').textContent = totalTasks;
-
-    // Dringende Aufgaben und früheste Fälligkeit
-    const allTasks = Array.from(document.querySelectorAll('.task'));
-    const urgentTasks = allTasks.filter(task => task.dataset.priority === 'Urgent');
-    if (urgentTasks.length > 0) {
-        const earliestUrgentTask = urgentTasks.reduce((earliest, current) =>
-            new Date(current.dataset.dueDate) < new Date(earliest.dataset.dueDate) ? current : earliest
-        );
-        const earliestDueDateTasks = urgentTasks.filter(task =>
-            task.dataset.dueDate === earliestUrgentTask.dataset.dueDate
-        );
-
-        // Aktualisiere die HTML-Elemente für dringende Aufgaben
-        document.getElementById('urgent_num_show').textContent = earliestDueDateTasks.length;
-        document.getElementById('date-of-due').textContent = earliestUrgentTask.dataset.dueDate;
-    } else {
-        document.getElementById('urgent_num_show').textContent = 0;
-        document.getElementById('date-of-due').textContent = 'No urgent tasks';
+        // HTML aktualisieren
+        updateSummaryHTML(counts);
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
     }
 }
+
+// MainCategories zählen
+function countMainCategories(data) {
+    const counts = {
+        ToDo: 0,
+        InProgress: 0,
+        AwaitFeedback: 0,
+        Done: 0
+    };
+
+    for (const key in data) {
+        const task = data[key];
+        if (counts.hasOwnProperty(task.mainCategory)) {
+            counts[task.mainCategory]++;
+        }
+    }
+
+    return counts;
+}
+
+// HTML aktualisieren
+function updateSummaryHTML(counts) {
+    document.getElementById('to_do_show').textContent = counts.ToDo || 0;
+    document.getElementById('tasks-in-progress').textContent = counts.InProgress || 0;
+    document.getElementById('tasks-in-awaiting').textContent = counts.AwaitFeedback || 0;
+    document.getElementById('done_show').textContent = counts.Done || 0;
+
+    // Optional: Anzahl der Aufgaben insgesamt
+    document.getElementById('tasks-in-board').textContent =
+        counts.ToDo + counts.InProgress + counts.AwaitFeedback + counts.Done;
+}
+
+// Seite initialisieren
+document.addEventListener('DOMContentLoaded', fetchTasks);
+
 
 // Beispiel: Rufe `updateSummary` auf, nachdem neue Aufgaben hinzugefügt wurden
 function addTaskToContainer(containerId, taskHtml) {

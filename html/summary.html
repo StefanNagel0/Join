@@ -10,10 +10,13 @@
     <link rel="stylesheet" href="../css/summary.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="icon" href="../assets/svg/logo_white.svg">
-    <script src="../scripts/header.js"></script>
-    <script src="../scripts/navbar.js"></script>
-    <script src="../scripts/add_task.js"></script>
-    <script src="../scripts/board.js"></script>    
+    <script src="../scripts/header.js" defer></script>
+    <script src="../scripts/navbar.js" defer></script>
+    <script src="../scripts/add_task.js" defer></script>
+    <script src="../scripts/board_template.js" defer></script>      
+    <script src="../scripts/board.js" defer></script>
+    <script src="../scripts/task_template.js" defer></script>
+    <script src="../scripts/task_change.js" defer></script>
     <script src="../scripts/summary.js" defer></script>
     <title>Join</title>
 </head>
@@ -109,8 +112,8 @@
                                         <img class="inner_first_line_img" src="../assets/svg/summary/pencil2.svg" alt="">  
                                     </div>
                                     <div class="to_do_infos">
-                                        <div class="summary_number" id="to-do-show">
-                                            1
+                                        <div class="summary_number" id="to_do_show">
+                                            0
                                         </div>
                                         <p>To-Do</p>
                                     </div>
@@ -123,7 +126,7 @@
                                     </div>
                                     <div class="to_do_infos">
                                         <div class="summary_number" id="done_show">
-                                            1
+                                            0
                                         </div>
                                         <p>Done</p>
                                     </div>
@@ -138,7 +141,7 @@
                                     </div>
                                     <div>
                                         <div class="summary_number" id="urgent_num_show">
-                                            1
+                                            0
                                         </div>
                                         <p class="urgent_text">urgent</p>
                                     </div>
@@ -156,7 +159,7 @@
                             <button onclick="navigateToBoard()" class="summary_to_board_button">
                                 <div class="summary_overview_board_box">
                                     <div id="tasks-in-board" class="summary_overview_board_num">
-                                        5
+                                        0
                                     </div>
                                     <p>Tasks in <br>Board</p>
                                 </div>
@@ -164,7 +167,7 @@
                             <button onclick="navigateToBoard()" class="summary_to_board_button">
                                 <div class="summary_overview_board_box">
                                     <div id="tasks-in-progress" class="summary_overview_board_num">
-                                        5
+                                        0
                                     </div>
                                     <p>Tasks in <br>Progress</p>
                                 </div>
@@ -172,7 +175,7 @@
                             <button onclick="navigateToBoard()" class="summary_to_board_button">
                                 <div class="summary_overview_board_box">
                                     <div id="tasks-in-awaiting" class="summary_overview_board_num">
-                                        5
+                                        0
                                     </div>
                                     <p>Awaiting<br>Feedback</p>
                                 </div>

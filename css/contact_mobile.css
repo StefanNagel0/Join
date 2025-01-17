@@ -2,6 +2,10 @@
     display: none;
 }
 
+.hlp {
+    display: none;
+}
+
 
 @media screen and (max-width: 430px) {
     .navbar_main {
@@ -170,5 +174,9 @@
 
     .navbar_img {
         display: none;
+    }
+
+    .hlp {
+        display: block
     }
 }

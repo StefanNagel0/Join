@@ -1,3 +1,7 @@
+.boardDropDown {
+    height: 100vh;
+}
+
 .task.dragging {
     opacity: 0.5;
     border: 2px dashed #000;

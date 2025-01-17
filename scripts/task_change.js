@@ -65,6 +65,11 @@ function displayTasks(tasks) {
     emptyTaskContainer();
 }
 
+function getToDoAddTaskPage() {
+    mainCategory = "ToDo";
+    postTask();
+}
+
 /* mainCategory assign */
 function getToDoButton() {
     mainCategory = "ToDo";
@@ -91,7 +96,7 @@ async function postTask() {
     const assignedTo = assignedToElement ? assignedToElement.textContent.trim() : '';
     const dueDate = document.getElementById("task-date").value;
     const priority = document.querySelector('.prio-btn.active')?.dataset.prio || '';
-    const category = document.querySelector('#dropdown-toggle-prio span').textContent;
+    const category = document.querySelector('#dropdown-toggle-category span').textContent;
     const subtasks = Array.from(document.querySelectorAll("#subtask-list li")).map(li => li.textContent);
     const taskData = {
         title,
@@ -105,11 +110,11 @@ async function postTask() {
     };
     try {
         const result = await postTaskToServer(taskData);
-        console.log("Task hinzugefügt:", result);
+        console.log("Task hinzugefügt:", result); //Entfernen bei Abgabe!
         addTaskSuccess();
         closeBoardAddTask();
     } catch (error) {
-        console.error("Task fehlerhaft:", error);
+        console.error("Task fehlerhaft:", error); //Entfernen bei Abgabe!
     }
     onload();
 }

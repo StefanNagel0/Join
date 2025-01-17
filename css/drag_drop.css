@@ -1,3 +1,10 @@
+.boardDropDown {
+    height: 650px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+
 .task.dragging {
     opacity: 0.5;
     border: 2px dashed #000;
@@ -16,7 +23,7 @@
 #tasksContainerInProgress,
 #tasksContainerAwaitFeedback,
 #tasksContainerDone {
-    min-height: 100hv;
+    /* min-height: 100vh; */
     /* border: 1px solid #ccc; */
     background-color: rgb(246, 247, 248);
 }

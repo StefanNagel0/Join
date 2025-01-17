@@ -10,7 +10,8 @@ function boardTemplate() {
                 <div class="contentHeadingSearchMain">
                     <div class="contentHeadingSearchSecond">
                         <div class="contenHeadingSearchMain">
-                            <input oninput="searchTask()" class="contentHeadingSearch" type="search" id="search" placeholder="Search Task">
+                            <input oninput="searchTask()" class="contentHeadingSearch" type="search" id="search"
+                                placeholder="Search Task">
                         </div>
                         <div>
                             <img class="contentHeadingSearchImg" src="../assets/svg/searching.svg" alt="search">
@@ -19,9 +20,9 @@ function boardTemplate() {
                 </div>
                 <div class="contentHeadingRight">
                     <div>
-                        <Button id="addTaskButton" class="addTaskButton" onclick="boardAddTask()">
-                        <p class="addTaskButtonText">Add Task</p>
-                        <img class="addTaskButtonImg" src="../assets/svg/add_task/add_task.svg" alt="">
+                        <Button id="addTaskButton" class="addTaskButton" onclick="getToDoButton()">
+                            <p class="addTaskButtonText">Add Task</p>
+                            <img class="addTaskButtonImg" src="../assets/svg/add_task/add_task.svg" alt="">
                         </Button>
                     </div>
                 </div>
@@ -34,33 +35,41 @@ function boardTemplate() {
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">To do</h3>
                     <p onclick="getToDoButton()" class="boardAddTaskText">+</p>
-                    </div>
-                <div id="tasksContainerToDo" ondrop="drop(event, 'ToDo')" ondragover="allowDrop(event)"></div>
+                </div>
+                <div class="boardDropDown" ondrop="drop(event, 'ToDo')" ondragover="allowDrop(event)">
+                    <div id="tasksContainerToDo"></div>
+                </div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">In progress</h3>
                     <p onclick="getInProgressButton()" class="boardAddTaskText">+</p>
                 </div>
-                <div id="tasksContainerInProgress" ondrop="drop(event, 'InProgress')" ondragover="allowDrop(event)"></div>
+                <div class="boardDropDown" ondrop="drop(event, 'InProgress')" ondragover="allowDrop(event)">
+                    <div id="tasksContainerInProgress"></div>
+                </div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">Await feedback</h3>
                     <p onclick="getAwaitFeedbackButton()" class="boardAddTaskText">+</p>
                 </div>
-                <div id="tasksContainerAwaitFeedback" ondrop="drop(event, 'AwaitFeedback')" ondragover="allowDrop(event)"></div>
+                <div class="boardDropDown" ondrop="drop(event, 'AwaitFeedback')" ondragover="allowDrop(event)">
+                    <div id="tasksContainerAwaitFeedback"></div>
+                </div>
             </div>
             <div class="boardColumn">
                 <div class="boardColumnHeader">
                     <h3 class="boardColumnHeaderH3">Done</h3>
                 </div>
-                <div id="tasksContainerDone" ondrop="drop(event, 'Done')" ondragover="allowDrop(event)"></div>
+                <div class="boardDropDown" ondrop="drop(event, 'Done')" ondragover="allowDrop(event)">
+                    <div id="tasksContainerDone"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-    `
+`
 }
 
 function boardAddTaskTemplate() {

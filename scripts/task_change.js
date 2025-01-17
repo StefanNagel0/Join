@@ -65,6 +65,11 @@ function displayTasks(tasks) {
     emptyTaskContainer();
 }
 
+function getToDoAddTaskPage() {
+    mainCategory = "ToDo";
+    postTask();
+}
+
 /* mainCategory assign */
 function getToDoButton() {
     mainCategory = "ToDo";

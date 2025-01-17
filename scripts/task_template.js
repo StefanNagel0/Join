@@ -203,6 +203,7 @@ function editingPriority(task) {
     return priorityOptions.map(
         (priority) => `<option value="${priority}" ${task.priority === priority ? "selected" : ""}>${priority}</option>`
     ).join("");
+
 }
 /* editing the task */
 function editTask(taskId) {
@@ -221,7 +222,7 @@ function editTask(taskId) {
             ${optionsHtml}
         </select>
         <div>
-            ${task.subtasks.map((subtask, index) => `
+            ${task.subtasks?.map((subtask, index) => `
                 <div>
                     <input type="text" id="subtask-${index}" value="${subtask}" />
                 </div>
@@ -231,6 +232,7 @@ function editTask(taskId) {
         <button onclick="closeTaskOverlay()">Cancel</button>
     `;
 }
+
 /* save the editing task */
 async function saveTask(taskId) {
     const task = globalTasks[taskId];
@@ -247,6 +249,7 @@ async function saveTask(taskId) {
         await updateTaskInDatabase(taskId, task);
     closeTaskOverlay();
     displayTasks(globalTasks);
+
 }
 /* edited task update to database */
 async function updateTaskInDatabase(taskId, updatedTask) {

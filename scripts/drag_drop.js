@@ -15,7 +15,6 @@ function allowDrop(event) {
 function drop(event, newStatus) {
     event.preventDefault();
     const taskId = event.dataTransfer.getData("text/plain");
-    console.log(`Task ID: ${taskId}, New Status: ${newStatus}`);
     moveTaskToNewStatus(taskId, newStatus);
 }
 

@@ -1,9 +1,9 @@
-.boardColumn > div[id^="tasksContainer"] {
+/* .boardColumn > div[id^="tasksContainer"] {
     max-height: 700px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
-}
+} */
 
 .boardAddTaskOverlay {
     position: fixed;

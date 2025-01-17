@@ -91,7 +91,7 @@ async function postTask() {
     const assignedTo = assignedToElement ? assignedToElement.textContent.trim() : '';
     const dueDate = document.getElementById("task-date").value;
     const priority = document.querySelector('.prio-btn.active')?.dataset.prio || '';
-    const category = document.querySelector('#dropdown-toggle-prio span').textContent;
+    const category = document.querySelector('#dropdown-toggle-category span').textContent;
     const subtasks = Array.from(document.querySelectorAll("#subtask-list li")).map(li => li.textContent);
     const taskData = {
         title,

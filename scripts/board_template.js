@@ -20,7 +20,7 @@ function boardTemplate() {
                 </div>
                 <div class="contentHeadingRight">
                     <div>
-                        <Button id="addTaskButton" class="addTaskButton" onclick="boardAddTask()">
+                        <Button id="addTaskButton" class="addTaskButton" onclick="getToDoButton()">
                             <p class="addTaskButtonText">Add Task</p>
                             <img class="addTaskButtonImg" src="../assets/svg/add_task/add_task.svg" alt="">
                         </Button>

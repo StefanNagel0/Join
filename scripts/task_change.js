@@ -110,11 +110,11 @@ async function postTask() {
     };
     try {
         const result = await postTaskToServer(taskData);
-        console.log("Task hinzugefügt:", result);
+        console.log("Task hinzugefügt:", result); //Entfernen bei Abgabe!
         addTaskSuccess();
         closeBoardAddTask();
     } catch (error) {
-        console.error("Task fehlerhaft:", error);
+        console.error("Task fehlerhaft:", error); //Entfernen bei Abgabe!
     }
     onload();
 }

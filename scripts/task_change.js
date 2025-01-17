@@ -93,7 +93,8 @@ async function postTask() {
     const title = document.getElementById("task-title").value;
     const description = document.getElementById("task-desc").value;
     const assignedToElement = document.getElementById("task-assigned");
-    const assignedTo = assignedToElement ? assignedToElement.textContent.trim() : '';
+    const assignedTo = Array.from(document.querySelectorAll('.selected-contacts .contact-name'))
+        .map(contact => contact.textContent.trim());
     const dueDate = document.getElementById("task-date").value;
     const priority = document.querySelector('.prio-btn.active')?.dataset.prio || '';
     const category = document.querySelector('#dropdown-toggle-category span').textContent;
@@ -101,7 +102,7 @@ async function postTask() {
     const taskData = {
         title,
         description,
-        assignedTo,
+        assignedToElement,
         dueDate,
         priority,
         category,

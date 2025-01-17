@@ -153,7 +153,7 @@ function createContactDiv(contact) {
   const initials = getInitials(contact.name);
 
   contactDiv.innerHTML = `
-    <div class="contactmain">
+    <div class="contactmain" toggleDetailsView(show) ">
     <div class="circle" style="background-color: ${contact.color};">
       ${initials || `<img class="concircle" src="../assets/icons/contact/circledefault.png">`}
     </div>
@@ -286,8 +286,38 @@ function validatePhoneInput(event) {
   input.value = input.value.replace(/[^0-9]/g, '');
 }
 
-document.getElementById("contact-phone").addEventListener("input", validatePhoneInput);
+function toggleDetailsView(show) {
+  const contactList = document.querySelector(".cont");
+  const flexDetails = document.querySelector(".flexdetails");
 
+  if (!contactList || !flexDetails) {
+    console.error("Required elements not found in the DOM.");
+    return;
+  }
+
+  if (window.innerWidth <= 600) { // Check if screen width is 600px or less
+    if (show) {
+      contactList.style.display = "none"; // Hide contact list
+      flexDetails.style.display = "flex"; // Show flex details
+    } else {
+      contactList.style.display = "flex"; // Show contact list
+      flexDetails.style.display = "none"; // Hide flex details
+    }
+  } else {
+    console.log("Screen width is greater than 600px. No action taken.");
+  }
+}
+
+// Example usage for button actions
+function showFlexDetails() {
+  toggleDetailsView(true); // Show flexdetails
+}
+
+function hideFlexDetails() {
+  toggleDetailsView(false); // Hide flexdetails
+}
+
+document.getElementById("contact-phone").addEventListener("input", validatePhoneInput);
 document.getElementById("contact-name").addEventListener("input", handleNameInput);
 document.getElementById("contact-form").addEventListener("submit", handleFormSubmit);
 

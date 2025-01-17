@@ -1,3 +1,5 @@
+
+/*
 .cont {
     max-height: 928px;
     width: 456px;
@@ -6,6 +8,8 @@
     align-items: center;
     flex-direction: column;
 }
+
+*/
 
 .cont::-webkit-scrollbar {
     width: 24px;
@@ -367,10 +371,12 @@
     overflow-x: hidden;
   }
 
+  /*
   .flexdetails {
     padding-left: 55px;
     padding-top: 110px;
   }
+    */
 
   #contact-phone, #contact-email, #contact-name {
     border-radius: 10px;
@@ -554,5 +560,9 @@
 }
 
 .mobileadd{
+  display: none;
+}
+
+.closebutton {
   display: none;
 }

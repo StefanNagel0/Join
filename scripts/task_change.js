@@ -65,7 +65,8 @@ function displayTasks(tasks) {
     emptyTaskContainer();
 }
 
-function getToDoAddTaskPage() {
+function getToDoAddTaskPage(event) {
+    event.preventDefault();
     mainCategory = "ToDo";
     postTask();
 }
@@ -95,41 +96,51 @@ async function postTask() {
     const assignedToElement = document.getElementById("task-assigned");
     const assignedTo = Array.from(document.querySelectorAll('.selected-contacts .contact-name'))
         .map(contact => contact.textContent.trim());
+        const assignedContacts = getSelectedContacts(); // Kontaktdaten holen
+        console.log('Assigned contacts:', assignedContacts); // Prüfen, ob die Kontakte korrekt erfasst werden
+    // Sicherstellen, dass assignedTo nicht leer ist
+    if (assignedTo.length === 0) {
+        console.warn('No contacts selected.');
+        assignedTo.push("Unassigned");  // Füge einen Standardwert hinzu
+    }
+    console.log('Assigned to:', assignedTo);  // Hier prüfen wir, ob Kontakte korrekt ausgewählt wurden
+
     const dueDate = document.getElementById("task-date").value;
     const priority = document.querySelector('.prio-btn.active')?.dataset.prio || '';
-    const category = document.querySelector('#dropdown-toggle-category span').textContent;
-    const subtasks = Array.from(document.querySelectorAll("#subtask-list li")).map(li => li.textContent);
+    const category = document.querySelector('#dropdown-toggle-category span').textContent.trim();
+    const subtasks = Array.from(document.querySelectorAll("#subtask-list li")).map(li => li.textContent.trim());
+
     const taskData = {
         title,
         description,
-        assignedToElement,
+        assignedTo: assignedContacts.length > 0 ? assignedContacts : ["Unassigned"],
         dueDate,
         priority,
         category,
         subtasks,
         mainCategory
     };
+    console.log('Task Data:', taskData);
     try {
         const result = await postTaskToServer(taskData);
-        console.log("Task hinzugefügt:", result); //Entfernen bei Abgabe!
         addTaskSuccess();
         closeBoardAddTask();
     } catch (error) {
-        console.error("Task fehlerhaft:", error); //Entfernen bei Abgabe!
+        console.error('Fehler beim Posten der Aufgabe:', error);
     }
     onload();
 }
 
-/* send task to server */
-async function postTaskToServer(data) {
+async function postTaskToServer(taskData) {
     const response = await fetch(`${BASE_URL}/tasks.json`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(taskData)
     });
     if (!response.ok) {
+        console.error(`Server Error: ${response.statusText}`);
         throw new Error(`Folgende Aufgabe konnte nicht geladen werden: ${response.statusText}`);
     }
     return await response.json();

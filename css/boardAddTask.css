@@ -174,30 +174,53 @@
     position: absolute;
     display: flex;
     justify-content: space-between;
-    bottom: 0;
-    right: 20px;
-    /* width: 220px; */
+    bottom: -14px;
+    width: 220px;
     height: 32px;
     margin-bottom: 10px;
+    align-items: center;
 }
 
 .initialsTemplate {
     display: flex;
 }
 
+
+
+.assigned-contact {
+    position: relative;
+    margin-left: -6px; 
+}
+
+
+.assigned-contact:last-child {
+    margin-left: -6px;
+}
+
+.initials-circle-board {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: 300;
+    font-size:12px;
+    z-index: 1;
+    border: 1px solid white;
+}
+
 .taskAssigned {
+    position: relative;
     display: flex;
-    gap: 5px;
-    width: 80px;
-    height: 32px;
+    align-items: center;
 }
 
 .taskPriority {
-    justify-content: left;
     width: 32px;
-    height: 32px;
-    padding: 10px 18px 10px 18px;
-    gap: 10px;
+    position: absolute;
+    right: 0;
 }
 
 .taskOverlay {

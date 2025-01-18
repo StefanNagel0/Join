@@ -10,7 +10,6 @@ function initializeApp() {
     setDateValidation();
     initializeClearButton();
     preventFormSubmissionOnEnter();
-    // document.querySelector('.add_task_submit_btn button').onclick = postTaskToDatabase;
 }
 
 /** Create an element with initials circle based on contact's name */
@@ -31,6 +30,7 @@ function createContactDiv(contact) {
     const container = createElementWithClass('div', 'contact-item');
     const circleLabelDiv = createElementWithClass('div', 'contact-circle-label', '', [circle, label]);
     container.append(circleLabelDiv, checkbox);
+    container.dataset.fullname = contact.name;
     container.onclick = () => toggleContactDiv(container, checkbox, label, circle, contact);
     return container;
 }
@@ -46,10 +46,13 @@ function toggleContactDiv(container, checkbox, label, circle, contact) {
 function toggleContactSelection(contact, isSelected, selectedContactsContainer) {
     const circle = createInitialsCircle(contact.name);
     if (isSelected) {
+        console.log('Adding contact:', contact.name); // Log, wenn Kontakt hinzugefügt wird
         const selectedContact = createElementWithClass('div', 'selected-contact');
+        selectedContact.dataset.fullname = contact.name;  // Speichert den vollen Namen
         selectedContact.append(circle);
         selectedContactsContainer.append(selectedContact);
     } else {
+        console.log('Removing contact:', contact.name); // Log, wenn Kontakt entfernt wird
         const selectedCircles = selectedContactsContainer.querySelectorAll('.selected-contact');
         selectedCircles.forEach(contactElement => {
             if (contactElement.querySelector('.initials-circle').textContent === circle.textContent) {
@@ -58,6 +61,13 @@ function toggleContactSelection(contact, isSelected, selectedContactsContainer) 
         });
     }
 }
+function getSelectedContacts() {
+    const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
+        .map(el => el.dataset.fullname);  // Hole den vollen Namen aus dem data-fullname Attribut
+    console.log('Selected contacts:', selectedContacts);  // Überprüfe, ob die Liste der vollen Namen korrekt ist
+    return selectedContacts;
+}
+
 
 /** Create a dropdown wrapper element */
 function createDropdownWrapper() {
@@ -119,12 +129,15 @@ function getContactColor(name) {
 /** Set validation for the date input to ensure it's not in the past */
 function setDateValidation() {
     const today = new Date().toISOString().split('T')[0];
-
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 100); // 100 Jahre in die Zukunft
+    const maxDateString = maxDate.toISOString().split('T')[0];
     // Funktion anwenden auf alle bestehenden Inputs
     const applyValidation = () => {
         const dateInputs = document.querySelectorAll('.task-date');
         dateInputs.forEach(dateInput => {
-            dateInput.setAttribute('min', today);
+            dateInput.setAttribute('min', today); // Minimal erlaubtes Datum
+            dateInput.setAttribute('max', maxDateString); // Maximal erlaubtes Datum
             dateInput.oninput = function () {
                 if (dateInput.value) {
                     dateInput.style.color = 'black';
@@ -134,17 +147,14 @@ function setDateValidation() {
             };
         });
     };
-
-    // Auf existierende Felder anwenden
     applyValidation();
-
     // MutationObserver für dynamisch hinzugefügte Elemente
     const observer = new MutationObserver(() => {
         applyValidation();
     });
-
     observer.observe(document.body, { childList: true, subtree: true });
 }
+
 
 
 /** Initialize the subtasks input, add button, and clear button behaviors */
@@ -349,15 +359,6 @@ async function uploadTaskToFirebase(task) {
 function resetFormAndNotify(form) {
     form.reset();
     alert('Task successfully saved to Firebase!');
-}
-
-/** Get the selected contacts from the task form */
-function getSelectedContacts() {
-    return Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
-        .map(el => {
-            const initialsCircle = el.querySelector('.initials-circle');
-            return initialsCircle?.textContent || '';
-        });
 }
 
 /** Utility function to create an element with class */

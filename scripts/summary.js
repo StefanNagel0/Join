@@ -44,18 +44,59 @@ async function fetchTasks() {
         if (!response.ok) {
             throw new Error('Failed to fetch tasks');
         }
-
         const data = await response.json();
-
         // MainCategories zählen
         const counts = countMainCategories(data);
 
+        // Tasks mit "Urgent"-Prio und nächstem Due Date filtern
+        const urgentData = countUrgentTasks(data);
+
         // HTML aktualisieren
-        updateSummaryHTML(counts);
+        updateSummaryHTML(counts, urgentData);
     } catch (error) {
         console.error('Error fetching tasks:', error);
     }
 }
+
+// Tasks mit Priorität "Urgent" und nächstem Due Date filtern
+function countUrgentTasks(data) {
+    const urgentTasks = [];
+
+    for (const key in data) {
+        const task = data[key];
+        if (
+            task.priority &&
+            task.priority.toLowerCase() === 'urgent' && // Groß-/Kleinschreibung ignorieren
+            task.dueDate
+        ) {
+            urgentTasks.push({
+                dueDate: new Date(task.dueDate),
+                task,
+            });
+        }
+    }
+
+    // Nach Fälligkeitsdatum sortieren
+    urgentTasks.sort((a, b) => a.dueDate - b.dueDate);
+
+    if (urgentTasks.length > 0) {
+        const nextDueDate = urgentTasks[0].dueDate;
+        const tasksWithNextDueDate = urgentTasks.filter(
+            (item) => item.dueDate.getTime() === nextDueDate.getTime()
+        );
+
+        return {
+            count: tasksWithNextDueDate.length,
+            dueDate: nextDueDate.toISOString().split('T')[0], // Format: YYYY-MM-DD
+        };
+    }
+
+    return {
+        count: 0,
+        dueDate: 'N/A',
+    };
+}
+
 
 // MainCategories zählen
 function countMainCategories(data) {
@@ -65,36 +106,29 @@ function countMainCategories(data) {
         AwaitFeedback: 0,
         Done: 0
     };
-
     for (const key in data) {
         const task = data[key];
         if (counts.hasOwnProperty(task.mainCategory)) {
             counts[task.mainCategory]++;
         }
     }
-
     return counts;
 }
 
 // HTML aktualisieren
-function updateSummaryHTML(counts) {
+function updateSummaryHTML(counts, urgentData) {
     document.getElementById('to_do_show').textContent = counts.ToDo || 0;
     document.getElementById('tasks-in-progress').textContent = counts.InProgress || 0;
     document.getElementById('tasks-in-awaiting').textContent = counts.AwaitFeedback || 0;
     document.getElementById('done_show').textContent = counts.Done || 0;
-
     // Optional: Anzahl der Aufgaben insgesamt
     document.getElementById('tasks-in-board').textContent =
         counts.ToDo + counts.InProgress + counts.AwaitFeedback + counts.Done;
+
+    // Urgent-Daten anzeigen
+    document.getElementById('urgent_num_show').textContent = urgentData.count;
+    document.getElementById('date-of-due').textContent = urgentData.dueDate;
 }
 
 // Seite initialisieren
 document.addEventListener('DOMContentLoaded', fetchTasks);
-
-
-// Beispiel: Rufe `updateSummary` auf, nachdem neue Aufgaben hinzugefügt wurden
-function addTaskToContainer(containerId, taskHtml) {
-    const container = document.getElementById(containerId);
-    container.insertAdjacentHTML('beforeend', taskHtml);
-    updateSummary(); // Aktualisiere die Zählung nach dem Hinzufügen
-}

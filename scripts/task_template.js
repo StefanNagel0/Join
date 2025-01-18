@@ -39,7 +39,7 @@ function taskDescriptionTemplate(task) {
 /* Renders the date of the task */
 function taskDateTemplate(task) {
     return `
-    <p id="taskDateID" class="taskDate"> data-due-date="${task.dueDate || "No Date"}"</p>
+    <p id="taskDateID" class="taskDate"> ${task.dueDate || "No Date"}</p>
     `
 }
 
@@ -128,7 +128,6 @@ function taskAssignedTemplateOverlay(task) {
 
 /* Renders the priority of the task */
 function taskPriorityTemplate(task) {
-    console.log('Rendering priority for task:', task);
     if (task.priority == "Urgent") {
         return `
         <p id="taskPriorityID" class="taskPriority  taskPriorityUrgent"><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>

@@ -47,8 +47,8 @@ function taskDateTemplate(task) {
 /* Renders the subtask of the task */
 function taskSubtasksTemplate(task) {
     if (task.subtasks && task.subtasks.length > 0) {
-        const completedSubtasks = task.subtasks.filter(subtask => subtask.completed).length;
-        const totalSubtasks = task.subtasks.length;
+        const completedSubtasks = task.subtasks.filter(subtask => subtask && subtask.completed).length;
+        const totalSubtasks = task.subtasks.filter(subtask => subtask).length;
         const progressPercent = (completedSubtasks / totalSubtasks) * 100;
         return `
         <div class="taskSubtaskContainer">
@@ -230,15 +230,15 @@ function taskAssignedTemplateOverlay(task) {
 
 /* Renders the priority of the task */
 function taskPriorityTemplate(task) {
-    if (task.priority == "Urgent") {
+    if (task.priority.toLowerCase() === "urgent") {
         return `
         <p id="taskPriorityID" class="taskPriority  taskPriorityUrgent"><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
         `
-    } else if (task.priority == "Medium") {
+    } else if (task.priority.toLowerCase() === "medium") {
         return `
         <p id="taskPriorityID" class="taskPriority data-priority taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
         `
-    } else if (task.priority == "Low") {
+    } else if (task.priority.toLowerCase() === "low") {
         return `
         <p id="taskPriorityID" class="taskPriority data-priority taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
         `;
@@ -247,17 +247,17 @@ function taskPriorityTemplate(task) {
 
 /* Renders the priority of the task in the overlay */
 function taskPriorityTemplateName(task) {
-    if (task.priority == "Urgent") {
+    if (task.priority.toLowerCase() === "urgent") {
         return `
         <p id="taskPriorityIDName">Urgent</p>
         <p id="taskPriorityIDName" data-priority="Urgent" class=""><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
         `
-    } else if (task.priority == "Medium") {
+    } else if (task.priority.toLowerCase() === "medium") {
         return `
         <p id="taskPriorityIDName">Medium</p>
         <p id="taskPriorityIDName" data-priority="Medium" class="taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
         `
-    } else if (task.priority == "Low") {
+    } else if (task.priority.toLowerCase() === "low") {
         return `
         <p id="taskPriorityIDName">Low</p>
         <p id="taskPriorityIDName" data-priority="Low" class="taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>

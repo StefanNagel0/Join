@@ -119,16 +119,33 @@ function getContactColor(name) {
 /** Set validation for the date input to ensure it's not in the past */
 function setDateValidation() {
     const today = new Date().toISOString().split('T')[0];
-    const dateInput = document.getElementById('task-date');
-    dateInput.setAttribute('min', today);
-    dateInput.oninput = function () {
-        if (dateInput.value) {
-            dateInput.style.color = 'black';
-        } else {
-            dateInput.style.color = '';
-        }
+
+    // Funktion anwenden auf alle bestehenden Inputs
+    const applyValidation = () => {
+        const dateInputs = document.querySelectorAll('.task-date');
+        dateInputs.forEach(dateInput => {
+            dateInput.setAttribute('min', today);
+            dateInput.oninput = function () {
+                if (dateInput.value) {
+                    dateInput.style.color = 'black';
+                } else {
+                    dateInput.style.color = '';
+                }
+            };
+        });
     };
+
+    // Auf existierende Felder anwenden
+    applyValidation();
+
+    // MutationObserver für dynamisch hinzugefügte Elemente
+    const observer = new MutationObserver(() => {
+        applyValidation();
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
 }
+
 
 /** Initialize the subtasks input, add button, and clear button behaviors */
 function initializeSubtasks() {

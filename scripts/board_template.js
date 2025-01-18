@@ -96,16 +96,16 @@ function boardAddTaskTemplate() {
         <div class="add_task_right_box">
             <div class="gap_8">
                 <label for="task-date">Due Date <span class="red_star">*</span></label>
-                <input type="date" id="task-date" name="dueDate" required>
+                <input type="date" class="task-date" id="task-date" name="dueDate" required>
             </div>
             <div class="gap_8">
                 <p class="prio_text">Prio</p>
                 <div id="task-priority">
-                    <button type="button" class="prio-btn" data-prio="Urgent">Urgent <img
+                    <button type="button" class="prio-btn urgent" data-prio="Urgent">Urgent <img
                             src="../assets/svg/add_task/prio_urgent.svg" alt=""></button>
-                    <button type="button" class="prio-btn" data-prio="Medium">Medium <img
+                    <button type="button" class="prio-btn medium" data-prio="Medium">Medium <img
                             src="../assets/svg/add_task/prio_medium.svg" alt=""></button>
-                    <button type="button" class="prio-btn" data-prio="Low">Low <img
+                    <button type="button" class="prio-btn low" data-prio="Low">Low <img
                             src="../assets/svg/add_task/prio_low.svg" alt=""></button>
                 </div>
             </div>

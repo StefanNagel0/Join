@@ -1,6 +1,7 @@
 /* initalizes the board */
 function initBoard() {
     toggleBoardPage();
+    setDateValidation();
 }
 
 /* Initailization of the Add Task function */

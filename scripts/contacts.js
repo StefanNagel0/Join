@@ -147,6 +147,8 @@ function appendContact(contact, groupDiv) {
   groupDiv.appendChild(contactDiv);
 }
 
+/*
+
 function createContactDiv(contact) {
   const contactDiv = document.createElement("div");
   contactDiv.classList.add("contact");
@@ -168,6 +170,32 @@ function createContactDiv(contact) {
   `;
   return contactDiv;
 }
+*/
+
+function createContactDiv(contact) {
+  const contactDiv = document.createElement("div");
+  contactDiv.classList.add("contact");
+
+  const initials = getInitials(contact.name);
+
+  contactDiv.innerHTML = `
+    <div class="contactmain" onclick="toggleDetailsView(true, ${contacts.indexOf(contact)})">
+      <div class="circle" style="background-color: ${contact.color};">
+        ${initials || `<img class="concircle" src="../assets/icons/contact/circledefault.png">`}
+      </div>
+      <div class="listdesign">
+        <p class="name" style="cursor: pointer;">
+          ${contact.name}
+        </p>
+        <p class="emails">${contact.email}</p>
+      </div>
+    </div>
+  `;
+
+  return contactDiv;
+}
+
+
 
 function showContactDetails(index) {
   const contact = contacts[index];
@@ -285,6 +313,7 @@ function validatePhoneInput(event) {
   const input = event.target;
   input.value = input.value.replace(/[^0-9]/g, '');
 }
+/*
 
 function toggleDetailsView(show) {
   const contactList = document.querySelector(".cont");
@@ -306,6 +335,52 @@ function toggleDetailsView(show) {
   } else {
     console.log("Screen width is greater than 600px. No action taken.");
   }
+} */
+
+
+function toggleDetailsView(show, index = null) {
+  const contactList = document.querySelector(".cont");
+  const scrollList = document.querySelector(".scrolllist");
+  const flexDetails = document.querySelector(".flexdetails");
+
+  if (!contactList || !scrollList || !flexDetails) {
+    console.error("Required elements not found in the DOM.");
+    return;
+  }
+
+  if (window.innerWidth <= 600) { // Check if screen width is 600px or less
+    if (show) {
+      scrollList.style.display = "none"; // Hide the scroll list
+      flexDetails.style.display = "flex"; // Show the flexdetails
+
+      // Populate the flexdetails with the selected contact's details
+      if (index !== null) {
+        const contact = contacts[index];
+        flexDetails.innerHTML = `
+        <div class="detailshead">
+                    <h1>Contacts</h1>
+                    <hr class="linetwo">
+                    <p>Better with a team</p>
+                </div>
+          <div class="detailscircle">
+            <div class="circle circlecont" style="background-color: ${contact.color};">
+              ${getInitials(contact.name)}
+            </div>
+            <p class="contactnames">${contact.name}</p>
+            <p><strong>Email:</strong> ${contact.email}</p>
+            <p><strong>Phone:</strong> ${contact.phone}</p>
+            <button onclick="hideFlexDetails()">Back</button>
+          </div>
+        `;
+      }
+    } else {
+      scrollList.style.display = "block"; // Show the scroll list
+      flexDetails.style.display = "none"; // Hide the flexdetails
+      showContacts();
+    }
+  } else {
+    console.log("Screen ist nicht 600px");
+  }
 }
 
 // Example usage for button actions
@@ -315,6 +390,10 @@ function showFlexDetails() {
 
 function hideFlexDetails() {
   toggleDetailsView(false); // Hide flexdetails
+}
+
+function hideFlexDetails() {
+  toggleDetailsView(false); // Hide flexdetails and show the contact list
 }
 
 document.getElementById("contact-phone").addEventListener("input", validatePhoneInput);

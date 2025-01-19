@@ -298,7 +298,7 @@
     width: 113px;
     height: 27px;
     padding: 4px 16px 4px 16px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     border-radius: 8px;
     font-family: Inter;
     font-size: 16px;
@@ -404,10 +404,14 @@
 }
 
 .initialsOverlay {
-    width: 25px;
-    height: 29.55px;
+    position: relative;
+    border-radius: 50%;
     rotate: 90deg;
-    color: #000000;
+    color: #ffffff;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid white;
+    font-size: 14px;
 }
 
 .openTaskOverlayAssigned {
@@ -415,14 +419,14 @@
     flex-direction: column;
     width: 445px;
     height: 116px;
-    gap: 4px;
+    gap: 8px;
     color: black !important;
 }
 
 .openTaskOverlaySubtaskContainer {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
 }
 
 .openTaskOverlaySubtaskTitle {

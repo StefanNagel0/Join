@@ -66,10 +66,10 @@ function openTaskOverlay(taskId) {
     }
     const overlayRef = document.getElementById("taskOverlay");
     overlayRef.innerHTML = taskOverlayTemplate(task, taskId);
+
     const removeClass = document.getElementById("taskTitleID");
     const removeClassTemplate = document.getElementById("taskDescriptionID");
     const removeClassDate = document.getElementById("taskDateID");
-    // const removeClassSubtasks = document.getElementById("taskSubtasksID");
     const removeClassAssigned = document.getElementById("taskAssignedID");
     const removeClassPriority = document.getElementById("taskPriorityIDName");
     const removeClassStatus = document.getElementById("taskStatusID");
@@ -81,8 +81,6 @@ function openTaskOverlay(taskId) {
         removeClassTemplate.classList.add("openTaskOverlayDescription")
         removeClassDate.classList.remove("taskDate")
         removeClassDate.classList.add("openTaskOverlayDate")
-        // removeClassSubtasks.classList.remove("taskSubtasks")
-        // removeClassSubtasks.classList.add("openTaskOverlaySubtask")
         removeClassAssigned.classList.remove("taskAssigned")
         removeClassAssigned.classList.add("openTaskOverlayAssigned")
         removeClassPriority.classList.remove("taskPriority")
@@ -94,9 +92,9 @@ function openTaskOverlay(taskId) {
     showOverlayTask();
 }
 
-function toggleCategory(taskId) {
-    let userStoryElement = document.querySelector("taskCategoryUserStory");
-    let technicalElement = document.querySelector("taskCategoryTechnical");
+function toggleCategory(task, taskId) {
+    let userStoryElement = document.querySelector(".taskCategoryUserStory");
+    let technicalElement = document.querySelector(".taskCategoryTechnical");
     if (userStoryElement && userStoryElement.classList.contains('taskCategoryUserStory')) {
         userStoryElement.classList.remove('taskCategoryUserStory');
         userStoryElement.classList.add('openTaskOverlayCategoryUserStory');

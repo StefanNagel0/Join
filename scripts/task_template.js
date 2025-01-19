@@ -104,9 +104,7 @@ function taskSubtasksTemplateOverlay(task) {
 //     }
 // }
 
-
 function taskAssignedTemplate(task) {
-    // Überprüfen, ob task.assignedTo existiert und ein Array ist
     if (Array.isArray(task.assignedTo) && task.assignedTo.length > 0) {
         return `
         <div id="taskAssignedID" class="taskAssigned">
@@ -114,10 +112,9 @@ function taskAssignedTemplate(task) {
                 .map((name) => {
                     const initials = name
                         .split(" ")
-                        .map(part => part.charAt(0))
+                        .map(part => part.charAt(0).toUpperCase())
                         .join("");
-
-                    const circleColor = getContactColor(name); // Holen der zufälligen Farbe
+                    const circleColor = getContactColor(name);
                     return `
                         <div class="assigned-contact">
                             <div class="initials-circle-board" style="background-color: ${circleColor};">
@@ -129,31 +126,9 @@ function taskAssignedTemplate(task) {
                 .join("")}
         </div>
         `;
-    } else if (task.assignedTo && typeof task.assignedTo === 'string') {
-        // Wenn assignedTo ein einzelner Name (String) ist, in ein Array umwandeln
-        const name = task.assignedTo;
-        const initials = name
-            .split(" ")
-            .map(part => part.charAt(0))
-            .join("");
-
-        const circleColor = getContactColor(name);
-        return `
-        <div id="taskAssignedID" class="taskAssigned">
-            <div class="assigned-contact">
-                <div class="initials-circle-board" style="background-color: ${circleColor};">
-                    ${initials}
-                </div>
-            </div>
-        </div>
-        `;
-    } else {
-        return ``;
     }
+    return ``;
 }
-
-
-
 
 /* Renders the assigned employees from the task in the overlay */
 // Benutzer nicht mit Komma trennen und Vor/Nachname + Farbe mit Kürzel anzeigen

@@ -39,7 +39,7 @@
     gap: 8px;
 }
 .navbar_buttons:hover{
-    background-color: #091931;
+    background-color: #29aae213;
 }
 .navbar_policy{
     display: flex;
@@ -78,6 +78,7 @@
     justify-content: space-between ;
     height: 100vh;
     margin-bottom: 52px;
+    width: 232px;
 }
 .bg_grey{
     background-color: #F6F7F8;

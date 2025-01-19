@@ -118,8 +118,8 @@
         width: 428px;
     }
 
-    .scrolllist, .navbar_main, .navbar_main_buttons {
-        width: 428px;
+    .scrolllist, .navbar_main, .navbar_main_buttons, .navbar_main_switches {
+        width: 100%;
     }
 
     .btnclass {

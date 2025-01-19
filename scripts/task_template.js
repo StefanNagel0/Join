@@ -83,27 +83,6 @@ function taskSubtasksTemplateOverlay(task) {
 }
 
 /* Renders the assigned employees from the task */
-//Nur Farbe mit Kürzel anzeigen
-// function taskAssignedTemplate(task) {
-//     if (task.assignedTo && task.assignedTo.length > 0) {
-//         return `
-//         <div id="taskAssignedID" class="taskAssigned">
-//             ${task.assignedTo
-//                 .map(name => {
-//                     const initials = name
-//                         .split(" ")
-//                         .map(part => part.charAt(0))
-//                         .join("");
-//                     return `<p class="initialsTemplate">${initials}</p>`;
-//                 })
-//                 .join("")}
-//         </div>
-//         `;
-//     } else {
-//         return ``;
-//     }
-// }
-
 function taskAssignedTemplate(task) {
     if (Array.isArray(task.assignedTo) && task.assignedTo.length > 0) {
         return `

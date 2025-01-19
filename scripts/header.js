@@ -1,5 +1,5 @@
 function initBoard() {
-    toggleBoardPage()
+    toggleBoardPage();
     initializeUserButton();
 }
 
@@ -14,19 +14,8 @@ function initializeUserButton() {
     const userPopup = document.getElementById('user-popup');
 
     setUserInitials(userInitialsButton);
-
-    // Popup öffnen/schließen
-    userInitialsButton.onclick = function (e) {
-        togglePopup(e, userPopup);
-    };
-
-    // Schließen des Popups bei Klick außerhalb
-    document.onclick = function (e) {
-        closePopup(e, userPopup, userInitialsButton);
-    };
 }
 
-// Setzt die Initialen des aktuellen Benutzers
 function setUserInitials(button) {
     const userName = getCurrentUserName();
     button.textContent = userName.toLowerCase() === "guest" 
@@ -34,28 +23,26 @@ function setUserInitials(button) {
         : getInitials(userName);
 }
 
-// Holt den aktuellen Benutzernamen (Mock-Funktion)
 function getCurrentUserName() {
     return "Guest";
 }
 
-// Generiert die Initialen eines Benutzernamens
 function getInitials(name) {
     const [firstName, lastName] = name.split(" ");
     return `${firstName?.[0] || ""}${lastName?.[0] || ""}`;
 }
 
-// Schaltet das Popup um
 function toggleUserPopup(event) {
     const userPopup = document.getElementById('user-popup');
-    event.stopPropagation();
+    event.stopPropagation(); // Verhindert das Auslösen von Klicks außerhalb des Pop-ups
     userPopup.classList.toggle('d-none');
 }
 
-// Schließt das Popup, wenn außerhalb geklickt wird
-function closePopup(event, userPopup, userInitialsButton) {
+function closePopup(event) {
+    const userPopup = document.getElementById('user-popup');
+    const userInitialsButton = document.getElementById('user-initials-button');
     const target = event.target;
-    
+
     // Wenn der Klick nicht auf das Popup oder den Button erfolgt, schließe das Popup
     if (!userPopup.contains(target) && !userInitialsButton.contains(target)) {
         userPopup.classList.add('d-none');

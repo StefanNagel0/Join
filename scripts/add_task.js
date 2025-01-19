@@ -372,8 +372,18 @@ function createElementWithClass(tagName, className, textContent = '', children =
 }
 
 /** Utility function: Generate a random color */
-function getRandomColor() {
-    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+function getRandomDarkColor() {
+    let color;
+    do {
+        color = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+        const r = parseInt(color.substring(0, 2), 16);
+        const g = parseInt(color.substring(2, 4), 16);
+        const b = parseInt(color.substring(4, 6), 16);
+        if ((r * 0.299 + g * 0.587 + b * 0.114) < 128) {
+            break;
+        }
+    } while (true);
+    return `#${color}`;
 }
 
 /** Clear the task form by resetting all form fields and UI elements to their initial state */

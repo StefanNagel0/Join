@@ -158,30 +158,6 @@ function taskAssignedTemplateOverlay(task) {
     }
 }
 
-
-
-// /* Renders the assigned employees from the task in the overlay */
-// // Benutzer nicht mit komma trennen und Vor/Nachname + Farbe mit Kürzel anzeigen
-// function taskAssignedTemplateOverlay(task) {
-//     if (task.assignedTo && task.assignedTo.length > 0) {
-//         return `
-//         <div id="taskAssignedID" class="taskAssigned">
-//             ${task.assignedTo
-//                 .map(name => {
-//                     const initials = name
-//                         .split(" ")
-//                         .map(part => part.charAt(0))
-//                         .join("");
-//                     return `<p><span class="initialsOverlay">${initials}</span> - ${name}</p>`;
-//                 })
-//                 .join("")}
-//         </div>
-//         `;
-//     } else {
-//         return ``;
-//     }
-// }
-
 /* Renders the priority of the task */
 function taskPriorityTemplate(task) {
     if (task.priority.toLowerCase() === "urgent") {

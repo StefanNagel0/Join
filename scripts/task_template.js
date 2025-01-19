@@ -223,6 +223,7 @@ function taskOverlayTemplate(task, taskId) {
         ${taskSubtasksTemplateOverlay(task)}
         <div class="openTaskOverlayButtonContainer">
             <button class="openTaskOverlayDeleteButton" onclick="deleteTask('${taskId}')"><img src="../assets/svg/delete.svg" alt=""> Delete</button>
+            <img src="../assets/svg/balken.svg"></img>
             <button class="openTaskOverlayEditButton" onclick="editTask('${taskId}')"><img src="../assets/svg/edit.svg" alt=""> Edit</button>
         </div>
     </div>

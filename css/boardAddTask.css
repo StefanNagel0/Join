@@ -189,7 +189,7 @@
 
 .assigned-contact {
     position: relative;
-    margin-left: -6px; 
+    margin-left: -6px;
 }
 
 
@@ -206,7 +206,7 @@
     line-height: 30px;
     color: white;
     font-weight: 300;
-    font-size:12px;
+    font-size: 12px;
     z-index: 1;
     border: 1px solid white;
 }
@@ -294,6 +294,40 @@
     right: 550px;
 }
 
+.openTaskOverlayCategoryUserStory {
+    width: 113px;
+    height: 27px;
+    padding: 4px 16px 4px 16px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #FFFFFF;
+    background: #0038FF;
+}
+
+.openTaskOverlayCategoryTechnical {
+    width: 150px;
+    height: 27px;
+    padding: 4px 16px 4px 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #FFFFFF;
+    background: #1FD7C1;
+}
+
 .openTaskOverlayTitle {
     width: 445px;
     height: 219px;
@@ -361,9 +395,12 @@
     display: flex;
     flex-direction: column;
     width: 445px;
-    height: 148px;
+    min-height: 150px;
     gap: 8px;
     color: #42526E;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
 }
 
 .initialsOverlay {
@@ -380,6 +417,27 @@
     height: 116px;
     gap: 4px;
     color: black !important;
+}
+
+.openTaskOverlaySubtaskContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.openTaskOverlaySubtaskTitle {
+    width: 220px;
+    height: 32px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-family: Inter;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #000000 !important;
 }
 
 .openTaskOverlaySubtasks {
@@ -400,7 +458,7 @@
     display: flex;
     justify-content: right;
     width: 450px;
-    height: 32px;
+    height: 24px;
     gap: 5px;
     margin-top: 0px;
 }
@@ -409,44 +467,49 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    width: 100px;
-    height: 32px;
+    width: 81px;
+    height: 24px;
     margin-bottom: 10px;
+    margin-right: 5px;
     background-color: transparent;
     border: transparent;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.openTaskOverlayDeleteButton img {
+    width: 24px;
+    height: 24px;
 }
 
 .openTaskOverlayEditButton {
     display: flex;
     align-items: center;
     gap: 5px;
-    width: 100px;
-    height: 32px;
+    width: 62px;
+    height: 24px;
     margin-bottom: 10px;
     background-color: transparent;
     border: transparent;
-}
-
-.openTaskOverlaySubtaskContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.openTaskOverlaySubtaskTitle {
-    width: 220px;
-    height: 32px;
-    margin-top: 150px;
-    margin-bottom: 5px;
     font-family: Inter;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 19.2px;
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-    color: #000000 !important;
 }
+
+.openTaskOverlayEditButton img {
+    width: 24px;
+    height: 24px;
+}
+
 .openTaskOverlaySubtask {
     display: flex;
     gap: 20px;

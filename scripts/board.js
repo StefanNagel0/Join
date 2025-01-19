@@ -74,6 +74,7 @@ function openTaskOverlay(taskId) {
     const removeClassPriority = document.getElementById("taskPriorityIDName");
     const removeClassStatus = document.getElementById("taskStatusID");
     if (removeClass, removeClassTemplate) {
+        toggleCategory(task, taskId);
         removeClass.classList.remove("taskTitle")
         removeClass.classList.add("openTaskOverlayTitle")
         removeClassTemplate.classList.remove("taskDescription")
@@ -93,9 +94,23 @@ function openTaskOverlay(taskId) {
     showOverlayTask();
 }
 
+function toggleCategory(taskId) {
+    let userStoryElement = document.querySelector("taskCategoryUserStory");
+    let technicalElement = document.querySelector("taskCategoryTechnical");
+    if (userStoryElement && userStoryElement.classList.contains('taskCategoryUserStory')) {
+        userStoryElement.classList.remove('taskCategoryUserStory');
+        userStoryElement.classList.add('openTaskOverlayCategoryUserStory');
+    } else if (technicalElement && technicalElement.classList.contains('taskCategoryTechnical')) {
+        technicalElement.classList.remove('taskCategoryTechnical');
+        technicalElement.classList.add('openTaskOverlayCategoryTechnical');
+    }
+}
+
 /* Closes the task that is open in the overlay */
 function closeTaskOverlay() {
     let overlayRef = document.getElementById("taskOverlay");
+    let darkOverlay = document.getElementById("darkOverlay");
+    darkOverlay.classList.remove("show");
     overlayRef.classList.remove("show");
     overlayRef.innerHTML = "";
 }

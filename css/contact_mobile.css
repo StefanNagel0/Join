@@ -22,10 +22,6 @@
         padding: 0;
     }
 
-    .flexdetails {
-        display: none;
-    }
-
     .mobileadd {
         display: block;
         cursor: pointer;
@@ -103,10 +99,10 @@
     }
 
     .btns {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
     }
 
     .logoover {
@@ -115,10 +111,13 @@
 
     .nav_header {
         padding: 20px 16px;
-        width: 428px;
+        width: 100%;
     }
 
-    .scrolllist, .navbar_main, .navbar_main_buttons, .navbar_main_switches {
+    .scrolllist,
+    .navbar_main,
+    .navbar_main_buttons,
+    .navbar_main_switches {
         width: 100%;
     }
 
@@ -165,7 +164,7 @@
         border: none;
         cursor: pointer;
         text-align: center;
-        padding: 0; 
+        padding: 0;
     }
 
     .navbar_buttons:hover {
@@ -185,9 +184,9 @@
     }
 
     .scrolllist {
-        margin-bottom: 70px; 
+        margin-bottom: 70px;
     }
-    
+
     .btnmobile {
         display: flex;
         align-items: center;
@@ -217,7 +216,7 @@
     }
 
     .header_text {
-        display:none;
+        display: none;
     }
 
     #user-popup {
@@ -225,13 +224,11 @@
     }
 
     .navbar_main_buttons {
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    justify-content: center;
-    padding: 0;
-    height: 80px;
-    margin: 0;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        height: 80px;
+        margin: 0;
     }
 
     .navbar_img {
@@ -239,93 +236,60 @@
     }
 
     .hlp {
-        display: block
+        display: block;
     }
 
-    @media screen and (max-width: 900px) {
-        .flexdetails {
-          padding-left: 20px;
-          padding-top: 50px;
-          width: 100%;
-          align-items: center;
-          justify-content: center;
-        }
-      
-        .detailscircle {
-          flex-direction: column;
-          gap: 15px;
-        }
-      
-        .contactnames {
-          font-size: 32px;
-          font-weight: 600;
-        }
-      
-        .info {
-          gap: 20px;
-          margin-top: 30px;
-          width: 90%;
-          text-align: center;
-        }
-      
-        .infom {
-          align-items: center;
-        }
-      
-        .mail {
-          font-size: 16px;
-        }
+    .flexdetails {
+       display: none;
+    }
 
-        .flexdetails {
-            display: flex;
-            flex-direction: column;
-        }
+    .detailscircle {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        justify-content: center;
+    }
 
-        #contactlist {
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            margin: 0;
-            justify-content: center;
-            align-items: center;
-        }
+    .contactnames {
+        font-size: 32px;
+        font-weight: 600;
+    }
 
-        .flexdetails { 
-          width: 100%;
-          height: 841px;
-          align-items: flex-start;
-        }
+    .info {
+        gap: 20px;
+        margin-top: 30px;
+        width: 90%;
+        text-align: center;
+    }
 
-        .detailshead {
-            position: relative;
-            z-index: 1001;
-            display: flex;
-        }
+    .infom {
+        align-items: center;
+        gap: 10px;
+    }
 
-        .nav_header {
-            display: flex;
-            box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.4);
-            z-index: 1001;
-            position: relative;
-        }
-      
-        .detailscircle {
-          width: 100%;
-          justify-content: center;
-        }
-      
-        .contactnames {
-          font-size: 28px;
-        }
+    .mail {
+        font-size: 16px;
+    }
 
-        .info {
-          width: 100%;
-          margin-top: 20px;
-        }
-      
-        .infom {
-          gap: 10px;
-        }
-      }
+    #contactlist {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .detailshead {
+        position: relative;
+        z-index: 1001;
+        display: flex;
+    }
+
+    .nav_header {
+        display: flex;
+        box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.4);
+        z-index: 1001;
+        position: relative;
+    }
 }

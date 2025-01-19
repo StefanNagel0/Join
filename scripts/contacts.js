@@ -179,7 +179,7 @@ function createContactDiv(contact) {
   const initials = getInitials(contact.name);
 
   contactDiv.innerHTML = `
-    <div class="contactmain" onclick="toggleDetailsView(true, ${contacts.indexOf(contact)})">
+    <div class="contactmain" onclick="showContactDetails(${contacts.indexOf(contact)})">
       <div class="circle" style="background-color: ${contact.color};">
         ${initials || `<img class="concircle" src="../assets/icons/contact/circledefault.png">`}
       </div>
@@ -313,29 +313,6 @@ function validatePhoneInput(event) {
   const input = event.target;
   input.value = input.value.replace(/[^0-9]/g, '');
 }
-/*
-
-function toggleDetailsView(show) {
-  const contactList = document.querySelector(".cont");
-  const flexDetails = document.querySelector(".flexdetails");
-
-  if (!contactList || !flexDetails) {
-    console.error("Required elements not found in the DOM.");
-    return;
-  }
-
-  if (window.innerWidth <= 600) { // Check if screen width is 600px or less
-    if (show) {
-      contactList.style.display = "none"; // Hide contact list
-      flexDetails.style.display = "flex"; // Show flex details
-    } else {
-      contactList.style.display = "flex"; // Show contact list
-      flexDetails.style.display = "none"; // Hide flex details
-    }
-  } else {
-    console.log("Screen width is greater than 600px. No action taken.");
-  }
-} */
 
 
 function toggleDetailsView(show, index = null) {
@@ -348,52 +325,66 @@ function toggleDetailsView(show, index = null) {
     return;
   }
 
-  if (window.innerWidth <= 600) { // Check if screen width is 600px or less
-    if (show) {
-      scrollList.style.display = "none"; // Hide the scroll list
-      flexDetails.style.display = "flex"; // Show the flexdetails
+  if (window.innerWidth > 900) {
+    // Bildschirmbreite > 900px: Beide Bereiche anzeigen
+    scrollList.style.display = "block"; // Kontaktliste bleibt sichtbar
+    flexDetails.style.display = "flex"; // Kontakt-Details sind sichtbar
 
-      // Populate the flexdetails with the selected contact's details
-      if (index !== null) {
+    // Zeige den Kontakt in den Details, falls ein Index übergeben wird
+    if (index !== null && contacts[index]) {
+      const contact = contacts[index];
+      flexDetails.innerHTML = `
+        <div class="detailshead">
+          <h1>Contact Details</h1>
+          <p>Manage your contact</p>
+          <hr class="linetwo">
+        </div>
+        <div class="detailscircle">
+          <div class="circle circlecont" style="background-color: ${contact.color || getRandomColor()};">
+            ${getInitials(contact.name)}
+          </div>
+          <p class="contactnames">${contact.name}</p>
+          <p><strong>Email:</strong> ${contact.email}</p>
+          <p><strong>Phone:</strong> ${contact.phone}</p>
+        </div>
+      `;
+    } else {
+      console.error("Invalid contact index:", index);
+    }
+  } else {
+    // Bildschirmbreite <= 900px: Ein Bereich wird ausgeblendet
+    if (show) {
+      scrollList.style.display = "none"; // Kontaktliste ausblenden
+      flexDetails.style.display = "flex"; // Kontakt-Details anzeigen
+
+      // Zeige den Kontakt in den Details, falls ein Index übergeben wird
+      if (index !== null && contacts[index]) {
         const contact = contacts[index];
         flexDetails.innerHTML = `
-        <div class="detailshead">
-                    <h1>Contacts</h1>
-                    <hr class="linetwo">
-                    <p>Better with a team</p>
-                </div>
+          <div class="detailshead">
+            <h1>Contact Details</h1>
+            <p>Manage your contact</p>
+            <hr class="linetwo">
+          </div>
           <div class="detailscircle">
-            <div class="circle circlecont" style="background-color: ${contact.color};">
+            <div class="circle circlecont" style="background-color: ${contact.color || getRandomColor()};">
               ${getInitials(contact.name)}
             </div>
             <p class="contactnames">${contact.name}</p>
             <p><strong>Email:</strong> ${contact.email}</p>
             <p><strong>Phone:</strong> ${contact.phone}</p>
-            <button onclick="hideFlexDetails()">Back</button>
+            <button onclick="toggleDetailsView(false)">Back</button>
           </div>
         `;
+      } else {
+        console.error("Invalid contact index:", index);
       }
     } else {
-      scrollList.style.display = "block"; // Show the scroll list
-      flexDetails.style.display = "none"; // Hide the flexdetails
-      showContacts();
+      scrollList.style.display = "block"; // Kontaktliste anzeigen
+      flexDetails.style.display = "none"; // Kontakt-Details ausblenden
+      showContacts(); // Kontakte neu laden
     }
-  } else {
-    console.log("Screen ist nicht 600px");
   }
-}
-
-// Example usage for button actions
-function showFlexDetails() {
-  toggleDetailsView(true); // Show flexdetails
-}
-
-function hideFlexDetails() {
-  toggleDetailsView(false); // Hide flexdetails
-}
-
-function hideFlexDetails() {
-  toggleDetailsView(false); // Hide flexdetails and show the contact list
 }
 
 document.getElementById("contact-phone").addEventListener("input", validatePhoneInput);

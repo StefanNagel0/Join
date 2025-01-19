@@ -45,9 +45,16 @@ function boardAddTask() {
 function closeBoardAddTask() {
     let overlayRef = document.getElementById("boardAddTask");
     let darkOverlay = document.getElementById("darkOverlay");
-
     overlayRef.classList.remove("show");
     darkOverlay.classList.remove("show");
+    closeTaskOverlay();
+}
+
+function showOverlayTask() {
+    let showOverlay = document.getElementById("taskOverlay");
+    let darkOverlay = document.getElementById("darkOverlay");
+    darkOverlay.classList.add("show");
+    showOverlay.classList.add("show");
 }
 
 /* Opening the task */
@@ -59,7 +66,6 @@ function openTaskOverlay(taskId) {
     }
     const overlayRef = document.getElementById("taskOverlay");
     overlayRef.innerHTML = taskOverlayTemplate(task, taskId);
-
     const removeClass = document.getElementById("taskTitleID");
     const removeClassTemplate = document.getElementById("taskDescriptionID");
     const removeClassDate = document.getElementById("taskDateID");
@@ -84,6 +90,7 @@ function openTaskOverlay(taskId) {
         removeClassStatus.classList.add("openTaskOverlayStatus")
     }
     overlayRef.classList.add("show");
+    showOverlayTask();
 }
 
 /* Closes the task that is open in the overlay */

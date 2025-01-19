@@ -235,6 +235,7 @@
     box-shadow: 0px 0px 4px 0px #00000029;
     background-color: #FFFFFF;
     z-index: 9991;
+    transition: right 0.3s ease;
 }
 
 .taskCategoryUserStory {
@@ -286,13 +287,12 @@
     z-index: 9995;
     background: #FFFFFF;
     box-shadow: 0px 0px 4px 0px #00000029;
+    transition: right 0.3s ease;
 }
 
-/* .openTaskOverlayChildContainer {
-    
-    width: 525px;
-    height: 750px;
-} */
+.taskOverlay.show {
+    right: 550px;
+}
 
 .openTaskOverlayTitle {
     width: 445px;

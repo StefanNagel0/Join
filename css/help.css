@@ -1,0 +1,12 @@
+.help {
+    margin-top: 110px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.help button {
+    border: 0;
+    background-color: transparent;
+    color: lightblue;
+    font-size: 32px;
+}

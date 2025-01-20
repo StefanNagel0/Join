@@ -88,9 +88,9 @@ function toggleSubtask(subtask, taskId, task) {
     if (checkbox.checked == true) {
         for (let i = 0; i < task.subtasks; i++) {
             console.log(taskId.subtasks[subtask]);
-
-            if (checkbox.checked) {
-                checkbox.checked = checkbox.checked.completed;
+// taskId ist NUR die ID, hier erst durch taskId die Subtasks bekommen
+            if (taskId.subtasks[subtask]) {
+                taskId.subtasks[subtask].completed = true;
                 console.log(taskId.subtasks[subtask].completed);
             }
         }

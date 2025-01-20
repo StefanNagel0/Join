@@ -1,7 +1,12 @@
 .help {
     margin-top: 110px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    max-width: 1440px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 800px;
+    flex: 1;
 }
 
 .help button {
@@ -9,4 +14,50 @@
     background-color: transparent;
     color: lightblue;
     font-size: 32px;
+}
+.howto{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.help h1 {
+    font-size: 61px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.descr {
+    gap: 16px;
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    flex-direction: column;
+    max-width: 1440px;
+}
+
+.descr h2 {
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.use h2 {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.number {
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.helpto {
+    display: flex;
+    justify-content: space-between;
+}
+
+.coint {
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
 }

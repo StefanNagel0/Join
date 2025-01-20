@@ -86,9 +86,8 @@ function toggleSubtask(subtask, taskId, task) {
     let checkbox = document.getElementById(`subtask-${subtask}`);
     if (checkbox.checked == true) {
         for (let i = 0; i < task.subtasks; i++) {
-            console.log(taskId.subtasks[i].name);
             console.log(taskId.subtasks[subtask]);
-            if (taskId.subtasks[i].name == subtask)
+            if (taskId.subtasks[subtask] == subtask)
                 taskId.subtasks[subtask].completed = true;
             console.log(taskId.subtasks[subtask].completed);
 

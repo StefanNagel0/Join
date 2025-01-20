@@ -223,7 +223,7 @@ function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
 function createSubtaskHTML(task) {
     return `
     <div>
-    <span class="subtask-marker">•</span>${task}
+    <span class="subtask-marker">• </span>${task}
     </div>
         <div class="subtask-controls">
             <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">

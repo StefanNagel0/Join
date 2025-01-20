@@ -68,7 +68,7 @@ function taskSubtasksTemplateOverlay(task) {
     if (task.subtasks && task.subtasks.length > 0) {
         const subtasksHtml = task.subtasks.map(subtask => `
             <p id="taskSubtasksID" class="openTaskOverlaySubtask">
-                <input type="checkbox" id="subtask-${subtask}" required/> ${subtask}
+                <input type="checkbox" id="subtask-${subtask}" onclick="toggleSubtask('${subtask}')" required/> ${subtask}
             </p>
         `).join("");
         return `
@@ -80,6 +80,30 @@ function taskSubtasksTemplateOverlay(task) {
     } else {
         return ``;
     }
+}
+
+function toggleSubtask(subtask, task) {
+    let checkbox = document.getElementById(`subtask-${subtask}`);
+    if (checkbox.checked == true) {
+        console.log("Checkbox checked");
+        console.log(subtask);
+        console.log(task);
+    } else if (checkbox.checked == false) {
+        console.log("Checkbox unchecked");
+    }
+    
+}
+
+function updateSubtaskProcess(subtask, tasks, task) {
+    const completedSubtasks = task.subtasks.filter(sub => sub.completed).length;
+    const totalSubtasks = task.subtasks.length;
+    const progressPercent = (completedSubtasks / totalSubtasks) * 100;
+
+    // Fortschrittsbalken aktualisieren
+    const progressBar = document.querySelector('.progressBar');
+    const progressText = document.querySelector('.progressText');
+    if (progressBar) progressBar.style.width = `${progressPercent}%`;
+    if (progressText) progressText.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
 }
 
 /* Renders the assigned employees from the task */

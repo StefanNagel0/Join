@@ -36,10 +36,21 @@ function login() {
         return;
     }
     if (isValidUser(email, password)) {
-        window.location.href = 'summary.html';
+        localStorage.setItem('loggedInEmail', email);
+        window.location.href = 'summary.html?showGreeting=true';
     } else {
         showError('E-Mail oder Passwort falsch.');
     }
+}
+
+function logout(event) {
+    // Verhindert, dass der Link das Standardverhalten (Seitenreload) ausführt
+    event.preventDefault();
+    // Entfernt die gespeicherten Daten aus localStorage
+    localStorage.removeItem('loggedInEmail');
+    localStorage.removeItem('greetingShown');
+    // Optional: Weiterleitung zur Login-Seite oder einer anderen Seite
+    window.location.href = 'login.html';  // Weiterleitung zur Login-Seite
 }
 
 function showError(message) {
@@ -51,10 +62,11 @@ function showError(message) {
     }, 2000);
 }
 
-
 function guestLogin() {
-    window.location.href = 'summary.html';
+    localStorage.setItem('loggedInEmail', 'guest@example.com'); // Ein Platzhalter für den Gast-Login (so als ob der Gast eingeloggt wäre)
+    window.location.href = 'summary.html?showGreeting=true';  // Weiterleitung zur summary.html mit showGreeting=true
 }
+
 
 function valueInput() {
     let email = document.getElementById('email').value.trim();

@@ -1,110 +1,186 @@
+document.addEventListener('DOMContentLoaded', () => {
+    handleGreetingOverlay();
+    setGreetingMessage();
+    fetchTasks();
+});
+
 // Funktion, um die Begrüßung basierend auf der Uhrzeit zu setzen
 function setGreetingMessage() {
     const greetingMessageDiv = document.getElementById('greeting-message');
     const userNameGreetingDiv = document.getElementById('user-name-greeting');
-
-    if (!greetingMessageDiv || !userNameGreetingDiv) {
+    const greetingMessageOverlay = document.getElementById('greeting-message-overlay');
+    const userNameGreetingOverlay = document.getElementById('user-name-greeting-overlay');
+    if (!greetingMessageDiv || !userNameGreetingDiv || !greetingMessageOverlay || !userNameGreetingOverlay) {
         console.error('Greeting elements not found in the DOM');
         return;
     }
-    const currentHour = new Date().getHours();
-    let greeting = '';
-    if (currentHour >= 5 && currentHour < 12) {
-        greeting = 'Good Morning';
-    } else if (currentHour >= 12 && currentHour < 18) {
-        greeting = 'Good Afternoon';
-    } else {
-        greeting = 'Good Evening';
-    }
+    const greeting = getGreetingBasedOnTime();
     const userName = getUserName();
-    // Überprüfen, ob der Benutzer "Guest" ist
+    setGreetingForElements(greeting, userName, greetingMessageDiv, userNameGreetingDiv);
+    setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userNameGreetingOverlay);
+}
+
+// Funktion, um die Begrüßung basierend auf der Uhrzeit zu setzen
+function getGreetingBasedOnTime() {
+    const currentHour = new Date().getHours();
+    if (currentHour >= 5 && currentHour < 12) return 'Good Morning';
+    if (currentHour >= 12 && currentHour < 18) return 'Good Afternoon';
+    return 'Good Evening';
+}
+
+// Funktion, um die Begrüßung für das Haupt-Div zu setzen
+function setGreetingForElements(greeting, userName, greetingMessageDiv, userNameGreetingDiv) {
     if (userName && userName.toLowerCase() !== 'guest') {
-        // Benutzer ist kein Gast: Begrüßung mit Komma und Name anzeigen
         greetingMessageDiv.textContent = `${greeting},`;
-        userNameGreetingDiv.textContent = `Welcome, ${userName}!`;
+        userNameGreetingDiv.textContent = `${userName}!`;
     } else {
-        // Benutzer ist ein Gast: Nur Begrüßung ohne Komma
         greetingMessageDiv.textContent = greeting;
         userNameGreetingDiv.textContent = ''; // Leer lassen, wenn der Benutzer ein Gast ist
     }
 }
-// Funktion, um einen Benutzernamen zu simulieren (kann später ersetzt werden)
-function getUserName() {
-    // Hier kannst du den Benutzernamen dynamisch aus einer Quelle abrufen
-    return 'Guest'; // Beispiel: "John Doe" oder "Guest"
-}
-// Begrüßungsnachricht anzeigen lassen, wenn die Seite geladen wird
-document.addEventListener('DOMContentLoaded', setGreetingMessage);
 
+// Funktion, um die Begrüßung für das Overlay zu setzen
+function setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userNameGreetingOverlay) {
+    if (userName && userName.toLowerCase() !== 'guest') {
+        greetingMessageOverlay.textContent = `${greeting},`;
+        userNameGreetingOverlay.textContent = `${userName}!`;
+    } else {
+        greetingMessageOverlay.textContent = greeting;
+        userNameGreetingOverlay.textContent = ''; // Leer lassen, wenn der Benutzer ein Gast ist
+    }
+}
+
+// Overlay anzeigen, wenn nötig
+function handleGreetingOverlay() {
+    const showGreeting = new URLSearchParams(window.location.search).get('showGreeting');
+    const overlay = document.getElementById('overlay_greeting');
+    const greetingMessageOverlay = document.getElementById('greeting-message-overlay');
+    const userNameGreetingOverlay = document.getElementById('user-name-greeting-overlay');
+    
+    if (shouldShowGreeting(showGreeting)) {
+        const greeting = getGreetingFromDOM();
+        const userName = getUserNameFromDOM();
+        setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userNameGreetingOverlay);
+        showOverlay(overlay);
+        hideOverlayAfterTimeout(overlay);
+    }
+}
+
+// Überprüfen, ob das Overlay angezeigt werden soll
+function shouldShowGreeting(showGreeting) {
+    return showGreeting === 'true' && !localStorage.getItem('greetingShown');
+}
+
+// Begrüßung und Benutzername aus der DOM holen
+function getGreetingFromDOM() {
+    return document.getElementById('greeting-message').textContent;
+}
+
+function getUserNameFromDOM() {
+    return document.getElementById('user-name-greeting').textContent;
+}
+
+// Begrüßung in das Overlay setzen
+function setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userNameGreetingOverlay) {
+    greetingMessageOverlay.textContent = greeting;
+    userNameGreetingOverlay.textContent = userName;
+}
+
+// Overlay anzeigen
+function showOverlay(overlay) {
+    overlay.style.display = 'flex';
+}
+
+// Overlay nach 3 Sekunden ausblenden
+function hideOverlayAfterTimeout(overlay) {
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        localStorage.setItem('greetingShown', 'true');
+    }, 3000); // 3 Sekunden lang anzeigen
+}
+
+// Benutzername abrufen
+function getUserName() {
+    const loggedInEmail = localStorage.getItem('loggedInEmail');
+    if (!loggedInEmail) {
+        return 'Guest';
+    }
+    const user = users.find(user => user.email === loggedInEmail);
+    return user ? user.name : 'Guest';
+}
 
 async function fetchTasks() {
     try {
-        // Daten von Firebase abrufen
         const response = await fetch(`${BASE_URL}tasks.json`);
         if (!response.ok) {
             throw new Error('Failed to fetch tasks');
         }
         const data = await response.json();
-        // MainCategories zählen
         const counts = countMainCategories(data);
-
-        // Tasks mit "Urgent"-Prio und nächstem Due Date filtern
         const urgentData = countUrgentTasks(data);
-
-        // HTML aktualisieren
         updateSummaryHTML(counts, urgentData);
     } catch (error) {
         console.error('Error fetching tasks:', error);
     }
 }
 
-// Tasks mit Priorität "Urgent" und nächstem Due Date filtern
 function countUrgentTasks(data) {
-    const urgentTasks = [];
-
-    for (const key in data) {
-        const task = data[key];
-        if (
-            task.priority &&
-            task.priority.toLowerCase() === 'urgent' && // Groß-/Kleinschreibung ignorieren
-            task.dueDate
-        ) {
-            urgentTasks.push({
-                dueDate: new Date(task.dueDate),
-                task,
-            });
-        }
-    }
-
-    // Nach Fälligkeitsdatum sortieren
-    urgentTasks.sort((a, b) => a.dueDate - b.dueDate);
+    const urgentTasks = filterUrgentTasks(data);
+    sortUrgentTasks(urgentTasks);
 
     if (urgentTasks.length > 0) {
         const nextDueDate = urgentTasks[0].dueDate;
-        const tasksWithNextDueDate = urgentTasks.filter(
-            (item) => item.dueDate.getTime() === nextDueDate.getTime()
-        );
-
-        return {
-            count: tasksWithNextDueDate.length,
-            dueDate: nextDueDate.toISOString().split('T')[0], // Format: YYYY-MM-DD
-        };
+        const tasksWithNextDueDate = getTasksWithNextDueDate(urgentTasks, nextDueDate);
+        return getTaskCountAndDueDate(tasksWithNextDueDate, nextDueDate);
     }
-
+    
     return {
         count: 0,
         dueDate: 'N/A',
     };
 }
 
+// Filtern der dringenden Aufgaben
+function filterUrgentTasks(data) {
+    const urgentTasks = [];
+    for (const key in data) {
+        const task = data[key];
+        if (task.priority && task.priority.toLowerCase() === 'urgent' && task.dueDate) {
+            urgentTasks.push({
+                dueDate: new Date(task.dueDate),
+                task,
+            });
+        }
+    }
+    return urgentTasks;
+}
 
-// MainCategories zählen
+// Sortieren der dringenden Aufgaben nach Fälligkeit
+function sortUrgentTasks(urgentTasks) {
+    urgentTasks.sort((a, b) => a.dueDate - b.dueDate);
+}
+
+// Aufgaben mit dem nächsten Fälligkeitsdatum finden
+function getTasksWithNextDueDate(urgentTasks, nextDueDate) {
+    return urgentTasks.filter(
+        (item) => item.dueDate.getTime() === nextDueDate.getTime()
+    );
+}
+
+// Anzahl der Aufgaben und das nächste Fälligkeitsdatum zurückgeben
+function getTaskCountAndDueDate(tasksWithNextDueDate, nextDueDate) {
+    return {
+        count: tasksWithNextDueDate.length,
+        dueDate: nextDueDate.toISOString().split('T')[0],
+    };
+}
+
 function countMainCategories(data) {
     const counts = {
         ToDo: 0,
         InProgress: 0,
         AwaitFeedback: 0,
-        Done: 0
+        Done: 0,
     };
     for (const key in data) {
         const task = data[key];
@@ -115,20 +191,13 @@ function countMainCategories(data) {
     return counts;
 }
 
-// HTML aktualisieren
 function updateSummaryHTML(counts, urgentData) {
     document.getElementById('to_do_show').textContent = counts.ToDo || 0;
     document.getElementById('tasks-in-progress').textContent = counts.InProgress || 0;
     document.getElementById('tasks-in-awaiting').textContent = counts.AwaitFeedback || 0;
     document.getElementById('done_show').textContent = counts.Done || 0;
-    // Optional: Anzahl der Aufgaben insgesamt
     document.getElementById('tasks-in-board').textContent =
         counts.ToDo + counts.InProgress + counts.AwaitFeedback + counts.Done;
-
-    // Urgent-Daten anzeigen
     document.getElementById('urgent_num_show').textContent = urgentData.count;
     document.getElementById('date-of-due').textContent = urgentData.dueDate;
 }
-
-// Seite initialisieren
-document.addEventListener('DOMContentLoaded', fetchTasks);

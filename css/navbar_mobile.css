@@ -8,6 +8,9 @@
 
 
 @media screen and (max-width: 900px) {
+    .help_img{
+        display: none;
+    }
     .navbar_main {
         position: fixed;
         bottom: 0;
@@ -23,6 +26,9 @@
         padding: 0;
     }
 
+    .scrolllist, .navbar_main, .navbar_main_buttons, .navbar_main_switches {
+        width: 100%;
+    }
 
 .nav_header {
     padding: 20px 16px;
@@ -66,6 +72,7 @@
     cursor: pointer;
     text-align: center;
     padding: 0; 
+    height: 72px;
 }
 
 .navbar_buttons:hover {

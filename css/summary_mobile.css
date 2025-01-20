@@ -1,0 +1,80 @@
+@media(max-width:1260px){
+    .greetings_message_box{
+        margin-left: 32px;
+    }
+    .greeting_message{
+        font-size: 30px;
+    }
+    .join_360{
+        font-size: 38px;
+    }
+    .heading_info{
+        font-size: 18px;
+    }
+    .summary_overview{
+        width: 418px;
+    }
+    .content_heading{
+        height: 45px;
+        width: 418px;
+    }
+    .content_heading img{
+        height: 38px;
+    }
+    .summary_first_line_box {
+        width: 418px;
+    }
+    .inner_first_line_box{
+        width: 186px;
+        height: 126px;
+    }
+    .ellipse_box{
+        height: 46px;
+        width: 46px;
+    }
+    .summary_number{
+        font-size: 38px;
+    }
+    .to_do_infos p{
+        font-size: 16px;
+    }
+    .urgent_box{
+        width: 418px;
+        height: 126px;
+        gap: 50px;
+    }
+    .urgent_first_box img{
+        height: 46px;
+    }
+    .date_line{
+        font-size: 16px;
+    }
+    .deadline_text{
+        font-size: 12px;
+    }
+    .summary_overview_board{
+        width: 418px;
+        height: 126px;
+    }
+    .summary_overview_board_box{
+        height: 126px;
+        width: 126px;
+    }
+    .summary_overview_board_num{
+        font-size: 38px;
+    }
+    .summary_overview_board_box p{
+        font-size: 16px;
+    }
+}
+@media(max-width:900px){
+    .greetings_message_box {
+        display: none;
+    }
+    .overlay_message_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    }
+}

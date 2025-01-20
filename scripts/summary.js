@@ -103,10 +103,10 @@ function hideOverlayAfterTimeout(overlay) {
 function getUserName() {
     const loggedInEmail = localStorage.getItem('loggedInEmail');
     if (!loggedInEmail) {
-        return 'Guest';
+        return '';
     }
     const user = users.find(user => user.email === loggedInEmail);
-    return user ? user.name : 'Guest';
+    return user ? user.name : '';
 }
 
 async function fetchTasks() {

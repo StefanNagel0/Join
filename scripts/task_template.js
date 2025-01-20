@@ -64,11 +64,11 @@ function taskSubtasksTemplate(task) {
 }
 
 /* Renders the subtask of the task in the overlay */
-function taskSubtasksTemplateOverlay(task, tasks) {
+function taskSubtasksTemplateOverlay(task, taskId) {
     if (task.subtasks && task.subtasks.length > 0) {
         const subtasksHtml = task.subtasks.map(subtask => `
             <p id="taskSubtasksID" class="openTaskOverlaySubtask">
-                <input type="checkbox" id="subtask-${subtask}" onclick="toggleSubtask('${subtask}')" required/> ${subtask}
+                <input type="checkbox" id="subtask-${subtask}" onclick="toggleSubtask('${subtask}', '${taskId}', '${task}')" required/> ${subtask}
             </p>
         `).join("");
         return `
@@ -82,24 +82,33 @@ function taskSubtasksTemplateOverlay(task, tasks) {
     }
 }
 
-function toggleSubtask(subtask, tasks) {
+function toggleSubtask(subtask, taskId, task) {
     let checkbox = document.getElementById(`subtask-${subtask}`);
     if (checkbox.checked == true) {
+        for (let i = 0; i < task.subtasks; i++) {
+            console.log(taskId.subtasks[i].name);
+            console.log(taskId.subtasks[subtask]);
+            if (taskId.subtasks[i].name == subtask)
+                taskId.subtasks[subtask].completed = true;
+            console.log(taskId.subtasks[subtask].completed);
+
+        }
         console.log("Checkbox checked");
         console.log(subtask);
-        console.log(tasks);
+        console.log(globalTasks);
+
+        updateSubtaskProcess(subtask, task, taskId);
+
     } else if (checkbox.checked == false) {
         console.log("Checkbox unchecked");
     }
-    
 }
 
-function updateSubtaskProcess(subtask, tasks, task) {
-    const completedSubtasks = task.subtasks.filter(sub => sub.completed).length;
-    const totalSubtasks = task.subtasks.length;
+function updateSubtaskProcess(subtask, task, taskId) {
+    const completedSubtasks = taskId.subtasks.filter(sub => sub.completed).length;
+    const totalSubtasks = taskId.subtasks.length;
     const progressPercent = (completedSubtasks / totalSubtasks) * 100;
 
-    // Fortschrittsbalken aktualisieren
     const progressBar = document.querySelector('.progressBar');
     const progressText = document.querySelector('.progressText');
     if (progressBar) progressBar.style.width = `${progressPercent}%`;

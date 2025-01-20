@@ -171,7 +171,7 @@ function taskOverlayTemplate(task, taskId) {
             Assigned to: ${taskAssignedTemplateOverlay(task)}
         </div>
         ${taskStatusTemplate(task)}
-        ${taskSubtasksTemplateOverlay(task)}
+        ${taskSubtasksTemplateOverlay(task, taskId)}
         <div class="openTaskOverlayButtonContainer">
             <button class="openTaskOverlayDeleteButton" onclick="deleteTask('${taskId}')"><img src="../assets/svg/delete.svg" alt=""> Delete</button>
             <img src="../assets/svg/balken.svg"></img>

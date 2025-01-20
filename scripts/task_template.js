@@ -64,7 +64,7 @@ function taskSubtasksTemplate(task) {
 }
 
 /* Renders the subtask of the task in the overlay */
-function taskSubtasksTemplateOverlay(task) {
+function taskSubtasksTemplateOverlay(task, tasks) {
     if (task.subtasks && task.subtasks.length > 0) {
         const subtasksHtml = task.subtasks.map(subtask => `
             <p id="taskSubtasksID" class="openTaskOverlaySubtask">
@@ -82,12 +82,12 @@ function taskSubtasksTemplateOverlay(task) {
     }
 }
 
-function toggleSubtask(subtask, task) {
+function toggleSubtask(subtask, tasks) {
     let checkbox = document.getElementById(`subtask-${subtask}`);
     if (checkbox.checked == true) {
         console.log("Checkbox checked");
         console.log(subtask);
-        console.log(task);
+        console.log(tasks);
     } else if (checkbox.checked == false) {
         console.log("Checkbox unchecked");
     }

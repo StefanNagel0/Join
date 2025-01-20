@@ -1,0 +1,15 @@
+h2 {
+    font-size: 27px;
+    font-weight: 700;
+    margin-top: 30px;
+}
+
+h1 {
+    font-size: 47px;
+    font-weight: 700;
+    margin-top: 110px;
+}
+
+.content {
+    height: 800px;
+}

@@ -1,3 +1,3 @@
 let users = [
-    { 'name': 'test', 'email': 'test@test.de', 'password': 'test' }
+    { 'name': 'Sofia Müller', 'email': 'test@test.de', 'password': 'test' }
 ];

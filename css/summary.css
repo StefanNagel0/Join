@@ -11,6 +11,11 @@
     font-weight: 400;
     color: #2A3647;
 }
+
+.blue_line{
+    display: none;
+}
+
 .summary_overview{
     width: 560px;
     height: 562px;

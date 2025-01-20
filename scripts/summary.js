@@ -32,7 +32,7 @@ function getGreetingBasedOnTime() {
 function setGreetingForElements(greeting, userName, greetingMessageDiv, userNameGreetingDiv) {
     if (userName && userName.toLowerCase() !== 'guest') {
         greetingMessageDiv.textContent = `${greeting},`;
-        userNameGreetingDiv.textContent = `${userName}!`;
+        userNameGreetingDiv.textContent = `${userName}`;
     } else {
         greetingMessageDiv.textContent = greeting;
         userNameGreetingDiv.textContent = ''; // Leer lassen, wenn der Benutzer ein Gast ist
@@ -43,7 +43,7 @@ function setGreetingForElements(greeting, userName, greetingMessageDiv, userName
 function setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userNameGreetingOverlay) {
     if (userName && userName.toLowerCase() !== 'guest') {
         greetingMessageOverlay.textContent = `${greeting},`;
-        userNameGreetingOverlay.textContent = `${userName}!`;
+        userNameGreetingOverlay.textContent = `${userName}`;
     } else {
         greetingMessageOverlay.textContent = greeting;
         userNameGreetingOverlay.textContent = ''; // Leer lassen, wenn der Benutzer ein Gast ist

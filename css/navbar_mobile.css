@@ -31,8 +31,9 @@
     }
 
 .nav_header {
-    padding: 20px 16px;
+    padding: 10px 10px;
     width: 100%;
+    height: 80px;
 }
 
 .navbar_main, .navbar_main_buttons, .navbar_main_switches {
@@ -107,5 +108,24 @@
 
     .hlp {
         display: block
+    }
+}
+
+@media(max-width:570px){
+    #user-initials-button{
+        height: 40px;
+        width: 40px;
+    }
+    .header_text{
+        display: none;
+    }
+    .header_logo_img{
+        display: flex;
+        height: 39px;
+        width: 32px;
+    }
+    .header_help_user{
+        padding: 0;
+        width:64px;
     }
 }

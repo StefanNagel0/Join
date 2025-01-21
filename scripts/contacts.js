@@ -147,30 +147,6 @@ function appendContact(contact, groupDiv) {
   groupDiv.appendChild(contactDiv);
 }
 
-/*
-
-function createContactDiv(contact) {
-  const contactDiv = document.createElement("div");
-  contactDiv.classList.add("contact");
-  const initials = getInitials(contact.name);
-
-  contactDiv.innerHTML = `
-    <div class="contactmain" toggleDetailsView(show) ">
-    <div class="circle" style="background-color: ${contact.color};">
-      ${initials || `<img class="concircle" src="../assets/icons/contact/circledefault.png">`}
-    </div>
-    <div class="listdesign">
-      <p class="name" onclick="showContactDetails(${contacts.indexOf(contact)})" style="cursor: pointer;">
-        ${contact.name}
-        </p>
-      <p class="emails">${contact.email}
-      </p>
-    </div>
-    </div>
-  `;
-  return contactDiv;
-}
-*/
 
 function createContactDiv(contact) {
   const contactDiv = document.createElement("div");
@@ -195,14 +171,14 @@ function createContactDiv(contact) {
   return contactDiv;
 }
 
-
-
 function showContactDetails(index) {
   const contact = contacts[index];
   const detailsDiv = document.getElementById("contact-details");
   detailsDiv.innerHTML = createContactDetails(contact);
   detailsDiv.style.display = "block";
+    
 }
+
 
 function createContactDetails(contact) {
   return `
@@ -317,5 +293,7 @@ function validatePhoneInput(event) {
 document.getElementById("contact-phone").addEventListener("input", validatePhoneInput);
 document.getElementById("contact-name").addEventListener("input", handleNameInput);
 document.getElementById("contact-form").addEventListener("submit", handleFormSubmit);
+
+
 
 showContacts();

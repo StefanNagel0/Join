@@ -208,7 +208,6 @@ function showContactDetails(index) {
 
     contactList.classList.add("hide");
     contactList.classList.remove("show");
-    
   }
 }
 

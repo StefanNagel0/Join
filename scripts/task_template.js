@@ -86,10 +86,11 @@ function taskSubtasksTemplateOverlay(task, taskId) {
 function toggleSubtask(subtask, taskId, task) {
     let checkbox = document.getElementById(`subtask-${subtask}`);
     if (checkbox.checked == true) {
+        taskId[subtask]
         for (let i = 0; i < task.subtasks; i++) {
+
             console.log(taskId[subtask]);
-// taskId ist NUR die ID, hier erst durch taskId die Subtasks bekommen
-            if (taskId[subtask]) {
+            if (taskId[subtask] == true) {
                 taskId[subtask].completed = true;
                 console.log(taskId[subtask].completed);
             }
@@ -103,7 +104,26 @@ function toggleSubtask(subtask, taskId, task) {
     }
 }
 
+// function updateSubtaskProcess() {
+//     // Alle Checkboxen für Subtasks auswählen
+//     const checkboxes = document.querySelectorAll('input[type="checkbox"][id^="subtask-"]');
+    
+//     // Anzahl der abgeschlossenen und gesamten Subtasks berechnen
+//     const completedSubtasks = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+//     const totalSubtasks = checkboxes.length;
+//     const progressPercent = (completedSubtasks / totalSubtasks) * 100;
+
+//     // Fortschrittsanzeige aktualisieren
+//     const progressBar = document.querySelector('.progressBar');
+//     const progressText = document.querySelector('.progressText');
+//     if (progressBar) progressBar.style.width = `${progressPercent}%`;
+//     if (progressText) progressText.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
+// }
+
+// Subtask weiter prüfen / Beim Klick auf Task wird der erste Task verändert (Style)
 function updateSubtaskProcess(subtask, task, taskId) {
+    const checkbox = document.getElementById(`subtask-${subtask}`);
+
     const completedSubtasks = Object.values(taskId).filter(sub => sub.completed).length;
     const totalSubtasks = Object.keys(taskId).length;
     const progressPercent = (completedSubtasks / totalSubtasks) * 100;
@@ -111,12 +131,12 @@ function updateSubtaskProcess(subtask, task, taskId) {
     const progressBar = document.querySelector('.progressBar');
     const progressText = document.querySelector('.progressText');
     if (progressBar) progressBar.style.width = `${progressPercent}%`;
-    if (progressText) progressText.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
+    // if (progressText) progressText.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
     taskSubtasksTemplate(task, taskId);
 }
 
 // function updateSubtaskProcess(subtask, task, taskId) {
-    
+
 //     const completedSubtasks = taskId[subtask].filter(sub => sub.completed).length;
 //     const totalSubtasks = taskId[subtask].length;
 //     const progressPercent = (completedSubtasks / totalSubtasks) * 100;

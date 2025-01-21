@@ -104,22 +104,6 @@ function toggleSubtask(subtask, taskId, task) {
     }
 }
 
-// function updateSubtaskProcess() {
-//     // Alle Checkboxen für Subtasks auswählen
-//     const checkboxes = document.querySelectorAll('input[type="checkbox"][id^="subtask-"]');
-    
-//     // Anzahl der abgeschlossenen und gesamten Subtasks berechnen
-//     const completedSubtasks = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
-//     const totalSubtasks = checkboxes.length;
-//     const progressPercent = (completedSubtasks / totalSubtasks) * 100;
-
-//     // Fortschrittsanzeige aktualisieren
-//     const progressBar = document.querySelector('.progressBar');
-//     const progressText = document.querySelector('.progressText');
-//     if (progressBar) progressBar.style.width = `${progressPercent}%`;
-//     if (progressText) progressText.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
-// }
-
 // Subtask weiter prüfen / Beim Klick auf Task wird der erste Task verändert (Style)
 function updateSubtaskProcess(subtask, task, taskId) {
     const checkbox = document.getElementById(`subtask-${subtask}`);

@@ -1,18 +1,24 @@
 .help {
-    margin-top: 110px;
+    padding-top: 110px;
     display: flex;
     flex-direction: column;
-    max-width: 1440px;
-    height: 800px;
+    max-width: 1920px;
+    height: 900px;
     flex: 1;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    margin-right: 100px;
 }
 
-.help button {
-    border: 0;
+
+.arrow {
     background-color: transparent;
-    color: lightblue;
-    font-size: 32px;
+    color: rgb(18, 181, 235);
+    font-size: 40px;
+    border: none;
 }
+
 .howto{
     display: flex;
     justify-content: center;
@@ -31,7 +37,7 @@
     justify-content: left;
     align-items: flex-start;
     flex-direction: column;
-    max-width: 1440px;
+    max-width: 1920px;
 }
 
 .descr h2 {
@@ -66,16 +72,6 @@
     font-weight: 700;
 }
 
-.content {
-    margin-left: 310px;
-}
-
-.nav_header {
-    margin-left: 230px;
-}
 
 
-.navbar_main {
-    position: fixed;
-}
 

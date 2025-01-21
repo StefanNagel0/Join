@@ -170,15 +170,63 @@ function createContactDiv(contact) {
 
   return contactDiv;
 }
-
 function showContactDetails(index) {
   const contact = contacts[index];
+  const contactList = document.querySelector(".scrolllist");
   const detailsDiv = document.getElementById("contact-details");
+  const detailsHead = document.querySelector(".detailshead");
+
   detailsDiv.innerHTML = createContactDetails(contact);
-  detailsDiv.style.display = "block";
+  detailsDiv.classList.add("show");
+  detailsDiv.classList.remove("hide");
+
+  if (window.innerWidth <= 900) {
+    detailsHead.classList.add("hide");
     
+    detailsDiv.innerHTML = `
+      <div class="detailsheader">
+        <h1>Contacts</h1>
+        <hr style="width: 0; height: 59px; border: 3px solid; border-color: #29ABE2;">
+        <p>Better with a team</p>
+      </div>
+      <div class="details-container">
+        <h2>Kontakt Details</h2>
+        <div class="detailscircle">
+          <div class="circle" style="background-color: ${contact.color || getRandomColor()}">
+            ${getInitials(contact.name)}
+          </div>
+        </div>
+        <p><strong>Name:</strong> ${contact.name}</p>
+        <p><strong>Telefon:</strong> ${contact.phone}</p>
+        <p><strong>Email:</strong> ${contact.email}</p>
+        <button class="back-button" onclick="showContactList()">Zurück</button>
+      </div>
+    `;
+    detailsDiv.classList.add("show");
+    detailsDiv.classList.remove("hide");
+
+    contactList.classList.add("hide");
+    contactList.classList.remove("show");
+
+    detailsHead.classList.add("hide");
+    detailsHead.classList.remove("show");
+  }
 }
 
+function showContactList() {
+  const contactList = document.querySelector(".scrolllist");
+  const detailsDiv = document.getElementById("contact-details");
+  const detailsHead = document.querySelector(".detailshead");
+
+  contactList.classList.add("show");
+  contactList.classList.remove("hide");
+
+  detailsDiv.classList.add("hide");
+  detailsDiv.classList.remove("show");
+
+  detailsHead.classList.add("show");
+  detailsHead.classList.remove("hide");
+}
 
 function createContactDetails(contact) {
   return `

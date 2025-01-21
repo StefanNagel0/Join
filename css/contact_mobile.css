@@ -56,14 +56,10 @@
         gap: 15px;
     }
 
+    .detailshead.hide {
+        display: none;
+    }
 
-.hide {
-    display: none;
-  }
-  
-  .show {
-    display: block;
-  }
 
     .closebutton {
         display: block;
@@ -256,11 +252,6 @@
         display: block;
     }
 
-    .flexdetails {
-        position: absolute;
-        
-    }
-
     .detailscircle {
         flex-direction: column;
         gap: 15px;
@@ -271,6 +262,10 @@
     .contactnames {
         font-size: 32px;
         font-weight: 600;
+    }
+
+    .detailshead {
+        display: none;
     }
 
     .info {

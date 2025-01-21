@@ -1,3 +1,10 @@
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
 
 .cont {
     max-height: 928px;
@@ -223,10 +230,13 @@
     background-color: #007bff !important;
   }
 
-  .detailshead {
+  .detailshead.show {
     display: flex;
     align-items: center;
     gap: 30px;
+}
+.detailshead.hide {
+  display: none;
 }
 
   .detailshead h1 {
@@ -358,7 +368,7 @@
     color: #007CEE;
   }
 
-  .scrolllist {
+  .scrolllist.show {
     max-height: 928px;
     width: 456px;
     display: flex;

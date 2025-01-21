@@ -170,6 +170,8 @@ function createContactDiv(contact) {
 
   return contactDiv;
 }
+
+
 function showContactDetails(index) {
   const contact = contacts[index];
   const contactList = document.querySelector(".scrolllist");
@@ -181,8 +183,7 @@ function showContactDetails(index) {
   detailsDiv.classList.remove("hide");
 
   if (window.innerWidth <= 900) {
-    detailsHead.classList.add("hide");
-    
+
     detailsDiv.innerHTML = `
       <div class="detailsheader">
         <h1>Contacts</h1>
@@ -207,9 +208,7 @@ function showContactDetails(index) {
 
     contactList.classList.add("hide");
     contactList.classList.remove("show");
-
-    detailsHead.classList.add("hide");
-    detailsHead.classList.remove("show");
+    
   }
 }
 
@@ -223,9 +222,6 @@ function showContactList() {
 
   detailsDiv.classList.add("hide");
   detailsDiv.classList.remove("show");
-
-  detailsHead.classList.add("show");
-  detailsHead.classList.remove("hide");
 }
 
 function createContactDetails(contact) {

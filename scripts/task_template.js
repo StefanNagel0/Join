@@ -84,7 +84,7 @@ function taskSubtasksTemplateOverlay(task, taskId) {
 
 /* Toggles the subtask of the task in the overlay */
 function toggleSubtask(subtask, taskId, task) {
-    let checkbox = document.getElementById(`subtask-${subtask}`);
+    const checkbox = document.getElementById(`subtask-${subtask}`);
     if (checkbox.checked == true) {
         taskId[subtask]
         for (let i = 0; i < task.subtasks; i++) {
@@ -133,7 +133,7 @@ function updateSubtaskProcess(subtask, task, taskId) {
     if (progressBar) progressBar.style.width = `${progressPercent}%`;
     // if (progressText) progressText.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
     taskSubtasksTemplate(task, taskId);
-}
+} 
 
 // function updateSubtaskProcess(subtask, task, taskId) {
 

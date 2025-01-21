@@ -90,6 +90,10 @@
         border-radius: 30px 30px 0 0;
     }
 
+    .flexdetails {
+        display: none;
+    }
+
     .overlay-left h1 {
         font-size: 47px;
         font-weight: 700;

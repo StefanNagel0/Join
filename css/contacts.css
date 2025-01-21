@@ -230,10 +230,14 @@
     background-color: #007bff !important;
   }
 
-  .detailshead.show {
+  .detailshead {
     display: flex;
     align-items: center;
     gap: 30px;
+  }
+
+.detailshead.show {
+    display: block;
 }
 .detailshead.hide {
   display: none;

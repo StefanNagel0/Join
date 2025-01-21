@@ -84,14 +84,14 @@ function taskSubtasksTemplateOverlay(task, taskId) {
 
 /* Toggles the subtask of the task in the overlay */
 function toggleSubtask(subtask, taskId, task) {
-    let checkbox = document.getElementById(`subtask-${subtask}`);
+    const checkbox = document.getElementById(`subtask-${subtask}`);
     if (checkbox.checked == true) {
         for (let i = 0; i < task.subtasks; i++) {
             console.log(taskId[subtask]);
 // taskId ist NUR die ID, hier erst durch taskId die Subtasks bekommen
-            if (taskId[subtask]) {
-                taskId[subtask].completed = true;
-                console.log(taskId[subtask].completed);
+            if (taskId[checkbox]) {
+                taskId[checkbox].completed = true;
+                console.log(taskId[checkbox].completed);
             }
         }
         console.log("Checkbox checked");
@@ -113,7 +113,7 @@ function updateSubtaskProcess(subtask, task, taskId) {
     if (progressBar) progressBar.style.width = `${progressPercent}%`;
     if (progressText) progressText.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
     taskSubtasksTemplate(task, taskId);
-}
+} 
 
 // function updateSubtaskProcess(subtask, task, taskId) {
     

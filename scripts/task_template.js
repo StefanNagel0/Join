@@ -119,18 +119,6 @@ function updateSubtaskProcess(subtask, task, taskId) {
     taskSubtasksTemplate(task, taskId);
 } 
 
-// function updateSubtaskProcess(subtask, task, taskId) {
-
-//     const completedSubtasks = taskId[subtask].filter(sub => sub.completed).length;
-//     const totalSubtasks = taskId[subtask].length;
-//     const progressPercent = (completedSubtasks / totalSubtasks) * 100;
-
-//     const progressBar = document.querySelector('.progressBar');
-//     const progressText = document.querySelector('.progressText');
-//     if (progressBar) progressBar.style.width = `${progressPercent}%`;
-//     if (progressText) progressText.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
-// }
-
 /* Renders the assigned employees from the task */
 function taskAssignedTemplate(task) {
     if (Array.isArray(task.assignedTo) && task.assignedTo.length > 0) {

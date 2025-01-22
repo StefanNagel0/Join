@@ -421,3 +421,20 @@ function initializeClearButton() {
         clearForm();
     };
 }
+
+function getToDoAddTaskPage(event) {
+    event.preventDefault(); // Verhindert die Standardaktion des Formulars
+
+    // Aufgabe speichern (du kannst hier deinen Code zur Speicherung hinzufügen)
+    console.log('Task submitted');
+
+    // Bestätigungsnachricht anzeigen
+    const confirmationMessage = document.getElementById('confirmation-message');
+    confirmationMessage.classList.add('show');
+
+    // Nach 1,5 Sekunden weiterleiten und Nachricht ausblenden
+    setTimeout(() => {
+        confirmationMessage.classList.remove('show');
+        window.location.href = 'board.html'; // Weiterleitung zur board.html
+    }, 1500);
+}

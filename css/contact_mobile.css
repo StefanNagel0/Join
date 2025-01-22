@@ -91,7 +91,10 @@
     }
 
     .flexdetails {
-        display: none;
+        position: absolute;
+        z-index: 900;
+        margin: 0;
+        width: 100% !important;
     }
 
     .overlay-left h1 {
@@ -135,7 +138,7 @@
     .navbar_main,
     .navbar_main_buttons,
     .navbar_main_switches {
-        width: 100%;
+        width: 100% !important;
     }
 
     .btnclass {
@@ -202,6 +205,9 @@
 
     .scrolllist {
         margin-bottom: 70px;
+        scrollbar-width: none;
+        position: relative;
+        z-index: 998;
     }
 
     .btnmobile {
@@ -257,10 +263,10 @@
     }
 
     .detailscircle {
-        flex-direction: column;
-        gap: 15px;
+        gap: 10px;
         width: 100%;
-        justify-content: center;
+        justify-content: flex-start;
+        flex-direction: row;
     }
 
     .contactnames {
@@ -301,6 +307,20 @@
         position: relative;
         z-index: 1001;
         display: flex;
+        flex-direction: column;
+       
+    }
+
+    .detailsheader h1 {
+        padding-bottom: 16px;
+        font-size: 47px;
+        font-weight: 700;
+    }
+
+    .detailsheader p {
+        font-size: 24px;
+        font-weight: 400;
+        padding: 0 0 6px 0;
     }
 
     .nav_header {
@@ -310,5 +330,21 @@
         position: relative;
     }
 
+    .circlecont {
+    width: 80px;
+    height: 80px;
+    color: white;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    font-size: 27px;
+    }
 
+    .backto {
+        display: flex;
+        justify-content: space-between;
+    }
 }

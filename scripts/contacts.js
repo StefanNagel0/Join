@@ -185,22 +185,25 @@ function showContactDetails(index) {
   if (window.innerWidth <= 900) {
 
     detailsDiv.innerHTML = `
+    <div class="backto">
       <div class="detailsheader">
         <h1>Contacts</h1>
-        <hr style="width: 0; height: 59px; border: 3px solid; border-color: #29ABE2;">
         <p>Better with a team</p>
+        <hr style="width: 90px; height: 0; border: 3px solid; border-color: #29ABE2;">
+        </div>
+        <button class="back-button" onclick="showContactList()">Zurück</button>
       </div>
       <div class="details-container">
         <h2>Kontakt Details</h2>
         <div class="detailscircle">
-          <div class="circle" style="background-color: ${contact.color || getRandomColor()}">
+          <div class="circle circlecont" style="background-color: ${contact.color || getRandomColor()}">
             ${getInitials(contact.name)}
           </div>
+          <p>${contact.name}</p>
         </div>
-        <p><strong>Name:</strong> ${contact.name}</p>
         <p><strong>Telefon:</strong> ${contact.phone}</p>
         <p><strong>Email:</strong> ${contact.email}</p>
-        <button class="back-button" onclick="showContactList()">Zurück</button>
+        
       </div>
     `;
     detailsDiv.classList.add("show");

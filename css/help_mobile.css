@@ -1,0 +1,10 @@
+@media(max-width:900px){
+    .content{
+        width: 100%;
+        margin-left: 0;
+    }
+    .help{
+        width: 90%;
+        margin: auto;
+    }
+}

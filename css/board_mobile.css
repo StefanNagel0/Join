@@ -1,4 +1,20 @@
+@media screen and (max-width: 1920px) {
+    .show {
+        right: 350px !important;
+    }
+}
+
+@media screen and (max-width: 1720px) {
+    .show {
+        right: 180px !important;
+    }
+}
+
 @media screen and (max-width: 1650px) {
+    .show {
+        right: 100px !important;
+    }
+
     .boardDropDown {
         width: 250px;
     }
@@ -17,9 +33,9 @@
 }
 
 @media screen and (max-width: 1560px) {
-    /* .boardDropDown {
-        width: 200px;
-    } */
+    .show {
+        right: 50px !important;
+    }
 
     .boardColumnHeader {
         width: 180px;
@@ -31,5 +47,56 @@
 
     .contentBoard {
         width: 0px;
+    }
+
+    .contentHeading {
+        width: 0px;
+    }
+}
+
+@media screen and (max-width: 1460px) {
+    .content {
+        margin-left: 0px;
+    }
+
+    .boardAddTaskOverlay {
+        width: 1000px;
+    }
+}
+
+@media screen and (max-width: 1360px) {
+    .boardColumnHeader {
+        width: 800px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .boardColumn {
+        width: 200px;
+    }
+
+    .boardDropDown {
+        width: 800px;
+        overflow-x: scroll;
+    }
+
+    .board {
+        flex-wrap: wrap;
+        /* height: 1000px; */
+        gap: 300px;
+    }
+
+    #tasksContainerToDo,
+    #tasksContainerInProgress,
+    #tasksContainerAwaitFeedback,
+    #tasksContainerDone {
+        display: flex;
+        flex-wrap: wrap;
+        width: 800px;
+        height: 300px;
+        gap: 20px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        scrollbar-width: auto;
     }
 }

@@ -148,9 +148,6 @@
 }
 
 .progressBarContainer {
-    display: flex;
-    justify-content: center;
-
     width: 50%;
     height: 5px;
     background-color: #e0e0e0;

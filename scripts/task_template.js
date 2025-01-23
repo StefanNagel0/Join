@@ -53,7 +53,7 @@ function taskSubtasksTemplate(task, taskId) {
         return `
         <div class="taskSubtaskContainer">
             <div class="progressBarContainer">
-                <div id="${taskId}" class="progressBar" style="width: ${progressPercent}%;"></div>
+                <div class="progressBar" style="width: ${progressPercent}%;"></div>
             </div>
             <p class="progressText">${completedSubtasks}/${totalSubtasks} Subtasks</p>
         </div>
@@ -99,51 +99,48 @@ async function getOneTask(taskId) {
 /* Toggles the subtask of the task in the overlay */
 async function toggleSubtask(subtaskIndex, taskId) {
     const checkbox = document.getElementById(`subtask-${taskId}-${subtaskIndex}`);
+    if (!checkbox) {
+        console.error(`Checkbox element for subtask-${taskId}-${subtaskIndex} not found`);
+        return;
+    }
     let task = await getOneTask(taskId);
     console.log(task);
-
+    if (!task) {
+        console.error(`Task with ID ${taskId} not found`);
+        return;
+    }
     if (task.subtasks && task.subtasks[subtaskIndex]) {
-        if (checkbox.checked) {
-            task.subtasks[subtaskIndex].completed = true;
-        } else {
-            task.subtasks[subtaskIndex].completed = false;
-        }
+        task.subtasks[subtaskIndex].completed = checkbox.checked;
         console.log("Checkbox checked");
         console.log(subtaskIndex);
         console.log(globalTasks);
-        await updateSubtaskDB(task.subtasks[subtaskIndex], task, taskId);
+        await updateSubtaskDB(task, taskId);
         updateSubtaskProcess(taskId, task);
-        await openTaskOverlay(taskId);
+        openTaskOverlay(taskId);
     } else {
         console.error(`Subtask with index ${subtaskIndex} not found in task`);
     }
 }
 
-// Subtask weiter prüfen / Beim Klick auf Task wird der erste Task verändert (Style)
+// Subtask weiter prüfen / Beim Klick auf Task werden andere Task verändert (Style)
 async function updateSubtaskProcess(taskId, task) {
     if (!task || !task.subtasks) {
         console.error('Task or subtasks not defined');
         return;
     }
-
     const completedSubtasks = task.subtasks.filter(sub => sub.completed).length;
     const totalSubtasks = task.subtasks.length;
     const progressPercent = (completedSubtasks / totalSubtasks) * 100;
-
     const progressBar = document.querySelector(`.progressBar[data-task-id="${taskId}"]`);
     const progressText = document.querySelector(`.progressText[data-task-id="${taskId}"]`);
     if (progressBar) progressBar.style.width = `${progressPercent}%`;
     if (progressText) progressText.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
-
-    // Lade die Aufgaben neu und aktualisiere die Subtasks
-    
     taskSubtasksTemplate(taskId, task);
     await loadTask("/tasks");
 }
 
-async function updateSubtaskDB(subtask, task, taskId) {
+async function updateSubtaskDB(task, taskId) {
     console.log(task);
-
     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
         method: "PATCH",
         headers: {
@@ -184,9 +181,7 @@ function taskAssignedTemplate(task) {
 }
 
 /* Renders the assigned employees from the task in the overlay */
-// Benutzer nicht mit Komma trennen und Vor/Nachname + Farbe mit Kürzel anzeigen
 function taskAssignedTemplateOverlay(task) {
-    // Überprüfen, ob task.assignedTo existiert und ein Array ist
     if (Array.isArray(task.assignedTo) && task.assignedTo.length > 0) {
         return `
         <div id="taskAssignedID" class="taskAssigned">
@@ -303,7 +298,7 @@ function editTask(taskId) {
         <div>
             ${task.subtasks?.map((subtask, index) => `
                 <div>
-                    <input type="text" id="subtask-${index}" value="${subtask}" />
+                    <input type="text" id="subtask-title-${index}" value="${subtask.name || ''}" />
                 </div>
             `).join("")}
         </div>

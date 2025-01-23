@@ -7,9 +7,11 @@ function showContactDetails(index) {
     detailsDiv.classList.add("show");
     detailsDiv.classList.remove("hide");
   
-    if (window.innerWidth <= 900) {
+    // Initial überprüfen, ob die Breite <= 900px ist und einmalig verstecken
+    if (window.innerWidth <= 900 && !detailsDiv.dataset.hiddenOnce) {
       detailsDiv.classList.add("hide");
       detailsDiv.classList.remove("show");
+      detailsDiv.dataset.hiddenOnce = true; // Markiere, dass das einmalige Verstecken ausgeführt wurde
   }
 
     if (window.innerWidth <= 900) {
@@ -31,7 +33,7 @@ function showContactDetails(index) {
             <p>${contact.name}</p>
           </div>
             <h2>Contact Information</h2>
-           <p class="infom"><strong class="topic">Email</strong> ${contact.email}</p>
+          <p class="infom"><strong class="topic">Email</strong> ${contact.email}</p>
           <p class="infom"><strong class="topic">Phone</strong> ${contact.phone}</p>  
           <button class="collapse-button btnmobile btnmob" onclick="toggleCollapse()"><img src="../assets/icons/contact/more.png"></button>
           <div class="collapse-content" id="collapseContent">
@@ -82,10 +84,37 @@ function showContactDetails(index) {
     `;
   }
 
-  window.addEventListener("resize", () => {
+// Überwachung der Fenstergröße für den Übergang
+let previousWidth = window.innerWidth; // Speichert die vorherige Fensterbreite
+
+window.addEventListener("resize", () => {
     const detailsDiv = document.getElementById("contact-details");
-    if (detailsDiv.classList.contains("show") && window.innerWidth <= 900) {
-        detailsDiv.classList.add("hide");
-        detailsDiv.classList.remove("show");
+    const contactList = document.querySelector(".scrolllist");
+
+    if (!detailsDiv) return;
+
+    const currentWidth = window.innerWidth;
+
+    // Wechsel von >900px auf ≤900px
+    if (currentWidth <= 900 && previousWidth > 900) {
+        if (detailsDiv.classList.contains("show")) {
+            detailsDiv.classList.add("hide");
+            detailsDiv.classList.remove("show");
+        }
     }
+
+    // Wechsel von ≤900px auf >900px
+    if (currentWidth > 900 && previousWidth <= 900) {
+        if (detailsDiv.classList.contains("show")) {
+            detailsDiv.classList.remove("show");
+            detailsDiv.classList.add("hide");
+        }
+
+        // Zeige die Kontaktliste wieder an
+        contactList.classList.add("show");
+        contactList.classList.remove("hide");
+    }
+
+    // Aktualisiere die vorherige Breite
+    previousWidth = currentWidth;
 });

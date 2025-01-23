@@ -56,11 +56,18 @@
     #task-priority{
         justify-content: space-around;
     }
+    .add_task_required_info{
+        display: none;
+    }
     .add_task_required_info_overlay{
         display: flex;
     }
     .add_task_required_info_box{
-        display: none;
+        position: fixed;
+        bottom: 97px;
+        right: 0;
+        width: 100%;
+        background-color: #F6F7F8;
     }
 }
 

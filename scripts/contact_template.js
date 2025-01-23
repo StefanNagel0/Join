@@ -80,11 +80,3 @@ function showContactDetails(index) {
       </div>
     `;
   }
-
-  window.addEventListener("resize", () => {
-    const detailsDiv = document.getElementById("contact-details");
-    if (detailsDiv.classList.contains("show") && window.innerWidth <= 900) {
-        detailsDiv.classList.add("hide");
-        detailsDiv.classList.remove("show");
-    }
-});

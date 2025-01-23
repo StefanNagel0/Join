@@ -437,6 +437,9 @@ color: red;
 .add_task_required_info{
     font-size: 16px;
 }
+.add_task_required_info_overlay{
+    display: none;
+}
 .add_task_buttons_box{
     display: flex;
     gap: 16px;

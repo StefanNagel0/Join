@@ -404,4 +404,43 @@
       .delete-button, .edit-button {
         background-color: white;
       }
+
+
+  
+  .successedit.show {
+    transform: translateX(0); 
+    opacity: 1;
+  }
+
+  .successcreate, .successedit {
+    position: fixed;
+    background-color: #2A3647;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: Inter, sans-serif;
+    font-size: 20px;
+    width: 326px;
+    height: 74px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    top: 50px;
+    left: 20%;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.successcreate.show, .successedit.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.successcreate.hide, .successedit.hide {
+    transform: translateX(100%);
+    opacity: 0;
+}
 }

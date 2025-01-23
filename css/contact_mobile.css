@@ -374,4 +374,34 @@
         font-size: 20px;
         margin: 0 0 20px 0;
     }
+
+  
+      .collapse-content {
+        position: fixed;
+        transform: translateX(100%); 
+        opacity: 0; 
+        transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        background-color: white;
+        border: 1px solid white;
+        border-radius: 5px;
+        width: 114px;
+        margin-left: 85%;
+        bottom: 150px;
+        right: 20px;
+        z-index: 900;
+      }
+  
+      .collapse-content.open {
+        transform: translateX(0);
+        opacity: 1;
+        position: fixed;
+      }
+
+      #contact-details {
+        margin-right: 20px;
+      }
+
+      .delete-button, .edit-button {
+        background-color: white;
+      }
 }

@@ -171,12 +171,10 @@ function createContactDiv(contact) {
   return contactDiv;
 }
 
-
 function showContactDetails(index) {
   const contact = contacts[index];
   const contactList = document.querySelector(".scrolllist");
   const detailsDiv = document.getElementById("contact-details");
-  const detailsHead = document.querySelector(".detailshead");
 
   detailsDiv.innerHTML = createContactDetails(contact);
   detailsDiv.classList.add("show");
@@ -203,9 +201,14 @@ function showContactDetails(index) {
           <h2>Contact Information</h2>
          <p class="infom"><strong class="topic">Email</strong> ${contact.email}</p>
         <p class="infom"><strong class="topic">Phone</strong> ${contact.phone}</p>  
-        <button class="collapse-button" onclick="toggleCollapse()">Mehr anzeigen</button>
+        <button class="collapse-button btnmobile btnmob" onclick="toggleCollapse()"><img src="../assets/icons/contact/more.png"></button>
         <div class="collapse-content" id="collapseContent">
-        <p>Hier ist der Inhalt, der ein- und ausgeblendet wird.</p>
+        <button class="edit-button" onclick="openOverlay('edit', ${contacts.indexOf(contact)})">
+        <img src="../assets/icons/contact/edit.png">Edit
+        </button>
+        <button class="delete-button" onclick="deleteContact(${contacts.indexOf(contact)})">
+        <img src="../assets/icons/contact/delete.png">Delete
+        </button>
       </div>   
       </div>
     `;
@@ -347,15 +350,12 @@ document.getElementById("contact-form").addEventListener("submit", handleFormSub
 function toggleCollapse() {
   const content = document.getElementById("collapseContent");
   const button = document.querySelector(".collapse-button");
-  if (content.style.display === "none" || content.style.display === "") {
-    content.style.display = "block";
-    button.textContent = "Weniger anzeigen";
+
+  if (content.classList.contains("open")) {
+    content.classList.remove("open");
   } else {
-    content.style.display = "none";
-    button.textContent = "Mehr anzeigen";
+    content.classList.add("open");
   }
 }
-
-
 
 showContacts();

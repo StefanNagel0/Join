@@ -59,6 +59,8 @@ function showOverlayTask() {
 
 /* Opening the task */
 function openTaskOverlay(taskId) {
+    console.log("Task mit ID", taskId, "wird geöffnet.");
+    
     const task = globalTasks[taskId];
     if (!task) {
         console.error("Task mit ID", taskId, "nicht gefunden.");

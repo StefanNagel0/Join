@@ -53,7 +53,7 @@ function taskSubtasksTemplate(task, taskId) {
         return `
         <div class="taskSubtaskContainer">
             <div class="progressBarContainer">
-                <div class="progressBar" style="width: ${progressPercent}%;"></div>
+                <div id="${taskId}" class="progressBar" style="width: ${progressPercent}%;"></div>
             </div>
             <p class="progressText">${completedSubtasks}/${totalSubtasks} Subtasks</p>
         </div>
@@ -65,10 +65,14 @@ function taskSubtasksTemplate(task, taskId) {
 
 /* Renders the subtask of the task in the overlay */
 function taskSubtasksTemplateOverlay(task, taskId) {
+    console.log(task);
+    
     if (task.subtasks && task.subtasks.length > 0) {
         const subtasksHtml = task.subtasks.map(subtask => `
+            
             <p id="taskSubtasksID" class="openTaskOverlaySubtask">
-                <input type="checkbox" id="subtask-${subtask}" onclick="toggleSubtask('${subtask}', '${taskId}', '${task}')" required/> ${subtask}
+            
+                <input type="checkbox" id="${taskId}" onclick="toggleSubtask(${subtask}, ${taskId})" required/> ${subtask}
             </p>
         `).join("");
         return `
@@ -82,15 +86,26 @@ function taskSubtasksTemplateOverlay(task, taskId) {
     }
 }
 
+async function getOneTask(taskId) {
+    const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`);
+    if (!response.ok) {
+        throw new Error(`Fehler beim Laden der Aufgabe: ${response.statusText}`);
+    }
+    return await response.json();
+}
+
 /* Toggles the subtask of the task in the overlay */
-function toggleSubtask(subtask, taskId, task) {
+async function toggleSubtask(subtask, taskId) {
     const checkbox = document.getElementById(`subtask-${subtask}`);
+    let task = await getOneTask(taskId);
+    console.log(task);
+    
     if (checkbox.checked == true) {
         taskId[subtask]
         for (let i = 0; i < task.subtasks; i++) {
 
             console.log(taskId[subtask]);
-            if (taskId[subtask] == true) {
+            if (task.subtask == true) {
                 taskId[subtask].completed = true;
                 console.log(taskId[subtask].completed);
             }
@@ -105,19 +120,38 @@ function toggleSubtask(subtask, taskId, task) {
 }
 
 // Subtask weiter prüfen / Beim Klick auf Task wird der erste Task verändert (Style)
-function updateSubtaskProcess(subtask, task, taskId) {
+async function updateSubtaskProcess(subtask, task, taskId) {
     const checkbox = document.getElementById(`subtask-${subtask}`);
 
     const completedSubtasks = Object.values(taskId).filter(sub => sub.completed).length;
     const totalSubtasks = Object.keys(taskId).length;
     const progressPercent = (completedSubtasks / totalSubtasks) * 100;
 
-    const progressBar = document.querySelector('.progressBar');
-    const progressText = document.querySelector('.progressText');
+    const progressBar = document.getElementById(`${taskId}`);
+    console.log(taskId);
+
+    // const progressText = document.querySelector('.progressText');
     if (progressBar) progressBar.style.width = `${progressPercent}%`;
     // if (progressText) progressText.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
-    taskSubtasksTemplate(task, taskId);
-} 
+    console.log(JSON.stringify(task, null, 2));
+    await loadTask(path = "/tasks");
+    taskSubtasksTemplate(taskId, task);
+}
+
+async function updateSubtaskDB(subtask, task, taskId) {
+    console.log(task);
+
+    const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(task)
+    });
+    if (!response.ok) {
+        throw new Error(`Fehler beim Aktualisieren des Subtask: ${response.statusText}`);
+    }
+}
 
 /* Renders the assigned employees from the task */
 function taskAssignedTemplate(task) {

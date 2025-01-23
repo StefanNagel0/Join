@@ -83,8 +83,7 @@ function showContactDetails(index) {
     `;
   }
 
-// Überwachung der Fenstergröße für den Übergang
-let previousWidth = window.innerWidth; // Speichert die vorherige Fensterbreite
+let previousWidth = window.innerWidth; 
 
 window.addEventListener("resize", () => {
     const detailsDiv = document.getElementById("contact-details");
@@ -94,26 +93,21 @@ window.addEventListener("resize", () => {
 
     const currentWidth = window.innerWidth;
 
-    // Wechsel von >900px auf ≤900px
     if (currentWidth <= 900 && previousWidth > 900) {
         if (detailsDiv.classList.contains("show")) {
             detailsDiv.classList.add("hide");
             detailsDiv.classList.remove("show");
         }
     }
-
-    // Wechsel von ≤900px auf >900px
     if (currentWidth > 900 && previousWidth <= 900) {
         if (detailsDiv.classList.contains("show")) {
             detailsDiv.classList.remove("show");
             detailsDiv.classList.add("hide");
         }
 
-        // Zeige die Kontaktliste wieder an
         contactList.classList.add("show");
         contactList.classList.remove("hide");
     }
 
-    // Aktualisiere die vorherige Breite
     previousWidth = currentWidth;
 });

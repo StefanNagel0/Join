@@ -97,7 +97,10 @@ async function postTask() {
     const dueDate = document.getElementById("task-date").value;
     const priority = document.querySelector('.prio-btn.active')?.dataset.prio || '';
     const category = document.querySelector('#dropdown-toggle-category span').textContent.trim();
-    const subtasks = Array.from(document.querySelectorAll("#subtask-list li")).map(li => li.textContent.trim());
+    const subtasks = Array.from(document.querySelectorAll("#subtask-list li")).map(li => ({
+        name: li.textContent.trim(),
+        completed: false
+    }));
     const taskData = {
         title,
         description,

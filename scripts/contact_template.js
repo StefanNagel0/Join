@@ -15,7 +15,6 @@ function showContactDetails(index) {
   }
 
     if (window.innerWidth <= 900) {
-  
       detailsDiv.innerHTML = `
       <div class="backto">
         <div class="detailsheader">
@@ -33,8 +32,8 @@ function showContactDetails(index) {
             <p>${contact.name}</p>
           </div>
             <h2>Contact Information</h2>
-          <p class="infom"><strong class="topic">Email</strong> ${contact.email}</p>
-          <p class="infom"><strong class="topic">Phone</strong> ${contact.phone}</p>  
+          <p class="infom"><strong class="topic">Email</strong>${contact.email}</p>
+          <p class="infom"><strong class="topic">Phone</strong>${contact.phone}</p>  
           <button class="collapse-button btnmobile btnmob" onclick="toggleCollapse()"><img src="../assets/icons/contact/more.png"></button>
           <div class="collapse-content" id="collapseContent">
           <button class="edit-button" onclick="openOverlay('edit', ${contacts.indexOf(contact)})">

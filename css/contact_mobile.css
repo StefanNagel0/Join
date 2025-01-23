@@ -199,6 +199,11 @@
     .navbar_buttons:hover {
         background-color: #1a2533;
         border-radius: 10px;
+        height: 100%;
+    }
+
+    .navbar_buttons:focus {
+        background-color: #1a2533;
     }
 
     .navbar_buttons_img img {

@@ -8,6 +8,11 @@ function showContactDetails(index) {
     detailsDiv.classList.remove("hide");
   
     if (window.innerWidth <= 900) {
+      detailsDiv.classList.add("hide");
+      detailsDiv.classList.remove("show");
+  }
+
+    if (window.innerWidth <= 900) {
   
       detailsDiv.innerHTML = `
       <div class="backto">
@@ -76,3 +81,11 @@ function showContactDetails(index) {
       </div>
     `;
   }
+
+  window.addEventListener("resize", () => {
+    const detailsDiv = document.getElementById("contact-details");
+    if (detailsDiv.classList.contains("show") && window.innerWidth <= 900) {
+        detailsDiv.classList.add("hide");
+        detailsDiv.classList.remove("show");
+    }
+});

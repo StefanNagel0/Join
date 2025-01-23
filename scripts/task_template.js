@@ -68,7 +68,7 @@ function taskSubtasksTemplateOverlay(task, taskId) {
     if (task.subtasks && task.subtasks.length > 0) {
         const subtasksHtml = task.subtasks.map((subtask, index) => `
             <p id="taskSubtasksID-${index}" class="openTaskOverlaySubtask">
-                <input type="checkbox" id="subtask-${taskId}-${index}" onclick="toggleSubtask(${index}, '${taskId}')" ${subtask.completed ? 'checked' : ''} required/> ${subtask.name}
+                <input title="Toggle Subtask" type="checkbox" id="subtask-${taskId}-${index}" onclick="toggleSubtask(${index}, '${taskId}')" ${subtask.completed ? 'checked' : ''} required/> ${subtask.name}
             </p>
         `).join("");
         return `

@@ -1,0 +1,35 @@
+@media screen and (max-width: 1650px) {
+    .boardDropDown {
+        width: 250px;
+    }
+
+    .boardColumnHeader {
+        width: 200px;
+    }
+
+    .boardColumn {
+        width: 280px;
+    }
+
+    .contentBoard {
+        width: 0px;
+    }
+}
+
+@media screen and (max-width: 1560px) {
+    /* .boardDropDown {
+        width: 200px;
+    } */
+
+    .boardColumnHeader {
+        width: 180px;
+    }
+
+    .boardColumn {
+        width: 250px;
+    }
+
+    .contentBoard {
+        width: 0px;
+    }
+}

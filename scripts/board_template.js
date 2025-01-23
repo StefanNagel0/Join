@@ -101,13 +101,13 @@ function boardAddTaskTemplate() {
             <div class="gap_8">
                 <p class="prio_text">Prio</p>
                 <div id="task-priority">
-                    <button type="button" class="prio-btn urgent" data-prio="Urgent">Urgent <img
-                            src="../assets/svg/add_task/prio_urgent.svg" alt=""></button>
-                    <button type="button" class="prio-btn medium" data-prio="Medium">Medium <img
-                            src="../assets/svg/add_task/prio_medium.svg" alt=""></button>
-                    <button type="button" class="prio-btn low" data-prio="Low">Low <img
-                            src="../assets/svg/add_task/prio_low.svg" alt=""></button>
-                </div>
+                                    <button type="button" class="prio-btn urgent" data-prio="urgent">Urgent <img
+                                            src="../assets/svg/add_task/prio_urgent.svg" alt=""></button>
+                                    <button type="button" class="prio-btn medium" data-prio="medium">Medium <img
+                                            src="../assets/svg/add_task/prio_medium.svg" alt=""></button>
+                                    <button type="button" class="prio-btn low" data-prio="low">Low <img
+                                            src="../assets/svg/add_task/prio_low.svg" alt=""></button>
+                                </div>
             </div>
                  <div class="dropdown-container">
                                 <div class="gap_8">

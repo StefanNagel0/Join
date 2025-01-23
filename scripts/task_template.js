@@ -43,7 +43,6 @@ function taskDateTemplate(task) {
     `
 }
 
-// Subtask als Balken darstellen
 /* Renders the subtask of the task */
 function taskSubtasksTemplate(task, taskId) {
     if (task.subtasks && task.subtasks.length > 0) {
@@ -124,7 +123,7 @@ async function toggleSubtask(subtaskIndex, taskId) {
     }
 }
 
-// Subtask weiter prüfen / Beim Klick auf Task werden andere Task verändert (Style)
+/* Updates the subtask progress of the task */
 async function updateSubtaskProcess(taskId, task) {
     if (!task || !task.subtasks) {
         console.error('Task or subtasks not defined');

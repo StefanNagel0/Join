@@ -35,6 +35,15 @@
         cursor: pointer;
     }
 
+    .hide {
+        display: none;
+    }
+      
+    .show {
+        display: block;
+    }
+
+
     .header_help_user {
         padding: 0;
     }

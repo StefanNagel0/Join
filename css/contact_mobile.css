@@ -269,6 +269,11 @@
         flex-direction: row;
     }
 
+    .detailscircle p {
+        font-size: 36px;
+        font-weight: 700;
+    }
+
     .contactnames {
         font-size: 32px;
         font-weight: 600;
@@ -346,5 +351,27 @@
     .backto {
         display: flex;
         justify-content: space-between;
+    }
+
+    .arrow {
+        background-color: transparent;
+        color: rgb(18, 181, 235);
+        font-size: 40px;
+        border: none;
+        display: flex;
+        height: 50px;    
+    }
+
+    .infom {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 22px;
+        font-size: 16px; 
+}
+    .details-container h2 {
+        font-size: 20px;
+        margin: 0 0 20px 0;
     }
 }

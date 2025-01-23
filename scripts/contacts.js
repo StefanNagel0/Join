@@ -191,19 +191,22 @@ function showContactDetails(index) {
         <p>Better with a team</p>
         <hr style="width: 90px; height: 0; border: 3px solid; border-color: #29ABE2;">
         </div>
-        <button class="back-button" onclick="showContactList()">Zurück</button>
+        <button class="back-button arrow" onclick="showContactList()">←</button>
       </div>
       <div class="details-container">
-        <h2>Kontakt Details</h2>
         <div class="detailscircle">
           <div class="circle circlecont" style="background-color: ${contact.color || getRandomColor()}">
             ${getInitials(contact.name)}
           </div>
           <p>${contact.name}</p>
         </div>
-        <p><strong>Telefon:</strong> ${contact.phone}</p>
-        <p><strong>Email:</strong> ${contact.email}</p>
-        
+          <h2>Contact Information</h2>
+         <p class="infom"><strong class="topic">Email</strong> ${contact.email}</p>
+        <p class="infom"><strong class="topic">Phone</strong> ${contact.phone}</p>  
+        <button class="collapse-button" onclick="toggleCollapse()">Mehr anzeigen</button>
+        <div class="collapse-content" id="collapseContent">
+        <p>Hier ist der Inhalt, der ein- und ausgeblendet wird.</p>
+      </div>   
       </div>
     `;
     detailsDiv.classList.add("show");
@@ -339,6 +342,19 @@ function validatePhoneInput(event) {
 document.getElementById("contact-phone").addEventListener("input", validatePhoneInput);
 document.getElementById("contact-name").addEventListener("input", handleNameInput);
 document.getElementById("contact-form").addEventListener("submit", handleFormSubmit);
+
+
+function toggleCollapse() {
+  const content = document.getElementById("collapseContent");
+  const button = document.querySelector(".collapse-button");
+  if (content.style.display === "none" || content.style.display === "") {
+    content.style.display = "block";
+    button.textContent = "Weniger anzeigen";
+  } else {
+    content.style.display = "none";
+    button.textContent = "Mehr anzeigen";
+  }
+}
 
 
 

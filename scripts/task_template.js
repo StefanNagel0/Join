@@ -82,12 +82,14 @@ function taskSubtasksTemplateOverlay(task, taskId) {
     }
 }
 
+/* Renders the assigned employees from the task */
 async function openTaskOverlay(taskId) {
     let task = await getOneTask(taskId);
     document.getElementById('taskOverlayContainer').innerHTML = taskSubtasksTemplateOverlay(task, taskId);
     document.getElementById('taskContainer').innerHTML = taskSubtasksTemplate(task, taskId);
 }
 
+/* Fetches a single task from the database */
 async function getOneTask(taskId) {
     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`);
     if (!response.ok) {
@@ -139,6 +141,7 @@ async function updateSubtaskProcess(taskId, task) {
     await loadTask("/tasks");
 }
 
+/* Fetches all tasks from the database */
 async function updateSubtaskDB(task, taskId) {
     console.log(task);
     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
@@ -191,7 +194,7 @@ function taskAssignedTemplateOverlay(task) {
                         .split(" ")
                         .map(part => part.charAt(0))
                         .join("");
-                    const circleColor = getContactColor(name); // Holen der zufälligen Farbe
+                    const circleColor = getContactColor(name);
                     return `
                         <p>
                             <span class="initialsOverlay" style="background-color: ${circleColor};">
@@ -205,7 +208,6 @@ function taskAssignedTemplateOverlay(task) {
         </div>
         `;
     } else if (task.assignedTo && typeof task.assignedTo === 'string') {
-        // Falls assignedTo ein einzelner Name (String) ist, es in ein Array umwandeln
         const name = task.assignedTo;
         const initials = name
             .split(" ")

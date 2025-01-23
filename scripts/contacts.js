@@ -151,9 +151,7 @@ function appendContact(contact, groupDiv) {
 function createContactDiv(contact) {
   const contactDiv = document.createElement("div");
   contactDiv.classList.add("contact");
-
   const initials = getInitials(contact.name);
-
   contactDiv.innerHTML = `
     <div class="contactmain" onclick="showContactDetails(${contacts.indexOf(contact)})">
       <div class="circle" style="background-color: ${contact.color};">
@@ -171,56 +169,9 @@ function createContactDiv(contact) {
   return contactDiv;
 }
 
-
-function showContactDetails(index) {
-  const contact = contacts[index];
-  const contactList = document.querySelector(".scrolllist");
-  const detailsDiv = document.getElementById("contact-details");
-  const detailsHead = document.querySelector(".detailshead");
-
-  detailsDiv.innerHTML = createContactDetails(contact);
-  detailsDiv.classList.add("show");
-  detailsDiv.classList.remove("hide");
-
-  if (window.innerWidth <= 900) {
-
-    detailsDiv.innerHTML = `
-    <div class="backto">
-      <div class="detailsheader">
-        <h1>Contacts</h1>
-        <p>Better with a team</p>
-        <hr style="width: 90px; height: 0; border: 3px solid; border-color: #29ABE2;">
-        </div>
-        <button class="back-button arrow" onclick="showContactList()">←</button>
-      </div>
-      <div class="details-container">
-        <div class="detailscircle">
-          <div class="circle circlecont" style="background-color: ${contact.color || getRandomColor()}">
-            ${getInitials(contact.name)}
-          </div>
-          <p>${contact.name}</p>
-        </div>
-          <h2>Contact Information</h2>
-         <p class="infom"><strong class="topic">Email</strong> ${contact.email}</p>
-        <p class="infom"><strong class="topic">Phone</strong> ${contact.phone}</p>  
-        <button class="collapse-button" onclick="toggleCollapse()">Mehr anzeigen</button>
-        <div class="collapse-content" id="collapseContent">
-        <p>Hier ist der Inhalt, der ein- und ausgeblendet wird.</p>
-      </div>   
-      </div>
-    `;
-    detailsDiv.classList.add("show");
-    detailsDiv.classList.remove("hide");
-
-    contactList.classList.add("hide");
-    contactList.classList.remove("show");
-  }
-}
-
 function showContactList() {
   const contactList = document.querySelector(".scrolllist");
   const detailsDiv = document.getElementById("contact-details");
-  const detailsHead = document.querySelector(".detailshead");
 
   contactList.classList.add("show");
   contactList.classList.remove("hide");
@@ -229,41 +180,11 @@ function showContactList() {
   detailsDiv.classList.remove("show");
 }
 
-function createContactDetails(contact) {
-  return `
-    <div class="detailscircle">
-    <div class="circle circlecont" style="background-color: ${contact.color};">
-      ${getInitials(contact.name)}
-    </div>
-    <div class="editdelete">
-    <p class="contactnames">${contact.name}</p>
-    <div class="contbtn">
-    <button class="edit-button" onclick="openOverlay('edit', ${contacts.indexOf(contact)})">
-      <img src="../assets/icons/contact/edit.png">Edit
-    </button>
-    <button class="delete-button" onclick="deleteContact(${contacts.indexOf(contact)})">
-      <img src="../assets/icons/contact/delete.png">Delete
-    </button>
-    </div>
-    </div>
-    </div>
-    <div class="info">
-    <p class="infop">Contact Information</p>
-    <div>
-    <p class="infom"><strong class="topic">E-Mail</strong><a class="mail">${contact.email}</a></p>
-    <p class="infom"><strong class="topic">Phone</strong>${contact.phone}</p>
-    <div class="successedit"></div>
-    </div>
-    </div>
-  `;
-}
-
 function deleteContact(index) {
     const overlay = document.getElementById("confirm-overlay");
     const yesButton = document.getElementById("confirm-yes");
     const noButton = document.getElementById("confirm-no");
     overlay.classList.remove("hide");
-
     yesButton.onclick = () => {
         contacts.splice(index, 1); 
         showContacts();
@@ -271,7 +192,6 @@ function deleteContact(index) {
         closeOverlay();
         overlay.classList.add("hide"); 
     };
-
     noButton.onclick = () => {
         overlay.classList.add("hide");
     };
@@ -347,15 +267,12 @@ document.getElementById("contact-form").addEventListener("submit", handleFormSub
 function toggleCollapse() {
   const content = document.getElementById("collapseContent");
   const button = document.querySelector(".collapse-button");
-  if (content.style.display === "none" || content.style.display === "") {
-    content.style.display = "block";
-    button.textContent = "Weniger anzeigen";
+
+  if (content.classList.contains("open")) {
+    content.classList.remove("open");
   } else {
-    content.style.display = "none";
-    button.textContent = "Mehr anzeigen";
+    content.classList.add("open");
   }
 }
-
-
 
 showContacts();

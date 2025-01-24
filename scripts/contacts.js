@@ -109,6 +109,11 @@ function closeOverlay() {
 }
 
 function showContacts() {
+  const contactList = document.getElementById("contactlist");
+  if (!contactList) {
+    console.log("");
+    return;
+  }
   const contactlist = document.getElementById("contactlist");
   contactlist.innerHTML = "";
   const groupedContacts = groupContactsByLetter(contacts);
@@ -151,6 +156,7 @@ function appendContact(contact, groupDiv) {
 function createContactDiv(contact) {
   const contactDiv = document.createElement("div");
   contactDiv.classList.add("contact");
+
   const initials = getInitials(contact.name);
   contactDiv.innerHTML = `
     <div class="contactmain" onclick="showContactDetails(${contacts.indexOf(contact)})">
@@ -259,10 +265,24 @@ function validatePhoneInput(event) {
   input.value = input.value.replace(/[^0-9]/g, '');
 }
 
-document.getElementById("contact-phone").addEventListener("input", validatePhoneInput);
-document.getElementById("contact-name").addEventListener("input", handleNameInput);
-document.getElementById("contact-form").addEventListener("submit", handleFormSubmit);
+function initializeEventListeners() {
+  const phoneInput = document.getElementById("contact-phone");
+  const nameInput = document.getElementById("contact-name");
+  const form = document.getElementById("contact-form");
 
+  if (phoneInput) {
+    phoneInput.addEventListener("input", validatePhoneInput);
+  }
+
+  if (nameInput) {
+    nameInput.addEventListener("input", handleNameInput);
+  }
+
+  if (form) {
+    form.addEventListener("submit", handleFormSubmit);
+  }
+}
+document.addEventListener("DOMContentLoaded", initializeEventListeners);
 
 function toggleCollapse() {
   const content = document.getElementById("collapseContent");

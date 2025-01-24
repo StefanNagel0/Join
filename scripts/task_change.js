@@ -65,12 +65,6 @@ function displayTasks(tasks) {
     emptyTaskContainer();
 }
 
-function getToDoAddTaskPage(event) {
-    event.preventDefault();
-    mainCategory = "ToDo";
-    postTask();
-}
-
 /* mainCategory assign */
 function getToDoButton() {
     mainCategory = "ToDo";
@@ -122,7 +116,42 @@ async function postTask() {
     onload();
 }
 
-/* add task */
+/**Handles the submission of the add-task form, collects task data*/
+function submitAddTask(event) {
+    event.preventDefault();
+    const taskData = collectTaskData();
+    postTaskToServer(taskData)
+        .then(showConfirmationAndRedirect)
+        .catch(() => alert("Fehler beim Hinzufügen der Aufgabe. Bitte versuche es erneut."));
+}
+
+/**Collects task data from the add-task form fields and constructs a task object.*/
+function collectTaskData() {
+    return {
+        title: document.getElementById("task-title").value,
+        description: document.getElementById("task-desc").value,
+        assignedTo: getSelectedContacts(),
+        dueDate: document.getElementById("task-date").value,
+        priority: document.querySelector('.prio-btn.active')?.dataset.prio || '',
+        category: document.querySelector('#dropdown-toggle-category span').textContent.trim(),
+        subtasks: Array.from(document.querySelectorAll("#subtask-list li")).map(li => ({
+            name: li.textContent.trim(),
+            completed: false
+        })),
+        mainCategory: "ToDo"
+    };
+}
+
+/** Displays a confirmation message to the user and redirects to the board page */
+function showConfirmationAndRedirect() {
+    const confirmationMessage = document.getElementById('confirmation-message');
+    confirmationMessage.classList.add('show');
+    setTimeout(() => {
+        confirmationMessage.classList.remove('show');
+        window.location.href = 'board.html';
+    }, 1500);
+}
+
 
 async function postTaskToServer(taskData) {
     const response = await fetch(`${BASE_URL}/tasks.json`, {

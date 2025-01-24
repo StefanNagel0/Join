@@ -4,9 +4,11 @@
     }
     .add_task_left_box{
         width: 290px;
+        gap: 16px;
     }
     .add_task_right_box{
         max-width: 290px;
+        gap: 16px;
     }
     .content_heading h2{
         font-size: 48px;
@@ -17,6 +19,9 @@
     .prio-btn{
         width: 91px;
         font-size: 14px;
+    }
+    .dropdown-content{
+        width: 290px;
     }
 }
 
@@ -36,9 +41,15 @@
     .add_task_mid_box{
         display: none;
     }
-    .add_task_form_box{
+    .add_task_form_box {
         height: 100vh;
         margin-bottom: 200px;
+        overflow-y: scroll;
+        scrollbar-width: none; /* Für Firefox */
+        -ms-overflow-style: none; /* Für Internet Explorer und Edge */
+    }
+    .add_task_form_box::-webkit-scrollbar {
+        display: none;
     }
     .add_task_left_box{
         width: 100%;

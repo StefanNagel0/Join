@@ -66,7 +66,7 @@
 
 @media screen and (max-width: 1360px) {
     .boardColumnHeader {
-        width: 800px;
+        width: 950px;
         display: flex;
         justify-content: space-between;
     }
@@ -76,7 +76,8 @@
     }
 
     .boardDropDown {
-        width: 800px;
+        width: 950px;
+        height: 300px;
         overflow-x: scroll;
     }
 
@@ -92,11 +93,255 @@
     #tasksContainerDone {
         display: flex;
         flex-wrap: wrap;
-        width: 800px;
+        width: 950px;
         height: 300px;
         gap: 20px;
         overflow-x: scroll;
         overflow-y: hidden;
-        scrollbar-width: auto;
+        scrollbar-width: none;
+    }
+
+    .contentHeadingMain {
+        width: 950px;
+        margin-left: 60px;
+    }
+
+    .noTasksParent {
+        width: 950px;
+    }
+
+    .content {
+        overflow-y: scroll;
+        scrollbar-width: none;
+        height: 900px;
+        margin-top: 5px;
+    }
+}
+
+@media screen and (max-width: 1260px) {
+    .boardColumnHeader {
+        width: 850px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .boardDropDown {
+        width: 850px;
+        height: 300px;
+        overflow-x: scroll;
+    }
+
+    #tasksContainerToDo,
+    #tasksContainerInProgress,
+    #tasksContainerAwaitFeedback,
+    #tasksContainerDone {
+        display: flex;
+        flex-wrap: wrap;
+        width: 850px;
+        height: 300px;
+        gap: 20px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        scrollbar-width: none;
+    }
+
+    .contentHeadingMain {
+        width: 850px;
+        margin-left: 60px;
+    }
+
+    .noTasksParent {
+        width: 850px;
+    }
+}
+
+@media screen and (max-width: 1160px) {
+    .boardColumnHeader {
+        width: 750px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .boardDropDown {
+        width: 750px;
+        height: 300px;
+        overflow-x: scroll;
+    }
+
+    #tasksContainerToDo,
+    #tasksContainerInProgress,
+    #tasksContainerAwaitFeedback,
+    #tasksContainerDone {
+        display: flex;
+        flex-wrap: wrap;
+        width: 750px;
+        height: 300px;
+        gap: 20px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        scrollbar-width: none;
+    }
+
+    .contentHeadingMain {
+        width: 750px;
+        margin-left: 60px;
+    }
+
+    .noTasksParent {
+        width: 750px;
+    }
+}
+
+@media screen and (max-width: 1060px) {
+    .boardColumnHeader {
+        width: 650px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .boardDropDown {
+        width: 650px;
+        height: 300px;
+        overflow-x: scroll;
+    }
+
+    #tasksContainerToDo,
+    #tasksContainerInProgress,
+    #tasksContainerAwaitFeedback,
+    #tasksContainerDone {
+        display: flex;
+        flex-wrap: wrap;
+        width: 650px;
+        height: 300px;
+        gap: 20px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        scrollbar-width: none;
+    }
+
+    .contentHeadingMain {
+        width: 650px;
+        margin-left: 60px;
+    }
+
+    .noTasksParent {
+        width: 650px;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .boardColumnHeader {
+        width: 550px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .contentHeadingMain {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contentHeadingSearchMain {
+        width: 250px;
+    }
+
+    .contentHeading {
+        margin-bottom: 50px;
+    }
+
+    .contentHeadingSearchSecond,
+    .contenHeadingSearchMain,
+    .contentHeadingSearch {
+        width: 180px;
+    }
+
+    .boardDropDown {
+        width: 550px;
+        height: 300px;
+        overflow-x: scroll;
+    }
+
+    #tasksContainerToDo,
+    #tasksContainerInProgress,
+    #tasksContainerAwaitFeedback,
+    #tasksContainerDone {
+        display: flex;
+        flex-wrap: wrap;
+        width: 550px;
+        height: 300px;
+        gap: 20px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        scrollbar-width: none;
+    }
+
+    .contentHeadingMain {
+        width: 550px;
+        margin-left: 60px;
+    }
+
+    .noTasksParent {
+        width: 550px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .content {
+        margin-bottom: 70px;
+    }
+
+    .boardColumnHeader {
+        width: 750px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .contentHeadingMain {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contentHeadingSearchMain {
+        width: 250px;
+    }
+
+    .contentHeading {
+        margin-bottom: 50px;
+    }
+
+    .contentHeadingSearchSecond,
+    .contenHeadingSearchMain,
+    .contentHeadingSearch {
+        width: 180px;
+    }
+
+    .boardDropDown {
+        width: 750px;
+        height: 300px;
+        overflow-x: scroll;
+    }
+
+    #tasksContainerToDo,
+    #tasksContainerInProgress,
+    #tasksContainerAwaitFeedback,
+    #tasksContainerDone {
+        display: flex;
+        flex-wrap: wrap;
+        width: 750px;
+        height: 300px;
+        gap: 20px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        scrollbar-width: none;
+    }
+
+    .contentHeadingMain {
+        width: 750px;
+        margin-left: 60px;
+    }
+
+    .noTasksParent {
+        width: 750px;
     }
 }

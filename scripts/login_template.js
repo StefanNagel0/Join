@@ -28,6 +28,10 @@ function loginTemplate() {
                 <div id="loginError" class="errorMessage"></div>
             </div>
         </section>
+        <div class="regiUser mobilelogin">
+                <p class="registerButton">Not a Join user?</p>
+                <button class="SignUpButton" onclick="window.location.href = 'registration.html';">Sign up</button>
+            </div>
         <footer>
             <div class="privacy">
                 <a href="">Privacy Policy</a>

@@ -1,7 +1,7 @@
 function registrationTemplate() {
     return `
     <div class="sectionOne">
-    <div class="mainLogin">
+    <div class="mainLogin registerMain">
         <img class="signUpArrow" onclick="window.location.href = 'login.html';" src="../assets/svg/arrow-left-line.svg"
             alt="">
         <div class="signUpCtn">

@@ -11,6 +11,10 @@
         margin: 50px 0 0 0;
     }
 
+    .registerMain {
+        margin: 0 0 0 30px !important;
+    }
+
     .mainLogin {
         width: 90%;
         margin: 0;
@@ -26,4 +30,8 @@
         padding: 0 0 20px 20px;
         margin: 0;
     }
+
+    .signUpArrow{
+        margin-right: 400px;
+    } 
 }

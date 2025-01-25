@@ -12,7 +12,7 @@ let mainCategory = '';
 /* define Firebase URL */
 const BASE_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/";
 
-/* tasks are loaded from the database */
+/**Loads tasks from a specified path and displays them.*/
 async function loadTask(path = "/tasks") {
     let response = await fetch(BASE_URL + path + ".json");
     let tasks = await response.json();
@@ -20,17 +20,30 @@ async function loadTask(path = "/tasks") {
     displayTasks(tasks);
 }
 
-/* rendering from the task */
+/**Displays tasks in their corresponding containers.*/
 function displayTasks(tasks) {
+    clearTaskContainers();
+    const taskArray = Object.entries(tasks);
+    taskArray.forEach(([taskId, task]) => {
+        const taskElement = createTaskElement(task, taskId);
+        appendTaskToCategory(task, taskElement);
+    });
+    emptyTaskContainer();
+}
+
+/**Clears all task containers.*/
+function clearTaskContainers() {
     document.getElementById("tasksContainerToDo").innerHTML = "";
     document.getElementById("tasksContainerInProgress").innerHTML = "";
     document.getElementById("tasksContainerAwaitFeedback").innerHTML = "";
     document.getElementById("tasksContainerDone").innerHTML = "";
-    for (const taskId in tasks) {
-        const task = tasks[taskId];
-        const taskElement = document.createElement("div");
-        taskElement.className = "task";
-        taskElement.innerHTML = `
+}
+
+/**Creates a task element with the provided task data.*/
+function createTaskElement(task, taskId) {
+    const taskElement = document.createElement("div");
+    taskElement.className = "task";
+    taskElement.innerHTML = `
         <div draggable="true" ondragstart="dragInit(event, '${taskId}')" class="taskContainer" onclick="openTaskOverlay('${taskId}')">
             <div class="taskChildContainer">
                 ${taskCategoryTemplate(task)}
@@ -43,26 +56,17 @@ function displayTasks(tasks) {
                     ${taskAssignedTemplate(task)}
                     ${taskPriorityTemplate(task)}
                 </div>
-                <!-- ${taskStatusTemplate(task)} -->
-                <!-- ${taskDateTemplate(task)} -->
             </div>
         </div>
-        `;
-        if (task.mainCategory === "ToDo") {
-            document.getElementById("tasksContainerToDo").appendChild(taskElement);
-        } else if (task.mainCategory === "InProgress") {
-            document.getElementById("tasksContainerInProgress").appendChild(taskElement);
-        } else if (task.mainCategory === "AwaitFeedback") {
-            document.getElementById("tasksContainerAwaitFeedback").appendChild(taskElement);
-        } else if (task.mainCategory === "Done") {
-            document.getElementById("tasksContainerDone").appendChild(taskElement);
-        }
-        for (const taskId in tasks) {
-            const task = tasks[taskId];
-        }
+    `;
+    return taskElement;
+}
 
-    }
-    emptyTaskContainer();
+/**Appends the task element to the correct category container.*/
+function appendTaskToCategory(task, taskElement) {
+    const category = task.mainCategory;
+    const containerId = `tasksContainer${category}`;
+    document.getElementById(containerId).appendChild(taskElement);
 }
 
 /* mainCategory assign */
@@ -83,37 +87,64 @@ function getAwaitFeedbackButton() {
     boardAddTask();
 }
 
-/* add task */
+/**Handles posting a new task by collecting data and sending it to the server.*/
 async function postTask() {
-    const title = document.getElementById("task-title").value;
-    const description = document.getElementById("task-desc").value;
-    const assignedContacts = getSelectedContacts(); // Holt die ausgewählten Kontakte
-    const dueDate = document.getElementById("task-date").value;
-    const priority = document.querySelector('.prio-btn.active')?.dataset.prio || '';
-    const category = document.querySelector('#dropdown-toggle-category span').textContent.trim();
-    const subtasks = Array.from(document.querySelectorAll("#subtask-list li")).map(li => ({
-        name: li.textContent.trim(),
-        completed: false
-    }));
-    const taskData = {
-        title,
-        description,
-        assignedTo: assignedContacts, // Leer lassen, wenn keine Kontakte ausgewählt wurden
-        dueDate,
-        priority,
-        category,
-        subtasks,
-        mainCategory
-    };
+    const taskData = getTaskData();
     console.log('Task Data:', taskData);
     try {
         const result = await postTaskToServer(taskData);
         addTaskSuccess();
         closeBoardAddTask();
     } catch (error) {
-        console.error('Fehler beim Posten der Aufgabe:', error);
+        console.error('Error posting task:', error);
     }
     onload();
+}
+
+/**Collects task data from the form fields and returns an object.*/
+function getTaskData() {
+    return {
+        title: getTitle(),
+        description: getDescription(),
+        assignedTo: getSelectedContacts(),
+        dueDate: getDueDate(),
+        priority: getPriority(),
+        category: getCategory(),
+        subtasks: getSubtasks(),
+        mainCategory
+    };
+}
+
+/**Retrieves the task title from the input field.*/
+function getTitle() {
+    return document.getElementById("task-title").value;
+}
+
+/**Retrieves the task description from the input field.*/
+function getDescription() {
+    return document.getElementById("task-desc").value;
+}
+
+/**Retrieves the task due date from the input field.*/
+function getDueDate() {
+    return document.getElementById("task-date").value;
+}
+
+/**Retrieves the selected task priority from the active priority button.*/
+function getPriority() {
+    return document.querySelector('.prio-btn.active')?.dataset.prio || '';
+}
+
+/**Retrieves the selected task category from the dropdown.*/
+function getCategory() {
+    return document.querySelector('#dropdown-toggle-category span').textContent.trim();
+}
+
+/**Collects the subtasks from the list and returns an array of objects.*/
+function getSubtasks() {
+    return Array.from(document.querySelectorAll("#subtask-list li")).map(li => ({
+        name: li.textContent.trim(), completed: false
+    }));
 }
 
 /**Handles the submission of the add-task form, collects task data*/
@@ -152,7 +183,7 @@ function showConfirmationAndRedirect() {
     }, 1500);
 }
 
-
+/**Sends task data to the server and saves it.*/
 async function postTaskToServer(taskData) {
     const response = await fetch(`${BASE_URL}/tasks.json`, {
         method: "POST",
@@ -176,7 +207,6 @@ function emptyTaskContainer() {
         "tasksContainerDone",
         "tasksContainerToDo"
     ];
-
     containers.forEach(containerId => {
         const container = document.getElementById(containerId);
         if (container.innerHTML.trim() === "") {

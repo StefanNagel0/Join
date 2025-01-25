@@ -1,12 +1,14 @@
 @media(max-width:900px) {
-    .loginHeaderH1{
+    .loginHeaderH1 {
         font-size: 44px;
         margin-bottom: 4px;
     }
-    .loginLine{
+
+    .loginLine {
         margin-right: 113.5px;
         margin-left: 113.5px;
     }
+
     .regiUser {
         display: none;
     }
@@ -41,43 +43,50 @@
         margin: 0;
     }
 
-    .signUpArrow{
+    .signUpArrow {
         margin-right: 400px;
     }
-    .loginForm{
+
+    .loginForm {
         width: 90%;
         margin: auto;
     }
-    .loginEmail{
-    width: 100%;
-    margin: auto;
-    max-width: 440px;
-    }
-    .loginPassword{
+
+    .loginEmail {
         width: 100%;
         margin: auto;
         max-width: 440px;
     }
-    .loginButtons{
+
+    .loginPassword {
+        width: 100%;
+        margin: auto;
+        max-width: 440px;
+    }
+
+    .loginButtons {
         flex-direction: column;
         gap: 21px;
     }
-    .loginButton{
+
+    .loginButton {
         width: 180px;
         justify-content: center;
         font-size: 18px;
     }
-    .guestButton{
+
+    .guestButton {
         font-size: 18px;
         justify-content: center;
     }
+
     #email {
         background: url(../assets/svg/mail.svg) no-repeat;
         background-position: calc(100% - 14px) center;
         padding-left: 15px;
         background-size: 20px;
     }
-    
+
     #password {
         background: url(../assets/svg/lock.svg) no-repeat;
         background-position: calc(100% - 14px) center;
@@ -109,8 +118,8 @@
 
 }
 
-@media(min-width:901px){
-    .mobilelogin{
+@media(min-width:901px) {
+    .mobilelogin {
         display: none;
     }
 }

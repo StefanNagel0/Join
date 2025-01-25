@@ -9,7 +9,7 @@
 .hide {
     display: none;
 }
-  
+
 .show {
     display: block;
 }
@@ -17,16 +17,16 @@
 @media screen and (max-width: 1200px) {
     .overlay-content {
         width: 660px;
-    } 
+    }
 }
 
 @media screen and (max-width: 1100px) {
     .overlay-left {
         width: 296px;
-    } 
+    }
 
     .successcreate {
-    z-index: 984;
+        z-index: 984;
     }
 }
 
@@ -69,7 +69,7 @@
     .hide {
         display: none;
     }
-      
+
     .show {
         display: block;
     }
@@ -113,7 +113,9 @@
         margin-bottom: 56px;
     }
 
-    #contact-name, #contact-email, #contact-phone {
+    #contact-name,
+    #contact-email,
+    #contact-phone {
         width: 414px;
     }
 
@@ -354,7 +356,6 @@
         z-index: 1001;
         display: flex;
         flex-direction: column;
-       
     }
 
     .detailsheader h1 {
@@ -377,16 +378,16 @@
     }
 
     .circlecont {
-    width: 80px;
-    height: 80px;
-    color: white;
-    font-weight: 400;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    margin-right: 10px;
-    font-size: 27px;
+        width: 80px;
+        height: 80px;
+        color: white;
+        font-weight: 400;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        margin-right: 10px;
+        font-size: 27px;
     }
 
     .backto {
@@ -400,7 +401,7 @@
         font-size: 40px;
         border: none;
         display: flex;
-        height: 50px;    
+        height: 50px;
     }
 
     .details-container h2 {
@@ -409,8 +410,8 @@
 
     .collapse-content {
         position: fixed;
-        transform: translateX(100%); 
-        opacity: 0; 
+        transform: translateX(100%);
+        opacity: 0;
         transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
         background-color: white;
         border: 1px solid white;
@@ -420,23 +421,20 @@
         bottom: 150px;
         right: 20px;
         z-index: 900;
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
       }
   
       .collapse-content.open {
         transform: translateX(0);
         opacity: 1;
         position: fixed;
-      }
+    }
 
-      .infom {
+    .infom {
         display: flex;
         align-items: flex-start;
         flex-direction: column;
         gap: 15px;
         margin-bottom: 22px;
-        font-size: 16px; 
+        font-size: 16px;
     }
-
 }
-

@@ -1,3 +1,4 @@
+/**Generates the HTML template for the registration page.*/
 function registrationTemplate() {
     return `
     <div class="sectionOne">
@@ -30,9 +31,10 @@ function registrationTemplate() {
         </form>
     </div>
 </div>
-        `
+    `
 }
 
+/**Generates the HTML template for a successful registration message.*/
 function signUpSuccess() {
     return `
     <div class="signUpSuccessClass" id="signUpSuccessID">

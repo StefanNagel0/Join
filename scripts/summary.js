@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchTasks();
 });
 
-// Funktion, um die Begrüßung basierend auf der Uhrzeit zu setzen
+/** Sets the greeting message based on the current time and user.*/
 function setGreetingMessage() {
     const greetingMessageDiv = document.getElementById('greeting-message');
     const userNameGreetingDiv = document.getElementById('user-name-greeting');
@@ -20,7 +20,7 @@ function setGreetingMessage() {
     setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userNameGreetingOverlay);
 }
 
-// Funktion, um die Begrüßung basierend auf der Uhrzeit zu setzen
+/** Returns a greeting based on the current time. */
 function getGreetingBasedOnTime() {
     const currentHour = new Date().getHours();
     if (currentHour >= 5 && currentHour < 12) return 'Good Morning';
@@ -28,7 +28,7 @@ function getGreetingBasedOnTime() {
     return 'Good Evening';
 }
 
-// Funktion, um die Begrüßung für das Haupt-Div zu setzen
+/** Sets the greeting message for the main elements. */
 function setGreetingForElements(greeting, userName, greetingMessageDiv, userNameGreetingDiv) {
     if (userName && userName.toLowerCase() !== 'guest') {
         greetingMessageDiv.textContent = `${greeting},`;
@@ -39,7 +39,7 @@ function setGreetingForElements(greeting, userName, greetingMessageDiv, userName
     }
 }
 
-// Funktion, um die Begrüßung für das Overlay zu setzen
+/** Sets the greeting message for the overlay. */
 function setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userNameGreetingOverlay) {
     if (userName && userName.toLowerCase() !== 'guest') {
         greetingMessageOverlay.textContent = `${greeting},`;
@@ -50,7 +50,7 @@ function setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userN
     }
 }
 
-// Overlay anzeigen, wenn nötig
+/** Handles the display of the greeting overlay on small screens. */
 function handleGreetingOverlay() {
     const showGreeting = new URLSearchParams(window.location.search).get('showGreeting');
     const overlay = document.getElementById('overlay_greeting');
@@ -67,16 +67,17 @@ function handleGreetingOverlay() {
     }
 }
 
-// Überprüfen, ob das Overlay angezeigt werden soll
+/** Checks if the greeting overlay should be shown.*/
 function shouldShowGreeting(showGreeting) {
     return showGreeting === 'true' && !localStorage.getItem('greetingShown');
 }
 
-// Begrüßung und Benutzername aus der DOM holen
+/** Retrieves the greeting message from the DOM. */
 function getGreetingFromDOM() {
     return document.getElementById('greeting-message').textContent;
 }
 
+/** Retrieves the user name from the DOM. */
 function getUserNameFromDOM() {
     return document.getElementById('user-name-greeting').textContent;
 }
@@ -87,7 +88,7 @@ function setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userN
     userNameGreetingOverlay.textContent = userName;
 }
 
-// Overlay mit sanftem Übergang anzeigen
+/** Shows the greeting overlay with a smooth transition. */
 function showOverlay(overlay) {
     overlay.style.display = 'flex';
     setTimeout(() => { 
@@ -95,7 +96,7 @@ function showOverlay(overlay) {
     }, 1); 
 }
 
-// Overlay nach 3 Sekunden ausblenden
+/** Hides the greeting overlay after a timeout. */
 function hideOverlayAfterTimeout(overlay) {
     setTimeout(() => {
         overlay.classList.remove('visible');
@@ -106,7 +107,7 @@ function hideOverlayAfterTimeout(overlay) {
     }, 1500);
 }
 
-// Überprüfung beim Laden der Seite
+/** Checks if the greeting overlay has already been shown in the session. */
 document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('overlay_greeting');
     if (!localStorage.getItem('greetingShown')) {
@@ -115,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Benutzername abrufen
+/** Retrieves the user name from local storage and matches it to a user object. */
 function getUserName() {
     const loggedInEmail = localStorage.getItem('loggedInEmail');
     if (!loggedInEmail) {
@@ -125,6 +126,7 @@ function getUserName() {
     return user ? user.name : '';
 }
 
+/**Fetches and processes tasks from the server. */
 async function fetchTasks() {
     try {
         const response = await fetch(`${BASE_URL}tasks.json`);
@@ -140,6 +142,7 @@ async function fetchTasks() {
     }
 }
 
+/**Counts and returns urgent tasks and their next due date.*/
 function countUrgentTasks(data) {
     const urgentTasks = filterUrgentTasks(data);
     sortUrgentTasks(urgentTasks);
@@ -156,7 +159,7 @@ function countUrgentTasks(data) {
     };
 }
 
-// Filtern der dringenden Aufgaben
+/** Filters urgent tasks from the fetched data. */
 function filterUrgentTasks(data) {
     const urgentTasks = [];
     for (const key in data) {
@@ -171,19 +174,19 @@ function filterUrgentTasks(data) {
     return urgentTasks;
 }
 
-// Sortieren der dringenden Aufgaben nach Fälligkeit
+/** Sorts urgent tasks based on due date. */
 function sortUrgentTasks(urgentTasks) {
     urgentTasks.sort((a, b) => a.dueDate - b.dueDate);
 }
 
-// Aufgaben mit dem nächsten Fälligkeitsdatum finden
+/**  Returns tasks with the next due date. */
 function getTasksWithNextDueDate(urgentTasks, nextDueDate) {
     return urgentTasks.filter(
         (item) => item.dueDate.getTime() === nextDueDate.getTime()
     );
 }
 
-// Anzahl der Aufgaben und das nächste Fälligkeitsdatum zurückgeben
+/** Returns the count of tasks and their next due date. */
 function getTaskCountAndDueDate(tasksWithNextDueDate, nextDueDate) {
     return {
         count: tasksWithNextDueDate.length,
@@ -191,6 +194,7 @@ function getTaskCountAndDueDate(tasksWithNextDueDate, nextDueDate) {
     };
 }
 
+/** Counts the tasks in the main categories. */
 function countMainCategories(data) {
     const counts = {
         ToDo: 0,
@@ -207,6 +211,7 @@ function countMainCategories(data) {
     return counts;
 }
 
+/** Updates the HTML elements with task counts and urgent task data. */
 function updateSummaryHTML(counts, urgentData) {
     document.getElementById('to_do_show').textContent = counts.ToDo || 0;
     document.getElementById('tasks-in-progress').textContent = counts.InProgress || 0;

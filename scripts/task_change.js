@@ -71,9 +71,19 @@ function appendTaskToCategory(task, taskElement) {
 
 /* mainCategory assign */
 function getToDoButton() {
-    mainCategory = "ToDo";
-    boardAddTask();
-}
+    if (window.innerWidth <= 900) {
+        window.location.href = './add_task.html'; // Ersetze 'deine_zielseite.html' durch die gewünschte URL
+    } else {
+        mainCategory = "ToDo";
+        boardAddTask();
+        // Führe die normale Aktion des Buttons aus, wenn die Fenstergröße größer als 880px ist
+    }
+};
+
+
+
+
+
 
 /* mainCategory assign */
 function getInProgressButton() {

@@ -57,7 +57,8 @@ function handleGreetingOverlay() {
     const greetingMessageOverlay = document.getElementById('greeting-message-overlay');
     const userNameGreetingOverlay = document.getElementById('user-name-greeting-overlay');
     
-    if (shouldShowGreeting(showGreeting)) {
+    // Überprüfen, ob die Breite <= 900px ist
+    if (window.innerWidth <= 900 && shouldShowGreeting(showGreeting)) {
         const greeting = getGreetingFromDOM();
         const userName = getUserNameFromDOM();
         setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userNameGreetingOverlay);
@@ -65,6 +66,7 @@ function handleGreetingOverlay() {
         hideOverlayAfterTimeout(overlay);
     }
 }
+
 
 // Überprüfen, ob das Overlay angezeigt werden soll
 function shouldShowGreeting(showGreeting) {

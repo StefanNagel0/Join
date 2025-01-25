@@ -113,11 +113,11 @@
                         <div class="add_task_left_box">
                             <div class="gap_8">
                                 <label for="task-title">Title <span class="red_star">*</span></label>
-                                <input type="text" id="task-title" name="title" placeholder="Enter a title" required>
+                                <input maxlength="30" type="text" id="task-title" name="title" placeholder="Enter a title" required>
                             </div>
                             <div class="gap_8">
                                 <label for="task-desc">Description</label>
-                                <textarea id="task-desc" name="description"
+                                <textarea maxlength="150" id="task-desc" name="description"
                                     placeholder="Enter a Description"></textarea>
                             </div>
                             <div class="gap_8">
@@ -178,7 +178,7 @@
                             <div class="gap_8">
                                 <label for="task-subtasks">Subtasks</label>
                                 <div id="subtask-container">
-                                    <input type="text" id="new-subtask" placeholder="Add new subtask">
+                                    <input maxlength="20" type="text" id="new-subtask" placeholder="Add new subtask">
                                     <img id="clear-subtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg"
                                         alt="">
                                     <img id="add-subtask" src="../assets/svg/add_task/add+symbol.svg" alt="">

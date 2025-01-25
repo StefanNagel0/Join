@@ -1,104 +1,129 @@
-@media(max-width:1260px){
-    .flex_content{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+@media(max-width:1260px) {
+    .flex_content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-    .content{
+
+    .content {
         margin-left: 0;
     }
-    .greetings_message_box{
+
+    .greetings_message_box {
         margin-left: 32px;
     }
-    .greeting_message{
+
+    .greeting_message {
         font-size: 26px;
     }
-    .greeting_message_name{
+
+    .greeting_message_name {
         font-size: 36px;
     }
-    .join_360{
+
+    .join_360 {
         font-size: 38px;
     }
-    .heading_info{
+
+    .heading_info {
         font-size: 18px;
     }
-    .summary_overview{
+
+    .summary_overview {
         width: 418px;
     }
-    .content_heading{
+
+    .content_heading {
         height: 45px;
         width: 418px;
     }
-    .heading_img{
+
+    .heading_img {
         height: 38px;
     }
+
     .summary_first_line_box {
         width: 418px;
     }
-    .inner_first_line_box{
+
+    .inner_first_line_box {
         width: 186px;
         height: 126px;
     }
-    .ellipse_box{
+
+    .ellipse_box {
         height: 46px;
         width: 46px;
     }
-    .summary_number{
+
+    .summary_number {
         font-size: 38px;
     }
-    .to_do_infos p{
+
+    .to_do_infos p {
         font-size: 16px;
     }
-    .urgent_box{
+
+    .urgent_box {
         width: 418px;
         height: 126px;
         gap: 50px;
     }
-    .urgent_first_box img{
+
+    .urgent_first_box img {
         height: 46px;
     }
-    .date_line{
+
+    .date_line {
         font-size: 16px;
     }
-    .deadline_text{
+
+    .deadline_text {
         font-size: 12px;
     }
-    .summary_overview_board{
+
+    .summary_overview_board {
         width: 418px;
         height: 126px;
     }
-    .summary_overview_board_box{
+
+    .summary_overview_board_box {
         height: 126px;
         width: 126px;
     }
-    .summary_overview_board_num{
+
+    .summary_overview_board_num {
         font-size: 38px;
     }
-    .summary_overview_board_box p{
+
+    .summary_overview_board_box p {
         font-size: 16px;
     }
-    .greetings_message_box{
+
+    .greetings_message_box {
         margin-top: 235.5px;
     }
 }
 
-@media(min-width:901px){
-    .overlay_greeting{
+@media(min-width:901px) {
+    .overlay_greeting {
         display: none !important;
     }
 }
 
-@media(max-width:900px){
+@media(max-width:900px) {
     .greetings_message_box {
         display: none;
     }
-    .overlay_message_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+
+    .overlay_message_container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
     }
-    .overlay_message_container{
+
+    .overlay_message_container {
         flex-direction: column;
         display: flex;
         height: 100%;
@@ -106,8 +131,8 @@
     }
 }
 
-@media(max-width:570px){
-    .content_heading{
+@media(max-width:570px) {
+    .content_heading {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -116,53 +141,64 @@
         margin: auto;
         margin-top: 48px;
     }
-    .heading_img{
+
+    .heading_img {
         display: none;
     }
-    .blue_line{
+
+    .blue_line {
         display: flex;
         border: 1.5px solid #28ABE1;
         width: 89px;
         margin-top: 8px;
         border-radius: 4px;
     }
-    .join_360{
+
+    .join_360 {
         font-size: 46px;
     }
+
     .heading_info {
         font-size: 19px;
     }
 }
 
-@media(max-width:465px){
-    .content{
+@media(max-width:465px) {
+    .content {
         width: 100%;
     }
-    .content_heading{
+
+    .content_heading {
         width: 80%;
     }
-    .summary_overview{
+
+    .summary_overview {
         margin-top: 68px;
         width: 100%;
     }
-    .inner_first_line_box{
+
+    .inner_first_line_box {
         width: 130px;
         height: 110px;
         border-radius: 20px;
         margin: auto;
     }
+
     .to_do_infos p {
         font-size: 11px;
     }
+
     .ellipse_box {
         height: 40px;
         width: 40px;
     }
-    .inner_first_line_img{
+
+    .inner_first_line_img {
         width: 24px;
         height: 24px;
     }
-    .urgent_box{
+
+    .urgent_box {
         padding: 14px 24px;
         width: 90%;
         margin: auto;
@@ -170,29 +206,37 @@
         gap: 40px;
         border-radius: 20px;
     }
-    .summary_first_line_box{
+
+    .summary_first_line_box {
         width: 100%;
     }
-    .summary_to_board_button{
+
+    .summary_to_board_button {
         width: 100%;
     }
+
     .urgent_first_box img {
         height: 36px;
     }
+
     .summary_number {
         font-size: 30px;
     }
-    .urgent_text{
+
+    .urgent_text {
         font-size: 14px;
     }
-    .urgent_vertical_line{
+
+    .urgent_vertical_line {
         height: 79px;
     }
-    .summary_overview_board{
+
+    .summary_overview_board {
         width: 100%;
         margin: auto;
         margin-top: 8px;
     }
+
     .summary_overview_board_box {
         height: 90px;
         width: 90px;
@@ -200,9 +244,11 @@
         border-radius: 20px;
         margin: auto;
     }
+
     .summary_overview_board_num {
         font-size: 30px;
     }
+
     .summary_overview_board_box p {
         font-size: 12px;
     }

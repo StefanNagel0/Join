@@ -69,21 +69,19 @@ function appendTaskToCategory(task, taskElement) {
     document.getElementById(containerId).appendChild(taskElement);
 }
 
-/* mainCategory assign */
+/**
+ * Handles the click event for the "To Do" button.
+ * Redirects to add_task.html if the window width is 900px or less.
+ * Otherwise, sets the main category to "ToDo" and calls boardAddTask().
+ */
 function getToDoButton() {
     if (window.innerWidth <= 900) {
-        window.location.href = './add_task.html'; // Ersetze 'deine_zielseite.html' durch die gewünschte URL
+        window.location.href = './add_task.html';
     } else {
         mainCategory = "ToDo";
         boardAddTask();
-        // Führe die normale Aktion des Buttons aus, wenn die Fenstergröße größer als 880px ist
     }
 };
-
-
-
-
-
 
 /* mainCategory assign */
 function getInProgressButton() {

@@ -8,7 +8,7 @@ function boardTemplate() {
                     <h2 class="contentHeadingH2">Board</h2>
                 </div>
                 <div>
-                    <img class="miniAddTaskImg" src="../assets/svg/add_task/add_task.svg" alt="">
+                    <img onclick="getToDoButton()" class="miniAddTaskImg" src="../assets/svg/add_task/add_task.svg" alt="">
                 </div>
             </div>
             <div class="contentHeadingOrder">

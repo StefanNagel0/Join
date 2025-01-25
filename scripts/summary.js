@@ -35,7 +35,7 @@ function setGreetingForElements(greeting, userName, greetingMessageDiv, userName
         userNameGreetingDiv.textContent = `${userName}`;
     } else {
         greetingMessageDiv.textContent = greeting;
-        userNameGreetingDiv.textContent = ''; // Leer lassen, wenn der Benutzer ein Gast ist
+        userNameGreetingDiv.textContent = '';
     }
 }
 
@@ -46,7 +46,7 @@ function setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userN
         userNameGreetingOverlay.textContent = `${userName}`;
     } else {
         greetingMessageOverlay.textContent = greeting;
-        userNameGreetingOverlay.textContent = ''; // Leer lassen, wenn der Benutzer ein Gast ist
+        userNameGreetingOverlay.textContent = '';
     }
 }
 
@@ -66,7 +66,6 @@ function handleGreetingOverlay() {
         hideOverlayAfterTimeout(overlay);
     }
 }
-
 
 // Überprüfen, ob das Overlay angezeigt werden soll
 function shouldShowGreeting(showGreeting) {
@@ -88,18 +87,33 @@ function setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userN
     userNameGreetingOverlay.textContent = userName;
 }
 
-// Overlay anzeigen
+// Overlay mit sanftem Übergang anzeigen
 function showOverlay(overlay) {
     overlay.style.display = 'flex';
+    setTimeout(() => { 
+        overlay.classList.add('visible');
+    }, 1); 
 }
 
 // Overlay nach 3 Sekunden ausblenden
 function hideOverlayAfterTimeout(overlay) {
     setTimeout(() => {
-        overlay.style.display = 'none';
-        localStorage.setItem('greetingShown', 'true');
-    }, 3000); // 3 Sekunden lang anzeigen
+        overlay.classList.remove('visible');
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            localStorage.setItem('greetingShown', 'true');
+        }, 300);
+    }, 1500);
 }
+
+// Überprüfung beim Laden der Seite
+document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('overlay_greeting');
+    if (!localStorage.getItem('greetingShown')) {
+        showOverlay(overlay);
+        hideOverlayAfterTimeout(overlay);
+    }
+});
 
 // Benutzername abrufen
 function getUserName() {

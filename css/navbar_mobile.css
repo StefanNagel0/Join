@@ -30,6 +30,22 @@
         width: 100%;
     }
 
+    .navbar_main_buttons button:nth-child(1) {
+        order: 1; /* Summary bleibt an erster Stelle */
+    }
+
+    .navbar_main_buttons button:nth-child(2) {
+        order: 3; /* Board auf die zweite Position verschieben */
+    }
+
+    .navbar_main_buttons button:nth-child(3) {
+        order: 2; /* Add Task an die dritte Position verschieben */
+    }
+
+    .navbar_main_buttons button:nth-child(4) {
+        order: 4; /* Contacts an die letzte Position verschieben */
+    }
+
 .nav_header {
     padding: 10px 18px;
     width: 100%;

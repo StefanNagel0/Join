@@ -24,6 +24,10 @@
     .overlay-left {
         width: 296px;
     } 
+
+    .successcreate {
+    z-index: 984;
+    }
 }
 
 
@@ -470,7 +474,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1001;
+    z-index: 900;
     top: 50px;
     left: 20%;
     transform: translateX(100%);

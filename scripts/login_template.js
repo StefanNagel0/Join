@@ -15,8 +15,8 @@ function loginTemplate() {
                     <div class="loginLine"></div>
                 </div>
                 <form onsubmit="login(); return false;" class="loginForm">
-                    <div class="loginEmail"><input class="loginInput" type="email" id="email" placeholder="Email"
-                            required>
+                    <div class="loginEmail">
+                        <input class="loginInput" type="email" id="email" placeholder="Email"required>
                     </div>
                     <div class="loginPassword"><input class="loginInput" type="password" id="password"
                             placeholder="Password" required></div>

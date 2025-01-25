@@ -190,10 +190,15 @@ justify-content: space-between;
     justify-content: center;
     align-items: center;
     z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0s 0.5s;
 }
 
 .overlay_greeting.visible {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.001s ease, visibility 0s 0s;
 }
 
 .greeting_message_overlay{

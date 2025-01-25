@@ -244,10 +244,7 @@ function showContactList() {
   detailsDiv.classList.remove("show");
 }
 
-/**
- * Deletes a contact by index and updates the contact list.
- * @param {number} index - The index of the contact to delete.
- */
+/* Deletes a contact by index and updates the contact list. */
 function deleteContact(index) {
   const overlay = document.getElementById("confirm-overlay");
   const yesButton = document.getElementById("confirm-yes");
@@ -267,21 +264,14 @@ function deleteContact(index) {
   };
 }
 
-/**
- * Handles input events for the contact name field.
- * @param {Event} event - The input event.
- */
+/* Handles input events for the contact name field. */
 function handleNameInput(event) {
   const name = event.target.value.trim();
   const circleDiv = document.querySelector(".overlay-content .circle");
   updateCirclePreview(name, circleDiv);
 }
 
-/**
- * Updates the circle preview with initials and color.
- * @param {string} name - The contact name.
- * @param {HTMLElement} circleDiv - The circle element.
- */
+/* Updates the circle preview with initials and color. */
 function updateCirclePreview(name, circleDiv) {
   if (name) {
     circleDiv.textContent = getInitials(name);
@@ -292,10 +282,7 @@ function updateCirclePreview(name, circleDiv) {
   }
 }
 
-/**
- * Handles form submission for adding or editing contacts.
- * @param {Event} event - The form submission event.
- */
+/*Handles form submission for adding or editing contacts. */
 function handleFormSubmit(event) {
   event.preventDefault();
   const name = document.getElementById("contact-name").value.trim();
@@ -311,12 +298,7 @@ function handleFormSubmit(event) {
   showContacts();
 }
 
-/**
- * Saves a new or edited contact.
- * @param {string} name - The contact's name.
- * @param {string} phone - The contact's phone number.
- * @param {string} email - The contact's email address.
- */
+/* Saves a new or edited contact. */
 function saveContact(name, phone, email) {
   if (editIndex !== null) {
     contacts[editIndex] = { ...contacts[editIndex], name, phone, email };
@@ -327,11 +309,7 @@ function saveContact(name, phone, email) {
   }
 }
 
-/**
- * Creates a success message and displays it temporarily.
- * @param {string} message - The success message.
- * @param {string} targetClass - The class name for the target element.
- */
+/* Creates a success message and displays it temporarily. */
 function createSuccessMessage(message, targetClass) {
   const successDiv = document.querySelector(`.${targetClass}`);
 
@@ -348,18 +326,13 @@ function createSuccessMessage(message, targetClass) {
   }
 }
 
-/**
- * Validates the phone input field, allowing only numbers.
- * @param {Event} event - The input event.
- */
+/* Validates the phone input field, allowing only numbers. */
 function validatePhoneInput(event) {
   const input = event.target;
   input.value = input.value.replace(/[^0-9]/g, '');
 }
 
-/**
- * Initializes event listeners for form inputs and submission.
- */
+/* Initializes event listeners for form inputs and submission. */
 function initializeEventListeners() {
   const phoneInput = document.getElementById("contact-phone");
   const nameInput = document.getElementById("contact-name");
@@ -380,9 +353,7 @@ function initializeEventListeners() {
 
 document.addEventListener("DOMContentLoaded", initializeEventListeners);
 
-/**
- * Toggles the collapse state of additional contact options.
- */
+/* Toggles the collapse state of additional contact options. */
 function toggleCollapse() {
   const content = document.getElementById("collapseContent");
   const button = document.querySelector(".collapse-button");
@@ -394,7 +365,5 @@ function toggleCollapse() {
   }
 }
 
-/**
- * Displays the contact list on page load.
- */
+/* Displays the contact list on page load.*/
 showContacts();

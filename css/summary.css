@@ -1,40 +1,44 @@
-.content{
+.content {
     margin-left: 96px;
 }
-.join_360{
+
+.join_360 {
     font-size: 61px;
     font-weight: 700;
 }
 
-.heading_info{
+.heading_info {
     font-size: 27px;
     font-weight: 400;
     color: #2A3647;
 }
 
-.blue_line{
+.blue_line {
     display: none;
 }
 
-.summary_overview{
+.summary_overview {
     width: 560px;
     height: 562px;
     margin-top: 56px;
 }
-.summary_first_line_box{
+
+.summary_first_line_box {
     width: 560px;
     height: 168px;
     display: flex;
     justify-content: space-between;
 }
-.summary_to_board_button{
+
+.summary_to_board_button {
     border: 0;
-    background-color:#F6F7F8;
+    background-color: #F6F7F8;
     border-radius: 30px;
     padding: 0;
     transition: transform 80ms ease-out;
 }
-.inner_first_line_box{
+
+.inner_first_line_box {
     width: 264px;
     height: 168px;
     border-radius: 30px;
@@ -47,30 +51,37 @@
     box-shadow: 0px 0px 4px 0px #0000001A;
     transition: transform 80ms ease-out, background-color 80ms ease-out, color 80ms ease-out;
 }
-.inner_first_line_box:hover{
+
+.inner_first_line_box:hover {
     transform: scale(1.1);
     background-color: #2A3647;
 }
-.summary_number{
+
+.summary_number {
     font-size: 64px;
     font-weight: 600;
     color: black;
 }
+
 .inner_first_line_box:hover .summary_number {
     color: white;
 }
-.urgent_box:hover .summary_number{
+
+.urgent_box:hover .summary_number {
     color: white;
 }
-.to_do_infos p{
+
+.to_do_infos p {
     font-size: 20px;
     font-weight: 400;
     color: #2A3647;
 }
+
 .inner_first_line_box:hover .to_do_infos p {
     color: white;
 }
-.urgent_box{
+
+.urgent_box {
     width: 560px;
     height: 168px;
     padding: 28px 48px;
@@ -83,19 +94,23 @@
     box-shadow: 0px 0px 4px 0px #0000001A;
     transition: transform 80ms ease-out, color 80ms ease-out;
 }
-.urgent_box:hover{
+
+.urgent_box:hover {
     transform: scale(1.1);
     background-color: #2A3647;
 }
-.urgent_first_box{
+
+.urgent_first_box {
     display: flex;
     gap: 18px;
     align-items: center;
 }
-.urgent_box:hover .urgent_text{
+
+.urgent_box:hover .urgent_text {
     color: white;
 }
-.urgent_deadline_box{
+
+.urgent_deadline_box {
     width: 178px;
     height: 57px;
     gap: 13px;
@@ -103,29 +118,35 @@
     flex-direction: column;
     justify-content: center;
 }
-.date_line{
+
+.date_line {
     font-size: 21px;
     font-weight: 700;
     color: #2A3647;
 }
-.urgent_box:hover .date_line{
+
+.urgent_box:hover .date_line {
     color: white;
 }
-.deadline_text{
+
+.deadline_text {
     font-size: 16px;
     font-weight: 400;
 }
-.urgent_box:hover .deadline_text{
+
+.urgent_box:hover .deadline_text {
     color: white;
 }
-.summary_overview_board{
+
+.summary_overview_board {
     width: 560px;
     height: 170px;
     margin-top: 28px;
     display: flex;
-justify-content: space-between;
+    justify-content: space-between;
 }
-.summary_overview_board_box{
+
+.summary_overview_board_box {
     background-color: white;
     border-radius: 30px;
     padding: 25px 0px;
@@ -140,26 +161,32 @@ justify-content: space-between;
     box-shadow: 0px 0px 4px 0px #0000001A;
     transition: transform 80ms ease-out, background-color 80ms ease-out, color 80ms ease-out;
 }
-.summary_overview_board_box:hover{
+
+.summary_overview_board_box:hover {
     transform: scale(1.1);
     background-color: #2A3647;
 }
-.summary_overview_board_num{
+
+.summary_overview_board_num {
     font-size: 64px;
     font-weight: 600;
 }
-.summary_overview_board_box:hover .summary_overview_board_num{
+
+.summary_overview_board_box:hover .summary_overview_board_num {
     color: white;
 }
-.summary_overview_board_box p{
+
+.summary_overview_board_box p {
     font-size: 20px;
     font-weight: 400;
     color: #2A3647;
 }
-.summary_overview_board_box:hover p{
+
+.summary_overview_board_box:hover p {
     color: white;
 }
-.flex_content{
+
+.flex_content {
     display: flex;
 }
 
@@ -201,37 +228,42 @@ justify-content: space-between;
     transition: opacity 0.001s ease, visibility 0s 0s;
 }
 
-.greeting_message_overlay{
+.greeting_message_overlay {
     font-size: 47px;
     font-weight: 500;
     color: #2A3647;
 }
-.greeting_message_name_overlay{
+
+.greeting_message_name_overlay {
     font-size: 64px;
     font-weight: 700;
     color: #29ABE2;
 }
 
-.greeting_message{
+.greeting_message {
     font-size: 47px;
     font-weight: 500;
     color: #2A3647;
 }
-.greeting_message_name{
+
+.greeting_message_name {
     font-size: 64px;
     font-weight: 700;
     color: #29ABE2;
 }
-.inner_first_line_img{
+
+.inner_first_line_img {
     width: 32px;
     height: 32px;
     filter: invert(0);
     transition: filter 80ms ease;
 }
-.inner_first_line_box:hover .inner_first_line_img{
+
+.inner_first_line_box:hover .inner_first_line_img {
     filter: invert(1);
 }
-.ellipse_box{
+
+.ellipse_box {
     height: 69px;
     width: 69px;
     background-color: #2A3647;
@@ -240,6 +272,7 @@ justify-content: space-between;
     justify-content: center;
     align-items: center;
 }
-.inner_first_line_box:hover .ellipse_box{
+
+.inner_first_line_box:hover .ellipse_box {
     background-color: white;
 }

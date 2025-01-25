@@ -1,16 +1,19 @@
-.content{
+.content {
     margin-left: 96px;
 }
-#task-priority{
+
+#task-priority {
     height: 56px;
     display: flex;
     gap: 8px;
 }
-.gap_8{
+
+.gap_8 {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
+
 .prio-btn {
     width: 136px;
     padding: 16px 10px;
@@ -24,7 +27,8 @@
     gap: 8px;
     transition: box-shadow 0.1s ease;
 }
-.prio-btn:hover{
+
+.prio-btn:hover {
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.4);
 }
 
@@ -36,12 +40,15 @@
 .prio-btn.urgent.active {
     background-color: rgb(255, 61, 0);
 }
+
 .prio-btn.medium.active {
     background-color: #FFA800;
 }
+
 .prio-btn.low.active {
     background-color: #7AE229;
 }
+
 .prio-btn.active img {
     filter: brightness(0) invert(1);
 }
@@ -51,15 +58,15 @@
     font-weight: 700;
 }
 
-.add_task_form_box{
+.add_task_form_box {
     display: flex;
     justify-content: left;
     height: 424px;
     margin-top: 48px;
-    gap:47px;
+    gap: 47px;
 }
 
-.add_task_left_box{
+.add_task_left_box {
     display: flex;
     flex-direction: column;
     width: 440px;
@@ -71,7 +78,8 @@
     font-weight: 400;
     color: #2A3647;
 }
-#task-desc{
+
+#task-desc {
     height: 132px;
     padding: 18px 16px;
     border-radius: 10px;
@@ -79,7 +87,8 @@
     max-width: 440px;
     max-height: 132px;
 }
-#task-title{
+
+#task-title {
     height: 48px;
     border-radius: 10px;
     padding: 12px 21px;
@@ -87,7 +96,8 @@
     display: flex;
     border: 1px solid #D1D1D1
 }
-.add_task_right_box{
+
+.add_task_right_box {
     display: flex;
     flex-direction: column;
     height: 516px;
@@ -121,12 +131,15 @@
     border-top: 5px solid #333;
     transition: transform 0.1s ease;
 }
+
 .dropdown-toggle.open .dropdown-arrow {
     transform: rotate(180deg);
 }
-#dropdown-toggle-category.open .dropdown-arrow{
+
+#dropdown-toggle-category.open .dropdown-arrow {
     transform: rotate(180deg);
 }
+
 .dropdown-content {
     border: 1px solid #ccc;
     background-color: #fff;
@@ -165,7 +178,7 @@
     background-color: #D1D1D1;
 }
 
-.contact-item.selected:hover{
+.contact-item.selected:hover {
     background-color: #2A3647;
 }
 
@@ -237,6 +250,7 @@
     transform: translate(-50%, -50%);
     font-weight: bold;
 }
+
 .contact-circle-label {
     display: flex;
     align-items: center;
@@ -248,7 +262,7 @@ textarea::placeholder {
     color: #D1D1D1;
 }
 
-#task-date{
+#task-date {
     height: 48px;
     padding: 12px 16px;
     border-radius: 10px;
@@ -260,6 +274,7 @@ textarea::placeholder {
     font-weight: 400;
     color: #2A3647;
 }
+
 #task-category:invalid {
     color: #D1D1D1;
 }
@@ -268,10 +283,12 @@ textarea::placeholder {
     font-weight: 400;
     color: #2A3647;
 }
+
 .dropdown-container {
     position: relative;
     display: inline-block;
 }
+
 .custom-dropdown {
     display: flex;
     justify-content: space-between;
@@ -284,6 +301,7 @@ textarea::placeholder {
     user-select: none;
     position: relative;
 }
+
 .dropdown-options {
     list-style: none;
     margin: 0;
@@ -299,24 +317,29 @@ textarea::placeholder {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: opacity 0.1s ease, visibility 0.1s ease;
 }
+
 .dropdown-options.hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
+
 .dropdown-options.visible {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
 }
+
 .dropdown-option {
     padding: 10px;
     cursor: pointer;
     transition: background-color 0.1s ease;
 }
+
 .dropdown-option:hover {
     background-color: #f0f0f0;
 }
+
 #subtask-container {
     position: relative;
     display: flex;
@@ -331,6 +354,7 @@ textarea::placeholder {
     cursor: pointer;
     color: gray;
 }
+
 #new-subtask {
     width: 100%;
     padding: 10px 40px 10px 10px;
@@ -342,7 +366,7 @@ textarea::placeholder {
 #new-subtask:focus {
     outline: none;
     border: 1px solid #28ABE2;
-    border-bottom: 2px solid #28ABE2;    
+    border-bottom: 2px solid #28ABE2;
     border-radius: 10px;
     transition: box-shadow 0.1s ease-in-out, border 0.1s ease-in-out;
 }
@@ -356,7 +380,9 @@ textarea::placeholder {
 #add-subtask {
     right: 10px;
 }
-#add-subtask:hover, #clear-subtask:hover {
+
+#add-subtask:hover,
+#clear-subtask:hover {
     opacity: 0.8;
 }
 
@@ -374,7 +400,7 @@ textarea::placeholder {
     padding: 0px 8px 0 20px;
 }
 
-.subtask-marker{
+.subtask-marker {
     margin-right: 4px;
 }
 
@@ -410,7 +436,9 @@ textarea::placeholder {
 }
 
 
-.subtask-edit, .subtask-trash, .subtask-check {
+.subtask-edit,
+.subtask-trash,
+.subtask-check {
     width: 26px;
     height: 26px;
     cursor: pointer;
@@ -427,30 +455,36 @@ textarea::placeholder {
     border-right: 1px solid #2A3647;
 }
 
-.add_task_required_info_box{
+.add_task_required_info_box {
     display: flex;
     justify-content: space-between;
     max-width: 959px;
     margin-top: 122px;
     align-items: end;
 }
-.red_star{
-color: red;
+
+.red_star {
+    color: red;
 }
-.add_task_required_info{
+
+.add_task_required_info {
     font-size: 16px;
 }
-.add_task_required_info_overlay{
+
+.add_task_required_info_overlay {
     display: none;
 }
-.add_task_buttons_box{
+
+.add_task_buttons_box {
     display: flex;
     gap: 16px;
 }
-.clear_save_btns{
+
+.clear_save_btns {
     display: flex;
 }
-.add_task_clear_btn{
+
+.add_task_clear_btn {
     display: flex;
     background-color: #F6F7F8;
     border: 1px solid #2A3647;
@@ -461,10 +495,12 @@ color: red;
     width: 110px;
     color: #2A3647;
 }
-.add_task_submit_btn{
+
+.add_task_submit_btn {
     display: flex;
 }
-.add_task_submit_btn button{
+
+.add_task_submit_btn button {
     height: 56px;
     border-radius: 10px;
     gap: 4px;
@@ -476,10 +512,12 @@ color: red;
     justify-content: center;
     align-items: center;
 }
-.add_task_submit_btn span{
+
+.add_task_submit_btn span {
     font-size: 18px;
 }
-.add_task_submit_btn img{
+
+.add_task_submit_btn img {
     height: 24px;
     width: 24px;
 }
@@ -505,12 +543,13 @@ color: red;
     justify-content: center;
     align-items: center;
 }
-#confirmation-message img{
+
+#confirmation-message img {
     width: 22px;
     height: 26px;
 }
 
 #confirmation-message.show {
-    bottom: 50%; /* Zielposition (Mitte des Bildschirms) */
+    bottom: 50%;
     opacity: 1;
 }

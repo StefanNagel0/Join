@@ -13,150 +13,55 @@ function initializeApp() {
     initHeader()
 }
 
-/** Create an element with initials circle based on contact's name */
-function createInitialsCircle(contactName) {
-    const circle = document.createElement('div');
-    circle.classList.add('initials-circle');
-    circle.textContent = getInitials(contactName);
-    circle.style.backgroundColor = getContactColor(contactName);
-    return circle;
-}
-
-/** Create a contact div with a circle, label, and checkbox */
-function createContactDiv(contact) {
-    const circle = createInitialsCircle(contact.name);
-    const label = createElementWithClass('span', 'contact-label', contact.name);
-    const checkbox = createElementWithClass('input', 'checkbox');
-    checkbox.type = 'checkbox';
-    const container = createElementWithClass('div', 'contact-item');
-    const circleLabelDiv = createElementWithClass('div', 'contact-circle-label', '', [circle, label]);
-    container.append(circleLabelDiv, checkbox);
-    container.dataset.fullname = contact.name;
-    container.onclick = () => toggleContactDiv(container, checkbox, label, circle, contact);
-    return container;
-}
-
-/** Toggle contact selection and update UI */
-function toggleContactDiv(container, checkbox, label, circle, contact) {
-    checkbox.checked = !checkbox.checked;
-    container.classList.toggle('selected', checkbox.checked);
-    toggleContactSelection(contact, checkbox.checked, document.getElementById('selected-contacts'));
-}
-
-/** Update the list of selected contacts */
-function toggleContactSelection(contact, isSelected, selectedContactsContainer) {
-    const circle = createInitialsCircle(contact.name);
-    if (isSelected) {
-        console.log('Adding contact:', contact.name); // Log, wenn Kontakt hinzugefügt wird
-        const selectedContact = createElementWithClass('div', 'selected-contact');
-        selectedContact.dataset.fullname = contact.name;  // Speichert den vollen Namen
-        selectedContact.append(circle);
-        selectedContactsContainer.append(selectedContact);
-    } else {
-        console.log('Removing contact:', contact.name); // Log, wenn Kontakt entfernt wird
-        const selectedCircles = selectedContactsContainer.querySelectorAll('.selected-contact');
-        selectedCircles.forEach(contactElement => {
-            if (contactElement.querySelector('.initials-circle').textContent === circle.textContent) {
-                selectedContactsContainer.removeChild(contactElement);
-            }
-        });
-    }
-}
-function getSelectedContacts() {
-    const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
-        .map(el => el.dataset.fullname);  // Hole den vollen Namen aus dem data-fullname Attribut
-    console.log('Selected contacts:', selectedContacts);  // Überprüfe, ob die Liste der vollen Namen korrekt ist
-    return selectedContacts;
-}
-
-
-/** Create a dropdown wrapper element */
-function createDropdownWrapper() {
-    const wrapper = createElementWithClass('div', 'dropdown-wrapper');
-    const content = createElementWithClass('div', 'dropdown-content');
-    const toggle = createDropdownToggle(content);
-    wrapper.append(toggle, content);
-    return { wrapper, content };
-}
-
-/** Create the dropdown toggle button */
-function createDropdownToggle(dropdownContent) {
-    const toggle = createElementWithClass('div', 'dropdown-toggle');
-    const textSpan = createElementWithClass('span', '', 'Select contacts to assign');
-    const arrowSpan = createElementWithClass('span', 'dropdown-arrow');
-    toggle.append(textSpan, arrowSpan);
-    toggle.onclick = () => {
-        const isVisible = dropdownContent.style.display === 'block';
-        dropdownContent.style.display = isVisible ? 'none' : 'block';
-    };
-    return toggle;
-}
-
-/** Initialize the contacts dropdown with the contact list*/
-function initializeContactsDropdown() {
-    const container = document.getElementById('task-assigned');
-    if (!container) return console.error("#task-assigned not found.");
-    const { wrapper, content } = createDropdownWrapper();
-    const selectedContacts = createElementWithClass('div', 'selected-contacts', '', [], 'selected-contacts');
-    contacts.forEach(contact => content.append(createContactDiv(contact)));
-    const dropdownToggle = wrapper.querySelector('.dropdown-toggle');
-    dropdownToggle.onclick = () => {
-        const dropdownContent = wrapper.querySelector('.dropdown-content');
-        const isVisible = dropdownContent.style.display === 'block';
-        dropdownContent.style.display = isVisible ? 'none' : 'block';
-        dropdownToggle.classList.toggle('open', !isVisible);
-    };
-    addOutsideClickListener(wrapper, content);
-    container.replaceWith(wrapper);
-    wrapper.append(selectedContacts);
-}
-
-/** Add an event listener for clicks outside the dropdown to close it */
-function addOutsideClickListener(wrapper, content) {
-    document.onclick = event => {
-        if (!wrapper.contains(event.target)) {
-            content.style.display = 'none';
-            wrapper.querySelector('.dropdown-toggle').classList.remove('open');
-        }
-    };
-}
-
-/** Generate a random color for a contact*/
-function getContactColor(name) {
-    if (!contactColors.has(name)) contactColors.set(name, getRandomColor());
-    return contactColors.get(name);
-}
-
 /** Set validation for the date input to ensure it's not in the past */
 function setDateValidation() {
-    const today = new Date().toISOString().split('T')[0];
+    const today = getCurrentDate();
+    const maxDateString = getMaxDateString();
+    applyValidation(today, maxDateString);
+    observeDomChanges(today, maxDateString);
+}
+
+/** Returns the current date in YYYY-MM-DD format. */
+function getCurrentDate() {
+    return new Date().toISOString().split('T')[0];
+}
+
+/** Returns a date string for a date 100 years in the future in YYYY-MM-DD format.*/
+function getMaxDateString() {
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() + 100); // 100 Jahre in die Zukunft
-    const maxDateString = maxDate.toISOString().split('T')[0];
-    // Funktion anwenden auf alle bestehenden Inputs
-    const applyValidation = () => {
-        const dateInputs = document.querySelectorAll('.task-date');
-        dateInputs.forEach(dateInput => {
-            dateInput.setAttribute('min', today); // Minimal erlaubtes Datum
-            dateInput.setAttribute('max', maxDateString); // Maximal erlaubtes Datum
-            dateInput.oninput = function () {
-                if (dateInput.value) {
-                    dateInput.style.color = 'black';
-                } else {
-                    dateInput.style.color = '';
-                }
-            };
-        });
+    return maxDate.toISOString().split('T')[0];
+}
+
+/** Applies date validation to all task date input fields. */
+function applyValidation(today, maxDateString) {
+    const dateInputs = document.querySelectorAll('.task-date');
+    dateInputs.forEach(dateInput => {
+        setDateAttributes(dateInput, today, maxDateString);
+        handleInputColorChange(dateInput);
+    });
+}
+
+/** Sets the min and max attributes for a given date input. */
+function setDateAttributes(dateInput, today, maxDateString) {
+    dateInput.setAttribute('min', today);
+    dateInput.setAttribute('max', maxDateString);
+}
+
+/**Changes the color of the date input based on its value.*/
+function handleInputColorChange(dateInput) {
+    dateInput.oninput = function () {
+        dateInput.style.color = dateInput.value ? 'black' : '';
     };
-    applyValidation();
-    // MutationObserver für dynamisch hinzugefügte Elemente
+}
+
+/** Observes DOM changes and applies date validation for dynamically added date inputs. */
+function observeDomChanges(today, maxDateString) {
     const observer = new MutationObserver(() => {
-        applyValidation();
+        applyValidation(today, maxDateString);
     });
     observer.observe(document.body, { childList: true, subtree: true });
 }
-
-
 
 /** Initialize the subtasks input, add button, and clear button behaviors */
 function initializeSubtasks() {
@@ -206,7 +111,7 @@ function editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     subtaskElement.focus();
     trashIcon.classList.add('editing')
     const marker = subtaskElement.querySelector('.subtask-marker');
-    if(marker) marker.style.display = "none";
+    if (marker) marker.style.display = "none";
 }
 
 /** Save the edited subtask */
@@ -217,27 +122,21 @@ function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     subtaskElement.contentEditable = 'false';
     trashIcon.classList.remove('editing');
     const marker = subtaskElement.querySelector('.subtask-marker');
-    if(marker) marker.style.display = 'inline';
+    if (marker) marker.style.display = 'inline';
 }
-
-/** Create the HTML for a subtask element */
-function createSubtaskHTML(task) {
-    return `
-    <div>
-    <span class="subtask-marker">• </span>${task}
-    </div>
-        <div class="subtask-controls">
-            <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
-            <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
-            <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
-        </div>`;
-}
-
 
 /** Add a subtask to the list */
 function addSubtask(input, list) {
     const task = input.value.trim();
     if (!task) return;
+    const subtaskElement = createSubtaskElement(task);
+    list.appendChild(subtaskElement);
+    input.value = '';
+    toggleClearButtonVisibility();
+}
+
+/**Observes DOM changes and applies date validation for dynamically added date inputs.*/
+function createSubtaskElement(task) {
     const subtaskElement = document.createElement('li');
     subtaskElement.classList.add('subtask-item');
     subtaskElement.innerHTML = createSubtaskHTML(task);
@@ -247,8 +146,11 @@ function addSubtask(input, list) {
     pencilIcon.onclick = () => editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon);
     checkIcon.onclick = () => saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon);
     trashIcon.onclick = () => subtaskElement.remove();
-    list.appendChild(subtaskElement);
-    input.value = '';
+    return subtaskElement;
+}
+
+/**Hides the "clear" button for subtasks.*/
+function toggleClearButtonVisibility() {
     const clearBtn = document.getElementById('clear-subtask');
     if (clearBtn) clearBtn.classList.add('d-none');
 }
@@ -301,29 +203,10 @@ function selectDropdownOption(event, toggle, option) {
     document.querySelector('#dropdown-toggle-category span').textContent = category;
 }
 
-/** Handle the task submission to the database */
-async function postTaskToDatabase(event) {
-    event.preventDefault();
-    const form = document.getElementById('task-form');
-    const category = document.querySelector('#dropdown-toggle-category span')?.textContent;
-    if (!category || category === 'Select task category') {
-        alert('Please select a category.');
-        return;
-    }
-    const task = createTaskObject(form);
-    try {
-        await uploadTaskToFirebase(task);
-        resetFormAndNotify(form);
-    } catch (error) {
-        console.error('Error uploading task', error);
-        alert('Error saving the task.');
-    }
-}
-
 /** Prevent form submission when Enter is pressed */
 function preventFormSubmissionOnEnter() {
     const form = document.getElementById('task-form');
-    form.onkeydown = function(event) {
+    form.onkeydown = function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
         }
@@ -342,18 +225,6 @@ function createTaskObject(form) {
         assignedTo: getSelectedContacts(),
         subtasks: Array.from(document.querySelectorAll('#subtask-list li')).map(li => li.textContent),
     };
-}
-
-/** Upload the task object to Firebase */
-async function uploadTaskToFirebase(task) {
-    const response = await fetch(`${BASE_URL}/tasks.json`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(task),
-    });
-    if (!response.ok) {
-        throw new Error(`Error saving task: ${response.statusText}`);
-    }
 }
 
 /** Reset the form and show a notification */
@@ -389,27 +260,57 @@ function getRandomDarkColor() {
 
 /** Clear the task form by resetting all form fields and UI elements to their initial state */
 function clearForm() {
-    const taskTitle = document.getElementById('task-title');
-    if (taskTitle) taskTitle.value = '';
-    const taskDesc = document.getElementById('task-desc');
-    if (taskDesc) taskDesc.value = '';
-    const taskDate = document.getElementById('task-date');
-    if (taskDate) taskDate.value = '';
+    resetField('task-title');
+    resetField('task-desc');
+    resetField('task-date');
+    resetPriority();
+    resetCategory();
+    resetSubtasks();
+    resetContacts();
+    resetDropdown();
+}
+
+/** Resets the value of a given form field by its ID.*/
+function resetField(id) {
+    const field = document.getElementById(id);
+    if (field) field.value = '';
+}
+
+/**Resets the priority of the task to "medium".*/
+function resetPriority() {
     document.querySelectorAll('.prio-btn').forEach(btn => btn.classList.remove('active'));
     const mediumBtn = document.querySelector('.prio-btn[data-prio="medium"]');
     if (mediumBtn) {
         mediumBtn.classList.add('active');
-        selectedPriority = mediumBtn.dataset.prio;}
+        selectedPriority = mediumBtn.dataset.prio;
+    }
+}
+
+/**Resets the task category dropdown to its default value.*/
+function resetCategory() {
     const categoryText = document.querySelector('#dropdown-toggle-category span');
     if (categoryText) categoryText.textContent = 'Select task category';
+}
+
+/**Resets the list of subtasks to an empty state.*/
+function resetSubtasks() {
     const subtaskList = document.getElementById('subtask-list');
     if (subtaskList) subtaskList.innerHTML = '';
+}
+
+/**Resets the selected contacts container to an empty state.*/
+function resetContacts() {
     const selectedContactsContainer = document.getElementById('selected-contacts');
     if (selectedContactsContainer) selectedContactsContainer.innerHTML = '';
+}
+
+/**Resets the task category dropdown and hides the dropdown content.*/
+function resetDropdown() {
     const dropdownToggle = document.getElementById('dropdown-toggle');
     if (dropdownToggle) {
         const span = dropdownToggle.querySelector('span');
-        if (span) span.textContent = 'Select contacts to assign';}
+        if (span) span.textContent = 'Select contacts to assign';
+    }
     const dropdownContent = document.getElementById('dropdown-content');
     if (dropdownContent) dropdownContent.style.display = 'none';
 }
@@ -423,19 +324,13 @@ function initializeClearButton() {
     };
 }
 
+/**Displays a confirmation message and redirects to the "board.html" page after 1.5 seconds.*/
 function getToDoAddTaskPage(event) {
-    event.preventDefault(); // Verhindert die Standardaktion des Formulars
-
-    // Aufgabe speichern (du kannst hier deinen Code zur Speicherung hinzufügen)
-    console.log('Task submitted');
-
-    // Bestätigungsnachricht anzeigen
+    event.preventDefault();
     const confirmationMessage = document.getElementById('confirmation-message');
     confirmationMessage.classList.add('show');
-
-    // Nach 1,5 Sekunden weiterleiten und Nachricht ausblenden
     setTimeout(() => {
         confirmationMessage.classList.remove('show');
-        window.location.href = 'board.html'; // Weiterleitung zur board.html
+        window.location.href = 'board.html';
     }, 1500);
 }

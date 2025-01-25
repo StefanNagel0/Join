@@ -1,79 +1,100 @@
-@media(max-width:1305px){
-    .content{
+@media(max-width:1305px) {
+    .content {
         margin-left: 40px;
     }
-    .add_task_left_box{
+
+    .add_task_left_box {
         width: 290px;
         gap: 16px;
     }
-    .add_task_right_box{
+
+    .add_task_right_box {
         max-width: 290px;
         gap: 16px;
     }
-    .content_heading h2{
+
+    .content_heading h2 {
         font-size: 48px;
     }
-    .add_task_form_box{
+
+    .add_task_form_box {
         gap: 15px;
     }
-    .prio-btn{
+
+    .prio-btn {
         width: 91px;
         font-size: 14px;
     }
-    .dropdown-content{
+
+    .dropdown-content {
         width: 290px;
     }
 }
 
-@media(max-width:900px){
-    .content{
+@media(max-width:900px) {
+    .content {
         display: flex;
         width: 100%;
         margin: auto;
     }
-    .form_box{
+
+    .form_box {
         width: 90%;
         margin: auto;
     }
-    .add_task_form_box{
+
+    .add_task_form_box {
         flex-direction: column;
     }
-    .add_task_mid_box{
+
+    .add_task_mid_box {
         display: none;
     }
+
     .add_task_form_box {
         height: 100vh;
         margin-bottom: 200px;
         overflow-y: scroll;
-        scrollbar-width: none; /* Für Firefox */
-        -ms-overflow-style: none; /* Für Internet Explorer und Edge */
+        scrollbar-width: none;
+        /* Für Firefox */
+        -ms-overflow-style: none;
+        /* Für Internet Explorer und Edge */
     }
+
     .add_task_form_box::-webkit-scrollbar {
         display: none;
     }
-    .add_task_left_box{
+
+    .add_task_left_box {
         width: 100%;
     }
-    #task-desc{
+
+    #task-desc {
         max-width: none;
     }
-    .add_task_right_box{
+
+    .add_task_right_box {
         max-width: none;
     }
-    .prio-btn{
+
+    .prio-btn {
         width: 136px;
         font-size: 16px;
     }
-    #task-priority{
+
+    #task-priority {
         justify-content: space-around;
     }
-    .add_task_required_info{
+
+    .add_task_required_info {
         display: none;
     }
-    .add_task_required_info_overlay{
+
+    .add_task_required_info_overlay {
         display: flex;
     }
-    .add_task_buttons_box{
+
+    .add_task_buttons_box {
         position: fixed;
         bottom: -44px;
         left: 0px;
@@ -84,18 +105,20 @@
         justify-content: end;
         padding: 12px 16px;
     }
-    .dropdown-content{
+
+    .dropdown-content {
         width: 90%;
     }
 }
 
-@media(max-width:400px){
-    .prio-btn{
+@media(max-width:400px) {
+    .prio-btn {
         height: 44px;
         width: 90px;
         font-size: 14px;
     }
-    .add_task_submit_btn span{
+
+    .add_task_submit_btn span {
         font-size: 17px;
     }
 }

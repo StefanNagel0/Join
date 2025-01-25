@@ -1,3 +1,4 @@
+/**Generates and returns an HTML login template string.*/
 function loginTemplate() {
     return `
     <section class="max-width">

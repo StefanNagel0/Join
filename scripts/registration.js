@@ -1,14 +1,17 @@
+/**Initializes the registration page and button state.*/
 function reginit() {
     toggleSignUpPage();
     toggleSignUpButton();
 }
 
+/**Displays the registration page and injects the registration template.*/
 function toggleSignUpPage() {
     let overlayRef = document.getElementById("registrationPage");
     overlayRef.innerHTML = registrationTemplate();
     overlayRef.style.display = "block";
 }
 
+/**Enables or disables the "Sign up" button based on the checkbox state.*/
 function toggleSignUpButton() {
     const checkbox = document.getElementById('checkbox');
     const signUpButton = document.querySelector('.signUpButton');
@@ -25,15 +28,14 @@ function toggleSignUpButton() {
     return;
 }
 
+/**Handles the registration process by validating the input fields and submitting the form.*/
 function signUp(event) {
     event.preventDefault();
-
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
     const confirmPassword = document.getElementById("confirmPassword").value.trim();
     const checkbox = document.getElementById("checkbox");
-
     if (!FieldsFilled(name, email, password, confirmPassword)) return;
     if (!PasswordsMatching(password, confirmPassword)) return;
     if (EmailTaken(email)) return;
@@ -43,6 +45,7 @@ function signUp(event) {
     userSuccessRegistration();
 }
 
+/**Checks if all the required fields are filled.*/
 function FieldsFilled(name, email, password, confirmPassword) {
     if (!name || !email || !password || !confirmPassword) {
         showError('Bitte alle Felder ausfüllen.');
@@ -51,6 +54,7 @@ function FieldsFilled(name, email, password, confirmPassword) {
     return true;
 }
 
+/**Checks if the password and confirmation password match.*/
 function PasswordsMatching(password, confirmPassword) {
     if (password !== confirmPassword) {
         showError('Passwörter stimmen nicht überein.');
@@ -59,6 +63,7 @@ function PasswordsMatching(password, confirmPassword) {
     return true;
 }
 
+/**Checks if the provided email is already taken.*/
 function EmailTaken(email) {
     if (users.some(user => user.email === email)) {
         showError('Diese E-Mail ist bereits vergeben.');
@@ -67,6 +72,7 @@ function EmailTaken(email) {
     return false;
 }
 
+/**Checks if the provided username is already taken.*/
 function UsernameTaken(name) {
     if (users.some(user => user.name === name)) {
         showError('Dieser Benutzername ist bereits vergeben.');
@@ -75,6 +81,7 @@ function UsernameTaken(name) {
     return false;
 }
 
+/**Validates if the password meets the required complexity.*/
 function PasswordValid(password) {
     if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
         showError('Das Passwort muss mindestens 8 Zeichen lang sein, einen Großbuchstaben, einen Kleinbuchstaben und eine Zahl enthalten.');
@@ -83,6 +90,7 @@ function PasswordValid(password) {
     return true;
 }
 
+/**Displays an error message.*/
 function showError(message) {
     const errorMessage = document.getElementById('signUpError');
     if (errorMessage) {
@@ -94,6 +102,7 @@ function showError(message) {
     }
 }
 
+/**Displays a success message upon successful registration and hides the registration page.*/
 function userSuccessRegistration() {
     let overlayRef = document.getElementById("signUpSuccess");
     overlayRef.innerHTML = signUpSuccess();

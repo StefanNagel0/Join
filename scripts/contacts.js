@@ -1,3 +1,7 @@
+/**
+ * Array of contact objects.
+ * @type {Array<{name: string, phone: string, email: string, color?: string}>}
+ */
 let contacts = [
   { name: "Anna Müller", phone: "017799988877", email: "anna.mueller@example.com" },
   { name: "Peter Schmidt", phone: "015612345678", email: "peter.schmidt@example.com" },
@@ -20,14 +24,24 @@ let contacts = [
   { name: "Nina Wagner", phone: "016799911123", email: "nina.wagner@example.com" }
 ];
 
+/** @type {number|null} Index of the currently edited contact. */
 let editIndex = null;
 
+/**
+ * Extracts the initials from a name string.
+ * @param {string} name - The full name of a contact.
+ * @returns {string} The initials of the name.
+ */
 function getInitials(name) {
   const parts = name.split(" ");
   const initials = parts.map(part => part[0]).join("").toUpperCase();
   return initials;
 }
 
+/**
+ * Generates a random color in hexadecimal format.
+ * @returns {string} A random hex color code.
+ */
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
   let color = "#";
@@ -37,6 +51,11 @@ function getRandomColor() {
   return color;
 }
 
+/**
+ * Opens an overlay for editing or adding a contact.
+ * @param {"edit"|"new"} mode - The mode of the overlay, either "edit" or "new".
+ * @param {number|null} [index=null] - The index of the contact to edit (optional).
+ */
 function openOverlay(mode, index = null) {
   const overlay = document.getElementById("overlay");
   overlay.classList.remove("hide");
@@ -50,6 +69,10 @@ function openOverlay(mode, index = null) {
   }
 }
 
+/**
+ * Sets up the overlay for editing an existing contact.
+ * @param {number} index - The index of the contact to edit.
+ */
 function setupEditContact(index) {
   const title = document.querySelector(".overlay-left h1");
   const description = document.querySelector(".description");
@@ -75,6 +98,9 @@ function setupEditContact(index) {
   editIndex = index;
 }
 
+/**
+ * Sets up the overlay for adding a new contact.
+ */
 function setupNewContact() {
   const title = document.querySelector(".overlay-left h1");
   const description = document.querySelector(".description");
@@ -99,6 +125,9 @@ function setupNewContact() {
   editIndex = null;
 }
 
+/**
+ * Closes the overlay.
+ */
 function closeOverlay() {
   const overlay = document.getElementById("overlay");
   overlay.classList.remove("show");
@@ -108,18 +137,25 @@ function closeOverlay() {
   }, 300);
 }
 
+/**
+ * Displays the contact list.
+ */
 function showContacts() {
   const contactList = document.getElementById("contactlist");
   if (!contactList) {
-    console.log("");
+    console.log("Das Element 'contactlist' wurde nicht gefunden.");
     return;
   }
-  const contactlist = document.getElementById("contactlist");
-  contactlist.innerHTML = "";
+  contactList.innerHTML = "";
   const groupedContacts = groupContactsByLetter(contacts);
-  displayGroupedContacts(groupedContacts, contactlist);
+  displayGroupedContacts(groupedContacts, contactList);
 }
 
+/**
+ * Groups contacts by the first letter of their name.
+ * @param {Array<{name: string, phone: string, email: string, color?: string}>} contacts - The contact list.
+ * @returns {Object<string, Array>} An object grouping contacts by their first letter.
+ */
 function groupContactsByLetter(contacts) {
   return contacts.reduce((groups, contact) => {
     const letter = contact.name.charAt(0).toUpperCase();
@@ -129,16 +165,26 @@ function groupContactsByLetter(contacts) {
   }, {});
 }
 
-function displayGroupedContacts(groupedContacts, contactlist) {
+/**
+ * Displays grouped contacts in the DOM.
+ * @param {Object<string, Array>} groupedContacts - Grouped contacts by their first letter.
+ * @param {HTMLElement} contactList - The DOM element to display contacts.
+ */
+function displayGroupedContacts(groupedContacts, contactList) {
   Object.keys(groupedContacts)
     .sort()
     .forEach(letter => {
       const groupDiv = createGroupDiv(letter);
       groupedContacts[letter].forEach(contact => appendContact(contact, groupDiv));
-      contactlist.appendChild(groupDiv);
+      contactList.appendChild(groupDiv);
     });
 }
 
+/**
+ * Creates a group container for contacts.
+ * @param {string} letter - The group letter.
+ * @returns {HTMLElement} A div element representing the group.
+ */
 function createGroupDiv(letter) {
   const groupDiv = document.createElement("div");
   groupDiv.classList.add("contact-group");
@@ -146,13 +192,22 @@ function createGroupDiv(letter) {
   return groupDiv;
 }
 
+/**
+ * Appends a contact to a group div.
+ * @param {{name: string, phone: string, email: string, color?: string}} contact - The contact object.
+ * @param {HTMLElement} groupDiv - The group container.
+ */
 function appendContact(contact, groupDiv) {
   if (!contact.color) contact.color = getRandomColor();
   const contactDiv = createContactDiv(contact);
   groupDiv.appendChild(contactDiv);
 }
 
-
+/**
+ * Creates a contact div element.
+ * @param {{name: string, phone: string, email: string, color?: string}} contact - The contact object.
+ * @returns {HTMLElement} The created contact div.
+ */
 function createContactDiv(contact) {
   const contactDiv = document.createElement("div");
   contactDiv.classList.add("contact");
@@ -175,6 +230,9 @@ function createContactDiv(contact) {
   return contactDiv;
 }
 
+/**
+ * Displays the contact list and hides the details view.
+ */
 function showContactList() {
   const contactList = document.querySelector(".scrolllist");
   const detailsDiv = document.getElementById("contact-details");
@@ -186,29 +244,44 @@ function showContactList() {
   detailsDiv.classList.remove("show");
 }
 
+/**
+ * Deletes a contact by index and updates the contact list.
+ * @param {number} index - The index of the contact to delete.
+ */
 function deleteContact(index) {
-    const overlay = document.getElementById("confirm-overlay");
-    const yesButton = document.getElementById("confirm-yes");
-    const noButton = document.getElementById("confirm-no");
-    overlay.classList.remove("hide");
-    yesButton.onclick = () => {
-        contacts.splice(index, 1); 
-        showContacts();
-        document.getElementById("contact-details").style.display = "none"; 
-        closeOverlay();
-        overlay.classList.add("hide"); 
-    };
-    noButton.onclick = () => {
-        overlay.classList.add("hide");
-    };
+  const overlay = document.getElementById("confirm-overlay");
+  const yesButton = document.getElementById("confirm-yes");
+  const noButton = document.getElementById("confirm-no");
+  overlay.classList.remove("hide");
+
+  yesButton.onclick = () => {
+    contacts.splice(index, 1);
+    showContacts();
+    document.getElementById("contact-details").style.display = "none";
+    closeOverlay();
+    overlay.classList.add("hide");
+  };
+
+  noButton.onclick = () => {
+    overlay.classList.add("hide");
+  };
 }
 
+/**
+ * Handles input events for the contact name field.
+ * @param {Event} event - The input event.
+ */
 function handleNameInput(event) {
   const name = event.target.value.trim();
   const circleDiv = document.querySelector(".overlay-content .circle");
   updateCirclePreview(name, circleDiv);
 }
 
+/**
+ * Updates the circle preview with initials and color.
+ * @param {string} name - The contact name.
+ * @param {HTMLElement} circleDiv - The circle element.
+ */
 function updateCirclePreview(name, circleDiv) {
   if (name) {
     circleDiv.textContent = getInitials(name);
@@ -219,6 +292,10 @@ function updateCirclePreview(name, circleDiv) {
   }
 }
 
+/**
+ * Handles form submission for adding or editing contacts.
+ * @param {Event} event - The form submission event.
+ */
 function handleFormSubmit(event) {
   event.preventDefault();
   const name = document.getElementById("contact-name").value.trim();
@@ -234,6 +311,12 @@ function handleFormSubmit(event) {
   showContacts();
 }
 
+/**
+ * Saves a new or edited contact.
+ * @param {string} name - The contact's name.
+ * @param {string} phone - The contact's phone number.
+ * @param {string} email - The contact's email address.
+ */
 function saveContact(name, phone, email) {
   if (editIndex !== null) {
     contacts[editIndex] = { ...contacts[editIndex], name, phone, email };
@@ -244,27 +327,39 @@ function saveContact(name, phone, email) {
   }
 }
 
+/**
+ * Creates a success message and displays it temporarily.
+ * @param {string} message - The success message.
+ * @param {string} targetClass - The class name for the target element.
+ */
 function createSuccessMessage(message, targetClass) {
   const successDiv = document.querySelector(`.${targetClass}`);
-  
+
   if (successDiv) {
     successDiv.textContent = message;
-    successDiv.classList.remove("hide"); 
+    successDiv.classList.remove("hide");
     successDiv.classList.add("show");
     setTimeout(() => {
       successDiv.classList.remove("show");
       successDiv.classList.add("hide");
     }, 3000);
-  } else {  
+  } else {
     console.error(`Keine \`div\` mit der Klasse '${targetClass}' gefunden.`);
   }
-} 
+}
 
+/**
+ * Validates the phone input field, allowing only numbers.
+ * @param {Event} event - The input event.
+ */
 function validatePhoneInput(event) {
   const input = event.target;
   input.value = input.value.replace(/[^0-9]/g, '');
 }
 
+/**
+ * Initializes event listeners for form inputs and submission.
+ */
 function initializeEventListeners() {
   const phoneInput = document.getElementById("contact-phone");
   const nameInput = document.getElementById("contact-name");
@@ -282,8 +377,12 @@ function initializeEventListeners() {
     form.addEventListener("submit", handleFormSubmit);
   }
 }
+
 document.addEventListener("DOMContentLoaded", initializeEventListeners);
 
+/**
+ * Toggles the collapse state of additional contact options.
+ */
 function toggleCollapse() {
   const content = document.getElementById("collapseContent");
   const button = document.querySelector(".collapse-button");
@@ -295,4 +394,7 @@ function toggleCollapse() {
   }
 }
 
+/**
+ * Displays the contact list on page load.
+ */
 showContacts();

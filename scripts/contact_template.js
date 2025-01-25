@@ -7,11 +7,11 @@ function showContactDetails(index) {
     detailsDiv.classList.add("show");
     detailsDiv.classList.remove("hide");
   
-    // Initial überprüfen, ob die Breite <= 900px ist und einmalig verstecken
+   
     if (window.innerWidth <= 900 && !detailsDiv.dataset.hiddenOnce) {
       detailsDiv.classList.add("hide");
       detailsDiv.classList.remove("show");
-      detailsDiv.dataset.hiddenOnce = true; // Markiere, dass das einmalige Verstecken ausgeführt wurde
+      detailsDiv.dataset.hiddenOnce = true;
   }
 
     if (window.innerWidth <= 900) {

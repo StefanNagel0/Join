@@ -114,7 +114,7 @@ function boardAddTaskTemplate() {
                                             src="../assets/svg/add_task/prio_low.svg" alt=""></button>
                                 </div>
             </div>
-                 <div class="dropdown-container">
+                <div class="dropdown-container">
                                 <div class="gap_8">
                                     <label for="task-category">Category <span class="red_star">*</span></label>
                                     <div class="dropdown-container">

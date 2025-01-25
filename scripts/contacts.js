@@ -143,7 +143,6 @@ function closeOverlay() {
 function showContacts() {
   const contactList = document.getElementById("contactlist");
   if (!contactList) {
-    console.log("Das Element 'contactlist' wurde nicht gefunden.");
     return;
   }
   contactList.innerHTML = "";

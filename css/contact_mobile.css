@@ -161,6 +161,10 @@
         align-items: center;
         padding: 0;
     }
+    
+    .delete-button, .edit-button {
+        background-color: white;
+    }
 
     .logoover {
         display: none;
@@ -416,6 +420,7 @@
         bottom: 150px;
         right: 20px;
         z-index: 900;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
       }
   
       .collapse-content.open {

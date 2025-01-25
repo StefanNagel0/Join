@@ -2,6 +2,7 @@
 function initBoard() {
     toggleBoardPage();
     setDateValidation();
+    initHeader();
 }
 
 /* Initailization of the Add Task function */

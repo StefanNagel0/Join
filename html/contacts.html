@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="../css/contact_mobile.css">
 
     <!-- scripts -->
-    <script src="../scripts/contacts.js" defer></script>
     <script src="../scripts/header.js" defer></script>
+    <script src="../scripts/contacts.js" defer></script>
     <script src="../scripts/navbar.js" defer></script>
     <script src="../scripts/contact_template.js"></script>
 </head>
 
-<body onclick="closePopup(event)">
+<body onload="initHeader()" onclick="closePopup(event)">
     <section class="template_nav_header">
         <nav class="navbar_main">
             <div class="navbar_logo">
@@ -64,7 +64,6 @@
                     </button>
                 </div>
                 <div class="navbar_policy">
-                    <button id="user-initials-button" onclick="toggleUserPopup(event)"></button>
                     <div class="privacy_policy">
                         <button>
                             <a href="../html/privacy_policy.html"> Privacy Policy</a>

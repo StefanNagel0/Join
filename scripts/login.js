@@ -63,9 +63,10 @@ function showError(message) {
 }
 
 function guestLogin() {
-    localStorage.setItem('loggedInEmail', 'guest@example.com'); // Ein Platzhalter für den Gast-Login (so als ob der Gast eingeloggt wäre)
-    window.location.href = 'summary.html?showGreeting=true';  // Weiterleitung zur summary.html mit showGreeting=true
+    localStorage.setItem('loggedInEmail', 'guest@example.com'); // Platzhalter für Gäste
+    window.location.href = 'summary.html?showGreeting=true';    // Weiterleitung
 }
+
 
 
 function valueInput() {

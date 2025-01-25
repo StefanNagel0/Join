@@ -10,6 +10,7 @@ function initializeApp() {
     setDateValidation();
     initializeClearButton();
     preventFormSubmissionOnEnter();
+    initHeader()
 }
 
 /** Create an element with initials circle based on contact's name */

@@ -84,7 +84,7 @@
 
 @media(min-width:901px){
     .overlay_greeting{
-        display: none;
+        display: none !important;
     }
 }
 

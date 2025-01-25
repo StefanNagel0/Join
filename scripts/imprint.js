@@ -1,3 +1,5 @@
+/**Highlights the keywords in the text by wrapping them in a `<span>` element
+ */
 function highlightKeywords() {
     let text = textElement.innerHTML;
 

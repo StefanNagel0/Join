@@ -14,6 +14,41 @@
     display: block;
 }
 
+@media screen and (max-width: 1200px) {
+    .overlay-content {
+        width: 660px;
+    } 
+}
+
+@media screen and (max-width: 1100px) {
+    .overlay-left {
+        width: 296px;
+    } 
+
+    .successcreate {
+    z-index: 984;
+    }
+}
+
+
+@media screen and (max-width: 957px) {
+    .form {
+        flex-direction: column;
+    }
+
+    .btns {
+        padding: 0;
+        justify-content: center;
+    }
+
+    .overlay-content {
+        width: 551px;
+    }
+}
+
+
+
+
 @media screen and (max-width: 900px) {
     .navbar_main {
         position: fixed;
@@ -72,9 +107,6 @@
 
     .closebutton {
         display: block;
-        position: absolute;
-        top: 138px;
-        right: 37px;
         color: white;
         background-color: transparent;
         border: none;
@@ -86,11 +118,11 @@
     }
 
     #contact-name, #contact-email, #contact-phone {
-        width: 346px;
+        width: 414px;
     }
 
     .overlay-left {
-        width: 396px;
+        width: 468px;
         height: 351px;
         display: flex;
         justify-content: center;
@@ -384,6 +416,15 @@
         margin: 0 0 20px 0;
     }
 
+    .closebutton {
+        bottom: 71px;
+        left: 203px;
+        position: relative;
+    }
+
+    .overlay-content {
+        width: 468px;
+    }
   
       .collapse-content {
         position: fixed;
@@ -433,7 +474,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1001;
+    z-index: 900;
     top: 50px;
     left: 20%;
     transform: translateX(100%);
@@ -471,4 +512,50 @@
     transform: translateX(100%);
     opacity: 0;
 }
+}
+
+@media screen and (max-width: 1100px){
+    .detailshead {
+
+    flex-direction: column;
+}   
+
+    .detailshead hr {
+        width: 115px !important;
+        height: 0 !important;
+    }
+}
+
+@media screen and (max-width: 1010px){
+    .detailshead h1 {
+        font-size: 43px;
+}   
+
+    .detailshead p {
+        font-size: 20px;
+    }   
+}
+
+
+
+@media screen and (max-width: 425px){
+   .closebutton{
+    left: 141px;
+   }
+
+    .overlay-left {
+        width: 336px;
+    }
+
+    .overlay-content {
+        width: 336px;
+    }
+
+    #contact-name, #contact-email, #contact-phone {
+        width: 300px;
+    }
+
+    .btns {
+        gap: 0;
+    }
 }

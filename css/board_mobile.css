@@ -67,9 +67,9 @@
     #tasksContainerInProgress,
     #tasksContainerAwaitFeedback,
     #tasksContainerDone {
-        display: flex;
+
         height: 300px;
-        gap: 20px;
+
     }
 }
 
@@ -98,6 +98,15 @@
     .contentHeadingMain {
         width: calc(100vw - 400px);
         margin-left: 60px;
+    }
+
+    #tasksContainerToDo,
+    #tasksContainerInProgress,
+    #tasksContainerAwaitFeedback,
+    #tasksContainerDone {
+        display: flex;
+        height: 300px;
+        gap: 20px;
     }
 
     .noTasksParent {

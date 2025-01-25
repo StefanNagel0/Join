@@ -74,7 +74,6 @@
         display: block;
     }
 
-
     .header_help_user {
         padding: 0;
     }
@@ -87,7 +86,7 @@
     }
 
     .overlay-content {
-        width: 396px;
+        width: 461px;
         height: 409px;
         border-radius: 0 0 30px 30px;
     }
@@ -99,7 +98,6 @@
     .detailshead.hide {
         display: none;
     }
-
 
     .closebutton {
         display: block;
@@ -438,3 +436,27 @@
         font-size: 16px;
     }
 }
+
+@media screen and (max-width: 1100px){
+    .detailshead {
+
+    flex-direction: column;
+}   
+
+    .detailshead hr {
+        width: 115px !important;
+        height: 0 !important;
+    }
+}
+
+@media screen and (max-width: 1010px){
+    .detailshead h1 {
+        font-size: 43px;
+}   
+
+    .detailshead p {
+        font-size: 20px;
+    }   
+}
+
+

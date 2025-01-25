@@ -131,6 +131,7 @@
     #user-initials-button{
         height: 40px;
         width: 40px;
+        font-size: 16px;
     }
     .header_text{
         display: none;

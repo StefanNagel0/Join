@@ -1,3 +1,6 @@
+.content{
+    margin-left: 96px;
+}
 #task-priority{
     height: 56px;
     display: flex;

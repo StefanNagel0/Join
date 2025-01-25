@@ -1,7 +1,9 @@
+/**Navigates the user to the previous page in the browser history.*/
 function goBack() {
     window.history.back();
   }
 
+/**Highlights the words "Join" and "Developer Akademie GmbH" in all paragraphs.*/
   function highlightJoinInParagraphs() {
     const paragraphs = document.querySelectorAll("p");
   

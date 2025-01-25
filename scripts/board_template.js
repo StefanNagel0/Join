@@ -3,8 +3,13 @@ function boardTemplate() {
     <div class="mainContent">
     <div class="contentHeading">
         <div class="contentHeadingMain">
-            <div>
-                <h2 class="contentHeadingH2">Board</h2>
+            <div class="contentHeadingSmall">
+                <div>
+                    <h2 class="contentHeadingH2">Board</h2>
+                </div>
+                <div>
+                    <img class="miniAddTaskImg" src="../assets/svg/add_task/add_task.svg" alt="">
+                </div>
             </div>
             <div class="contentHeadingOrder">
                 <div class="contentHeadingSearchMain">

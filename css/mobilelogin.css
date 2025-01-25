@@ -84,6 +84,29 @@
         padding-left: 15px;
         background-size: 20px;
     }
+
+    .signUpInput {
+        width: 100%;
+    }
+
+    #name {
+        background: url(../assets/svg/mail.svg) no-repeat;
+        background-position: calc(100% - 14px) center;
+        background-size: 20px;
+    }
+
+    #confirmPassword {
+        background: url(../assets/svg/lock.svg) no-repeat;
+        background-position: calc(100% - 14px) center;
+        background-size: 20px;
+    }
+
+    .sectionOne {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center;
+    }
+
 }
 
 @media(min-width:901px){

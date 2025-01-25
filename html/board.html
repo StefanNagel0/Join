@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/standard.css">
-    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="../css/font.css">
     <link rel="stylesheet" href="../css/board.css">
     <link rel="stylesheet" href="../css/add_task.css">
@@ -16,9 +15,10 @@
     <link rel="stylesheet" href="../css/board_mobile.css">
     <link rel="stylesheet" href="../css/drag_drop_mobile.css">
     <link rel="stylesheet" href="../css/boardAddTask_mobile.css">
+    <link rel="stylesheet" href="/css/style.css">    
     <link rel="icon" href="../assets/svg/logo_white.svg">
     <script src="../scripts/header.js" defer></script>
-    <script src="../scripts/users.js"></script>
+    <script src="../scripts/users.js" defer></script>
     <script src="../scripts/navbar.js" defer></script>
     <script src="../scripts/contacts.js" defer></script>
     <script src="../scripts/board_template.js" defer></script>
@@ -30,7 +30,7 @@
     <title>Join</title>
 </head>
 
-<body onload="initBoard()" onclick="closePopup(event)">
+<body onload="initBoard(), onload()" onclick="closePopup(event)">
     <section class="template_nav_header">
         <nav class="navbar_main">
             <div class="navbar_logo">

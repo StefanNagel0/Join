@@ -292,21 +292,40 @@ function editTask(taskId) {
     const optionsHtml = editingPriority(task);
     const overlayRef = document.querySelector(".openTaskOverlayMain");
     overlayRef.innerHTML = `
+    <button class="closeEditButton" onclick="closeTaskOverlay()">X</button>
+<div class="openEditTaskOverlayMain">
+    <div class="openEditTaskOverlayTitle">
+        <label for="editTitle">Title</label>
         <input id="editTitle" type="text" value="${task.title}" />
+    </div>
+    <div class="openEditTaskOverlayDescription">
+        <label for="editDescription">Description</label>
         <textarea id="editDescription">${task.description}</textarea>
-        <input id="editDueDate" type="date" value="${task.dueDate}" />
+    </div>
+    <div class="openEditTaskOverlayDueDate">
+        <label for="editDueDate">Due Date</label>
+        <input class="taskEditDate" id="editDueDate" type="date" value="${task.dueDate}" />
+    </div>
+    <div class="openEditTaskOverlayPriority">
+        <label for="editPriority">Priority</label>
         <select id="editPriority">
             ${optionsHtml}
         </select>
+    </div>
+    <div class="openEditTaskOverlaySubtasks">
+        <label for="editSubtasks">Subtasks</label>
         <div>
             ${task.subtasks?.map((subtask, index) => `
-                <div>
-                    <input type="text" id="subtask-title-${index}" value="${subtask.name || ''}" />
-                </div>
+            <div>
+                <input type="text" id="subtask-title-${index}" value="${subtask.name || ''}" />
+            </div>
             `).join("")}
         </div>
-        <button onclick="saveTask('${taskId}')">Save</button>
-        <button onclick="closeTaskOverlay()">Cancel</button>
+    </div>
+</div>
+<div>
+    <button onclick="saveTask('${taskId}')">Save</button>
+</div>
     `;
 }
 

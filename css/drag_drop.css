@@ -8,15 +8,16 @@
 .task.dragging {
     opacity: 0.5;
     border: 2px dashed #000;
+    transform: rotate(-10deg);
+}
+
+.task {
+    transition: transform 0.3s ease;
 }
 
 .boardColumn.dragover {
     background-color: #f0f8ff;
-}
-
-.boardColumn.dragover {
     border: 2px dashed #007bff;
-    background-color: #f0f8ff;
 }
 
 #tasksContainerToDo,
@@ -43,8 +44,8 @@
 .noTasksChild {
     width: 150px;
     height: 19px;
-    font-family: Open Sans;
-    font-size: 24px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px;
     font-weight: 400;
     line-height: 19.2px;
     text-align: left;

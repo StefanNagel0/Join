@@ -4,6 +4,7 @@ let currentDraggedElement;
 function dragInit(event, taskId) {
     currentDraggedElement = taskId;
     event.dataTransfer.setData("text/plain", taskId);
+    startDrag(taskId);
 }
 
 /* Allows tasks to be placed in the target container */
@@ -16,6 +17,7 @@ function drop(event, newStatus) {
     event.preventDefault();
     const taskId = event.dataTransfer.getData("text/plain");
     moveTaskToNewStatus(taskId, newStatus);
+    endDrag();
 }
 
 /* Updates the task in the data structure and database */
@@ -33,7 +35,7 @@ function startDrag(taskId) {
 }
 
 /* Removes the visual highlighting when dragging ends */
-function endDrag(event) {
+function endDrag() {
     const taskElement = document.querySelector(".task.dragging");
     if (taskElement) taskElement.classList.remove("dragging");
 }

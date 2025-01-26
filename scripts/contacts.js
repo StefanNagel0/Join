@@ -1,7 +1,4 @@
-/**
- * Array of contact objects.
- * @type {Array<{name: string, phone: string, email: string, color?: string}>}
- */
+/* Array of contact objects. */
 let contacts = [
   { name: "Anna Müller", phone: "017799988877", email: "anna.mueller@example.com" },
   { name: "Peter Schmidt", phone: "015612345678", email: "peter.schmidt@example.com" },
@@ -24,24 +21,17 @@ let contacts = [
   { name: "Nina Wagner", phone: "016799911123", email: "nina.wagner@example.com" }
 ];
 
-/** @type {number|null} Index of the currently edited contact. */
+/* @type {number|null} Index of the currently edited contact. */
 let editIndex = null;
 
-/**
- * Extracts the initials from a name string.
- * @param {string} name - The full name of a contact.
- * @returns {string} The initials of the name.
- */
+/* Extracts the initials from a name string. */
 function getInitials(name) {
   const parts = name.split(" ");
   const initials = parts.map(part => part[0]).join("").toUpperCase();
   return initials;
 }
 
-/**
- * Generates a random color in hexadecimal format.
- * @returns {string} A random hex color code.
- */
+/* Generates a random color in hexadecimal format. */
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
   let color = "#";
@@ -51,11 +41,7 @@ function getRandomColor() {
   return color;
 }
 
-/**
- * Opens an overlay for editing or adding a contact.
- * @param {"edit"|"new"} mode - The mode of the overlay, either "edit" or "new".
- * @param {number|null} [index=null] - The index of the contact to edit (optional).
- */
+/* Opens an overlay for editing or adding a contact. */
 function openOverlay(mode, index = null) {
   const overlay = document.getElementById("overlay");
   overlay.classList.remove("hide");
@@ -69,10 +55,7 @@ function openOverlay(mode, index = null) {
   }
 }
 
-/**
- * Sets up the overlay for editing an existing contact.
- * @param {number} index - The index of the contact to edit.
- */
+/* Sets up the overlay for editing an existing contact. */
 function setupEditContact(index) {
   const title = document.querySelector(".overlay-left h1");
   const description = document.querySelector(".description");
@@ -98,9 +81,7 @@ function setupEditContact(index) {
   editIndex = index;
 }
 
-/**
- * Sets up the overlay for adding a new contact.
- */
+/* Sets up the overlay for adding a new contact. */
 function setupNewContact() {
   const title = document.querySelector(".overlay-left h1");
   const description = document.querySelector(".description");
@@ -125,9 +106,7 @@ function setupNewContact() {
   editIndex = null;
 }
 
-/**
- * Closes the overlay.
- */
+/* Closes the overlay. */
 function closeOverlay() {
   const overlay = document.getElementById("overlay");
   overlay.classList.remove("show");
@@ -137,9 +116,7 @@ function closeOverlay() {
   }, 300);
 }
 
-/**
- * Displays the contact list.
- */
+/* Displays the contact list. */
 function showContacts() {
   const contactList = document.getElementById("contactlist");
   if (!contactList) {
@@ -150,11 +127,7 @@ function showContacts() {
   displayGroupedContacts(groupedContacts, contactList);
 }
 
-/**
- * Groups contacts by the first letter of their name.
- * @param {Array<{name: string, phone: string, email: string, color?: string}>} contacts - The contact list.
- * @returns {Object<string, Array>} An object grouping contacts by their first letter.
- */
+/* Groups contacts by the first letter of their name.*/
 function groupContactsByLetter(contacts) {
   return contacts.reduce((groups, contact) => {
     const letter = contact.name.charAt(0).toUpperCase();
@@ -164,11 +137,7 @@ function groupContactsByLetter(contacts) {
   }, {});
 }
 
-/**
- * Displays grouped contacts in the DOM.
- * @param {Object<string, Array>} groupedContacts - Grouped contacts by their first letter.
- * @param {HTMLElement} contactList - The DOM element to display contacts.
- */
+/* Displays grouped contacts in the DOM. */
 function displayGroupedContacts(groupedContacts, contactList) {
   Object.keys(groupedContacts)
     .sort()
@@ -179,11 +148,7 @@ function displayGroupedContacts(groupedContacts, contactList) {
     });
 }
 
-/**
- * Creates a group container for contacts.
- * @param {string} letter - The group letter.
- * @returns {HTMLElement} A div element representing the group.
- */
+/* Creates a group container for contacts. */
 function createGroupDiv(letter) {
   const groupDiv = document.createElement("div");
   groupDiv.classList.add("contact-group");
@@ -191,22 +156,14 @@ function createGroupDiv(letter) {
   return groupDiv;
 }
 
-/**
- * Appends a contact to a group div.
- * @param {{name: string, phone: string, email: string, color?: string}} contact - The contact object.
- * @param {HTMLElement} groupDiv - The group container.
- */
+/* Appends a contact to a group div. */
 function appendContact(contact, groupDiv) {
   if (!contact.color) contact.color = getRandomColor();
   const contactDiv = createContactDiv(contact);
   groupDiv.appendChild(contactDiv);
 }
 
-/**
- * Creates a contact div element.
- * @param {{name: string, phone: string, email: string, color?: string}} contact - The contact object.
- * @returns {HTMLElement} The created contact div.
- */
+/* Creates a contact div element. */
 function createContactDiv(contact) {
   const contactDiv = document.createElement("div");
   contactDiv.classList.add("contact");
@@ -229,9 +186,7 @@ function createContactDiv(contact) {
   return contactDiv;
 }
 
-/**
- * Displays the contact list and hides the details view.
- */
+/* Displays the contact list and hides the details view. */
 function showContactList() {
   const contactList = document.querySelector(".scrolllist");
   const detailsDiv = document.getElementById("contact-details");

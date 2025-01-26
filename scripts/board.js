@@ -165,3 +165,20 @@ function searchTask() {
     });
     displayTasks(Object.fromEntries(filteredTasks));
 }
+
+/**
+ * Validiert und formatiert das Fälligkeitsdatum.
+ */
+function validateDueDate() {
+    const dateInput = document.getElementById('editDueDate').value;
+    const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d\d$/;
+
+    if (!datePattern.test(dateInput)) {
+        alert('Bitte gib das Datum im Format DD/MM/YYYY ein.');
+    } else {
+        // Datum ist gültig. Hier kannst du das Datum im gewünschten Format weiterverarbeiten.
+        const parts = dateInput.split('/');
+        const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD Format
+        alert(`Datum ist gültig: ${formattedDate}`);
+    }
+}

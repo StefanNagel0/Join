@@ -344,17 +344,17 @@ function editTask(taskId) {
             <input class="taskEditDate" id="editDueDate" type="date" value="${task.dueDate}" />
         </div>
         <div class="openEditTaskOverlayPriority">
-            <label for="editPriority">Priority</label>
+            <label for="taskPriorityIDName">Priority</label>
             <div class="prio">
-            <div class="priolow prio-btn urgent">
+            <div class="priolow urgent">
               <p id="taskPriorityIDName">Urgent</p>
         <p id="taskPriorityIDName" data-priority="Urgent" class=""><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
              </div>
-            <div class="priolow prio-btn medium">
+            <div class="priolow medium">
              <p id="taskPriorityIDName">Medium</p>
         <p id="taskPriorityIDName" data-priority="Medium" class="taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
             </div>
-            <div class="priolow prio-btn low">
+            <div class="priolow low">
            <p id="taskPriorityIDName">Low</p>
         <p id="taskPriorityIDName" data-priority="Low" class="taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
             </div>

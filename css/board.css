@@ -325,3 +325,7 @@
     opacity: 1;
     color: white;
 } */
+
+.taskContainer:active {
+    transform: rotate(5deg);
+}

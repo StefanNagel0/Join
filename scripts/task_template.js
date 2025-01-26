@@ -230,6 +230,29 @@ function taskAssignedTemplateOverlay(task) {
     }
 }
 
+function taskAssignedEdit(task) {
+    if (Array.isArray(task.assignedTo) && task.assignedTo.length > 0) {
+        return task.assignedTo
+            .map(name => {
+                return `
+                    <option value="${name}" selected>
+                        ${name}
+                    </option>
+                `;
+            })
+            .join("");
+    } else if (task.assignedTo && typeof task.assignedTo === 'string') {
+        const name = task.assignedTo;
+        return `
+            <option value="${name}" selected>
+                ${name}
+            </option>
+        `;
+    } else {
+        return ``;
+    }
+}
+
 /* Renders the priority of the task */
 function taskPriorityTemplate(task) {
     if (task.priority.toLowerCase() === "urgent") {
@@ -282,6 +305,18 @@ function editingPriority(task) {
     ).join("");
 
 }
+
+/* Renders the assigned employees from the task */
+function getAssignedOptions(assignedTo, users) {
+    if (!users || !Array.isArray(users)) {
+        console.error("Users array is undefined or not an array.");
+        return "";
+    }
+    return users.map(
+        (user) => `<option value="${user}" ${assignedTo.includes(user) ? "selected" : ""}>${user}</option>`
+    ).join("");
+}
+
 /* editing the task */
 function editTask(taskId) {
     const task = globalTasks[taskId];
@@ -290,42 +325,53 @@ function editTask(taskId) {
         return;
     }
     const optionsHtml = editingPriority(task);
+    const assignedOptionsHtml = taskAssignedEdit(task);
     const overlayRef = document.querySelector(".openTaskOverlayMain");
     overlayRef.innerHTML = `
     <button class="closeEditButton" onclick="closeTaskOverlay()">X</button>
 <div class="openEditTaskOverlayMain">
-    <div class="openEditTaskOverlayTitle">
-        <label for="editTitle">Title</label>
-        <input id="editTitle" type="text" value="${task.title}" />
-    </div>
-    <div class="openEditTaskOverlayDescription">
-        <label for="editDescription">Description</label>
-        <textarea id="editDescription">${task.description}</textarea>
-    </div>
-    <div class="openEditTaskOverlayDueDate">
-        <label for="editDueDate">Due Date</label>
-        <input class="taskEditDate" id="editDueDate" type="date" value="${task.dueDate}" />
-    </div>
-    <div class="openEditTaskOverlayPriority">
-        <label for="editPriority">Priority</label>
-        <select id="editPriority">
-            ${optionsHtml}
-        </select>
-    </div>
-    <div class="openEditTaskOverlaySubtasks">
-        <label for="editSubtasks">Subtasks</label>
-        <div>
-            ${task.subtasks?.map((subtask, index) => `
+    <div class="editScrollbar">
+        <div class="openEditTaskOverlayTitle">
+            <label for="editTitle">Title</label>
+            <input id="editTitle" type="text" value="${task.title}" />
+        </div>
+        <div class="openEditTaskOverlayDescription">
+            <label for="editDescription">Description</label>
+            <textarea id="editDescription">${task.description}</textarea>
+        </div>
+        <div class="openEditTaskOverlayDueDate">
+            <label for="editDueDate">Due Date</label>
+            <input class="taskEditDate" id="editDueDate" type="date" value="${task.dueDate}" />
+        </div>
+        <div class="openEditTaskOverlayPriority">
+            <label for="editPriority">Priority</label>
+            <select id="editPriority">
+                ${optionsHtml}
+            </select>
+        </div>
+        <div class="openEditTaskOverlayAssigned">
+            <label for="editAssigned">Assigned To</label>
+            <select id="editAssigned" multiple>
+                ${assignedOptionsHtml}
+            </select>
+        </div>
+        <div class="openEditTaskOverlaySubtasks">
+            <label for="editSubtasks">Subtasks</label>
             <div>
-                <input type="text" id="subtask-title-${index}" value="${subtask.name || ''}" />
+                ${task.subtasks?.map((subtask, index) => `
+                <div>
+                    <input type="text" id="subtask-title-${index}" value="${subtask.name || ''}" />
+                </div>
+                `).join("")}
             </div>
-            `).join("")}
         </div>
     </div>
+    <div class="openEditTaskSaveButtonSorting">
+        <button class="openEditTaskSaveButton" onclick="saveTask('${taskId}')">Ok<img
+                src="../assets/svg/add_task/check.svg" alt=""></button>
+    </div>
 </div>
-<div>
-    <button onclick="saveTask('${taskId}')">Save</button>
-</div>
+
     `;
 }
 
@@ -343,10 +389,10 @@ async function saveTask(taskId) {
     task.subtasks = Array.from(document.querySelectorAll("[id^='subtask-']")).map(input => input.value);
     if (taskId in globalTasks)
         await updateTaskInDatabase(taskId, task);
-    closeTaskOverlay();
     displayTasks(globalTasks);
-
+    closeTaskOverlay();
 }
+
 /* edited task update to database */
 async function updateTaskInDatabase(taskId, updatedTask) {
     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {

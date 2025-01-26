@@ -8,30 +8,24 @@
 .openEditTaskOverlayMain {
     display: flex;
     flex-direction: column;
+    height: 100vh;
     margin-top: 50px;
     gap: 10px;
-    overflow-y: auto;
-    scrollbar-width: auto;
+    overflow-y: hidden;
+}
+
+.editScrollbar {
+    flex: 1;
+    overflow-y: scroll;
+    scrollbar-width: thin;
     scrollbar-color: #a8a8a8 #ffffff;
-}
-
-.openEditTaskOverlayMain::-webkit-scrollbar {
-    width: 10px;
-}
-
-.openEditTaskOverlayMain::-webkit-scrollbar-track {
-    background: #ffffff;
-}
-
-.openEditTaskOverlayMain::-webkit-scrollbar-thumb {
-    background-color: #a8a8a8;
-    border-radius: 10px;
-    border: 4px solid #ffffff;
+    margin-bottom: 40px;
 }
 
 .openEditTaskOverlayTitle {
     display: flex;
     flex-direction: column;
+    max-width: calc(100% - 5px);
     font-size: 32px;
     font-weight: 700;
     line-height: 39.2px;
@@ -41,6 +35,7 @@
 .openEditTaskOverlayDescription {
     display: flex;
     flex-direction: column;
+    max-width: calc(100% - 5px);
     font-size: 16px;
     line-height: 19.2px;
     color: #42526E;
@@ -49,7 +44,7 @@
 .openEditTaskOverlayDueDate {
     display: flex;
     flex-direction: column;
-    width: 101px;
+    max-width: calc(100% - 5px);
     height: 23px;
     margin-bottom: 30px;
     font-family: Open Sans;
@@ -62,13 +57,14 @@
     color: #000000 !important;
 }
 
-.taskEditDate{
+.taskEditDate {
     width: 115px;
 }
 
 .openEditTaskOverlayPriority {
     display: flex;
     flex-direction: column;
+    max-width: calc(100% - 5px);
     font-size: 16px;
     line-height: 19.2px;
 }
@@ -77,8 +73,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 220px;
-    height: 24px;
+    max-width: calc(100% - 5px);
+    height: 100vh;
     gap: 25px;
     color: #42526E;
 }
@@ -92,8 +88,36 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 220px;
+    max-width: calc(100% - 5px);
     height: 24px;
     gap: 25px;
     color: #42526E;
+}
+
+.openEditTaskSaveButtonSorting {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+    padding: 20px;
+}
+
+.openEditTaskSaveButton {
+    position: absolute;
+    bottom: 0px;
+    right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 89px;
+    height: 57px;
+    padding: 16px;
+    gap: 8px;
+    border-radius: 10px;
+    background-color: rgb(42, 54, 71);
+    color: white;
+}
+
+.openEditTaskSaveButton:hover {
+    background-color: #29ABE2;
 }

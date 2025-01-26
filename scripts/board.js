@@ -18,15 +18,14 @@ function toggleBoardPage() {
     boardPage.style.display = 'block';
 }
 
-/* Task successfully added */
-function addTaskSuccess() {
-    let overlayRef = document.getElementById('addTaskSuccess');
-    overlayRef.innerHTML = addTaskSuccessTemplate();
-    overlayRef.style.display = "block";
 
+/** Displays a success message overlay when a task is added successfully. */
+function addTaskSuccess() {
+    const overlayRef = document.getElementById('addTaskSuccess');
+    overlayRef.innerHTML = addTaskSuccessTemplate();
+    overlayRef.style.display = "flex"; 
     setTimeout(() => {
         overlayRef.style.display = "none";
-        closeBoardAddTask();
     }, 2000);
 }
 

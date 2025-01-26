@@ -344,7 +344,7 @@ function editTask(taskId) {
             <input class="taskEditDate" id="editDueDate" type="date" value="${task.dueDate}" />
         </div>
         <div class="openEditTaskOverlayPriority">
-            <label for="editPriority">Priority</label>
+            <label for="taskPriorityIDName">Priority</label>
             <div class="prio">
                 <div class="priolow prio-btn urgent">
                     <p id="taskPriorityIDName">Urgent</p>

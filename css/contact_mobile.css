@@ -14,21 +14,6 @@
     display: block;
 }
 
-@media screen and (max-width: 1200px) {
-    .overlay-content {
-        width: 660px;
-    }
-}
-
-@media screen and (max-width: 1100px) {
-    .overlay-left {
-        width: 296px;
-    }
-
-    .successcreate {
-        z-index: 984;
-    }
-}
 
 @media screen and (max-width: 957px) {
     .form {
@@ -118,7 +103,7 @@
     }
 
     .overlay-left {
-        width: 468px;
+        width: 468px !important;
         height: 351px;
         display: flex;
         justify-content: center;
@@ -436,27 +421,4 @@
         font-size: 16px;
     }
 }
-
-@media screen and (max-width: 1100px){
-    .detailshead {
-
-    flex-direction: column;
-}   
-
-    .detailshead hr {
-        width: 115px !important;
-        height: 0 !important;
-    }
-}
-
-@media screen and (max-width: 1010px){
-    .detailshead h1 {
-        font-size: 43px;
-}   
-
-    .detailshead p {
-        font-size: 20px;
-    }   
-}
-
 

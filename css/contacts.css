@@ -6,6 +6,34 @@
   display: block;
 }
 
+@media screen and (max-width: 1200px) {
+  .overlay-content {
+      width: 660px;
+  }
+}
+
+@media screen and (max-width: 1010px){
+  .detailshead h1 {
+      font-size: 43px;
+}   
+
+  .detailshead p {
+      font-size: 20px;
+  }   
+}
+
+@media screen and (max-width: 1100px) {
+  .overlay-left {
+      width: 296px;
+  }
+
+  .successcreate {
+      z-index: 984;
+  }
+}
+
+
+
 .cont {
   max-height: 928px;
   width: 456px;

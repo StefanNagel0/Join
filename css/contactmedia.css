@@ -1,4 +1,23 @@
-@media screen and (max-width: 900) {
+#contact-name {
+  background: url(../assets/svg/person.svg) no-repeat;
+          background-position: calc(100% - 14px) center;
+          background-size: 20px;
+  }
+  
+  #contact-email {
+    background: url(../assets/svg/mail.svg) no-repeat;
+          background-position: calc(100% - 14px) center;
+          background-size: 20px;
+  }
+
+  #contact-phone {
+    background: url(../assets/svg/call.svg) no-repeat;
+          background-position: calc(100% - 14px) center;
+          background-size: 20px;
+  }
+
+
+@media screen and (max-width: 899px) {
     .infom {
         display: flex;
         align-items: flex-start;
@@ -19,7 +38,7 @@
     }
 
     .overlay-content {
-        width: 468px;
+        width: 468px !important;
     }
   
       .collapse-content.open {
@@ -77,7 +96,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1009;
+    z-index: 500;
     bottom: 150px;
     transform: translateX(100%);
     opacity: 0;
@@ -93,4 +112,46 @@
     transform: translateX(100%);
     opacity: 0;
 }
+}
+
+@media screen and (max-width: 1100px){
+  .detailshead {
+
+  flex-direction: column;
+}   
+
+  .detailshead hr {
+      width: 115px !important;
+      height: 0 !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .overlay-left {
+    width: 370px !important;
+  }
+
+  .overlay-content {
+    width: 370px !important;
+}
+
+.closebutton {
+  left: 151px;
+}
+
+#contact-name, #contact-email, #contact-phone {
+  width: 339px;
+}
+
+}
+
+@media screen and (max-width: 1200px) {
+  .overlay-content{
+    width: 657px;
+  }
+
+  .overlay-left {
+    width: 392px;
+  }
+
 }

@@ -346,35 +346,40 @@ function editTask(taskId) {
         <div class="openEditTaskOverlayPriority">
             <label for="taskPriorityIDName">Priority</label>
             <div class="prio">
-            <div class="priolow prio-btn urgent">
-              <p id="taskPriorityIDName">Urgent</p>
-        <p id="taskPriorityIDName" data-priority="Urgent" class=""><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
-             </div>
-            <div class="priolow prio-btn medium">
-             <p id="taskPriorityIDName">Medium</p>
-        <p id="taskPriorityIDName" data-priority="Medium" class="taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
-            </div>
-            <div class="priolow prio-btn low">
-           <p id="taskPriorityIDName">Low</p>
-        <p id="taskPriorityIDName" data-priority="Low" class="taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
-            </div>
-        </div>
-        <div class="openEditTaskOverlayAssigned">
-            <label for="editAssigned">Assigned To</label>
-            <select id="editAssigned" multiple>
-                ${assignedOptionsHtml}
-            </select>
-        </div>
-        <div class="openEditTaskOverlaySubtasks">
-            <label for="editSubtasks">Subtasks</label>
-            <div>
-                ${task.subtasks?.map((subtask, index) => `
-                <div>
-                    <input type="text" id="subtask-title-${index}" value="${subtask.name || ''}" />
+                <div class="priolow prio-btn urgent">
+                    <p id="taskPriorityIDName">Urgent</p>
+                    <p id="taskPriorityIDName" data-priority="Urgent" class=""><img
+                            src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
                 </div>
-                `).join("")}
+                <div class="priolow prio-btn medium">
+                    <p id="taskPriorityIDName">Medium</p>
+                    <p id="taskPriorityIDName" data-priority="Medium" class="taskPriorityMedium"><img
+                            src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
+                </div>
+                <div class="priolow prio-btn low">
+                    <p id="taskPriorityIDName">Low</p>
+                    <p id="taskPriorityIDName" data-priority="Low" class="taskPriorityLow"><img
+                            src="../assets/svg/add_task/prio_low.svg" alt=""></p>
+                </div>
+            </div>
+            <div class="openEditTaskOverlayAssigned">
+                <label for="editAssigned">Assigned To</label>
+                <select id="editAssigned" multiple>
+                    ${assignedOptionsHtml}
+                </select>
+            </div>
+            <div class="openEditTaskOverlaySubtasks">
+                <label for="editSubtasks">Subtasks</label>
+                <div>
+                    ${task.subtasks?.map((subtask, index) => `
+                    <div>
+                        <input type="text" id="subtask-title-${index}" value="${subtask.name || ''}" />
+                    </div>
+                    `).join("")}
+                </div>
             </div>
         </div>
+        
     </div>
     <div class="openEditTaskSaveButtonSorting">
             <button class="openEditTaskSaveButton" onclick="saveTask('${taskId}')">Ok<img

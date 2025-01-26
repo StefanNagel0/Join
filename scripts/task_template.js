@@ -337,7 +337,7 @@ function editTask(taskId) {
         </div>
         <div class="openEditTaskOverlayDescription">
             <label for="editDescription">Description</label>
-            <textarea id="editDescription">${task.description}</textarea>
+            <textarea maxlength="150" id="editDescription">${task.description}</textarea>
         </div>
         <div class="openEditTaskOverlayDueDate">
             <label for="editDueDate">Due Date</label>
@@ -364,27 +364,37 @@ function editTask(taskId) {
             </div>
             <div class="openEditTaskOverlayAssigned">
                 <label for="editAssigned">Assigned To</label>
+                <div id="task-assigned" style="border: 1px solid #ccc; padding: 10px;"></div>
+            </div>
                 <select id="editAssigned" multiple>
                     ${assignedOptionsHtml}
                 </select>
             </div>
             <div class="openEditTaskOverlaySubtasks">
                 <label for="editSubtasks">Subtasks</label>
+                <div id="subtask-container">
+                    <input maxlength="20" type="text" id="new-subtask" placeholder="Add new subtask">
+                    <img id="clear-subtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg" alt="">
+                    <img id="add-subtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
+                </div>
                 <div>
                     ${task.subtasks?.map((subtask, index) => `
-                    <div>
-                        <input type="text" id="subtask-title-${index}" value="${subtask.name || ''}" />
+                    <div class="subtask-item" id="subtask-item-${index}">
+                        <span id="subtask-text-${index}">${subtask.name || ''}</span>
+                        <input type="text" id="subtask-input-${index}" value="${subtask.name || ''}"
+                            class="existing-subtask d-none" />
+                        <button type="button" onclick="editSubtask(${index})">Edit</button>
+                        <button type="button" onclick="saveSubtask(${index})" class="d-none">Save</button>
                     </div>
                     `).join("")}
                 </div>
             </div>
         </div>
-        
     </div>
     <div class="openEditTaskSaveButtonSorting">
-            <button class="openEditTaskSaveButton" onclick="saveTask('${taskId}')">Ok<img
-                    src="../assets/svg/add_task/check.svg" alt=""></button>
-        </div>
+        <button class="openEditTaskSaveButton" onclick="saveTask('${taskId}')">Ok<img
+                src="../assets/svg/add_task/check.svg" alt=""></button>
+    </div>
 </div>
     `;
 }

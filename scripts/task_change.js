@@ -158,10 +158,18 @@ function getSubtasks() {
 /**Handles the submission of the add-task form, collects task data*/
 function submitAddTask(event) {
     event.preventDefault();
-    const taskData = collectTaskData();
-    postTaskToServer(taskData)
-        .then(showConfirmationAndRedirect)
-        .catch(() => alert("Fehler beim Hinzufügen der Aufgabe. Bitte versuche es erneut."));
+    const categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
+    if (categoryText === 'Select task category') {
+        document.getElementById('dropdown-toggle-category').classList.add('error');
+        document.getElementById('category-error').classList.remove('hidden');
+        return;
+    } else {
+        document.getElementById('dropdown-toggle-category').classList.remove('error');
+        document.getElementById('category-error').classList.add('hidden');
+    }
+    const form = document.getElementById('task-form');
+    const task = createTaskObject(form);
+    resetFormAndNotify(form);
 }
 
 /**Collects task data from the add-task form fields and constructs a task object.*/

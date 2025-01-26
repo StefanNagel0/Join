@@ -193,14 +193,16 @@ function initializeCategoryDropdown() {
     };
 }
 
-/** Select a dropdown option */
-function selectDropdownOption(event, toggle, option) {
-    const category = option.textContent;
-    toggle.querySelector('span').textContent = category;
-    option.parentElement.classList.remove('visible');
-    option.parentElement.classList.add('hidden');
-    toggle.classList.remove('open');
-    document.querySelector('#dropdown-toggle-category span').textContent = category;
+// /** Select a dropdown option */
+function selectDropdownOption(event, dropdown, option) {
+    const selectedCategory = option.getAttribute('data-category');
+    dropdown.querySelector('span').textContent = selectedCategory;
+    document.getElementById('category-error').classList.add('hidden');
+    document.getElementById('dropdown-toggle-category').classList.remove('error');
+    const categoryContent = document.getElementById('dropdown-options-category');
+    categoryContent.classList.remove('visible');
+    categoryContent.classList.add('hidden');
+    dropdown.classList.remove('open');
 }
 
 /** Prevent form submission when Enter is pressed */
@@ -213,7 +215,7 @@ function preventFormSubmissionOnEnter() {
     };
 }
 
-/** Create the task object from the form data */
+// /** Create the task object from the form data */
 function createTaskObject(form) {
     const formData = new FormData(form);
     return {
@@ -221,7 +223,9 @@ function createTaskObject(form) {
         description: formData.get('description'),
         dueDate: formData.get('dueDate'),
         priority: selectedPriority,
-        category: document.querySelector('#dropdown-toggle-category span')?.textContent || null,
+        category: document.querySelector('#dropdown-toggle-category span')?.textContent !== 'Select task category'
+            ? document.querySelector('#dropdown-toggle-category span').textContent // Wenn Kategorie ausgewählt, wird sie im Task gespeichert
+            : null, // Falls keine Kategorie ausgewählt wurde, wird null gesetzt
         assignedTo: getSelectedContacts(),
         subtasks: Array.from(document.querySelectorAll('#subtask-list li')).map(li => li.textContent),
     };
@@ -230,7 +234,6 @@ function createTaskObject(form) {
 /** Reset the form and show a notification */
 function resetFormAndNotify(form) {
     form.reset();
-    alert('Task successfully saved to Firebase!');
 }
 
 /** Utility function to create an element with class */

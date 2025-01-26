@@ -401,3 +401,14 @@ textarea::placeholder {
     bottom: 50%;
     opacity: 1;
 }
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    margin-left: 12px;
+}
+
+.hidden {
+    display: none;
+}

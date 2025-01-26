@@ -142,12 +142,20 @@
     color: red;
 }
 
+.add_task_required_info_box_overlay {
+    display: flex;
+    justify-content: space-between;
+    max-width: 94%;
+    margin-top: 306px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 .addTaskBottomBox {
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
-    margin-left: 650px;
     gap: 20px;
     overflow: hidden;
 }

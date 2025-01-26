@@ -95,18 +95,33 @@ function getAwaitFeedbackButton() {
     boardAddTask();
 }
 
-/**Handles posting a new task by collecting data and sending it to the server.*/
+/**Posts the task after validating the category.*/
 async function postTask() {
-    const taskData = getTaskData();
-    console.log('Task Data:', taskData);
+    if (!validateCategory()) return;
     try {
-        const result = await postTaskToServer(taskData);
+        const result = await postTaskToServer(getTaskData());
         addTaskSuccess();
         closeBoardAddTask();
     } catch (error) {
         console.error('Error posting task:', error);
     }
     onload();
+}
+
+/**Validates whether a valid category has been selected.*/
+function validateCategory() {
+    const categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
+    const isValid = categoryText !== 'Select task category';
+    toggleCategoryError(isValid);
+    return isValid;
+}
+
+/**Toggles the error message for the category field.*/
+function toggleCategoryError(isValid) {
+    const categoryElement = document.getElementById('dropdown-toggle-category');
+    const errorElement = document.getElementById('category-error');
+    categoryElement.classList.toggle('error', !isValid);
+    errorElement.classList.toggle('hidden', isValid);
 }
 
 /**Collects task data from the form fields and returns an object.*/

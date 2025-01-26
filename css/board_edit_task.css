@@ -28,7 +28,7 @@ select {
 
 .editScrollbar {
     flex: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #a8a8a8 #ffffff;
     margin-bottom: 40px;
@@ -135,10 +135,10 @@ select {
 }
 
 .openEditTaskSaveButtonSorting {
-    position: relative;
+    /* position: relative; */
     display: flex;
     justify-content: flex-end;
-    margin-top: auto;
+    /* margin-top: auto; */
     padding: 20px;
 }
 

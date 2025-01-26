@@ -361,6 +361,12 @@ textarea::placeholder {
     align-items: center;
 }
 
+.add_task_submit_btn button:hover{
+    background-color: rgb(41, 171, 226);
+    border: 1px solid rgb(41, 171, 226);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
 .add_task_submit_btn span {
     font-size: 18px;
 }

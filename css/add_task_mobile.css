@@ -51,10 +51,17 @@
         display: none;
     }
 
+    .content_heading{
+        max-width: 440px;
+        margin: auto;
+    }
+
     .add_task_form_box {
         height: 100vh;
         margin-bottom: 200px;
         overflow-y: scroll;
+        max-width: 440px;
+        margin: auto;
         scrollbar-width: none;
         /* Für Firefox */
         -ms-overflow-style: none;

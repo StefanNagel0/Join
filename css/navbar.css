@@ -128,6 +128,9 @@
     cursor: pointer;
     position: relative;
 }
+#user-initials-button:hover{
+    background-color: #E2E6EC;
+}
 
 #user-popup {
     position: absolute;

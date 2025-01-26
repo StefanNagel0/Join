@@ -143,9 +143,8 @@ select {
 }
 
 .openEditTaskSaveButton {
-    position: absolute;
-    bottom: 0px;
-    right: 15px;
+    position: relative;
+    top: 124px;
     display: flex;
     justify-content: center;
     align-items: center;

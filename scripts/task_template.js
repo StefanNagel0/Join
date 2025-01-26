@@ -345,20 +345,14 @@ function editTask(taskId) {
         </div>
         <div class="openEditTaskOverlayPriority">
             <label for="editPriority">Priority</label>
-            <div class="prio">
-            <div class="priolow prio-btn urgent">
-              <p id="taskPriorityIDName">Urgent</p>
-        <p id="taskPriorityIDName" data-priority="Urgent" class=""><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
-             </div>
-            <div class="priolow prio-btn medium">
-             <p id="taskPriorityIDName">Medium</p>
-        <p id="taskPriorityIDName" data-priority="Medium" class="taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
-            </div>
-            <div class="priolow prio-btn low">
-           <p id="taskPriorityIDName">Low</p>
-        <p id="taskPriorityIDName" data-priority="Low" class="taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
-            </div>
-        </div>
+            <div id="task-priority">
+                                    <button type="button" class="prio-btn urgent" data-prio="urgent">Urgent <img
+                                            src="../assets/svg/add_task/prio_urgent.svg" alt=""></button>
+                                    <button type="button" class="prio-btn medium" data-prio="medium">Medium <img
+                                            src="../assets/svg/add_task/prio_medium.svg" alt=""></button>
+                                    <button type="button" class="prio-btn low" data-prio="low">Low <img
+                                            src="../assets/svg/add_task/prio_low.svg" alt=""></button>
+                                </div>
         <div class="openEditTaskOverlayAssigned">
             <label for="editAssigned">Assigned To</label>
             <select id="editAssigned" multiple>

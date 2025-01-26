@@ -4,7 +4,7 @@
     right: 36px;
     cursor: pointer;
     background-color: transparent;
-    border: none; 
+    border: none;
 }
 
 input[type="text"],
@@ -200,8 +200,4 @@ select {
 .low:active {
     background-color: #7AE229;
     color: white;
-}
-
-#task-priority {
-    justify-content: center;
 }

@@ -132,6 +132,9 @@
 }
 
 @media(max-width:570px) {
+    .flex_content{
+        height: 83vh;
+    }
     .content_heading {
         display: flex;
         flex-direction: column;

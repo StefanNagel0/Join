@@ -393,15 +393,26 @@
     scrollbar-width: none;
 }
 
+.board_overlay_contact_box{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 16px;
+}
+
 .initialsOverlay {
-    position: relative;
+    /* position: relative; */
     border-radius: 50%;
-    rotate: 90deg;
     color: #ffffff;
     text-align: center;
     line-height: 30px;
     border: 1px solid white;
     font-size: 14px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .openTaskOverlayAssigned {

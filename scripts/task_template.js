@@ -197,11 +197,11 @@ function taskAssignedTemplateOverlay(task) {
                         .join("");
                     const circleColor = getContactColor(name);
                     return `
-                        <p>
+                        <p class="board_overlay_contact_box">
                             <span class="initialsOverlay" style="background-color: ${circleColor};">
                                 ${initials}
                             </span> 
-                            - ${name}
+                            ${name}
                         </p>
                     `;
                 })

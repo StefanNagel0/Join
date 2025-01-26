@@ -120,6 +120,7 @@ async function openTaskOverlay(taskId) {
         removeClass.classList.add("openTaskOverlayTitle");
         removeClassTemplate.classList.remove("taskDescription");
         removeClassTemplate.classList.add("openTaskOverlayDescription");
+        removeClassTemplate.innerText = task.description;
         removeClassDate.classList.remove("taskDate");
         removeClassDate.classList.add("openTaskOverlayDate");
         removeClassAssigned.classList.remove("taskAssigned");

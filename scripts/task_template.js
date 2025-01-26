@@ -30,10 +30,12 @@ function taskTitleTemplate(task) {
 }
 
 /* Renders the description of the task */
+
 function taskDescriptionTemplate(task) {
+    const truncatedDescription = task.description.length > 30 ? task.description.substring(0, 30) + '...' : task.description;
     return `
-    <p id="taskDescriptionID" class="taskDescription">${task.description}</p>
-    `
+    <p id="taskDescriptionID" class="taskDescription">${truncatedDescription}</p>
+    `;
 }
 
 /* Renders the date of the task */

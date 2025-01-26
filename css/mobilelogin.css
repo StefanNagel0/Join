@@ -123,3 +123,25 @@
         display: none;
     }
 }
+
+@media screen and (max-width: 870px) {
+    .signUpSuccessClass {
+        margin-left: 292px;
+    }
+}
+
+@media screen and (max-width: 610px) {
+    .signUpSuccessClass {
+        margin-left: 163px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .signUpArrow{
+        margin-right: 303px !important;
+    }
+
+    .signUpSuccessClass {
+        margin-left: 27px;
+    }
+}

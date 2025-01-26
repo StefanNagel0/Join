@@ -275,3 +275,25 @@ footer a:hover {
     color: rgba(41, 171, 226, 1);
     font-weight: 700;
 }
+
+.SignUpButton {
+    position: fixed;
+    background-color: #2A3647;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: Inter, sans-serif;
+    font-size: 20px;
+    width: 326px;
+    height: 74px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 900;
+    top: 50px;
+    left: 20%;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}

@@ -103,6 +103,10 @@ function boardAddTaskTemplate() {
                 <label for="task-date">Due Date <span class="red_star">*</span></label>
                 <input type="date" class="task-date" id="task-date" name="dueDate" required>
             </div>
+            <label>Prority</label>
+            <select id="editPriority">
+                ${optionsHtml}
+            </select>
             <div class="prio">
             <div class="priolow prio-btn urgent">
               <p id="taskPriorityIDName">Urgent</p>

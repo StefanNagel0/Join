@@ -60,12 +60,11 @@ select {
     gap: 8px;
     margin-bottom: 30px;
 }
+
 .openEditTaskOverlayDescription label {
     font-size: 20px;
     font-weight: 400;
 }
-
-
 
 .openEditTaskOverlayDueDate {
     display: flex;
@@ -135,16 +134,12 @@ select {
 }
 
 .openEditTaskSaveButtonSorting {
-    /* position: relative; */
     display: flex;
     justify-content: flex-end;
-    /* margin-top: auto; */
     padding: 20px;
 }
 
 .openEditTaskSaveButton {
-    position: relative;
-    top: 124px;
     display: flex;
     justify-content: center;
     align-items: center;

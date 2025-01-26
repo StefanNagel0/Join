@@ -31,7 +31,7 @@ function moveTaskToNewStatus(taskId, newStatus) {
 /* Highlights the task visually while it is being dragged */
 function startDrag(taskId) {
     const taskElement = document.getElementById(`task-${taskId}`);
-    taskElement.classList.add("dragging");
+    if (taskElement) taskElement.classList.add("dragging");
 }
 
 /* Removes the visual highlighting when dragging ends */

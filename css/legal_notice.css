@@ -12,3 +12,7 @@ h1 {
 .content {
     height: 800px;
 }
+
+.content_legal{
+    margin-left: 96px;
+}

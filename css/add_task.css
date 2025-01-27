@@ -343,6 +343,15 @@ textarea::placeholder {
     width: 110px;
     color: #2A3647;
 }
+.add_task_clear_btn:hover{
+    border: 1px solid #28ABE2;
+    color: #28ABE2;
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.add_task_clear_btn:hover img {
+    filter: invert(48%) sepia(87%) saturate(596%) hue-rotate(170deg) brightness(94%) contrast(92%);
+}
 
 .add_task_submit_btn {
     display: flex;

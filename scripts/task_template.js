@@ -327,76 +327,7 @@ function editTask(taskId) {
     const optionsHtml = editingPriority(task);
     const assignedOptionsHtml = taskAssignedEdit(task);
     const overlayRef = document.querySelector(".openTaskOverlayMain");
-    overlayRef.innerHTML = `
-    <button class="closeEditButton" onclick="closeTaskOverlay()">X</button>
-<div class="openEditTaskOverlayMain">
-    <div class="editScrollbar">
-        <div class="openEditTaskOverlayTitle">
-            <label for="editTitle">Title</label>
-            <input id="editTitle" type="text" value="${task.title}" />
-        </div>
-        <div class="openEditTaskOverlayDescription">
-            <label for="editDescription">Description</label>
-            <textarea maxlength="150" id="editDescription">${task.description}</textarea>
-        </div>
-        <div class="openEditTaskOverlayDueDate">
-            <label for="editDueDate">Due Date</label>
-            <input class="taskEditDate" id="editDueDate" type="date" value="${task.dueDate}" />
-        </div>
-        <div class="openEditTaskOverlayPriority">
-            <label for="taskPriorityIDName">Priority</label>
-            <div class="prio">
-                <div class="priolow prio-btn urgent">
-                    <p id="taskPriorityIDName">Urgent</p>
-                    <p id="taskPriorityIDName" data-priority="Urgent" class=""><img
-                            src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
-                </div>
-                <div class="priolow prio-btn medium">
-                    <p id="taskPriorityIDName">Medium</p>
-                    <p id="taskPriorityIDName" data-priority="Medium" class="taskPriorityMedium"><img
-                            src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
-                </div>
-                <div class="priolow prio-btn low">
-                    <p id="taskPriorityIDName">Low</p>
-                    <p id="taskPriorityIDName" data-priority="Low" class="taskPriorityLow"><img
-                            src="../assets/svg/add_task/prio_low.svg" alt=""></p>
-                </div>
-            </div>
-            <div class="openEditTaskOverlayAssigned">
-                <label for="editAssigned">Assigned To</label>
-                <div id="task-assigned" style="border: 1px solid #ccc; padding: 10px;"></div>
-            </div>
-                <select id="editAssigned" multiple>
-                    ${assignedOptionsHtml}
-                </select>
-            </div>
-            <div class="openEditTaskOverlaySubtasks">
-                <label for="editSubtasks">Subtasks</label>
-                <div id="subtask-container">
-                    <input maxlength="20" type="text" id="new-subtask" placeholder="Add new subtask">
-                    <img id="clear-subtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg" alt="">
-                    <img id="add-subtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
-                </div>
-                <div>
-                    ${task.subtasks?.map((subtask, index) => `
-                    <div class="subtask-item" id="subtask-item-${index}">
-                        <span id="subtask-text-${index}">${subtask.name || ''}</span>
-                        <input type="text" id="subtask-input-${index}" value="${subtask.name || ''}"
-                            class="existing-subtask d-none" />
-                        <button type="button" onclick="editSubtask(${index})">Edit</button>
-                        <button type="button" onclick="saveSubtask(${index})" class="d-none">Save</button>
-                    </div>
-                    `).join("")}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="openEditTaskSaveButtonSorting">
-        <button class="openEditTaskSaveButton" onclick="saveTask('${taskId}')">Ok<img
-                src="../assets/svg/add_task/check.svg" alt=""></button>
-    </div>
-</div>
-    `;
+    overlayRef.innerHTML = taskEditTemplate(task, taskId);
 }
 
 /* save the editing task */

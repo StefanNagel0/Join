@@ -1,89 +1,232 @@
 // FUNKTIONEN HIER EINFÜGEN!
-/* editing the task */
+
 function editTask(taskId) {
     const task = globalTasks[taskId];
     if (!task) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
         return;
     }
-    // const optionsHtml = editingPriority(task);
-    // const assignedOptionsHtml = taskAssignedEdit(task);
+
+    // Lade das Overlay mit den bearbeitbaren Feldern
     const overlayRef = document.querySelector(".openTaskOverlayMain");
-    overlayRef.innerHTML = taskEditTemplate(task, taskId);
+    overlayRef.innerHTML = `
+        <input id="editTitle" type="text" value="${task.title}">
+        <textarea id="editDescription">${task.description}</textarea>
+        <input id="editDueDate" type="date" value="${task.dueDate}">
+        ${taskEditPriority(task)} <!-- Füge Priorität hinzu -->
+        ${taskEditAssignedTo(task)} <!-- Füge Assigned to hinzu -->
+        ${taskEditSubtasks(task)} <!-- Füge Subtasks hinzu -->
+        <button onclick="saveTask('${taskId}')">OK</button>
+    `;
+
+    // Füge Logik hinzu, um Priorität durch Klick zu ändern (ohne EventListener)
+    document.querySelectorAll("#task-priority .prio-btn").forEach(button => {
+        button.onclick = function () {
+            // Entferne die aktive Klasse von allen Buttons
+            document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
+            // Setze die aktive Klasse auf den angeklickten Button
+            button.classList.add("active");
+            // Speichere die neue Priorität im `data-priority`-Attribut
+            document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
+        };
+    });
 }
 
-function taskEditTitle(task, taskId) {
-    let taskTitle = document.getElementById('taskTitleID');
-    taskTitle.value = task.title;
+
+// /* editing the task */
+// function editTask(taskId) {
+//     const task = globalTasks[taskId];
+//     if (!task) {
+//         console.error(`Task mit ID ${taskId} nicht gefunden.`);
+//         return;
+//     }
+//     // const optionsHtml = editingPriority(task);
+//     // const assignedOptionsHtml = taskAssignedEdit(task);
+//     const overlayRef = document.querySelector(".openTaskOverlayMain");
+//     overlayRef.innerHTML = taskEditTemplate(task, taskId);
+// }
+
+function taskEditTitle(task) {
     return `
     <div class="openEditTaskOverlayTitle">
-            <label for="editTitle">Title</label>
-            <input id="editTitle" type="text" value="${task.title}" />
-        </div>
-        `;
-}
-
-function taskEditDescription(task, taskId) {
-    let taskBeschreibung = document.getElementById('taskDescriptionID');
-    taskBeschreibung.value = task.beschreibung;
-    return `
-    <div class="openEditTaskOverlayDescription">
-            <label for="editDescription">Description</label>
-            <textarea maxlength="150" id="editDescription">${task.description}</textarea>
-        </div>
-        `;
-}
-
-function taskEditDate(task, taskId) {
-    let taskDate = document.getElementById('taskDateID');
-    taskDate.value = task.date;
-    return `
-    <div class="openEditTaskOverlayDueDate">
-            <label for="editDueDate">Due Date</label>
-            <input type="date" id="editDueDate" value="${task.dueDate}" />
-        </div>
-        `;
-}
-
-function taskEditPriority(task, taskId) {
-    let taskPriority = document.getElementById('taskPriorityIDName');
-    taskPriority.value = task.priority;
-    return `
-    <label for="taskPriorityIDName">Priority</label>
-            <div class="prio">
-                <button class="prio-btn urgent" data-prio="urgent">Urgent</button>
-                <button class="prio-btn medium" data-prio="medium">Medium</button>
-                <button class="prio-btn low" data-prio="low">Low</button>
-            </div>
-        `;
-}
-
-function taskEditAssignedTo(task, taskId) {
-    let taskAssignedTo = document.getElementById('taskAssignedID');
-    taskAssignedTo.value = task.assignedTo;
-    return `
-    <label for="editAssigned">Assigned to</label>
-    <div id="editAssigned" style="border: 1px solid #ccc; padding: 10px;"></div>
-        `;
-}
-
-function taskEditSubtasks(task, taskId, subtask, index) {
-    if (task.subtasks && task.subtasks.length > 0) {
-        const subtasksHtml = task.subtasks.map((subtask, index) => `
-        <p id="taskSubtasksID-${index}" class="openTaskOverlaySubtask">
-            <input title="Toggle Subtask" type="checkbox" id="subtask-${taskId}-${index}" onclick="toggleSubtask(${index}, '${taskId}')" ${subtask.completed ? 'checked' : ''} required/> ${subtask.name}
-        </p>
-    `).join("");
-        return `
-    <div class="openTaskOverlaySubtaskContainer">
-    <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
-        ${subtasksHtml}
+        <label for="editTitle">Title</label>
+        <input id="editTitle" type="text" value="${task.title}" />
     </div>
     `;
+}
+
+
+// function taskEditTitle(task, taskId) {
+//     let taskTitle = document.getElementById('taskTitleID');
+//     taskTitle.value = task.title;
+//     return `
+//     <div class="openEditTaskOverlayTitle">
+//             <label for="editTitle">Title</label>
+//             <input id="editTitle" type="text" value="${task.title}" />
+//         </div>
+//         `;
+// }
+
+function taskEditDescription(task) {
+    return `
+    <div class="openEditTaskOverlayDescription">
+        <label for="editDescription">Description</label>
+        <textarea maxlength="150" id="editDescription">${task.description}</textarea>
+    </div>
+    `;
+}
+
+// function taskEditDescription(task, taskId) {
+//     let taskBeschreibung = document.getElementById('taskDescriptionID');
+//     taskBeschreibung.value = task.beschreibung;
+//     return `
+//     <div class="openEditTaskOverlayDescription">
+//             <label for="editDescription">Description</label>
+//             <textarea maxlength="150" id="editDescription">${task.description}</textarea>
+//         </div>
+//         `;
+// }
+
+function taskEditDate(task) {
+    return `
+    <div class="openEditTaskOverlayDueDate">
+        <label for="editDueDate">Due Date</label>
+        <input type="date" id="editDueDate" value="${task.dueDate}" />
+    </div>
+    `;
+}
+
+
+// function taskEditDate(task, taskId) {
+//     let taskDate = document.getElementById('taskDateID');
+//     taskDate.value = task.date;
+//     return `
+//     <div class="openEditTaskOverlayDueDate">
+//             <label for="editDueDate">Due Date</label>
+//             <input type="date" id="editDueDate" value="${task.dueDate}" />
+//         </div>
+//         `;
+// }
+
+function taskEditPriority(task) {
+    // Überprüfe die aktuelle Priorität und füge eine aktive Klasse hinzu
+    const priorityButtons = `
+        <button type="button" class="prio-btn urgent ${task.priority === 'Urgent' ? 'active' : ''}" data-prio="Urgent">
+            Urgent <img src="../assets/svg/add_task/prio_urgent.svg" alt="">
+        </button>
+        <button type="button" class="prio-btn medium ${task.priority === 'Medium' ? 'active' : ''}" data-prio="Medium">
+            Medium <img src="../assets/svg/add_task/prio_medium.svg" alt="">
+        </button>
+        <button type="button" class="prio-btn low ${task.priority === 'Low' ? 'active' : ''}" data-prio="Low">
+            Low <img src="../assets/svg/add_task/prio_low.svg" alt="">
+        </button>
+    `;
+
+    // Enthält die Buttons und ein `data-priority`-Attribut, um die aktuelle Auswahl zu speichern
+    return `
+        <div class="gap_8">
+            <p class="prio_text">Prio</p>
+            <div id="task-priority" data-priority="${task.priority}">
+                ${priorityButtons}
+            </div>
+        </div>
+    `;
+}
+
+// function taskEditPriority(task, taskId) {
+//     let taskPriority = document.getElementById('taskPriorityIDName');
+//     taskPriority.value = task.priority;
+//     return `
+//             <div class="gap_8">
+//                 <p class="prio_text">Prio</p>
+//                 <div id="task-priority">
+//                     <button type="button" class="prio-btn urgent" data-prio="urgent">Urgent <img
+//                         src="../assets/svg/add_task/prio_urgent.svg" alt=""></button>
+//                     <button type="button" class="prio-btn medium" data-prio="medium">Medium <img
+//                         src="../assets/svg/add_task/prio_medium.svg" alt=""></button>
+//                     <button type="button" class="prio-btn low" data-prio="low">Low <img
+//                         src="../assets/svg/add_task/prio_low.svg" alt=""></button>
+//                     </div>
+//                 </div>
+//         `;
+// }
+
+
+function taskEditAssignedTo(task) {
+    const assignedHtml = task.assignedTo.map((person, index) => `
+        <div class="assigned-person" id="assigned-${index}">
+            <input type="text" value="${person}" id="editAssigned-${index}" />
+        </div>
+    `).join("");
+
+    return `
+    <div class="openEditTaskOverlayAssigned">
+        <label for="editAssigned">Assigned to</label>
+        <div id="editAssigned">
+            ${assignedHtml}
+        </div>
+    </div>
+    `;
+}
+
+
+// function taskEditAssignedTo(task, taskId) {
+//     let taskAssignedTo = document.getElementById('taskAssignedID');
+//     taskAssignedTo.value = task.assignedTo;
+//     return `
+//     <label for="editAssigned">Assigned to</label>
+//     <div id="editAssigned" style="border: 1px solid #ccc; padding: 10px;"></div>
+//         `;
+// }
+
+function taskEditSubtasks(task) {
+    if (task.subtasks && task.subtasks.length > 0) {
+        const subtasksHtml = task.subtasks.map((subtask, index) => `
+        <div id="subtask-container-${index}">
+            <label for="subtask-${index}">Subtask ${index + 1}</label>
+            <input type="text" id="subtask-${index}" value="${subtask.name || ''}" />
+            <input type="checkbox" id="subtask-completed-${index}" ${subtask.completed ? "checked" : ""} />
+        </div>
+        `).join("");
+
+        return `
+        <div class="openTaskOverlaySubtaskContainer">
+            <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
+            ${subtasksHtml}
+        </div>
+        `;
     } else {
-        return ``;
+        // Fallback für Tasks ohne Unteraufgaben
+        return `
+        <div class="openTaskOverlaySubtaskContainer">
+            <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
+            <p>No subtasks available</p>
+        </div>
+        `;
     }
 }
+
+
+
+
+
+// function taskEditSubtasks(task, taskId, subtask, index) {
+//     if (task.subtasks && task.subtasks.length > 0) {
+//         const subtasksHtml = task.subtasks.map((subtask, index) => `
+//         <p id="taskSubtasksID-${index}" class="openTaskOverlaySubtask">
+//             <input title="Toggle Subtask" type="checkbox" id="subtask-${taskId}-${index}" onclick="toggleSubtask(${index}, '${taskId}')" ${subtask.completed ? 'checked' : ''} required/> ${subtask.name}
+//         </p>
+//     `).join("");
+//         return `
+//     <div class="openTaskOverlaySubtaskContainer">
+//     <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
+//         ${subtasksHtml}
+//     </div>
+//     `;
+//     } else {
+//         return ``;
+//     }
+// }
 
 // function taskEditSubtasks(task, taskId, subtask, index) {
 //     let taskSubtasks = document.getElementById("subtask-${taskId}-${index}");

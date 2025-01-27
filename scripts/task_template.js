@@ -45,7 +45,7 @@ function taskDateTemplate(task) {
     `
 }
 
-/* Renders the subtask of the task */
+// /* Renders the subtask of the task */
 function taskSubtasksTemplate(task, taskId) {
     if (task.subtasks && task.subtasks.length > 0) {
         const completedSubtasks = task.subtasks.filter(subtask => subtask && subtask.completed).length;
@@ -64,7 +64,8 @@ function taskSubtasksTemplate(task, taskId) {
     }
 }
 
-/* Renders the subtask of the task in the overlay */
+
+// /* Renders the subtask of the task in the overlay */
 function taskSubtasksTemplateOverlay(task, taskId) {
     if (task.subtasks && task.subtasks.length > 0) {
         const subtasksHtml = task.subtasks.map((subtask, index) => `
@@ -83,12 +84,44 @@ function taskSubtasksTemplateOverlay(task, taskId) {
     }
 }
 
-/* Renders the assigned employees from the task */
-async function openTaskOverlay(taskId) {
-    let task = await getOneTask(taskId);
-    document.getElementById('taskOverlayContainer').innerHTML = taskSubtasksTemplateOverlay(task, taskId);
-    document.getElementById('taskContainer').innerHTML = taskSubtasksTemplate(task, taskId);
+
+function openTaskOverlay(taskId) {
+    const task = globalTasks[taskId];
+    if (!task) {
+        console.error(`Task mit ID ${taskId} nicht gefunden.`);
+        return;
+    }
+
+    // Stelle sicher, dass das Overlay existiert
+    const overlayRef = document.querySelector(".openTaskOverlayMain");
+    if (!overlayRef) {
+        console.error("Overlay konnte nicht gefunden werden.");
+        return;
+    }
+
+    // Füge die HTML-Inhalte hinzu
+    overlayRef.innerHTML = `
+        <div>
+            ${taskEditTitle(task)}
+            ${taskEditDescription(task)}
+            ${taskEditDate(task)}
+            ${taskEditPriority(task)}
+            ${taskEditAssignedTo(task)}
+            ${taskEditSubtasks(task)}  <!-- Unteraufgaben hinzufügen -->
+            <button onclick="saveTask('${taskId}')">OK</button>
+        </div>
+    `;
+    overlayRef.classList.add('active'); // Beispiel, um das Overlay zu aktivieren
 }
+
+
+
+/* Renders the assigned employees from the task */
+// async function openTaskOverlay(taskId) {
+//     let task = await getOneTask(taskId);
+//     document.getElementById('taskOverlayContainer').innerHTML = taskSubtasksTemplateOverlay(task, taskId);
+//     document.getElementById('taskContainer').innerHTML = taskSubtasksTemplate(task, taskId);
+// }
 
 /* Fetches a single task from the database */
 async function getOneTask(taskId) {
@@ -318,22 +351,84 @@ function getAssignedOptions(assignedTo, users) {
 }
 
 /* save the editing task */
+
+
 async function saveTask(taskId) {
+    // Prüfe, ob die Task-ID existiert
     const task = globalTasks[taskId];
     if (!task) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
         return;
     }
-    task.title = document.getElementById("editTitle").value;
-    task.description = document.getElementById("editDescription").value;
-    task.dueDate = document.getElementById("editDueDate").value;
-    task.priority = document.getElementById("editPriority").value;
-    task.subtasks = Array.from(document.querySelectorAll("[id^='subtask-']")).map(input => input.value);
-    if (taskId in globalTasks)
-        await updateTaskInDatabase(taskId, task);
-    displayTasks(globalTasks);
-    closeTaskOverlay();
+    try {
+        // Lese und speichere den Titel
+        const titleInput = document.getElementById("editTitle");
+        task.title = titleInput?.value || task.title;
+        // Lese und speichere die Beschreibung
+        const descriptionInput = document.getElementById("editDescription");
+        task.description = descriptionInput?.value || task.description;
+        // Lese und speichere das Fälligkeitsdatum
+        const dueDateInput = document.getElementById("editDueDate");
+        task.dueDate = dueDateInput?.value || task.dueDate;
+        // Lese und speichere die Zuweisungen
+        const assignedInputs = document.querySelectorAll("[id^='editAssigned-']");
+        task.assignedTo = Array.from(assignedInputs).map(input => input?.value || "");
+        // Lese und speichere die Unteraufgaben
+        if (task.subtasks && task.subtasks.length > 0) {
+            task.subtasks = task.subtasks.map((subtask, index) => {
+                const subtaskInput = document.getElementById(`subtask-${index}`);
+                const subtaskCompleted = document.getElementById(`subtask-completed-${index}`);
+                // Sicherstellen, dass beide Eingabefelder vorhanden sind
+                if (!subtaskInput || !subtaskCompleted) {
+                    console.error(`Fehlendes Eingabefeld oder Kontrollkästchen für Unteraufgabe ${index}`);
+                    return { name: subtask?.name || '', completed: subtask?.completed || false };
+                }
+                return {
+                    name: subtaskInput.value,
+                    completed: subtaskCompleted.checked,
+                };
+            });
+        } else {
+            console.warn("Keine Unteraufgaben gefunden.");
+        }
+        // Lese und speichere die Priorität
+        const priorityElement = document.getElementById("task-priority");
+        if (priorityElement) {
+            task.priority = priorityElement.getAttribute("data-priority") || task.priority;
+        }
+        // Debug: Zeige den aktualisierten Task in der Konsole
+        console.log(`Updated Task (${taskId}):`, task);
+        // Aktualisiere die Datenbank
+        if (taskId in globalTasks) {
+            await updateTaskInDatabase(taskId, task);
+        }
+        // Aktualisiere die Anzeige und schließe das Overlay
+        displayTasks(globalTasks);
+        closeTaskOverlay();
+    } catch (error) {
+        console.error("Fehler beim Speichern der Aufgabe:", error);
+    }
 }
+
+
+
+
+// async function saveTask(taskId) {
+//     const task = globalTasks[taskId];
+//     if (!task) {
+//         console.error(`Task mit ID ${taskId} nicht gefunden.`);
+//         return;
+//     }
+//     task.title = document.getElementById("editTitle").value;
+//     task.description = document.getElementById("editDescription").value;
+//     task.dueDate = document.getElementById("editDueDate").value;
+//     task.priority = document.getElementById("editPriority").value;
+//     task.subtasks = Array.from(document.querySelectorAll("[id^='subtask-']")).map(input => input.value);
+//     if (taskId in globalTasks)
+//         await updateTaskInDatabase(taskId, task);
+//     displayTasks(globalTasks);
+//     closeTaskOverlay();
+// }
 
 /* edited task update to database */
 async function updateTaskInDatabase(taskId, updatedTask) {

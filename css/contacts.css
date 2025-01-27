@@ -254,10 +254,6 @@
   backdrop-filter: blur(4px);
 }
 
-.contact:focus {
-  background-color: #007bff !important;
-}
-
 .detailshead {
   display: flex;
   align-items: center;
@@ -461,6 +457,11 @@
   opacity: 1;
 }
 
+.btncont:hover {
+  background-color: #29ABE2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 .successcreate {
   position: fixed;
   background-color: #2A3647;
@@ -476,7 +477,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1001;
-  top: 50px;
+  top: 80px;
   left: 75%;
   transform: translateX(100%);
   opacity: 0;
@@ -493,6 +494,7 @@
 .successedit.hide {
   transform: translateX(100%);
   opacity: 0;
+  display: none;
 }
 
 .scrolllist {
@@ -593,10 +595,10 @@
   display: none;
 }
 
-.contact:hover {
-  background-color: #2A3647;
+.contactmain:hover {
+  background: linear-gradient(90deg, #F9F9F9 0%, #F0F0F0 100%);
+  color: black;
   border-radius: 10px;
-  color: white;
 }
 
 .circle {
@@ -610,4 +612,10 @@
 
 .closebutton {
   display: none;
+}
+
+.selected {
+  background-color: #2A3647 !important;
+  color: white !important; 
+  border-radius: 10px !important;
 }

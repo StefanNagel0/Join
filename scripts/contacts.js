@@ -170,7 +170,7 @@ function createContactDiv(contact) {
 
   const initials = getInitials(contact.name);
   contactDiv.innerHTML = `
-    <div class="contactmain" onclick="showContactDetails(${contacts.indexOf(contact)})">
+    <div class="contactmain" onclick="selectContactMain(this), showContactDetails(${contacts.indexOf(contact)})">
       <div class="circle" style="background-color: ${contact.color};">
         ${initials || `<img class="concircle" src="../assets/icons/contact/circledefault.png">`}
       </div>
@@ -316,6 +316,22 @@ function toggleCollapse() {
     content.classList.remove("open");
   } else {
     content.classList.add("open");
+  }
+}
+
+function selectContactMain(selectedElement) {
+  // Überprüfen, ob das Element bereits ausgewählt ist
+  const isSelected = selectedElement.classList.contains('selected');
+
+  // Entferne die Auswahl von allen anderen Elementen
+  const allContacts = document.querySelectorAll('.contactmain');
+  allContacts.forEach((element) => {
+    element.classList.remove('selected');
+  });
+
+  // Falls das Element nicht ausgewählt war, wähle es aus
+  if (!isSelected) {
+    selectedElement.classList.add('selected');
   }
 }
 

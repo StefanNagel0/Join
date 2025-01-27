@@ -1,4 +1,16 @@
 // FUNKTIONEN HIER EINFÜGEN!
+/* editing the task */
+function editTask(taskId) {
+    const task = globalTasks[taskId];
+    if (!task) {
+        console.error(`Task mit ID ${taskId} nicht gefunden.`);
+        return;
+    }
+    const optionsHtml = editingPriority(task);
+    const assignedOptionsHtml = taskAssignedEdit(task);
+    const overlayRef = document.querySelector(".openTaskOverlayMain");
+    overlayRef.innerHTML = taskEditTemplate(task, taskId);
+}
 
 function taskEditTitel(task, taskId) {
     let taskTitel = document.getElementById('taskTitel');

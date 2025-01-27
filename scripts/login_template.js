@@ -35,8 +35,8 @@ function loginTemplate() {
             </div>
         <footer>
             <div class="privacy">
-                <a href="">Privacy Policy</a>
-                <a href="">Legal notice</a>
+                <a href="../html/privacy_policy_not_loggedIn.html">Privacy Policy</a>
+                <a href="../html/legal_not_loggedIn.html">Legal notice</a>
             </div>
         </footer>
     </section>

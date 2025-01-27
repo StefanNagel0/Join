@@ -6,15 +6,15 @@ function editTask(taskId) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
         return;
     }
-    const optionsHtml = editingPriority(task);
-    const assignedOptionsHtml = taskAssignedEdit(task);
+    // const optionsHtml = editingPriority(task);
+    // const assignedOptionsHtml = taskAssignedEdit(task);
     const overlayRef = document.querySelector(".openTaskOverlayMain");
     overlayRef.innerHTML = taskEditTemplate(task, taskId);
 }
 
-function taskEditTitel(task, taskId) {
-    let taskTitel = document.getElementById('taskTitel');
-    taskTitel.value = task.titel;
+function taskEditTitle(task, taskId) {
+    let taskTitle = document.getElementById('taskTitleID');
+    taskTitle.value = task.title;
     return `
     <div class="openEditTaskOverlayTitle">
             <label for="editTitle">Title</label>
@@ -24,7 +24,7 @@ function taskEditTitel(task, taskId) {
 }
 
 function taskEditDescription(task, taskId) {
-    let taskBeschreibung = document.getElementById('taskBeschreibung');
+    let taskBeschreibung = document.getElementById('taskDescriptionID');
     taskBeschreibung.value = task.beschreibung;
     return `
     <div class="openEditTaskOverlayDescription">
@@ -35,7 +35,7 @@ function taskEditDescription(task, taskId) {
 }
 
 function taskEditDate(task, taskId) {
-    let taskDate = document.getElementById('taskDate');
+    let taskDate = document.getElementById('taskDateID');
     taskDate.value = task.date;
     return `
     <div class="openEditTaskOverlayDueDate">
@@ -46,7 +46,7 @@ function taskEditDate(task, taskId) {
 }
 
 function taskEditPriority(task, taskId) {
-    let taskPriority = document.getElementById('taskPriority');
+    let taskPriority = document.getElementById('taskPriorityIDName');
     taskPriority.value = task.priority;
     return `
     <label for="taskPriorityIDName">Priority</label>
@@ -59,7 +59,7 @@ function taskEditPriority(task, taskId) {
 }
 
 function taskEditAssignedTo(task, taskId) {
-    let taskAssignedTo = document.getElementById('taskAssignedTo');
+    let taskAssignedTo = document.getElementById('taskAssignedID');
     taskAssignedTo.value = task.assignedTo;
     return `
     <label for="editAssigned">Assigned to</label>
@@ -67,14 +67,32 @@ function taskEditAssignedTo(task, taskId) {
         `;
 }
 
-function taskEditSubtasks(task, taskId) {
-    let taskSubtasks = document.getElementById('taskSubtasks');
-    taskSubtasks.value = task.subtasks;
-    return `
-    <label for="editSubtasks">Subtasks</label>
-    <div id="subtask-container">
-    <input maxlength="20" type="text" id="new-subtask" placeholder="Add new subtask">
-    <img id="clear-subtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg" alt="">
-    <img id="add-subtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
-        `;
+function taskEditSubtasks(task, taskId, subtask, index) {
+    if (task.subtasks && task.subtasks.length > 0) {
+        const subtasksHtml = task.subtasks.map((subtask, index) => `
+        <p id="taskSubtasksID-${index}" class="openTaskOverlaySubtask">
+            <input title="Toggle Subtask" type="checkbox" id="subtask-${taskId}-${index}" onclick="toggleSubtask(${index}, '${taskId}')" ${subtask.completed ? 'checked' : ''} required/> ${subtask.name}
+        </p>
+    `).join("");
+        return `
+    <div class="openTaskOverlaySubtaskContainer">
+    <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
+        ${subtasksHtml}
+    </div>
+    `;
+    } else {
+        return ``;
+    }
 }
+
+// function taskEditSubtasks(task, taskId, subtask, index) {
+//     let taskSubtasks = document.getElementById("subtask-${taskId}-${index}");
+//     taskSubtasks.value = task.subtasks;
+//     return `
+//     <label for="editSubtasks">Subtasks</label>
+//     <div id="subtask-container">
+//     <input maxlength="20" type="text" id="new-subtask" placeholder="Add new subtask">
+//     <img id="clear-subtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg" alt="">
+//     <img id="add-subtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
+//         `;
+// }

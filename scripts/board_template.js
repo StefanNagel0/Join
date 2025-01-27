@@ -201,7 +201,7 @@ function taskOverlayTemplate(task, taskId) {
 function taskEditTemplate(task, taskId) {
     return `
     <div class="openEditTaskOverlayMain">
-        ${taskEditTitel(task, taskId)}
+        ${taskEditTitle(task, taskId)}
         ${taskEditDescription(task, taskId)}
         ${taskEditDate(task, taskId)}
         <div class="openEditTaskOverlayPriority">

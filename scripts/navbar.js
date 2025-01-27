@@ -27,3 +27,7 @@ function navigateToPrivacy() {
 function navigateToPageLegalNotice() {
     window.location.href = "../html/legal_notice.html";
 }
+
+function navigateToLogin() {
+    window.location.href = "../html/login.html";
+}

@@ -41,6 +41,9 @@
     border: 0;
     gap: 8px;
 }
+.navbar_buttons_img img{
+    height: 32px;
+}
 
 .navbar_buttons:hover {
     background-color: #29aae213;
@@ -63,7 +66,13 @@
     color: #29ABE2;
 }
 
-.navbar_policy button {
+.privacy_policy button{
+    border: 0;
+    background-color: #2A3647;
+    width: 232px;
+}
+
+.legal_notice button{
     border: 0;
     background-color: #2A3647;
     width: 232px;

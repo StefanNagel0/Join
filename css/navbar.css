@@ -15,7 +15,11 @@
 .navbar_img {
     width: 100.03px;
     height: 121.97px;
+}
 
+.help_img:hover {
+    cursor: pointer;
+    zoom: 110%;
 }
 
 .navbar_main_buttons {
@@ -64,6 +68,8 @@
 
 .navbar_policy a:hover {
     color: #29ABE2;
+    zoom: 110%;
+    font-weight: bold;
 }
 
 .privacy_policy button{

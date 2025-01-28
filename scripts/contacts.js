@@ -465,7 +465,7 @@ function startSyncProcess() {
     await fetchContactsFromFirebase(); // Kontakte aus Firebase abrufen
     await checkAndUploadNewContacts(); // Neue Kontakte hochladen
     console.log("Synchronisation abgeschlossen.");
-  }, 5000); // Alle 5 Sekunden
+  }, 500000000000); // Alle 5 Sekunden
 }
 
 // Initialisierung

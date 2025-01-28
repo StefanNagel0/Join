@@ -1,11 +1,21 @@
 /** Create an element with initials circle based on contact's name */
+
 function createInitialsCircle(contactName) {
     const circle = document.createElement('div');
     circle.classList.add('initials-circle');
     circle.textContent = getInitials(contactName);
-    circle.style.backgroundColor = getContactColor(contactName);
+    circle.style.backgroundColor = getContactColor(contactName); // Farbe aus Firebase
     return circle;
 }
+
+
+// function createInitialsCircle(contactName) {
+//     const circle = document.createElement('div');
+//     circle.classList.add('initials-circle');
+//     circle.textContent = getInitials(contactName);
+//     circle.style.backgroundColor = getContactColor(contactName);
+//     return circle;
+// }
 
 /** Create a contact div with a circle, label, and checkbox */
 function createContactDiv(contact) {
@@ -75,12 +85,23 @@ function createDropdownToggle(dropdownContent) {
 }
 
 /** Initialize the contacts dropdown with the contact list*/
-function initializeContactsDropdown() {
+
+async function initializeContactsDropdown() {
     const container = document.getElementById('task-assigned');
     if (!container) return console.error("#task-assigned not found.");
+
+    // Kontakte sicherstellen, dass sie aus Firebase geladen wurden
+    if (!contacts || contacts.length === 0) {
+        console.warn("Keine Kontakte verfügbar. Lade aus Firebase...");
+        await fetchContactsFromFirebase(); // Kontakte aus Firebase laden
+    }
+
     const { wrapper, content } = createDropdownWrapper();
     const selectedContacts = createElementWithClass('div', 'selected-contacts', '', [], 'selected-contacts');
+
+    // Kontakte darstellen
     contacts.forEach(contact => content.append(createContactDiv(contact)));
+
     const dropdownToggle = wrapper.querySelector('.dropdown-toggle');
     dropdownToggle.onclick = () => {
         const dropdownContent = wrapper.querySelector('.dropdown-content');
@@ -93,18 +114,51 @@ function initializeContactsDropdown() {
     wrapper.append(selectedContacts);
 }
 
-/** Add an event listener for clicks outside the dropdown to close it */
 function addOutsideClickListener(wrapper, content) {
     document.onclick = event => {
         if (!wrapper.contains(event.target)) {
-            content.style.display = 'none';
+            content.classList.remove('visible'); // Versteckt das Dropdown, wenn außerhalb geklickt wird
             wrapper.querySelector('.dropdown-toggle').classList.remove('open');
         }
     };
 }
 
+
+// function initializeContactsDropdown() {
+//     const container = document.getElementById('task-assigned');
+//     if (!container) return console.error("#task-assigned not found.");
+//     const { wrapper, content } = createDropdownWrapper();
+//     const selectedContacts = createElementWithClass('div', 'selected-contacts', '', [], 'selected-contacts');
+//     contacts.forEach(contact => content.append(createContactDiv(contact)));
+//     const dropdownToggle = wrapper.querySelector('.dropdown-toggle');
+//     dropdownToggle.onclick = () => {
+//         const dropdownContent = wrapper.querySelector('.dropdown-content');
+//         const isVisible = dropdownContent.style.display === 'block';
+//         dropdownContent.style.display = isVisible ? 'none' : 'block';
+//         dropdownToggle.classList.toggle('open', !isVisible);
+//     };
+//     addOutsideClickListener(wrapper, content);
+//     container.replaceWith(wrapper);
+//     wrapper.append(selectedContacts);
+// }
+
+
+
 /** Generate a random color for a contact*/
+
 function getContactColor(name) {
-    if (!contactColors.has(name)) contactColors.set(name, getRandomColor());
-    return contactColors.get(name);
+    // Suche den Kontakt in der globalen Kontaktliste
+    const contact = contacts.find(contact => contact.name === name);
+    if (contact && contact.color) {
+        return contact.color; // Verwende die Farbe aus der Datenbank
+    } else {
+        console.warn(`Farbe für Kontakt ${name} nicht gefunden. Verwende Standardfarbe.`);
+        return "#CCCCCC"; // Standardfarbe, falls keine Farbe definiert ist
+    }
 }
+
+
+// function getContactColor(name) {
+//     if (!contactColors.has(name)) contactColors.set(name, getRandomColor());
+//     return contactColors.get(name);
+// }

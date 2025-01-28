@@ -46,6 +46,8 @@ function taskDateTemplate(task) {
 }
 
 // /* Renders the subtask of the task */
+
+
 function taskSubtasksTemplate(task, taskId) {
     if (task.subtasks && task.subtasks.length > 0) {
         const completedSubtasks = task.subtasks.filter(subtask => subtask && subtask.completed).length;
@@ -70,7 +72,7 @@ function taskSubtasksTemplateOverlay(task, taskId) {
     if (task.subtasks && task.subtasks.length > 0) {
         const subtasksHtml = task.subtasks.map((subtask, index) => `
             <p id="taskSubtasksID-${index}" class="openTaskOverlaySubtask">
-                <input title="Toggle Subtask" type="checkbox" id="subtask-${taskId}-${index}" onclick="toggleSubtask(${index}, '${taskId}')" ${subtask.completed ? 'checked' : ''} required/> ${subtask.name}
+                <input title="Toggle Subtask" type="checkbox" id="subtask-${taskId}-${index}" onclick="toggleSubtask(${index}, '${taskId}')" ${subtask.completed ? 'checked' : ''} required/> ${subtask.text}
             </p>
         `).join("");
         return `

@@ -22,15 +22,33 @@ async function loadTask(path = "/tasks") {
 }
 
 /**Displays tasks in their corresponding containers.*/
+
 function displayTasks(tasks) {
     clearTaskContainers();
     const taskArray = Object.entries(tasks);
+
     taskArray.forEach(([taskId, task]) => {
+        if (!task.mainCategory) {
+            console.warn(`Task ${taskId} hat keine mainCategory. Überspringen.`);
+            return;
+        }
         const taskElement = createTaskElement(task, taskId);
         appendTaskToCategory(task, taskElement);
     });
+
     emptyTaskContainer();
 }
+
+
+// function displayTasks(tasks) {
+//     clearTaskContainers();
+//     const taskArray = Object.entries(tasks);
+//     taskArray.forEach(([taskId, task]) => {
+//         const taskElement = createTaskElement(task, taskId);
+//         appendTaskToCategory(task, taskElement);
+//     });
+//     emptyTaskContainer();
+// }
 
 /**Clears all task containers.*/
 function clearTaskContainers() {
@@ -167,13 +185,16 @@ function getCategory() {
 /**Collects the subtasks from the list and returns an array of objects.*/
 function getSubtasks() {
     return Array.from(document.querySelectorAll("#subtask-list li")).map(li => ({
-        name: li.textContent.trim(), completed: false
+        text: li.textContent.trim(), completed: false
     }));
 }
 
 /**Handles the submission of the add-task form, collects task data*/
+
 function submitAddTask(event) {
     event.preventDefault();
+
+    // 1. Validierung der Kategorie
     const categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
     if (categoryText === 'Select task category') {
         document.getElementById('dropdown-toggle-category').classList.add('error');
@@ -183,10 +204,61 @@ function submitAddTask(event) {
         document.getElementById('dropdown-toggle-category').classList.remove('error');
         document.getElementById('category-error').classList.add('hidden');
     }
+
+    // 2. Erstelle das Task-Objekt
     const form = document.getElementById('task-form');
     const task = createTaskObject(form);
-    resetFormAndNotify(form);
+
+    // 3. Task in die Datenbank speichern
+    addTaskToFirebase(task).then(() => {
+        console.log('Task erfolgreich hinzugefügt:', task);
+
+        // 4. Formular zurücksetzen und Benachrichtigung anzeigen
+        resetFormAndNotify(form);
+    }).catch(error => {
+        console.error('Fehler beim Hinzufügen des Tasks:', error);
+    });
 }
+
+async function addTaskToFirebase(task) {
+    const TASKS_URL = `${BASE_URL}tasks.json`; // Verwende die BASE_URL
+    try {
+        const response = await fetch(TASKS_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(task),
+        });
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Task erfolgreich in Firebase gespeichert:', data);
+            return data; // Rückgabe der Antwort (z. B. für Task-ID)
+        } else {
+            throw new Error(`Fehler beim Speichern des Tasks: ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error('Netzwerkfehler beim Speichern des Tasks:', error);
+        throw error; // Fehler weitergeben, falls benötigt
+    }
+}
+
+
+// function submitAddTask(event) {
+//     event.preventDefault();
+//     const categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
+//     if (categoryText === 'Select task category') {
+//         document.getElementById('dropdown-toggle-category').classList.add('error');
+//         document.getElementById('category-error').classList.remove('hidden');
+//         return;
+//     } else {
+//         document.getElementById('dropdown-toggle-category').classList.remove('error');
+//         document.getElementById('category-error').classList.add('hidden');
+//     }
+//     const form = document.getElementById('task-form');
+//     const task = createTaskObject(form);
+//     resetFormAndNotify(form);
+// }
 
 /**Collects task data from the add-task form fields and constructs a task object.*/
 function collectTaskData() {
@@ -198,7 +270,7 @@ function collectTaskData() {
         priority: document.querySelector('.prio-btn.active')?.dataset.prio || '',
         category: document.querySelector('#dropdown-toggle-category span').textContent.trim(),
         subtasks: Array.from(document.querySelectorAll("#subtask-list li")).map(li => ({
-            name: li.textContent.trim(),
+            text: li.textContent.trim(),
             completed: false
         })),
         mainCategory: "ToDo"
@@ -255,3 +327,21 @@ function addTaskToContainer(containerId, taskHTML) {
     }
     container.innerHTML += taskHTML;
 }
+
+async function fixTasksMainCategory() {
+    const response = await fetch(BASE_URL + "/tasks.json");
+    const tasks = await response.json();
+
+    for (const [taskId, task] of Object.entries(tasks)) {
+        if (!task.mainCategory) {
+            task.mainCategory = 'ToDo'; // Standardwert setzen
+            await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mainCategory: 'ToDo' }),
+            });
+            console.log(`Task ${taskId} aktualisiert.`);
+        }
+    }
+}
+fixTasksMainCategory();

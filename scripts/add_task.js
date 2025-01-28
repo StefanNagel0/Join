@@ -135,6 +135,7 @@ function addSubtask(input, list) {
     toggleClearButtonVisibility();
 }
 
+
 /**Observes DOM changes and applies date validation for dynamically added date inputs.*/
 function createSubtaskElement(task) {
     const subtaskElement = document.createElement('li');
@@ -215,21 +216,61 @@ function preventFormSubmissionOnEnter() {
     };
 }
 
-// /** Create the task object from the form data */
-function createTaskObject(form) {
-    const formData = new FormData(form);
-    return {
-        title: formData.get('title'),
-        description: formData.get('description'),
-        dueDate: formData.get('dueDate'),
-        priority: selectedPriority,
-        category: document.querySelector('#dropdown-toggle-category span')?.textContent !== 'Select task category'
-            ? document.querySelector('#dropdown-toggle-category span').textContent // Wenn Kategorie ausgewählt, wird sie im Task gespeichert
-            : null, // Falls keine Kategorie ausgewählt wurde, wird null gesetzt
-        assignedTo: getSelectedContacts(),
-        subtasks: Array.from(document.querySelectorAll('#subtask-list li')).map(li => li.textContent),
-    };
+function getSubtasksFromForm(form) {
+    const subtaskList = form.querySelector('#subtask-list');
+    const subtasks = [];
+    subtaskList.querySelectorAll('li').forEach((li) => {
+        const textElement = li.querySelector('.subtask-text');
+        if (textElement) {
+            subtasks.push({
+                text: textElement.textContent.trim(),
+                completed: li.classList.contains('completed'), // Optional
+            });
+        } else {
+            console.warn('Subtask ohne Text-Element gefunden:', li);
+        }
+    });
+    return subtasks;
 }
+
+
+
+
+
+// /** Create the task object from the form data */
+
+function createTaskObject(form) {
+    const task = {
+        title: form.querySelector('#task-title').value.trim(),
+        description: form.querySelector('#task-desc').value.trim(),
+        dueDate: form.querySelector('#task-date').value,
+        priority: document.getElementById('task-priority').getAttribute('data-priority') || 'Medium',
+        category: document.querySelector('#dropdown-toggle-category span').textContent,
+        assignedTo: getSelectedContacts(), // Hole die ausgewählten Kontakte
+        subtasks: getSubtasksFromForm(form),
+        createdAt: new Date().toISOString(),
+        mainCategory: 'ToDo', // Standardkategorie hinzufügen
+    };
+
+    console.log('Erstelltes Task-Objekt:', task);
+    return task;
+}
+
+
+// function createTaskObject(form) {
+//     const formData = new FormData(form);
+//     return {
+//         title: formData.get('title'),
+//         description: formData.get('description'),
+//         dueDate: formData.get('dueDate'),
+//         priority: selectedPriority,
+//         category: document.querySelector('#dropdown-toggle-category span')?.textContent !== 'Select task category'
+//             ? document.querySelector('#dropdown-toggle-category span').textContent // Wenn Kategorie ausgewählt, wird sie im Task gespeichert
+//             : null, // Falls keine Kategorie ausgewählt wurde, wird null gesetzt
+//         assignedTo: getSelectedContacts(),
+//         subtasks: Array.from(document.querySelectorAll('#subtask-list li')).map(li => li.textContent),
+//     };
+// }
 
 /** Reset the form and show a notification */
 function resetFormAndNotify(form) {

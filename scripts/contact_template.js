@@ -44,7 +44,7 @@ function showContactDetails(index) {
                 <button class="edit-button" onclick="openOverlay('edit', ${contacts.indexOf(contact)})">
                     <img src="../assets/icons/contact/edit.png">Edit
                 </button>
-                <button class="delete-button" onclick="deleteContact(${contacts.indexOf(contact)})">
+                <button class="delete-button" onclick="deleteContact(${contact.id})">
                     <img src="../assets/icons/contact/delete.png">Delete
                 </button>
             </div>

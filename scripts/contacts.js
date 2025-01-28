@@ -347,7 +347,7 @@ function selectContactMain(selectedElement) {
   }
 }
 // Firebase-URL für die Kontakte
-const BASE_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
+// const BASE_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
 
 // ID-Tracker für neue Kontakte
 let nextId = 1;

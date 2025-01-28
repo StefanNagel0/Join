@@ -45,6 +45,8 @@ header img {
 }
 
 .signUpButton {
+    display: flex;
+    align-items: center;
     width: 95px;
     height: 49px;
     padding: 15px 16px 15px 16px;
@@ -60,6 +62,12 @@ header img {
     text-decoration-skip-ink: none;
     color: white;
     background-color: rgb(42, 54, 71);
+}
+
+.signUpButton:hover {
+    background-color: rgb(41, 171, 226, 1);
+    color: white;
+    box-shadow: 0px 5px 0px 0px #0000002c;
 }
 
 body {
@@ -195,31 +203,6 @@ body {
     background-size: 20px;
 }
 
-.signUpButton {
-    display: flex;
-    align-items: center;
-    width: 130px;
-    height: 55px;
-    padding: 15px 24px 15px 24px;
-    gap: 10px;
-    border-radius: 8px;
-    opacity: 1;
-    color: #ffffff;
-    font-family: Inter;
-    font-size: 21px;
-    font-weight: 700;
-    line-height: 25.2px;
-    text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-    background: #2A3647;
-}
-
-.signUpButton:hover {
-    background-color: #ffffff;
-    color: #2a3647;
-}
-
 .checkboxMain {
     display: flex;
     justify-content: center;
@@ -272,9 +255,14 @@ body {
     color: #29ABE2;
 }
 
+.signUpErrorMain {
+    position: relative;
+}
+
 .errorMessage {
-    position: fixed;
-    left: 690px;
+    position: relative;
+    right: 50px;
+    bottom: 10px;
     width: 300px;
     height: 20px;
     color: red;

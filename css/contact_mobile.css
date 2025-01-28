@@ -30,7 +30,7 @@
     }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 940px) {
     .navbar_main {
         position: fixed;
         bottom: 0;
@@ -292,7 +292,7 @@
         gap: 10px;
         width: 100%;
         justify-content: flex-start;
-        flex-direction: row;
+        flex-direction: row !important;
     }
 
     .detailscircle p {
@@ -422,3 +422,7 @@
     }
 }
 
+.selected:hover {
+    color: black !important;
+    background-color: #2A3647 !important;
+}

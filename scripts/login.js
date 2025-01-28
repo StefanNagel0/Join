@@ -43,6 +43,12 @@ function login() {
         window.location.href = 'summary.html?showGreeting=true';
     } else {
         showError('E-Mail oder Passwort falsch.');
+        document.getElementById("email").style.borderColor="red";
+        document.getElementById("password").style.borderColor="red";
+        setTimeout(function() {
+            document.getElementById("email").style.borderColor="rgba(204, 204, 204, 1)";
+            document.getElementById("password").style.borderColor="rgba(204, 204, 204, 1)";
+        }, 2000);
     }
 }
 
@@ -82,6 +88,12 @@ function valueInput() {
 function inputValidation(email, password) {
     if (!email || !password) {
         showError('Bitte geben Sie Ihre E-Mail und Ihr Passwort ein.');
+        document.getElementById("email").style.borderColor="red";
+        document.getElementById("password").style.borderColor="red";
+        setTimeout(function() {
+            document.getElementById("email").style.borderColor="rgba(204, 204, 204, 1)";
+            document.getElementById("password").style.borderColor="rgba(204, 204, 204, 1)";
+        }, 2000);
         return false;
     }
     return true;

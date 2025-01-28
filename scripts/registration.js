@@ -24,6 +24,7 @@ function toggleSignUpButton() {
         signUpButton.disabled = true;
         signUpButton.style.cursor = 'not-allowed';
         signUpButton.style.background = '#808080';
+        signUpButton.classList.add('signUpButton');
     }
     return;
 }
@@ -57,6 +58,12 @@ function FieldsFilled(name, email, password, confirmPassword) {
 /**Checks if the password and confirmation password match.*/
 function PasswordsMatching(password, confirmPassword) {
     if (password !== confirmPassword) {
+        document.getElementById("password").style.borderColor="red";
+        document.getElementById("confirmPassword").style.borderColor="red";
+        setTimeout(function() {
+            document.getElementById("password").style.borderColor="rgba(204, 204, 204, 1)";
+            document.getElementById("confirmPassword").style.borderColor="rgba(204, 204, 204, 1)";
+        }, 2000);
         showError('Passwörter stimmen nicht überein.');
         return false;
     }
@@ -67,6 +74,10 @@ function PasswordsMatching(password, confirmPassword) {
 function EmailTaken(email) {
     if (users.some(user => user.email === email)) {
         showError('Diese E-Mail ist bereits vergeben.');
+        document.getElementById("email").style.borderColor="red";
+        setTimeout(function() {
+            document.getElementById("email").style.borderColor="rgba(204, 204, 204, 1)";
+        }, 2000);
         return true;
     }
     return false;
@@ -76,6 +87,10 @@ function EmailTaken(email) {
 function UsernameTaken(name) {
     if (users.some(user => user.name === name)) {
         showError('Dieser Benutzername ist bereits vergeben.');
+        document.getElementById("name").style.borderColor="red";
+        setTimeout(function() {
+            document.getElementById("name").style.borderColor="rgba(204, 204, 204, 1)";
+        }, 2000);
         return true;
     }
     return false;
@@ -84,7 +99,13 @@ function UsernameTaken(name) {
 /**Validates if the password meets the required complexity.*/
 function PasswordValid(password) {
     if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
-        showError('Das Passwort muss mindestens 8 Zeichen lang sein, einen Großbuchstaben, einen Kleinbuchstaben und eine Zahl enthalten.');
+        document.getElementById("password").style.borderColor="red";
+        document.getElementById("confirmPassword").style.borderColor="red";
+        setTimeout(function() {
+            document.getElementById("password").style.borderColor="rgba(204, 204, 204, 1)";
+            document.getElementById("confirmPassword").style.borderColor="rgba(204, 204, 204, 1)";
+        }, 2000);
+        showError('Passwort: mind. 8 Zeichen, Groß-/Kleinbuchstabe, Zahl.');
         return false;
     }
     return true;
@@ -98,7 +119,7 @@ function showError(message) {
         errorMessage.style.display = 'block';
         setTimeout(() => {
             errorMessage.style.display = 'none';
-        }, 2000);
+        }, 3000);
     }
 }
 
@@ -110,7 +131,7 @@ function userSuccessRegistration() {
     let overlayRefSignUp = document.getElementById("registrationPage");
     overlayRefSignUp.style.display = "none";
     setTimeout(() => {
-        // window.location.href = "login.html";
+        window.location.href = "login.html";
         overlayRef.style.display = "none";
     }, 20000);
 }

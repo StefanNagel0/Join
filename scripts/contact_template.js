@@ -48,7 +48,7 @@ function showContactDetails(index) {
                     <img src="../assets/icons/contact/delete.png">Delete
                 </button>
             </div>
-            <div class="successedit"></div>
+            <div class="successedit hide"></div>
         </div>
         `;
         detailsDiv.classList.add("show");

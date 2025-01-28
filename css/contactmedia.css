@@ -155,3 +155,19 @@
   }
 
 }
+
+
+@media screen and (max-width: 1080px) {
+  .detailscircle {
+    flex-direction: column;
+  }
+
+  .contbtn {
+    justify-content: center !important;
+    align-items: center;
+  }
+
+  .contactnames {
+    text-align: center;
+  }
+}

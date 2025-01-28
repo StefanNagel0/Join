@@ -7,6 +7,9 @@ function boardTemplate() {
                 <div>
                     <h2 class="contentHeadingH2">Board</h2>
                 </div>
+                <div>
+                    <img onclick="getToDoButton()" class="miniAddTaskImg" src="../assets/svg/add_task/add_task.svg" alt="">
+                </div>
             </div>
             <div class="contentHeadingOrder">
                 <div class="contentHeadingSearchMain">
@@ -78,7 +81,7 @@ function boardAddTaskTemplate() {
     return `
 <section>
 <form id="add-task-form" onsubmit="event.preventDefault(); postTask();">
-         <form id="add-task-form" onsubmit="event.preventDefault(); postTask();">
+        <form id="add-task-form" onsubmit="event.preventDefault(); postTask();">
         <section class="add_task_form_box">
             <div class="add_task_left_box addTaskLeftBoxBoard">
                 <div class="gap_8">
@@ -198,7 +201,7 @@ function taskOverlayTemplate(task, taskId) {
 function taskEditTemplate(task, taskId) {
     return `
     <div class="openEditTaskOverlayMain">
-        ${taskEditTitle(task, taskId)}
+        ${taskEditTitel(task, taskId)}
         ${taskEditDescription(task, taskId)}
         ${taskEditDate(task, taskId)}
         <div class="openEditTaskOverlayPriority">

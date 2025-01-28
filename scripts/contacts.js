@@ -189,7 +189,7 @@ async function deleteContact(id) {
 
   try {
     if (contact.firebaseKey) {
-      const response = await fetch(`${BASE_URL}/contacts/${contact.firebaseKey}.json`, {
+      const response = await fetch(`${CONTACTS_URL}/contacts/${contact.firebaseKey}.json`, {
         method: "DELETE",
       });
 
@@ -327,7 +327,7 @@ function selectContactMain(selectedElement) {
   }
 }
 // Firebase-URL für die Kontakte
-const BASE_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
+const CONTACTS_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
 
 // ID-Tracker für neue Kontakte
 let nextId = 1;
@@ -337,7 +337,7 @@ let nextId = 1;
  */
 async function fetchContactsFromFirebase() {
   try {
-    const response = await fetch(BASE_URL, {
+    const response = await fetch(CONTACTS_URL, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -376,7 +376,7 @@ async function fetchContactsFromFirebase() {
  */
 async function pushContactToFirebase(contact) {
   try {
-    const response = await fetch(BASE_URL, {
+    const response = await fetch(CONTACTS_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -406,7 +406,7 @@ async function updateContactInFirebase(contact) {
     return;
   }
   try {
-    const response = await fetch(`${BASE_URL}/${contact.firebaseKey}.json`, {
+    const response = await fetch(`${CONTACTS_URL}/${contact.firebaseKey}.json`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

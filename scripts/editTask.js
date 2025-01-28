@@ -153,21 +153,59 @@ function taskEditPriority(task) {
 
 
 function taskEditAssignedTo(task) {
-    const assignedHtml = task.assignedTo.map((person, index) => `
-        <div class="assigned-person" id="assigned-${index}">
-            <input type="text" value="${person}" id="editAssigned-${index}" />
-        </div>
-    `).join("");
-
+    const assignedContacts = task.assignedTo || []; // Bereits zugewiesene Kontakte
+    const contactListHtml = contacts.map(contact => {
+        const isSelected = assignedContacts.includes(contact.name);
+        return `
+            <div class="contact-item ${isSelected ? 'selected' : ''}" data-fullname="${contact.name}" onclick="toggleContactSelectionUI(this, '${contact.name}')">
+                <div class="contact-circle-label">
+                    <div class="initials-circle" style="background-color: ${getContactColor(contact.name)}">
+                        ${getInitials(contact.name)}
+                    </div>
+                    <span class="contact-label">${contact.name}</span>
+                </div>
+                <input type="checkbox" ${isSelected ? 'checked' : ''} />
+            </div>
+        `;
+    }).join("");
     return `
-    <div class="openEditTaskOverlayAssigned">
-        <label for="editAssigned">Assigned to</label>
-        <div id="editAssigned">
-            ${assignedHtml}
+        <div id="task-assigned" class="dropdown-wrapper">
+            <div class="dropdown-toggle" onclick="toggleDropdown(this)">
+                <span>Select contacts to assign</span>
+                <span class="dropdown-arrow"></span>
+            </div>
+            <div class="dropdown-content">
+                ${contactListHtml}
+            </div>
+            <div id="selected-contacts" class="selected-contacts">
+                ${assignedContacts.map(contactName => `
+                    <div class="selected-contact" data-fullname="${contactName}">
+                        <div class="initials-circle" style="background-color: ${getContactColor(contactName)}">
+                            ${getInitials(contactName)}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
         </div>
-    </div>
     `;
 }
+
+function toggleContactSelectionUI(container, contactName) {
+    const checkbox = container.querySelector("input[type='checkbox']");
+    const isSelected = checkbox.checked = !checkbox.checked; // Umschalten des Status
+    container.classList.toggle("selected", isSelected);
+
+    const selectedContactsContainer = document.getElementById('selected-contacts');
+    toggleContactSelection({ name: contactName }, isSelected, selectedContactsContainer);
+}
+
+function toggleDropdown(toggle) {
+    const dropdownContent = toggle.nextElementSibling;
+    const isVisible = dropdownContent.style.display === 'block';
+    dropdownContent.style.display = isVisible ? 'none' : 'block';
+    toggle.classList.toggle('open', !isVisible);
+}
+
 
 
 // function taskEditAssignedTo(task, taskId) {

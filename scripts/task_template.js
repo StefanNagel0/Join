@@ -361,27 +361,32 @@ async function saveTask(taskId) {
         return;
     }
     try {
-        // Lese und speichere den Titel
+        // 1. Lese und speichere den Titel
         const titleInput = document.getElementById("editTitle");
         task.title = titleInput?.value || task.title;
-        // Lese und speichere die Beschreibung
+        // 2. Lese und speichere die Beschreibung
         const descriptionInput = document.getElementById("editDescription");
         task.description = descriptionInput?.value || task.description;
-        // Lese und speichere das Fälligkeitsdatum
+        // 3. Lese und speichere das Fälligkeitsdatum
         const dueDateInput = document.getElementById("editDueDate");
         task.dueDate = dueDateInput?.value || task.dueDate;
-        // Lese und speichere die Zuweisungen
-        const assignedInputs = document.querySelectorAll("[id^='editAssigned-']");
-        task.assignedTo = Array.from(assignedInputs).map(input => input?.value || "");
-        // Lese und speichere die Unteraufgaben
+        // 4. Lese und speichere die Priorität
+        const priorityElement = document.getElementById("task-priority");
+        if (priorityElement) {
+            task.priority = priorityElement.getAttribute("data-priority") || task.priority;
+        }
+        // 5. Lese und speichere die zugewiesenen Kontakte
+        const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
+            .map(el => el.dataset.fullname); // Extrahiere die Namen der ausgewählten Kontakte
+        task.assignedTo = selectedContacts;
+        // 6. Lese und speichere die Unteraufgaben
         if (task.subtasks && task.subtasks.length > 0) {
-            task.subtasks = task.subtasks.map((subtask, index) => {
+            task.subtasks = task.subtasks.map((_, index) => {
                 const subtaskInput = document.getElementById(`subtask-${index}`);
                 const subtaskCompleted = document.getElementById(`subtask-completed-${index}`);
-                // Sicherstellen, dass beide Eingabefelder vorhanden sind
                 if (!subtaskInput || !subtaskCompleted) {
                     console.error(`Fehlendes Eingabefeld oder Kontrollkästchen für Unteraufgabe ${index}`);
-                    return { name: subtask?.name || '', completed: subtask?.completed || false };
+                    return { name: `Subtask ${index + 1}`, completed: false };
                 }
                 return {
                     name: subtaskInput.value,
@@ -391,24 +396,20 @@ async function saveTask(taskId) {
         } else {
             console.warn("Keine Unteraufgaben gefunden.");
         }
-        // Lese und speichere die Priorität
-        const priorityElement = document.getElementById("task-priority");
-        if (priorityElement) {
-            task.priority = priorityElement.getAttribute("data-priority") || task.priority;
-        }
         // Debug: Zeige den aktualisierten Task in der Konsole
         console.log(`Updated Task (${taskId}):`, task);
-        // Aktualisiere die Datenbank
+        // 7. Aktualisiere die Datenbank
         if (taskId in globalTasks) {
             await updateTaskInDatabase(taskId, task);
         }
-        // Aktualisiere die Anzeige und schließe das Overlay
+        // 8. Aktualisiere die Anzeige und schließe das Overlay
         displayTasks(globalTasks);
         closeTaskOverlay();
     } catch (error) {
         console.error("Fehler beim Speichern der Aufgabe:", error);
     }
 }
+
 
 
 // async function saveTask(taskId) {

@@ -292,7 +292,7 @@
         gap: 10px;
         width: 100%;
         justify-content: flex-start;
-        flex-direction: row;
+        flex-direction: row !important;
     }
 
     .detailscircle p {

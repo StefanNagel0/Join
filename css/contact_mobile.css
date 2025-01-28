@@ -422,3 +422,7 @@
     }
 }
 
+.selected:hover {
+    color: black !important;
+    background-color: #2A3647 !important;
+}

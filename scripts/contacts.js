@@ -326,85 +326,75 @@ function selectContactMain(selectedElement) {
     selectedElement.classList.add('selected');
   }
 }
+
+
 // Firebase-URL für die Kontakte
-const CONTACTS_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
+const CONTACTS_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/contacts";
 
-// ID-Tracker für neue Kontakte
-let nextId = 1;
+/* Hinzufügen eines neuen Kontakts und direktes Hochladen zu Firebase. */
+async function saveContact(name, phone, email) {
+  if (editIndex !== null) {
+    const contact = contacts[editIndex];
+    contact.name = name;
+    contact.phone = phone;
+    contact.email = email;
 
-/**
- * Lädt alle Kontakte aus der Firebase-Datenbank herunter und aktualisiert die lokale Kontaktliste.
- */
-async function fetchContactsFromFirebase() {
-  try {
-    const response = await fetch(CONTACTS_URL, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      if (data) {
-        const firebaseContacts = Object.entries(data).map(([key, value]) => ({
-          ...value,
-          firebaseKey: key, // Speichere den Firebase-Schlüssel
-        }));
-        firebaseContacts.forEach(contact => {
-          if (!contacts.find(c => c.id === contact.id)) {
-            contacts.push(contact);
-            if (contact.id >= nextId) {
-              nextId = contact.id + 1; // Aktualisiere nextId basierend auf den vorhandenen IDs
-            }
-          }
-        });
-        console.log("Kontakte aus Firebase aktualisiert:", contacts);
-        if (typeof showContacts === "function") showContacts();
-      }
-    } else {
-      console.error("Fehler beim Abrufen der Kontakte aus Firebase:", response.status);
+    if (contact.firebaseKey) {
+      await updateContactInFirebase(contact);
     }
-  } catch (error) {
-    console.error("Netzwerkfehler beim Abrufen der Kontakte:", error);
+    createSuccessMessage("Contact successfully updated", "successedit");
+  } else {
+    const newContact = { name, phone, email, color: getRandomColor() };
+
+    // Prüfen auf Duplikate
+    const isDuplicate = contacts.some(contact => contact.name === name && contact.phone === phone);
+    if (isDuplicate) {
+      alert("Duplicate contact detected. The contact will not be added.");
+      return;
+    }
+
+    const firebaseKey = await pushContactToFirebase(newContact);
+
+    if (firebaseKey) {
+      newContact.firebaseKey = firebaseKey;
+      contacts.push(newContact);
+    }
+
+    createSuccessMessage("Contact successfully created", "successcreate");
   }
+
+  await fetchContactsFromFirebase(); // Synchronisierung nach Hinzufügen
 }
 
-/**
- * Pusht einen einzelnen Kontakt zur Firebase-Datenbank.
- * @param {Object} contact - Der Kontakt, der hochgeladen werden soll.
- */
-async function pushContactToFirebase(contact) {
-  try {
-    const response = await fetch(CONTACTS_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(contact),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log(`Kontakt ${contact.name} erfolgreich hochgeladen:`, data);
-      contact.uploaded = true; // Kontakt als hochgeladen markieren
-    } else {
-      console.error(`Fehler beim Hochladen des Kontakts ${contact.name}:`, response.status);
-    }
-  } catch (error) {
-    console.error(`Netzwerkfehler beim Hochladen von ${contact.name}:`, error);
-  }
-}
-
-/**
- * Aktualisiert einen bestehenden Kontakt in der Firebase-Datenbank.
- * @param {Object} contact - Der Kontakt, der bearbeitet werden soll.
- */
-async function updateContactInFirebase(contact) {
-  if (!contact.firebaseKey) {
-    console.error("Kontakt hat keinen Firebase-Schlüssel:", contact);
+/* Direktes Löschen eines Kontakts in Firebase und lokal. */
+async function deleteContact(index) {
+  const contact = contacts[index];
+  if (!contact || !contact.firebaseKey) {
+    console.error("Kontakt nicht gefunden oder hat keinen Firebase-Schlüssel.");
     return;
   }
+
+  try {
+    const response = await fetch(`${CONTACTS_URL}/${contact.firebaseKey}.json`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      contacts.splice(index, 1);
+      console.log(`Kontakt ${contact.name} erfolgreich gelöscht.`);
+      showContacts();
+    } else {
+      console.error(`Fehler beim Löschen des Kontakts ${contact.name}:`, response.status);
+    }
+  } catch (error) {
+    console.error("Netzwerkfehler beim Löschen des Kontakts:", error);
+  }
+
+  await fetchContactsFromFirebase(); // Synchronisierung nach Löschen
+}
+
+/* Aktualisieren eines Kontakts in Firebase. */
+async function updateContactInFirebase(contact) {
   try {
     const response = await fetch(`${CONTACTS_URL}/${contact.firebaseKey}.json`, {
       method: "PUT",
@@ -414,71 +404,73 @@ async function updateContactInFirebase(contact) {
       body: JSON.stringify(contact),
     });
 
-    if (response.ok) {
-      console.log(`Kontakt ${contact.name} erfolgreich bearbeitet.`);
-    } else {
-      console.error(`Fehler beim Bearbeiten des Kontakts ${contact.name}:`, response.status);
+    if (!response.ok) {
+      console.error(`Fehler beim Aktualisieren des Kontakts ${contact.name}:`, response.status);
     }
   } catch (error) {
-    console.error(`Netzwerkfehler beim Bearbeiten von ${contact.name}:`, error);
+    console.error(`Netzwerkfehler beim Aktualisieren von ${contact.name}:`, error);
   }
+
+  await fetchContactsFromFirebase(); // Synchronisierung nach Bearbeiten
 }
 
-/**
- * Bearbeitet einen bestehenden Kontakt lokal und in Firebase.
- * @param {number} id - Die ID des zu bearbeitenden Kontakts.
- * @param {string} name - Der neue Name.
- * @param {string} phone - Die neue Telefonnummer.
- * @param {string} email - Die neue E-Mail-Adresse.
- */
-async function editContact(id, name, phone, email) {
-  const contact = contacts.find(contact => contact.id === id);
-  if (contact) {
-    contact.name = name;
-    contact.phone = phone;
-    contact.email = email;
-    await updateContactInFirebase(contact); // Kontakt in Firebase aktualisieren
-    console.log(`Kontakt mit ID ${id} wurde bearbeitet.`);
-    if (typeof showContacts === "function") showContacts();
-  } else {
-    console.error("Kontakt mit ID", id, "nicht gefunden.");
-  }
-}
+/* Hochladen eines neuen Kontakts zu Firebase. */
+async function pushContactToFirebase(contact) {
+  try {
+    const response = await fetch(`${CONTACTS_URL}.json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(contact),
+    });
 
-/**
- * Überprüft neue Kontakte, die noch nicht hochgeladen wurden, und lädt sie hoch.
- */
-async function checkAndUploadNewContacts() {
-  for (const contact of contacts) {
-    if (!contact.uploaded) {
-      await pushContactToFirebase(contact); // Nur Kontakte hochladen, die noch nicht hochgeladen wurden
+    if (response.ok) {
+      const data = await response.json();
+      console.log(`Kontakt ${contact.name} erfolgreich hochgeladen.`);
+      return data.name; // Firebase generiert einen Schlüssel und gibt ihn zurück
+    } else {
+      console.error(`Fehler beim Hochladen des Kontakts ${contact.name}:`, response.status);
+      return null;
     }
+  } catch (error) {
+    console.error(`Netzwerkfehler beim Hochladen von ${contact.name}:`, error);
+    return null;
   }
 }
 
-/**
- * Startet den Intervallprozess für regelmäßige Überprüfung und Synchronisierung.
- */
-function startSyncProcess() {
-  setInterval(async () => {
-    console.log("Synchronisation gestartet...");
-    await fetchContactsFromFirebase(); // Kontakte aus Firebase abrufen
-    await checkAndUploadNewContacts(); // Neue Kontakte hochladen
-    console.log("Synchronisation abgeschlossen.");
-  }, 500000000000); // Alle 5 Sekunden
+/* Kontakte aus Firebase abrufen, Duplikate entfernen und die lokale Liste aktualisieren. */
+async function fetchContactsFromFirebase() {
+  try {
+    const response = await fetch(`${CONTACTS_URL}.json`, {
+      method: "GET",
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const firebaseContacts = Object.entries(data || {}).map(([key, value]) => ({
+        ...value,
+        firebaseKey: key,
+      }));
+
+      // Duplikate entfernen
+      const uniqueContacts = firebaseContacts.filter((contact, index, self) =>
+        index === self.findIndex(c => c.name === contact.name && c.phone === contact.phone)
+      );
+
+      contacts = uniqueContacts;
+      showContacts();
+    } else {
+      console.error("Fehler beim Abrufen der Kontakte aus Firebase:", response.status);
+    }
+  } catch (error) {
+    console.error("Netzwerkfehler beim Abrufen der Kontakte:", error);
+  }
 }
 
-// Initialisierung
+/* Initialisierung der Kontakte und Anzeige. */
 async function initializeContacts() {
-  await fetchContactsFromFirebase(); // Vorhandene Kontakte abrufen
-  startSyncProcess(); // Synchronisierung starten
+  await fetchContactsFromFirebase();
 }
 
-initializeContacts();
-
-// Beispiel für neuen Kontakt
-// addNewContact("Max Mustermann", "0123456789", "max.mustermann@example.com");
-// Beispiel für Kontakt bearbeiten
-// editContact(1, "Max Mustermann", "0987654321", "max@example.com");
-// Beispiel für Kontakt löschen
-// deleteContact(1);
+document.addEventListener("DOMContentLoaded", initializeContacts);

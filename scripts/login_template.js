@@ -22,6 +22,9 @@ function loginTemplate() {
                     <div class="loginPassword"><input class="loginInput" type="password" id="password"
                             placeholder="Password" required></div>
                 </form>
+                <div class="rememberMeCtn">
+                <input class="rememberMe" type="checkbox" id="rememberMe"><label for="rememberMe">Remember me</label>
+                </div>
                 <div class="loginButtons">
                     <button class="loginButton" onclick="login()">Log in</button>
                     <button class="guestButton" onclick="guestLogin()">Guest Log In</button>

@@ -10,7 +10,7 @@ function registrationTemplate() {
             <div class="signUpLine"></div>
         </div>
         <form onsubmit="signUp(event);" class="loginForm">
-            <div class="signUpInput"><input style="color: rgb(0, 0, 0);" class="signUpInput2" type="name" id="name"
+            <div class="signUpInput"><input type="name" id="name"
                     placeholder="Name" required>
             </div>
             <div class="signUpInput"><input class="signUpInput2" type="email" id="email" placeholder="Email" required>
@@ -27,7 +27,9 @@ function registrationTemplate() {
             <div class="signUpButtonMain">
                 <button type="submit" class="signUpButton" disabled>Sign up</button>
             </div>
-            <div id="signUpError" class="errorMessage"></div>
+            <div class="signUpErrorMain">
+                <div id="signUpError" class="errorMessage"></div>
+            </div>
         </form>
     </div>
 </div>

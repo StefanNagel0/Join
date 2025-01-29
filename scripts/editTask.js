@@ -297,8 +297,6 @@ function taskEditSubtasks(task) {
     `;
 }
 
-{/* <input type="checkbox" id="subtask-completed-${index}" ${subtask.completed ? "checked" : ""} /> */ }
-
 function toggleEditSubtask(index) {
     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
     if (!subtaskContainer) return console.error("Subtask-Container nicht gefunden!");
@@ -357,40 +355,6 @@ async function fetchTaskFromFirebase(taskId) {
         return null;
     }
 }
-
-
-// function taskEditSubtasks(task, taskId, subtask, index) {
-//     if (task.subtasks && task.subtasks.length > 0) {
-//         const subtasksHtml = task.subtasks.map((subtask, index) => `
-//         <p id="taskSubtasksID-${index}" class="openTaskOverlaySubtask">
-//             <input title="Toggle Subtask" type="checkbox" id="subtask-${taskId}-${index}" onclick="toggleSubtask(${index}, '${taskId}')" ${subtask.completed ? 'checked' : ''} required/> ${subtask.name}
-//         </p>
-//     `).join("");
-//         return `
-//     <div class="openTaskOverlaySubtaskContainer">
-//     <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
-//         ${subtasksHtml}
-//     </div>
-//     `;
-//     } else {
-//         return ``;
-//     }
-// }
-
-// function taskEditSubtasks(task, taskId, subtask, index) {
-//     let taskSubtasks = document.getElementById("subtask-${taskId}-${index}");
-//     taskSubtasks.value = task.subtasks;
-//     return `
-//     <label for="editSubtasks">Subtasks</label>
-//     <div id="subtask-container">
-//     <input maxlength="20" type="text" id="new-subtask" placeholder="Add new subtask">
-//     <img id="clear-subtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg" alt="">
-//     <img id="add-subtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
-//         `;
-// }
-
-
-
 
 async function saveTask(taskId) {
     // Prüfe, ob die Task-ID existiert

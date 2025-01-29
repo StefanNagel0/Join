@@ -280,11 +280,11 @@ function taskEditSubtasks(task) {
         <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}">
             <label id="subtask-${index}">${subtask.text}</label>
             <div class="subtaskEditingContainer">
-                <button>
-                    <img src="../assets/svg/edit.svg" alt="" onclick="toggleEditSubtask(${index})">
+                <button onclick="toggleEditSubtask(${index})">
+                    <img src="../assets/svg/edit.svg" alt="">
                 </button>
-                <button>
-                    <img src="../assets/svg/delete.svg" alt="" onclick="deleteSubtask(${index})">
+                <button onclick="deleteSubtask(${index})">
+                    <img src="../assets/svg/delete.svg" alt="">
                 </button>
             </div>
         </div>
@@ -297,7 +297,7 @@ function taskEditSubtasks(task) {
     `;
 }
 
-{/* <input type="checkbox" id="subtask-completed-${index}" ${subtask.completed ? "checked" : ""} /> */}
+{/* <input type="checkbox" id="subtask-completed-${index}" ${subtask.completed ? "checked" : ""} /> */ }
 
 function toggleEditSubtask(index) {
     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
@@ -312,7 +312,7 @@ function toggleEditSubtask(index) {
 }
 
 
-function toggleDeleteSubtask (task, index) {
+function toggleDeleteSubtask(task, index) {
     const subtask = task.subtasks[index];
 
 }
@@ -386,4 +386,78 @@ function saveEditedSubtask(index) {
             </button>
         </div>
     `;
+}
+
+/* save the editing task */
+
+
+async function saveTask(taskId) {
+    // Prüfe, ob die Task-ID existiert
+    const task = globalTasks[taskId];
+    if (!task) {
+        console.error(`Task mit ID ${taskId} nicht gefunden.`);
+        return;
+    }
+    try {
+        // 1. Lese und speichere den Titel
+        const titleInput = document.getElementById("editTitle");
+        task.title = titleInput?.value || task.title;
+        // 2. Lese und speichere die Beschreibung
+        const descriptionInput = document.getElementById("editDescription");
+        task.description = descriptionInput?.value || task.description;
+        // 3. Lese und speichere das Fälligkeitsdatum
+        const dueDateInput = document.getElementById("editDueDate");
+        task.dueDate = dueDateInput?.value || task.dueDate;
+        // 4. Lese und speichere die Priorität
+        const priorityElement = document.getElementById("task-priority");
+        if (priorityElement) {
+            task.priority = priorityElement.getAttribute("data-priority") || task.priority;
+        }
+        // 5. Lese und speichere die zugewiesenen Kontakte
+        const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
+            .map(el => el.dataset.fullname); // Extrahiere die Namen der ausgewählten Kontakte
+        task.assignedTo = selectedContacts;
+        // 6. Lese und speichere die Unteraufgaben
+        if (task.subtasks && task.subtasks.length > 0) {
+            task.subtasks = task.subtasks.map((_, index) => {
+                const subtaskInput = document.getElementById(`subtask-${index}`);
+                const subtaskCompleted = document.getElementById(`subtask-completed-${index}`);
+                if (!subtaskInput || !subtaskCompleted) {
+                    console.error(`Fehlendes Eingabefeld oder Kontrollkästchen für Unteraufgabe ${index}`);
+                    return { name: `Subtask ${index + 1}`, completed: false };
+                }
+                return {
+                    name: subtaskInput.value,
+                    completed: subtaskCompleted.checked,
+                };
+            });
+        } else {
+            console.warn("Keine Unteraufgaben gefunden.");
+        }
+        // Debug: Zeige den aktualisierten Task in der Konsole
+        console.log(`Updated Task (${taskId}):`, task);
+        // 7. Aktualisiere die Datenbank
+        if (taskId in globalTasks) {
+            await updateTaskInDatabase(taskId, task);
+        }
+        // 8. Aktualisiere die Anzeige und schließe das Overlay
+        displayTasks(globalTasks);
+        closeTaskOverlay();
+    } catch (error) {
+        console.error("Fehler beim Speichern der Aufgabe:", error);
+    }
+}
+
+/* edited task update to database */
+async function updateTaskInDatabase(taskId, updatedTask) {
+    const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedTask)
+    });
+    if (!response.ok) {
+        throw new Error(`Fehler beim Aktualisieren der Aufgabe: ${response.statusText}`);
+    }
 }

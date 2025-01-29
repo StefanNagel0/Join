@@ -272,49 +272,67 @@ function toggleContactSelectionUI(container, contactName) {
 //     <div id="editAssigned" style="border: 1px solid #ccc; padding: 10px;"></div>
 //         `;
 // }
-
 function taskEditSubtasks(task) {
-    if (task.subtasks && task.subtasks.length > 0) {
-        const subtasksHtml = task.subtasks.map((subtask, index) => `
+    if (!task || !task.subtasks) return ''; // Sicherstellen, dass task existiert
+
+    // Erstelle HTML für Subtasks
+    const subtasksHtml = task.subtasks.map((subtask, index) => `
         <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}">
             <label id="subtask-${index}">${subtask.text}</label>
             <div class="subtaskEditingContainer">
-           <button><img src="../assets/svg/edit.svg" alt="" onclick="toggleEditSubtask(${task}, ${index}, ${subtask})"></button>
-           <button><img src="../assets/svg/delete.svg" alt="" onclick="deleteSubtask(${task}, ${index}, ${subtask})"></button>
+                <button>
+                    <img src="../assets/svg/edit.svg" alt="" onclick="toggleEditSubtask(${index})">
+                </button>
+                <button>
+                    <img src="../assets/svg/delete.svg" alt="" onclick="deleteSubtask(${index})">
+                </button>
             </div>
         </div>
-        `).join("");
-
-        return `
+    `).join("");
+    return `
         <div class="openTaskOverlaySubtaskContainer">
             <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
             ${subtasksHtml}
         </div>
-        `;
-    } else {
-        // Fallback für Tasks ohne Unteraufgaben
-        return `
-        <div class="openTaskOverlaySubtaskContainer">
-            <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
-            <p>No subtasks available</p>
-        </div>
-        `;
-    }
+    `;
 }
 
-//<input type="checkbox" id="subtask-completed-${index}" ${subtask.completed ? "checked" : ""} />}
-function toggleEditSubtask(task, index, subtask) {
-    for (let i = 0; i < task.subtasks.length; i++) {
-        let subtaskEdit = task.subtasks[i];
-        return `
-    <input type="text" id="subtask-${i}" value="${subtaskEdit}" />
-    `
-    }
+{/* <input type="checkbox" id="subtask-completed-${index}" ${subtask.completed ? "checked" : ""} /> */}
+
+function toggleEditSubtask(index) {
+    let subtaskContainer = document.getElementById(`subtask-container-${index}`);
+    if (!subtaskContainer) return console.error("Subtask-Container nicht gefunden!");
+    let subtaskLabel = document.getElementById(`subtask-${index}`);
+    if (!subtaskLabel) return console.error("Subtask-Label nicht gefunden!");
+    let currentText = subtaskLabel.innerText; // Aktueller Text des Subtasks
+    subtaskContainer.innerHTML = `
+        <input type="text" id="edit-subtask-${index}" value="${currentText}" />
+        <button onclick="saveEditedSubtask(${index})">Save</button>
+    `;
 }
 
-function toggleDeleteSubtask(task, index) {
+
+function toggleDeleteSubtask (task, index) {
     const subtask = task.subtasks[index];
 
+}
+
+async function fetchTaskFromFirebase(taskId) {
+    try {
+        const response = await fetch(`${BASE_URL}tasks/${taskId}.json`);
+        if (!response.ok) {
+            throw new Error(`Fehler beim Abrufen der Task: ${response.status}`);
+        }
+        const taskData = await response.json();
+        if (!taskData) {
+            console.error("Task nicht gefunden in Firebase!");
+            return null;
+        }
+        return { id: taskId, ...taskData }; // Task mit ID zurückgeben
+    } catch (error) {
+        console.error("Fehler beim Laden der Task:", error);
+        return null;
+    }
 }
 
 
@@ -347,3 +365,25 @@ function toggleDeleteSubtask(task, index) {
 //     <img id="add-subtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
 //         `;
 // }
+
+function saveEditedSubtask(index) {
+    let editedInput = document.getElementById(`edit-subtask-${index}`);
+    if (!editedInput) return console.error("Bearbeitungsfeld nicht gefunden!");
+
+    let newText = editedInput.value.trim();
+    if (newText === "") return console.warn("Leere Eingabe, nichts wird gespeichert.");
+
+    // Den Subtask im UI ersetzen
+    let subtaskContainer = document.getElementById(`subtask-container-${index}`);
+    subtaskContainer.innerHTML = `
+        <label id="subtask-${index}">${newText}</label>
+        <div class="subtaskEditingContainer">
+            <button>
+                <img src="../assets/svg/edit.svg" alt="" onclick="toggleEditSubtask(${index})">
+            </button>
+            <button>
+                <img src="../assets/svg/delete.svg" alt="" onclick="deleteSubtask(${index})">
+            </button>
+        </div>
+    `;
+}

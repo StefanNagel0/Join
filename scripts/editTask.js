@@ -311,6 +311,29 @@ function toggleEditSubtask(index) {
     `;
 }
 
+/* save the editing task */
+function saveEditedSubtask(index) {
+    let editedInput = document.getElementById(`edit-subtask-${index}`);
+    if (!editedInput) return console.error("Bearbeitungsfeld nicht gefunden!");
+
+    let newText = editedInput.value.trim();
+    if (newText === "") return console.warn("Leere Eingabe, nichts wird gespeichert.");
+
+    // Den Subtask im UI ersetzen
+    let subtaskContainer = document.getElementById(`subtask-container-${index}`);
+    subtaskContainer.innerHTML = `
+        <label id="subtask-${index}">${newText}</label>
+        <div class="subtaskEditingContainer">
+            <button onclick="toggleEditSubtask(${index})">
+                <img src="../assets/svg/edit.svg" alt="" >
+            </button>
+            <button onclick="deleteSubtask(${index})">
+                <img src="../assets/svg/delete.svg" alt="" >
+            </button>
+        </div>
+    `;
+}
+
 
 function toggleDeleteSubtask(task, index) {
     const subtask = task.subtasks[index];
@@ -366,29 +389,7 @@ async function fetchTaskFromFirebase(taskId) {
 //         `;
 // }
 
-function saveEditedSubtask(index) {
-    let editedInput = document.getElementById(`edit-subtask-${index}`);
-    if (!editedInput) return console.error("Bearbeitungsfeld nicht gefunden!");
 
-    let newText = editedInput.value.trim();
-    if (newText === "") return console.warn("Leere Eingabe, nichts wird gespeichert.");
-
-    // Den Subtask im UI ersetzen
-    let subtaskContainer = document.getElementById(`subtask-container-${index}`);
-    subtaskContainer.innerHTML = `
-        <label id="subtask-${index}">${newText}</label>
-        <div class="subtaskEditingContainer">
-            <button>
-                <img src="../assets/svg/edit.svg" alt="" onclick="toggleEditSubtask(${index})">
-            </button>
-            <button>
-                <img src="../assets/svg/delete.svg" alt="" onclick="deleteSubtask(${index})">
-            </button>
-        </div>
-    `;
-}
-
-/* save the editing task */
 
 
 async function saveTask(taskId) {

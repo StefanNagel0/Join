@@ -279,8 +279,8 @@ function taskEditSubtasks(task) {
         <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}">
             <label id="subtask-${index}">${subtask.text}</label>
             <div class="subtaskEditingContainer">
-           <button><img src="../assets/svg/edit.svg" alt="" onclick="toggleEditSubtask(index)"></button>
-           <button><img src="../assets/svg/delete.svg" alt="" onclick="deleteSubtask(task, index)"></button>
+           <button><img src="../assets/svg/edit.svg" alt="" onclick="toggleEditSubtask(${task}, ${index}, ${subtask})"></button>
+           <button><img src="../assets/svg/delete.svg" alt="" onclick="deleteSubtask(${task}, ${index}, ${subtask})"></button>
             </div>
         </div>
         `).join("");
@@ -302,18 +302,19 @@ function taskEditSubtasks(task) {
     }
 }
 
-{/* <input type="checkbox" id="subtask-completed-${index}" ${subtask.completed ? "checked" : ""} /> */}
-
-function toggleEditSubtask (index) {
-    let subtaskEdit = task.subtasks[index];
-    return `
-    <input type="text" id="${subtaskEdit.name[index]}" value="${subtask.name || ''}" />
+//<input type="checkbox" id="subtask-completed-${index}" ${subtask.completed ? "checked" : ""} />}
+function toggleEditSubtask(task, index, subtask) {
+    for (let i = 0; i < task.subtasks.length; i++) {
+        let subtaskEdit = task.subtasks[i];
+        return `
+    <input type="text" id="subtask-${i}" value="${subtaskEdit}" />
     `
+    }
 }
 
-function toggleDeleteSubtask (task, index) {
+function toggleDeleteSubtask(task, index) {
     const subtask = task.subtasks[index];
-    
+
 }
 
 

@@ -134,6 +134,12 @@
     color: #42526E;
 }
 
+.subtaskEditingContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
 .openEditTaskSaveButtonSorting {
     display: flex;
     justify-content: flex-end;

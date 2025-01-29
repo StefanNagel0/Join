@@ -276,10 +276,12 @@ function toggleContactSelectionUI(container, contactName) {
 function taskEditSubtasks(task) {
     if (task.subtasks && task.subtasks.length > 0) {
         const subtasksHtml = task.subtasks.map((subtask, index) => `
-        <div id="subtask-container-${index}">
-            <label for="subtask-${index}">Subtask ${index + 1}</label>
-            <input type="text" id="subtask-${index}" value="${subtask.name || ''}" />
-            <input type="checkbox" id="subtask-completed-${index}" ${subtask.completed ? "checked" : ""} />
+        <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}">
+            <label id="subtask-${index}">${subtask.text}</label>
+            <div class="subtaskEditingContainer">
+           <button><img src="../assets/svg/edit.svg" alt="" onclick="toggleEditSubtask(index)"></button>
+           <button><img src="../assets/svg/delete.svg" alt="" onclick="deleteSubtask(task, index)"></button>
+            </div>
         </div>
         `).join("");
 
@@ -300,7 +302,19 @@ function taskEditSubtasks(task) {
     }
 }
 
+{/* <input type="checkbox" id="subtask-completed-${index}" ${subtask.completed ? "checked" : ""} /> */}
 
+function toggleEditSubtask (index) {
+    let subtaskEdit = task.subtasks[index];
+    return `
+    <input type="text" id="${subtaskEdit.name[index]}" value="${subtask.name || ''}" />
+    `
+}
+
+function toggleDeleteSubtask (task, index) {
+    const subtask = task.subtasks[index];
+    
+}
 
 
 // function taskEditSubtasks(task, taskId, subtask, index) {

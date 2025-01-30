@@ -256,22 +256,6 @@ function createTaskObject(form) {
     return task;
 }
 
-
-// function createTaskObject(form) {
-//     const formData = new FormData(form);
-//     return {
-//         title: formData.get('title'),
-//         description: formData.get('description'),
-//         dueDate: formData.get('dueDate'),
-//         priority: selectedPriority,
-//         category: document.querySelector('#dropdown-toggle-category span')?.textContent !== 'Select task category'
-//             ? document.querySelector('#dropdown-toggle-category span').textContent // Wenn Kategorie ausgewählt, wird sie im Task gespeichert
-//             : null, // Falls keine Kategorie ausgewählt wurde, wird null gesetzt
-//         assignedTo: getSelectedContacts(),
-//         subtasks: Array.from(document.querySelectorAll('#subtask-list li')).map(li => li.textContent),
-//     };
-// }
-
 /** Reset the form and show a notification */
 function resetFormAndNotify(form) {
     form.reset();

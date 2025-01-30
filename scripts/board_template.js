@@ -170,6 +170,7 @@ function boardAddTaskTemplate() {
 
 /* Renders the overlay from the task */
 function taskOverlayTemplate(task, taskId) {
+    console.log(task);
     return `
     <div class="openTaskOverlayMain">
         ${taskCategoryTemplate(task)}

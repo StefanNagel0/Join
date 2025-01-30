@@ -46,7 +46,6 @@ function editTask(taskId) {
 }
 
 
-
 // /* editing the task */
 // function editTask(taskId) {
 //     const task = globalTasks[taskId];
@@ -464,26 +463,6 @@ async function fetchTaskFromFirebase(taskId) {
     return { id: taskId, ...taskData };
 }
 
-
-// async function fetchTaskFromFirebase(taskId) {
-//     try {
-//         const response = await fetch(`${BASE_URL}tasks/${taskId}.json`);
-//         if (!response.ok) {
-//             throw new Error(`Fehler beim Abrufen der Task: ${response.status}`);
-//         }
-//         const taskData = await response.json();
-//         if (!taskData) {
-//             console.error("Task nicht gefunden in Firebase!");
-//             return null;
-//         }
-//         return { id: taskId, ...taskData }; // Task mit ID zurückgeben
-//     } catch (error) {
-//         console.error("Fehler beim Laden der Task:", error);
-//         return null;
-//     }
-// }
-
-
 async function saveTask(taskId) {
     const task = globalTasks[taskId];
     if (!task) {
@@ -491,7 +470,8 @@ async function saveTask(taskId) {
         return;
     }
     try {
-        // Titel, Beschreibung und andere Felder speichern
+        const taskFromDB = await fetchTaskFromFirebase(taskId);
+        const subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks;
         const titleInput = document.getElementById("editTitle");
         task.title = titleInput?.value || task.title;
         const descriptionInput = document.getElementById("editDescription");
@@ -502,141 +482,20 @@ async function saveTask(taskId) {
         if (priorityElement) {
             task.priority = priorityElement.getAttribute("data-priority") || task.priority;
         }
-        // Zuordnen der Kontakte
         const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
             .map(el => el.dataset.fullname);
         task.assignedTo = selectedContacts;
-        // Subtask-Daten aus den Eingabefeldern übernehmen
-        const subtasks = task.subtasks.map((subtask, index) => {
-            const subtaskTextElement = document.getElementById(`edit-subtask-${index}`);
-            if (subtaskTextElement) {
-                subtask.text = subtaskTextElement.value || subtask.text; // Aktualisiere den Text der Subtask
-            }
-            return subtask;
-        });
-        task.subtasks = subtasks;
-        // Debug: Subtasks anzeigen
-        console.log("Updated Subtasks:", task.subtasks);
-        // Task in der Datenbank speichern
+        task.subtasks = subtasksFromDB;
+        console.log("Updated Task ohne Subtasks-Überschreibung:", task);
         if (taskId in globalTasks) {
             await updateTaskInDatabase(taskId, task);
         }
-        // UI aktualisieren und Overlay schließen
-        displayTasks(globalTasks);  // Vergewissere dich, dass dies alle Task-Daten neu rendert
+        displayTasks(globalTasks);
         closeTaskOverlay();
     } catch (error) {
         console.error("Fehler beim Speichern der Aufgabe:", error);
     }
 }
-
-// async function saveTask(taskId) {
-//     const task = globalTasks[taskId];
-//     if (!task) {
-//         console.error(`Task mit ID ${taskId} nicht gefunden.`);
-//         return;
-//     }
-
-//     try {
-//         // Titel, Beschreibung und andere Felder speichern
-//         const titleInput = document.getElementById("editTitle");
-//         task.title = titleInput?.value || task.title;
-
-//         const descriptionInput = document.getElementById("editDescription");
-//         task.description = descriptionInput?.value || task.description;
-
-//         const dueDateInput = document.getElementById("editDueDate");
-//         task.dueDate = dueDateInput?.value || task.dueDate;
-
-//         const priorityElement = document.getElementById("task-priority");
-//         if (priorityElement) {
-//             task.priority = priorityElement.getAttribute("data-priority") || task.priority;
-//         }
-//         // Zuordnen der Kontakte
-//         const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
-//             .map(el => el.dataset.fullname);
-//         task.assignedTo = selectedContacts;
-//         // Subtask-Daten aus den Eingabefeldern übernehmen
-//         const subtasks = task.subtasks.map((subtask, index) => {
-//             const subtaskTextElement = document.getElementById(`subtask-text-${index}`);
-//             if (subtaskTextElement) {
-//                 subtask.text = subtaskTextElement.value || subtask.text; // Aktualisiere den Text der Subtask
-//             }
-//             return subtask;
-//         });
-//         task.subtasks = subtasks;
-//         // Debug: Subtasks anzeigen
-//         console.log("Updated Subtasks:", task.subtasks);
-//         // Task in der Datenbank speichern
-//         if (taskId in globalTasks) {
-//             await updateTaskInDatabase(taskId, task);
-//         }
-//         // UI aktualisieren und Overlay schließen
-//         displayTasks(globalTasks);
-//         closeTaskOverlay();
-//     } catch (error) {
-//         console.error("Fehler beim Speichern der Aufgabe:", error);
-//     }
-// }
-
-
-
-// async function saveTask(taskId) {
-//     // Prüfe, ob die Task-ID existiert
-//     const task = globalTasks[taskId];
-//     if (!task) {
-//         console.error(`Task mit ID ${taskId} nicht gefunden.`);
-//         return;
-//     }
-//     try {
-//         // 1. Lese und speichere den Titel
-//         const titleInput = document.getElementById("editTitle");
-//         task.title = titleInput?.value || task.title;
-//         // 2. Lese und speichere die Beschreibung
-//         const descriptionInput = document.getElementById("editDescription");
-//         task.description = descriptionInput?.value || task.description;
-//         // 3. Lese und speichere das Fälligkeitsdatum
-//         const dueDateInput = document.getElementById("editDueDate");
-//         task.dueDate = dueDateInput?.value || task.dueDate;
-//         // 4. Lese und speichere die Priorität
-//         const priorityElement = document.getElementById("task-priority");
-//         if (priorityElement) {
-//             task.priority = priorityElement.getAttribute("data-priority") || task.priority;
-//         }
-//         // 5. Lese und speichere die zugewiesenen Kontakte
-//         const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
-//             .map(el => el.dataset.fullname); // Extrahiere die Namen der ausgewählten Kontakte
-//         task.assignedTo = selectedContacts;
-//         // 6. Lese und speichere die Unteraufgaben
-//         if (task.subtasks && task.subtasks.length > 0) {
-//             task.subtasks = task.subtasks.map((_, index) => {
-//                 const subtaskInput = document.getElementById(`subtask-${index}`);
-//                 const subtaskCompleted = document.getElementById(`subtask-completed-${index}`);
-//                 if (!subtaskInput || !subtaskCompleted) {
-//                     // Das hier drüber gehört in die IF Abfrage rein!
-//                     console.error(`Fehlendes Eingabefeld oder Kontrollkästchen für Unteraufgabe ${index}`);
-//                     return { text: `Subtask ${index + 1}`, completed: false };
-//                 }
-//                 return {
-//                     name: subtaskInput.value,
-//                     // completed: subtaskCompleted.checked,
-//                 };
-//             });
-//         } else {
-//             console.warn("Keine Unteraufgaben gefunden.");
-//         }
-//         // Debug: Zeige den aktualisierten Task in der Konsole
-//         console.log(`Updated Task (${taskId}):`, task);
-//         // 7. Aktualisiere die Datenbank
-//         if (taskId in globalTasks) {
-//             await updateTaskInDatabase(taskId, task);
-//         }
-//         // 8. Aktualisiere die Anzeige und schließe das Overlay
-//         displayTasks(globalTasks);
-//         closeTaskOverlay();
-//     } catch (error) {
-//         console.error("Fehler beim Speichern der Aufgabe:", error);
-//     }
-// }
 
 /* edited task update to database */
 

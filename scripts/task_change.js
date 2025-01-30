@@ -6,6 +6,9 @@ function onload() {
 /* global definition of task */
 let globalTasks = {};
 
+
+
+
 /* global definition of mainCategory */
 let mainCategory = '';
 
@@ -20,7 +23,6 @@ async function loadTask(path = "/tasks") {
     globalTasks = tasks;
     displayTasks(tasks);
 }
-
 /**Displays tasks in their corresponding containers.*/
 
 function displayTasks(tasks) {

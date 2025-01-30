@@ -1,11 +1,20 @@
 // FUNKTIONEN HIER EINFÜGEN!
 
 function editTask(taskId) {
+    console.log("Aufruf von editTask mit Task ID:", taskId);  // Debugging
+    if (!taskId) {
+        console.error("Fehler: taskId ist undefined oder null!");
+        return;
+    }
+
     const task = globalTasks[taskId];
     if (!task) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
         return;
     }
+
+    console.log("Gefundene Task:", task);
+    console.log("Subtasks:", task.subtasks);
 
     // Lade das Overlay mit den bearbeitbaren Feldern
     const overlayRef = document.querySelector(".openTaskOverlayMain");
@@ -15,10 +24,9 @@ function editTask(taskId) {
         <input id="editDueDate" type="date" value="${task.dueDate}">
         ${taskEditPriority(task)} <!-- Füge Priorität hinzu -->
         ${taskEditAssignedTo(task)} <!-- Füge Assigned to hinzu -->
-        ${taskEditSubtasks(task)} <!-- Füge Subtasks hinzu -->
+        ${taskEditSubtasks(task, taskId)} <!-- Füge Subtasks hinzu und übergebe taskId -->
         <button onclick="saveTask('${taskId}')">OK</button>
     `;
-
     // Füge Logik hinzu, um Priorität durch Klick zu ändern (ohne EventListener)
     document.querySelectorAll("#task-priority .prio-btn").forEach(button => {
         button.onclick = function () {
@@ -31,6 +39,7 @@ function editTask(taskId) {
         };
     });
 }
+
 
 
 // /* editing the task */
@@ -271,22 +280,28 @@ function toggleContactSelectionUI(container, contactName) {
 //     <div id="editAssigned" style="border: 1px solid #ccc; padding: 10px;"></div>
 //         `;
 // }
-function taskEditSubtasks(task) {
+
+function taskEditSubtasks(task, taskId) {
     if (!task || !task.subtasks) return ''; // Sicherstellen, dass task existiert
-    // Erstelle HTML für Subtasks
-    const subtasksHtml = task.subtasks.map((subtask, index) => `
-        <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}">
-            <label id="subtask-${index}">${subtask.text}</label>
-            <div class="subtaskEditingContainer">
-                <button onclick="toggleEditSubtask(${index})">
-                    <img src="../assets/svg/edit.svg" alt="">
-                </button>
-                <button onclick="deleteSubtask(${index})">
-                    <img src="../assets/svg/delete.svg" alt="">
-                </button>
+
+    console.log("task.id in taskEditSubtasks:", taskId);  // Debugging für task.id
+
+    const subtasksHtml = task.subtasks.map((subtask, index) => {
+        return `
+            <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}">
+                <input type="text" id="edit-subtask-${index}" value="${subtask.text}" /> <!-- Subtask in Input umwandeln -->
+                <div class="subtaskEditingContainer">
+                    <button onclick="toggleEditSubtask(${index}, '${taskId}')">
+                        <img src="../assets/svg/edit.svg" alt="">
+                    </button>
+                    <button onclick="deleteSubtask(${index}, '${taskId}')">
+                        <img src="../assets/svg/delete.svg" alt="">
+                    </button>
+                </div>
             </div>
-        </div>
-    `).join("");
+        `;
+    }).join("");
+
     return `
         <div class="openTaskOverlaySubtaskContainer">
             <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
@@ -295,7 +310,64 @@ function taskEditSubtasks(task) {
     `;
 }
 
-function toggleEditSubtask(index) {
+
+
+// function taskEditSubtasks(task, taskId) {
+//     if (!task || !task.subtasks) return ''; // Sicherstellen, dass task existiert
+//     console.log("task.id in taskEditSubtasks:", taskId);  // Debugging für task.id
+
+//     const subtasksHtml = task.subtasks.map((subtask, index) => {
+//         return `
+//             <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}">
+//                 <label id="subtask-${index}">${subtask.text}</label>
+//                 <div class="subtaskEditingContainer">
+//                     <button onclick="toggleEditSubtask(${index}, '${taskId}')">
+//                         <img src="../assets/svg/edit.svg" alt="">
+//                     </button>
+//                     <button onclick="deleteSubtask(${index}, '${taskId}')">
+//                         <img src="../assets/svg/delete.svg" alt="">
+//                     </button>
+//                 </div>
+//             </div>
+//         `;
+//     }).join("");
+
+//     return `
+//         <div class="openTaskOverlaySubtaskContainer">
+//             <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
+//             ${subtasksHtml}
+//         </div>
+//     `;
+// }
+
+
+
+// function taskEditSubtasks(task) {
+//     if (!task || !task.subtasks) return ''; // Sicherstellen, dass task existiert
+//     // Erstelle HTML für Subtasks
+//     const subtasksHtml = task.subtasks.map((subtask, index) => `
+//         <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}">
+//             <label id="subtask-${index}">${subtask.text}</label>
+//             <div class="subtaskEditingContainer">
+//                 <button onclick="toggleEditSubtask(${index}, '${taskId}')">
+//                     <img src="../assets/svg/edit.svg" alt="">
+//                 </button>
+//                 <button onclick="deleteSubtask(${index})">
+//                     <img src="../assets/svg/delete.svg" alt="">
+//                 </button>
+//             </div>
+//         </div>
+//     `).join("");
+//     return `
+//         <div class="openTaskOverlaySubtaskContainer">
+//             <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
+//             ${subtasksHtml}
+//         </div>
+//     `;
+// }
+
+function toggleEditSubtask(index, taskId) {
+    console.log("taskId in toggleEditSubtask:", taskId);  // Debugging für taskId
     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
     if (!subtaskContainer) return console.error("Subtask-Container nicht gefunden!");
     let subtaskLabel = document.getElementById(`subtask-${index}`);
@@ -303,9 +375,23 @@ function toggleEditSubtask(index) {
     let currentText = subtaskLabel.innerText; // Aktueller Text des Subtasks
     subtaskContainer.innerHTML = `
         <input type="text" id="edit-subtask-${index}" value="${currentText}" />
-        <button onclick="saveEditedSubtask(${index})">Save</button>
+        <button data-task-id="${taskId}" onclick="saveEditedSubtask(${index}, this)">Save</button>
     `;
 }
+
+
+
+// function toggleEditSubtask(index) {
+//     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
+//     if (!subtaskContainer) return console.error("Subtask-Container nicht gefunden!");
+//     let subtaskLabel = document.getElementById(`subtask-${index}`);
+//     if (!subtaskLabel) return console.error("Subtask-Label nicht gefunden!");
+//     let currentText = subtaskLabel.innerText; // Aktueller Text des Subtasks
+//     subtaskContainer.innerHTML = `
+//         <input type="text" id="edit-subtask-${index}" value="${currentText}" />
+//         <button onclick="saveEditedSubtask(${index}, '${taskId}')">Save</button>
+//     `;
+// }
 
 function subtaskCompletedCheckbox(index, completed) {
     return `
@@ -314,29 +400,67 @@ function subtaskCompletedCheckbox(index, completed) {
 }
 
 /* save the editing task */
-async function saveEditedSubtask(index) {
+
+async function saveEditedSubtask(index, buttonElement) {
+    const taskId = buttonElement.getAttribute('data-task-id'); // Hole die Task ID vom Button
+    if (!taskId) return console.error("Task ID fehlt!"); // Debugging
+
+    console.log("Task ID:", taskId); // Debugging
     let editedInput = document.getElementById(`edit-subtask-${index}`);
     if (!editedInput) return console.error("Bearbeitungsfeld nicht gefunden!");
-
     let newText = editedInput.value.trim();
     if (newText === "") return console.warn("Leere Eingabe, nichts wird gespeichert.");
 
+    // Task aus Firebase holen
+    let task = await fetchTaskFromFirebase(taskId);
+    if (!task || !task.subtasks) return console.error("Task oder Subtasks nicht gefunden!");
+    console.log("Generiere Subtasks für Task:", task); // Debugging-Ausgabe
+
+    // Subtask-Text aktualisieren
+    task.subtasks[index].text = newText;
     // Den Subtask im UI ersetzen
     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
+    console.log(`Speichern der bearbeiteten Subtask: ${index}, Task ID: ${taskId}`);
     subtaskContainer.innerHTML = `
         <label id="subtask-${index}">${newText}</label>
         <div class="subtaskEditingContainer">
-            <button onclick="toggleEditSubtask(${index})">
-                <img src="../assets/svg/edit.svg" alt="" >
+            <button onclick="toggleEditSubtask(${index}, '${taskId}')">
+                <img src="../assets/svg/edit.svg" alt="">
             </button>
-            <button onclick="deleteSubtask(${index})">
-                <img src="../assets/svg/delete.svg" alt="" >
+            <button onclick="deleteSubtask(${index}, '${taskId}')">
+                <img src="../assets/svg/delete.svg" alt="">
             </button>
         </div>
     `;
+    // Aktualisierte Daten in Firebase speichern
     await updateSubtaskDB(task, taskId);
 }
 
+
+
+
+// async function saveEditedSubtask(index) {
+//     let editedInput = document.getElementById(`edit-subtask-${index}`);
+//     if (!editedInput) return console.error("Bearbeitungsfeld nicht gefunden!");
+
+//     let newText = editedInput.value.trim();
+//     if (newText === "") return console.warn("Leere Eingabe, nichts wird gespeichert.");
+
+//     // Den Subtask im UI ersetzen
+//     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
+//     subtaskContainer.innerHTML = `
+//         <label id="subtask-${index}">${newText}</label>
+//         <div class="subtaskEditingContainer">
+//             <button onclick="toggleEditSubtask(${index})">
+//                 <img src="../assets/svg/edit.svg" alt="" >
+//             </button>
+//             <button onclick="deleteSubtask(${index})">
+//                 <img src="../assets/svg/delete.svg" alt="" >
+//             </button>
+//         </div>
+//     `;
+//     await updateSubtaskDB(task, taskId);
+// }
 
 function toggleDeleteSubtask(task, index) {
     const subtask = task.subtasks[index];
@@ -344,74 +468,94 @@ function toggleDeleteSubtask(task, index) {
 }
 
 async function fetchTaskFromFirebase(taskId) {
-    try {
-        const response = await fetch(`${BASE_URL}tasks/${taskId}.json`);
-        if (!response.ok) {
-            throw new Error(`Fehler beim Abrufen der Task: ${response.status}`);
-        }
-        const taskData = await response.json();
-        if (!taskData) {
-            console.error("Task nicht gefunden in Firebase!");
-            return null;
-        }
-        return { id: taskId, ...taskData }; // Task mit ID zurückgeben
-    } catch (error) {
-        console.error("Fehler beim Laden der Task:", error);
+    console.log("Abruf der Task mit ID:", taskId); // Debugging-Ausgabe
+    if (!taskId) {
+        console.error("Fehler: Task ID ist undefined!");
         return null;
     }
+
+    const response = await fetch(`${BASE_URL}tasks/${taskId}.json`);
+    const taskData = await response.json();
+    
+    console.log("Erhaltene Task-Daten:", taskData); // Debugging
+
+    if (!taskData) {
+        console.error("Task nicht gefunden in Firebase!");
+        return null;
+    }
+
+    return { id: taskId, ...taskData };
 }
 
+
+// async function fetchTaskFromFirebase(taskId) {
+//     try {
+//         const response = await fetch(`${BASE_URL}tasks/${taskId}.json`);
+//         if (!response.ok) {
+//             throw new Error(`Fehler beim Abrufen der Task: ${response.status}`);
+//         }
+//         const taskData = await response.json();
+//         if (!taskData) {
+//             console.error("Task nicht gefunden in Firebase!");
+//             return null;
+//         }
+//         return { id: taskId, ...taskData }; // Task mit ID zurückgeben
+//     } catch (error) {
+//         console.error("Fehler beim Laden der Task:", error);
+//         return null;
+//     }
+// }
+
+
+
 async function saveTask(taskId) {
-    // Prüfe, ob die Task-ID existiert
     const task = globalTasks[taskId];
     if (!task) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
         return;
     }
+
     try {
-        // 1. Lese und speichere den Titel
+        // Titel, Beschreibung und andere Felder speichern
         const titleInput = document.getElementById("editTitle");
         task.title = titleInput?.value || task.title;
-        // 2. Lese und speichere die Beschreibung
+
         const descriptionInput = document.getElementById("editDescription");
         task.description = descriptionInput?.value || task.description;
-        // 3. Lese und speichere das Fälligkeitsdatum
+
         const dueDateInput = document.getElementById("editDueDate");
         task.dueDate = dueDateInput?.value || task.dueDate;
-        // 4. Lese und speichere die Priorität
+
         const priorityElement = document.getElementById("task-priority");
         if (priorityElement) {
             task.priority = priorityElement.getAttribute("data-priority") || task.priority;
         }
-        // 5. Lese und speichere die zugewiesenen Kontakte
+
+        // Zuordnen der Kontakte
         const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
-            .map(el => el.dataset.fullname); // Extrahiere die Namen der ausgewählten Kontakte
+            .map(el => el.dataset.fullname);
         task.assignedTo = selectedContacts;
-        // 6. Lese und speichere die Unteraufgaben
-        if (task.subtasks && task.subtasks.length > 0) {
-            task.subtasks = task.subtasks.map((_, index) => {
-                const subtaskInput = document.getElementById(`subtask-${index}`);
-                const subtaskCompleted = document.getElementById(`subtask-completed-${index}`);
-                if (!subtaskInput || !subtaskCompleted) {
-                    // Das hier drüber gehört in die IF Abfrage rein!
-                    console.error(`Fehlendes Eingabefeld oder Kontrollkästchen für Unteraufgabe ${index}`);
-                    return { text: `Subtask ${index + 1}`, completed: false };
-                }
-                return {
-                    name: subtaskInput.value,
-                    // completed: subtaskCompleted.checked,
-                };
-            });
-        } else {
-            console.warn("Keine Unteraufgaben gefunden.");
-        }
-        // Debug: Zeige den aktualisierten Task in der Konsole
-        console.log(`Updated Task (${taskId}):`, task);
-        // 7. Aktualisiere die Datenbank
+
+        // Subtask-Daten aus den Eingabefeldern übernehmen
+        const subtasks = task.subtasks.map((subtask, index) => {
+            const subtaskTextElement = document.getElementById(`subtask-text-${index}`);
+            if (subtaskTextElement) {
+                subtask.text = subtaskTextElement.value || subtask.text; // Aktualisiere den Text der Subtask
+            }
+            return subtask;
+        });
+
+        task.subtasks = subtasks;
+
+        // Debug: Subtasks anzeigen
+        console.log("Updated Subtasks:", task.subtasks);
+
+        // Task in der Datenbank speichern
         if (taskId in globalTasks) {
             await updateTaskInDatabase(taskId, task);
         }
-        // 8. Aktualisiere die Anzeige und schließe das Overlay
+
+        // UI aktualisieren und Overlay schließen
         displayTasks(globalTasks);
         closeTaskOverlay();
     } catch (error) {
@@ -419,30 +563,128 @@ async function saveTask(taskId) {
     }
 }
 
+
+
+// async function saveTask(taskId) {
+//     // Prüfe, ob die Task-ID existiert
+//     const task = globalTasks[taskId];
+//     if (!task) {
+//         console.error(`Task mit ID ${taskId} nicht gefunden.`);
+//         return;
+//     }
+//     try {
+//         // 1. Lese und speichere den Titel
+//         const titleInput = document.getElementById("editTitle");
+//         task.title = titleInput?.value || task.title;
+//         // 2. Lese und speichere die Beschreibung
+//         const descriptionInput = document.getElementById("editDescription");
+//         task.description = descriptionInput?.value || task.description;
+//         // 3. Lese und speichere das Fälligkeitsdatum
+//         const dueDateInput = document.getElementById("editDueDate");
+//         task.dueDate = dueDateInput?.value || task.dueDate;
+//         // 4. Lese und speichere die Priorität
+//         const priorityElement = document.getElementById("task-priority");
+//         if (priorityElement) {
+//             task.priority = priorityElement.getAttribute("data-priority") || task.priority;
+//         }
+//         // 5. Lese und speichere die zugewiesenen Kontakte
+//         const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
+//             .map(el => el.dataset.fullname); // Extrahiere die Namen der ausgewählten Kontakte
+//         task.assignedTo = selectedContacts;
+//         // 6. Lese und speichere die Unteraufgaben
+//         if (task.subtasks && task.subtasks.length > 0) {
+//             task.subtasks = task.subtasks.map((_, index) => {
+//                 const subtaskInput = document.getElementById(`subtask-${index}`);
+//                 const subtaskCompleted = document.getElementById(`subtask-completed-${index}`);
+//                 if (!subtaskInput || !subtaskCompleted) {
+//                     // Das hier drüber gehört in die IF Abfrage rein!
+//                     console.error(`Fehlendes Eingabefeld oder Kontrollkästchen für Unteraufgabe ${index}`);
+//                     return { text: `Subtask ${index + 1}`, completed: false };
+//                 }
+//                 return {
+//                     name: subtaskInput.value,
+//                     // completed: subtaskCompleted.checked,
+//                 };
+//             });
+//         } else {
+//             console.warn("Keine Unteraufgaben gefunden.");
+//         }
+//         // Debug: Zeige den aktualisierten Task in der Konsole
+//         console.log(`Updated Task (${taskId}):`, task);
+//         // 7. Aktualisiere die Datenbank
+//         if (taskId in globalTasks) {
+//             await updateTaskInDatabase(taskId, task);
+//         }
+//         // 8. Aktualisiere die Anzeige und schließe das Overlay
+//         displayTasks(globalTasks);
+//         closeTaskOverlay();
+//     } catch (error) {
+//         console.error("Fehler beim Speichern der Aufgabe:", error);
+//     }
+// }
+
 /* edited task update to database */
-async function updateTaskInDatabase(taskId, updatedTask) {
-    const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(updatedTask)
-    });
-    if (!response.ok) {
-        throw new Error(`Fehler beim Aktualisieren der Aufgabe: ${response.statusText}`);
+
+async function updateTaskInDatabase(taskId, task) {
+    try {
+        const response = await fetch(`/tasks/${taskId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(task),
+        });
+
+        if (response.ok) {
+            console.log("Task erfolgreich aktualisiert:", taskId);
+        } else {
+            console.error("Fehler beim Aktualisieren des Tasks:", taskId);
+        }
+    } catch (error) {
+        console.error("Fehler beim Speichern des Tasks in der Datenbank:", error);
     }
 }
 
+// async function updateTaskInDatabase(taskId, updatedTask) {
+//     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+//         method: "PUT",
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify(updatedTask)
+//     });
+//     if (!response.ok) {
+//         throw new Error(`Fehler beim Aktualisieren der Aufgabe: ${response.statusText}`);
+//     }
+// }
+
 async function updateSubtaskDB(task, taskId) {
-    console.log(task);
-    const response = await fetch(`${BASE_URL}/tasks/${taskId}/subtasks.json`, {
+    if (!task || !taskId) return console.error("Task oder Task ID fehlen!");
+    const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(task)
+        body: JSON.stringify({ 
+            subtasks: task.subtasks 
+        }) // Nur die Subtasks aktualisieren
     });
     if (!response.ok) {
-        throw new Error(`Fehler beim Aktualisieren des Subtask: ${response.statusText}`);
+        throw new Error(`Fehler beim Aktualisieren des Subtasks: ${response.statusText}`);
     }
 }
+
+
+// async function updateSubtaskDB(task, taskId) {
+//     console.log(task);
+//     const response = await fetch(`${BASE_URL}/tasks/${taskId}/subtasks.json`, {
+//         method: "PATCH",
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify(task)
+//     });
+//     if (!response.ok) {
+//         throw new Error(`Fehler beim Aktualisieren des Subtask: ${response.statusText}`);
+//     }
+// }

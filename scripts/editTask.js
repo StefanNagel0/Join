@@ -386,14 +386,17 @@ async function saveTask(taskId) {
         if (task.subtasks && task.subtasks.length > 0) {
             task.subtasks = task.subtasks.map((_, index) => {
                 const subtaskInput = document.getElementById(`subtask-${index}`);
-                const subtaskCompleted = document.getElementById(`subtask-completed-${index}`);
-                if (!subtaskInput || !subtaskCompleted) {
+                // const subtaskCompleted = document.getElementById(`subtask-completed-${index}`);
+                if (!subtaskInput ) {
+
+                    // || !subtaskCompleted
+                    // Das hier drüber gehört in die IF Abfrage rein!
                     console.error(`Fehlendes Eingabefeld oder Kontrollkästchen für Unteraufgabe ${index}`);
                     return { name: `Subtask ${index + 1}`, completed: false };
                 }
                 return {
                     name: subtaskInput.value,
-                    completed: subtaskCompleted.checked,
+                    // completed: subtaskCompleted.checked,
                 };
             });
         } else {

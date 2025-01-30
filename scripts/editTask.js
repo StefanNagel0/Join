@@ -121,7 +121,6 @@ function taskEditPriority(task) {
             Low <img src="../assets/svg/add_task/prio_low.svg" alt="">
         </button>
     `;
-
     // Enthält die Buttons und ein `data-priority`-Attribut, um die aktuelle Auswahl zu speichern
     return `
         <div class="gap_8">
@@ -274,7 +273,6 @@ function toggleContactSelectionUI(container, contactName) {
 // }
 function taskEditSubtasks(task) {
     if (!task || !task.subtasks) return ''; // Sicherstellen, dass task existiert
-
     // Erstelle HTML für Subtasks
     const subtasksHtml = task.subtasks.map((subtask, index) => `
         <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}">
@@ -309,8 +307,14 @@ function toggleEditSubtask(index) {
     `;
 }
 
+function subtaskCompletedCheckbox(index, completed) {
+    return `
+        <input type="checkbox" id="subtask-completed-${index}" ${completed ? 'checked' : ''} />
+    `;
+}
+
 /* save the editing task */
-function saveEditedSubtask(index) {
+async function saveEditedSubtask(index) {
     let editedInput = document.getElementById(`edit-subtask-${index}`);
     if (!editedInput) return console.error("Bearbeitungsfeld nicht gefunden!");
 
@@ -330,6 +334,7 @@ function saveEditedSubtask(index) {
             </button>
         </div>
     `;
+    await updateSubtaskDB(task, taskId);
 }
 
 
@@ -386,13 +391,11 @@ async function saveTask(taskId) {
         if (task.subtasks && task.subtasks.length > 0) {
             task.subtasks = task.subtasks.map((_, index) => {
                 const subtaskInput = document.getElementById(`subtask-${index}`);
-                // const subtaskCompleted = document.getElementById(`subtask-completed-${index}`);
-                if (!subtaskInput ) {
-
-                    // || !subtaskCompleted
+                const subtaskCompleted = document.getElementById(`subtask-completed-${index}`);
+                if (!subtaskInput || !subtaskCompleted) {
                     // Das hier drüber gehört in die IF Abfrage rein!
                     console.error(`Fehlendes Eingabefeld oder Kontrollkästchen für Unteraufgabe ${index}`);
-                    return { name: `Subtask ${index + 1}`, completed: false };
+                    return { text: `Subtask ${index + 1}`, completed: false };
                 }
                 return {
                     name: subtaskInput.value,
@@ -427,5 +430,19 @@ async function updateTaskInDatabase(taskId, updatedTask) {
     });
     if (!response.ok) {
         throw new Error(`Fehler beim Aktualisieren der Aufgabe: ${response.statusText}`);
+    }
+}
+
+async function updateSubtaskDB(task, taskId) {
+    console.log(task);
+    const response = await fetch(`${BASE_URL}/tasks/${taskId}/subtasks.json`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(task)
+    });
+    if (!response.ok) {
+        throw new Error(`Fehler beim Aktualisieren des Subtask: ${response.statusText}`);
     }
 }

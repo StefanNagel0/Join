@@ -1,5 +1,6 @@
 let detailTask
 
+
 function editTask(taskId) {
     console.log("Aufruf von editTask mit Task ID:", taskId);  // Debugging
     if (!taskId) {
@@ -26,17 +27,24 @@ function editTask(taskId) {
         ${taskEditSubtasks(task, taskId)} <!-- Füge Subtasks hinzu und übergebe taskId -->
         <button onclick="saveTask('${taskId}')">OK</button>
     `;
-    // Füge Logik hinzu, um Priorität durch Klick zu ändern (ohne EventListener)
-    document.querySelectorAll("#task-priority .prio-btn").forEach(button => {
-        button.onclick = function () {
-            // Entferne die aktive Klasse von allen Buttons
-            document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
-            // Setze die aktive Klasse auf den angeklickten Button
-            button.classList.add("active");
-            // Speichere die neue Priorität im `data-priority`-Attribut
-            document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
-        };
-    });
+    // Warte, bis die Buttons im DOM sind, dann setze die aktive Priorität
+    setTimeout(() => {
+        const priorityButtons = document.querySelectorAll("#task-priority .prio-btn");
+        // Setze den aktiven Button basierend auf `task.priority`
+        priorityButtons.forEach(button => {
+            if (button.getAttribute("data-prio") === task.priority) {
+                button.classList.add("active");
+            }
+            button.onclick = function () {
+                // Entferne die aktive Klasse von allen Buttons
+                priorityButtons.forEach(btn => btn.classList.remove("active"));
+                // Setze die aktive Klasse auf den angeklickten Button
+                button.classList.add("active");
+                // Speichere die neue Priorität im `data-priority`-Attribut
+                document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
+            };
+        });
+    }, 0);
 }
 
 function taskEditTitle(task) {
@@ -67,24 +75,19 @@ function taskEditDate(task) {
 }
 
 function taskEditPriority(task) {
-    // Überprüfe die aktuelle Priorität und füge eine aktive Klasse hinzu
-    const priorityButtons = `
-        <button type="button" class="prio-btn urgent ${task.priority === 'Urgent' ? 'active' : ''}" data-prio="Urgent">
-            Urgent <img src="../assets/svg/add_task/prio_urgent.svg" alt="">
-        </button>
-        <button type="button" class="prio-btn medium ${task.priority === 'Medium' ? 'active' : ''}" data-prio="Medium">
-            Medium <img src="../assets/svg/add_task/prio_medium.svg" alt="">
-        </button>
-        <button type="button" class="prio-btn low ${task.priority === 'Low' ? 'active' : ''}" data-prio="Low">
-            Low <img src="../assets/svg/add_task/prio_low.svg" alt="">
-        </button>
-    `;
-    // Enthält die Buttons und ein `data-priority`-Attribut, um die aktuelle Auswahl zu speichern
     return `
         <div class="gap_8">
             <p class="prio_text">Prio</p>
             <div id="task-priority" data-priority="${task.priority}">
-                ${priorityButtons}
+                <button type="button" class="prio-btn urgent" data-prio="Urgent">
+                    Urgent <img src="../assets/svg/add_task/prio_urgent.svg" alt="">
+                </button>
+                <button type="button" class="prio-btn medium" data-prio="Medium">
+                    Medium <img src="../assets/svg/add_task/prio_medium.svg" alt="">
+                </button>
+                <button type="button" class="prio-btn low" data-prio="Low">
+                    Low <img src="../assets/svg/add_task/prio_low.svg" alt="">
+                </button>
             </div>
         </div>
     `;
@@ -206,25 +209,19 @@ function subtaskCompletedCheckbox(index, completed) {
     `;
 }
 
-/* save the editing task */
+/* save the editing Subtask */
 async function saveEditedSubtask(index, buttonElement) {
     const taskId = buttonElement.getAttribute('data-task-id'); // Hole die Task ID vom Button
     if (!taskId) return console.error("Task ID fehlt!"); // Debugging
-
     console.log("Task ID:", taskId); // Debugging
     let editedInput = document.getElementById(`edit-subtask-${index}`);
     if (!editedInput) return console.error("Bearbeitungsfeld nicht gefunden!");
     let newText = editedInput.value.trim();
     if (newText === "") return console.warn("Leere Eingabe, nichts wird gespeichert.");
-
-    // Task aus Firebase holen
     let task = await fetchTaskFromFirebase(taskId);
     if (!task || !task.subtasks) return console.error("Task oder Subtasks nicht gefunden!");
     console.log("Generiere Subtasks für Task:", task); // Debugging-Ausgabe
-
-    // Subtask-Text aktualisieren
     task.subtasks[index].text = newText;
-    // Den Subtask im UI ersetzen
     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
     console.log(`Speichern der bearbeiteten Subtask: ${index}, Task ID: ${taskId}`);
     subtaskContainer.innerHTML = `
@@ -238,7 +235,6 @@ async function saveEditedSubtask(index, buttonElement) {
             </button>
         </div>
     `;
-    // Aktualisierte Daten in Firebase speichern
     await updateSubtaskDB(task, taskId);
 }
 
@@ -267,39 +263,79 @@ async function fetchTaskFromFirebase(taskId) {
     return { id: taskId, ...taskData };
 }
 
+
 async function saveTask(taskId) {
     const task = globalTasks[taskId];
     if (!task) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
         return;
     }
+
     try {
         const taskFromDB = await fetchTaskFromFirebase(taskId);
         const subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks;
-        const titleInput = document.getElementById("editTitle");
-        task.title = titleInput?.value || task.title;
-        const descriptionInput = document.getElementById("editDescription");
-        task.description = descriptionInput?.value || task.description;
-        const dueDateInput = document.getElementById("editDueDate");
-        task.dueDate = dueDateInput?.value || task.dueDate;
-        const priorityElement = document.getElementById("task-priority");
-        if (priorityElement) {
-            task.priority = priorityElement.getAttribute("data-priority") || task.priority;
-        }
-        const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
+
+        task.title = document.getElementById("editTitle")?.value || task.title;
+        task.description = document.getElementById("editDescription")?.value || task.description;
+        task.dueDate = document.getElementById("editDueDate")?.value || task.dueDate;
+        
+        // Aktualisiert die Priorität
+        task.priority = document.getElementById("task-priority").dataset.priority || task.priority;
+
+        // Holt die ausgewählten Kontakte
+        task.assignedTo = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
             .map(el => el.dataset.fullname);
-        task.assignedTo = selectedContacts;
+
+        // Verhindert das Überschreiben der Subtasks
         task.subtasks = subtasksFromDB;
+
         console.log("Updated Task ohne Subtasks-Überschreibung:", task);
+
         if (taskId in globalTasks) {
             await updateTaskInDatabase(taskId, task);
         }
+
         displayTasks(globalTasks);
         closeTaskOverlay();
     } catch (error) {
         console.error("Fehler beim Speichern der Aufgabe:", error);
     }
 }
+
+
+// async function saveTask(taskId) {
+//     const task = globalTasks[taskId];
+//     if (!task) {
+//         console.error(`Task mit ID ${taskId} nicht gefunden.`);
+//         return;
+//     }
+//     try {
+//         const taskFromDB = await fetchTaskFromFirebase(taskId);
+//         const subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks;
+//         const titleInput = document.getElementById("editTitle");
+//         task.title = titleInput?.value || task.title;
+//         const descriptionInput = document.getElementById("editDescription");
+//         task.description = descriptionInput?.value || task.description;
+//         const dueDateInput = document.getElementById("editDueDate");
+//         task.dueDate = dueDateInput?.value || task.dueDate;
+//         const priorityElement = document.getElementById("task-priority");
+//         if (priorityElement) {
+//             task.priority = priorityElement.getAttribute("data-priority") || task.priority;
+//         }
+//         const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
+//             .map(el => el.dataset.fullname);
+//         task.assignedTo = selectedContacts;
+//         task.subtasks = subtasksFromDB;
+//         console.log("Updated Task ohne Subtasks-Überschreibung:", task);
+//         if (taskId in globalTasks) {
+//             await updateTaskInDatabase(taskId, task);
+//         }
+//         displayTasks(globalTasks);
+//         closeTaskOverlay();
+//     } catch (error) {
+//         console.error("Fehler beim Speichern der Aufgabe:", error);
+//     }
+// }
 
 /* edited task update to database */
 async function updateTaskInDatabase(taskId, task) {

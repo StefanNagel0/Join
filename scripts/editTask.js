@@ -498,7 +498,6 @@ async function saveTask(taskId) {
 }
 
 /* edited task update to database */
-
 async function updateTaskInDatabase(taskId, task) {
     try {
         const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {

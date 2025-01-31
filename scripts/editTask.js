@@ -1,5 +1,3 @@
-// FUNKTIONEN HIER EINFÜGEN!
-
 let detailTask
 
 function editTask(taskId) {
@@ -8,19 +6,15 @@ function editTask(taskId) {
         console.error("Fehler: taskId ist undefined oder null!");
         return;
     }
-
     const task = globalTasks[taskId];
     detailTask = task;
     console.log(detailTask);
-    
     if (!task) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
         return;
     }
-
     console.log("Gefundene Task:", task);
     console.log("Subtasks:", task.subtasks);
-
     // Lade das Overlay mit den bearbeitbaren Feldern
     const overlayRef = document.querySelector(".openTaskOverlayMain");
     overlayRef.innerHTML = `
@@ -45,20 +39,6 @@ function editTask(taskId) {
     });
 }
 
-
-// /* editing the task */
-// function editTask(taskId) {
-//     const task = globalTasks[taskId];
-//     if (!task) {
-//         console.error(`Task mit ID ${taskId} nicht gefunden.`);
-//         return;
-//     }
-//     // const optionsHtml = editingPriority(task);
-//     // const assignedOptionsHtml = taskAssignedEdit(task);
-//     const overlayRef = document.querySelector(".openTaskOverlayMain");
-//     overlayRef.innerHTML = taskEditTemplate(task, taskId);
-// }
-
 function taskEditTitle(task) {
     return `
     <div class="openEditTaskOverlayTitle">
@@ -67,18 +47,6 @@ function taskEditTitle(task) {
     </div>
     `;
 }
-
-
-// function taskEditTitle(task, taskId) {
-//     let taskTitle = document.getElementById('taskTitleID');
-//     taskTitle.value = task.title;
-//     return `
-//     <div class="openEditTaskOverlayTitle">
-//             <label for="editTitle">Title</label>
-//             <input id="editTitle" type="text" value="${task.title}" />
-//         </div>
-//         `;
-// }
 
 function taskEditDescription(task) {
     return `
@@ -89,17 +57,6 @@ function taskEditDescription(task) {
     `;
 }
 
-// function taskEditDescription(task, taskId) {
-//     let taskBeschreibung = document.getElementById('taskDescriptionID');
-//     taskBeschreibung.value = task.beschreibung;
-//     return `
-//     <div class="openEditTaskOverlayDescription">
-//             <label for="editDescription">Description</label>
-//             <textarea maxlength="150" id="editDescription">${task.description}</textarea>
-//         </div>
-//         `;
-// }
-
 function taskEditDate(task) {
     return `
     <div class="openEditTaskOverlayDueDate">
@@ -108,18 +65,6 @@ function taskEditDate(task) {
     </div>
     `;
 }
-
-
-// function taskEditDate(task, taskId) {
-//     let taskDate = document.getElementById('taskDateID');
-//     taskDate.value = task.date;
-//     return `
-//     <div class="openEditTaskOverlayDueDate">
-//             <label for="editDueDate">Due Date</label>
-//             <input type="date" id="editDueDate" value="${task.dueDate}" />
-//         </div>
-//         `;
-// }
 
 function taskEditPriority(task) {
     // Überprüfe die aktuelle Priorität und füge eine aktive Klasse hinzu
@@ -144,25 +89,6 @@ function taskEditPriority(task) {
         </div>
     `;
 }
-
-// function taskEditPriority(task, taskId) {
-//     let taskPriority = document.getElementById('taskPriorityIDName');
-//     taskPriority.value = task.priority;
-//     return `
-//             <div class="gap_8">
-//                 <p class="prio_text">Prio</p>
-//                 <div id="task-priority">
-//                     <button type="button" class="prio-btn urgent" data-prio="urgent">Urgent <img
-//                         src="../assets/svg/add_task/prio_urgent.svg" alt=""></button>
-//                     <button type="button" class="prio-btn medium" data-prio="medium">Medium <img
-//                         src="../assets/svg/add_task/prio_medium.svg" alt=""></button>
-//                     <button type="button" class="prio-btn low" data-prio="low">Low <img
-//                         src="../assets/svg/add_task/prio_low.svg" alt=""></button>
-//                     </div>
-//                 </div>
-//         `;
-// }
-
 
 function taskEditAssignedTo(task) {
     const assignedContacts = task.assignedTo || []; // Bereits zugewiesene Kontakte
@@ -203,54 +129,12 @@ function taskEditAssignedTo(task) {
     `;
 }
 
-
-
-
-
 function toggleEditTaskDropdown(event, toggle, options) {
     event.stopPropagation(); // Verhindert, dass der Klick außerhalb das Dropdown schließt
     const visible = options.classList.contains('visible'); // Prüft, ob es bereits sichtbar ist
     options.classList.toggle('visible', !visible); // Fügt die 'visible'-Klasse hinzu oder entfernt sie
     toggle.classList.toggle('open', !visible); // Fügt 'open'-Klasse hinzu, um das Pfeilsymbol zu toggeln
 }
-
-// function taskEditAssignedTo(task) {
-//     const assignedContacts = task.assignedTo || []; // Bereits zugewiesene Kontakte
-//     const contactListHtml = contacts.map(contact => {
-//         const isSelected = assignedContacts.includes(contact.name);
-//         return `
-//             <div class="contact-item ${isSelected ? 'selected' : ''}" data-fullname="${contact.name}" onclick="toggleContactSelectionUI(this, '${contact.name}')">
-//                 <div class="contact-circle-label">
-//                     <div class="initials-circle" style="background-color: ${getContactColor(contact.name)}">
-//                         ${getInitials(contact.name)}
-//                     </div>
-//                     <span class="contact-label">${contact.name}</span>
-//                 </div>
-//                 <input type="checkbox" ${isSelected ? 'checked' : ''} />
-//             </div>
-//         `;
-//     }).join("");
-//     return `
-//         <div id="task-assigned" class="dropdown-wrapper">
-//                 <div class="dropdown-toggle" onclick="toggleEditTaskDropdown(event, this, document.querySelector('.dropdown-content'))">
-//                 <span>Select contacts to assign</span>
-//                 <span class="dropdown-arrow"></span>
-//             </div>
-//             <div class="dropdown-content">
-//                 ${contactListHtml}
-//             </div>
-//             <div id="selected-contacts" class="selected-contacts">
-//                 ${assignedContacts.map(contactName => `
-//                     <div class="selected-contact" data-fullname="${contactName}">
-//                         <div class="initials-circle" style="background-color: ${getContactColor(contactName)}">
-//                             ${getInitials(contactName)}
-//                         </div>
-//                     </div>
-//                 `).join('')}
-//             </div>
-//         </div>
-//     `;
-// }
 
 function toggleEditTaskDropdown(event, toggle, options) {
     // Prüfen, ob das Event ein echtes Event-Objekt ist
@@ -274,20 +158,6 @@ function toggleContactSelectionUI(container, contactName) {
     const selectedContactsContainer = document.getElementById('selected-contacts');
     toggleContactSelection({ name: contactName }, isSelected, selectedContactsContainer);
 }
-
-
-// function taskEditAssignedTo(task, taskId) {
-//     let taskAssignedTo = document.getElementById('taskAssignedID');
-//     taskAssignedTo.value = task.assignedTo;
-//     return `
-//     <label for="editAssigned">Assigned to</label>
-//     <div id="editAssigned" style="border: 1px solid #ccc; padding: 10px;"></div>
-//         `;
-// }
-
-
-
-
 
 function taskEditSubtasks(task, taskId) {
     if (!task || !task.subtasks) return ''; // Sicherstellen, dass task existiert
@@ -317,32 +187,6 @@ function taskEditSubtasks(task, taskId) {
     `;
 }
 
-
-
-// function taskEditSubtasks(task) {
-//     if (!task || !task.subtasks) return ''; // Sicherstellen, dass task existiert
-//     // Erstelle HTML für Subtasks
-//     const subtasksHtml = task.subtasks.map((subtask, index) => `
-//         <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}">
-//             <label id="subtask-${index}">${subtask.text}</label>
-//             <div class="subtaskEditingContainer">
-//                 <button onclick="toggleEditSubtask(${index}, '${taskId}')">
-//                     <img src="../assets/svg/edit.svg" alt="">
-//                 </button>
-//                 <button onclick="deleteSubtask(${index})">
-//                     <img src="../assets/svg/delete.svg" alt="">
-//                 </button>
-//             </div>
-//         </div>
-//     `).join("");
-//     return `
-//         <div class="openTaskOverlaySubtaskContainer">
-//             <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
-//             ${subtasksHtml}
-//         </div>
-//     `;
-// }
-
 function toggleEditSubtask(index, taskId) {
     console.log("taskId in toggleEditSubtask:", taskId);  // Debugging für taskId
     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
@@ -356,18 +200,6 @@ function toggleEditSubtask(index, taskId) {
     `;
 }
 
-// function toggleEditSubtask(index) {
-//     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
-//     if (!subtaskContainer) return console.error("Subtask-Container nicht gefunden!");
-//     let subtaskLabel = document.getElementById(`subtask-${index}`);
-//     if (!subtaskLabel) return console.error("Subtask-Label nicht gefunden!");
-//     let currentText = subtaskLabel.innerText; // Aktueller Text des Subtasks
-//     subtaskContainer.innerHTML = `
-//         <input type="text" id="edit-subtask-${index}" value="${currentText}" />
-//         <button onclick="saveEditedSubtask(${index}, '${taskId}')">Save</button>
-//     `;
-// }
-
 function subtaskCompletedCheckbox(index, completed) {
     return `
         <input type="checkbox" id="subtask-completed-${index}" ${completed ? 'checked' : ''} />
@@ -375,8 +207,6 @@ function subtaskCompletedCheckbox(index, completed) {
 }
 
 /* save the editing task */
-
-
 async function saveEditedSubtask(index, buttonElement) {
     const taskId = buttonElement.getAttribute('data-task-id'); // Hole die Task ID vom Button
     if (!taskId) return console.error("Task ID fehlt!"); // Debugging
@@ -412,32 +242,6 @@ async function saveEditedSubtask(index, buttonElement) {
     await updateSubtaskDB(task, taskId);
 }
 
-
-
-
-// async function saveEditedSubtask(index) {
-//     let editedInput = document.getElementById(`edit-subtask-${index}`);
-//     if (!editedInput) return console.error("Bearbeitungsfeld nicht gefunden!");
-
-//     let newText = editedInput.value.trim();
-//     if (newText === "") return console.warn("Leere Eingabe, nichts wird gespeichert.");
-
-//     // Den Subtask im UI ersetzen
-//     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
-//     subtaskContainer.innerHTML = `
-//         <label id="subtask-${index}">${newText}</label>
-//         <div class="subtaskEditingContainer">
-//             <button onclick="toggleEditSubtask(${index})">
-//                 <img src="../assets/svg/edit.svg" alt="" >
-//             </button>
-//             <button onclick="deleteSubtask(${index})">
-//                 <img src="../assets/svg/delete.svg" alt="" >
-//             </button>
-//         </div>
-//     `;
-//     await updateSubtaskDB(task, taskId);
-// }
-
 function toggleDeleteSubtask(task, index) {
     const subtask = task.subtasks[index];
 
@@ -452,7 +256,7 @@ async function fetchTaskFromFirebase(taskId) {
 
     const response = await fetch(`${BASE_URL}tasks/${taskId}.json`);
     const taskData = await response.json();
-    
+
     console.log("Erhaltene Task-Daten:", taskData); // Debugging
 
     if (!taskData) {
@@ -518,40 +322,6 @@ async function updateTaskInDatabase(taskId, task) {
     }
 }
 
-
-// async function updateTaskInDatabase(taskId, task) {
-//     try {
-//         const response = await fetch(`/tasks/${taskId}`, {
-//             method: "PUT",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify(task),
-//         });
-
-//         if (response.ok) {
-//             console.log("Task erfolgreich aktualisiert:", taskId);
-//         } else {
-//             console.error("Fehler beim Aktualisieren des Tasks:", taskId);
-//         }
-//     } catch (error) {
-//         console.error("Fehler beim Speichern des Tasks in der Datenbank:", error);
-//     }
-// }
-
-// async function updateTaskInDatabase(taskId, updatedTask) {
-//     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
-//         method: "PUT",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(updatedTask)
-//     });
-//     if (!response.ok) {
-//         throw new Error(`Fehler beim Aktualisieren der Aufgabe: ${response.statusText}`);
-//     }
-// }
-
 async function updateSubtaskDB(task, taskId) {
     if (!task || !taskId) return console.error("Task oder Task ID fehlen!");
     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
@@ -559,26 +329,11 @@ async function updateSubtaskDB(task, taskId) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ 
-            subtasks: task.subtasks 
+        body: JSON.stringify({
+            subtasks: task.subtasks
         }) // Nur die Subtasks aktualisieren
     });
     if (!response.ok) {
         throw new Error(`Fehler beim Aktualisieren des Subtasks: ${response.statusText}`);
     }
 }
-
-
-// async function updateSubtaskDB(task, taskId) {
-//     console.log(task);
-//     const response = await fetch(`${BASE_URL}/tasks/${taskId}/subtasks.json`, {
-//         method: "PATCH",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(task)
-//     });
-//     if (!response.ok) {
-//         throw new Error(`Fehler beim Aktualisieren des Subtask: ${response.statusText}`);
-//     }
-// }

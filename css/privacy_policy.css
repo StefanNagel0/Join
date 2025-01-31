@@ -26,6 +26,10 @@
 .privacy {
     margin-right: 100px;
     margin-left: 75px;
+    max-height: 840px;
+    overflow-x: scroll !important;
+    scrollbar-width: none;
+    padding-bottom: 150px;
 }
 
 .arrow {
@@ -33,4 +37,5 @@
     color: rgb(18, 181, 235);
     font-size: 40px;
     border: none;
+    padding-right: 40px
 }

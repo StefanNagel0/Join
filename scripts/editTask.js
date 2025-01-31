@@ -46,6 +46,7 @@ function editTask(taskId) {
             document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
         };
     });
+    setupDateValidation();
 }
 
 // Funktion, um die 'active' Klasse basierend auf der Priorität zu setzen
@@ -76,7 +77,7 @@ function taskEditDescription(task) {
     return `
     <div class="openEditTaskOverlayDescription">
         <label for="editDescription">Description</label>
-        <textarea maxlength="150" id="editDescription">${task.description}</textarea>
+        <textarea class="" maxlength="150" id="editDescription">${task.description}</textarea>
     </div>
     `;
 }
@@ -86,9 +87,48 @@ function taskEditDate(task) {
     <div class="openEditTaskOverlayDueDate">
         <label for="editDueDate">Due Date</label>
         <input type="date" id="editDueDate" value="${task.dueDate}" />
+        <small id="dateError" style="color: red; display: none;">Datum muss zwischen heute und 100 Jahre in der Zukunft liegen</small>
     </div>
     `;
 }
+
+function setupDateValidation() {
+    const dateInput = document.getElementById("editDueDate");
+    const errorText = document.getElementById("dateError");
+    if (!dateInput) {
+        console.error("Fehler: Kein Eingabefeld für das Datum gefunden.");
+        return;
+    }
+    const today = new Date().toISOString().split("T")[0];
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 100);
+    const maxDateString = maxDate.toISOString().split("T")[0];
+    dateInput.setAttribute("min", today);
+    dateInput.setAttribute("max", maxDateString);
+    dateInput.addEventListener("input", function () {
+        const selectedDate = new Date(dateInput.value);
+        const minDate = new Date(today);
+        if (selectedDate < minDate || selectedDate > maxDate) {
+            dateInput.style.border = "2px solid red";
+            errorText.style.display = "block";
+        } else {
+            dateInput.style.border = "";
+            errorText.style.display = "none";
+        }
+        dateInput.style.color = "black";
+    });
+}
+
+
+// Hauptfunktion zum Erstellen des Bearbeitungsformulars für das Fälligkeitsdatum
+// function taskEditDate(task) {
+//     return `
+//     <div class="openEditTaskOverlayDueDate">
+//         <label for="editDueDate">Due Date</label>
+//         <input type="date" id="editDueDate" value="${task.dueDate}" />
+//     </div>
+//     `;
+// }
 
 function taskEditPriority(task) {
     return `

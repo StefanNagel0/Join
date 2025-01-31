@@ -35,9 +35,28 @@
 .prio-btn.active {
     color: white;
     border: none;
+    transition: background-color 0.3s ease; /* Übergang für den Hintergrund */
+    box-shadow: none; /* Entferne Box-Shadow, um sicherzustellen, dass er nicht stört */
 }
 
+/* .prio-btn.active {
+    color: white;
+    border: none;
+} */
+
 .prio-btn.urgent.active {
+    background-color: rgb(255, 61, 0) !important; /* Füge !important hinzu, um Konflikte zu vermeiden */
+}
+
+.prio-btn.medium.active {
+    background-color: #FFA800 !important;
+}
+
+.prio-btn.low.active {
+    background-color: #7AE229 !important;
+}
+
+/* .prio-btn.urgent.active {
     background-color: rgb(255, 61, 0);
 }
 
@@ -47,7 +66,7 @@
 
 .prio-btn.low.active {
     background-color: #7AE229;
-}
+} */
 
 .prio-btn.active img {
     filter: brightness(0) invert(1);

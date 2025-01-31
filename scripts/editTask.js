@@ -1,5 +1,10 @@
 let detailTask
 
+// Funktion zur Normalisierung der Priorität
+function normalizePriority(priority) {
+    return priority ? priority.toLowerCase() : ''; // Konvertiert die Priorität in Kleinbuchstaben
+}
+
 
 function editTask(taskId) {
     console.log("Aufruf von editTask mit Task ID:", taskId);  // Debugging
@@ -16,6 +21,7 @@ function editTask(taskId) {
     }
     console.log("Gefundene Task:", task);
     console.log("Subtasks:", task.subtasks);
+
     // Lade das Overlay mit den bearbeitbaren Feldern
     const overlayRef = document.querySelector(".openTaskOverlayMain");
     overlayRef.innerHTML = `
@@ -27,24 +33,34 @@ function editTask(taskId) {
         ${taskEditSubtasks(task, taskId)} <!-- Füge Subtasks hinzu und übergebe taskId -->
         <button onclick="saveTask('${taskId}')">OK</button>
     `;
-    // Warte, bis die Buttons im DOM sind, dann setze die aktive Priorität
-    setTimeout(() => {
-        const priorityButtons = document.querySelectorAll("#task-priority .prio-btn");
-        // Setze den aktiven Button basierend auf `task.priority`
-        priorityButtons.forEach(button => {
-            if (button.getAttribute("data-prio") === task.priority) {
-                button.classList.add("active");
-            }
-            button.onclick = function () {
-                // Entferne die aktive Klasse von allen Buttons
-                priorityButtons.forEach(btn => btn.classList.remove("active"));
-                // Setze die aktive Klasse auf den angeklickten Button
-                button.classList.add("active");
-                // Speichere die neue Priorität im `data-priority`-Attribut
-                document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
-            };
-        });
-    }, 0);
+    // Stelle sicher, dass der richtige Prioritätsbutton die 'active' Klasse bekommt
+    applyActivePriorityButton(task.priority);
+    // Füge Event-Listener für das Umschalten der Priorität hinzu
+    document.querySelectorAll("#task-priority .prio-btn").forEach(button => {
+        button.onclick = function () {
+            // Entferne die aktive Klasse von allen Buttons
+            document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
+            // Setze die aktive Klasse auf den angeklickten Button
+            button.classList.add("active");
+            // Speichere die neue Priorität im `data-priority`-Attribut
+            document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
+        };
+    });
+}
+
+// Funktion, um die 'active' Klasse basierend auf der Priorität zu setzen
+function applyActivePriorityButton(priority) {
+    // Warten Sie, bis das DOM vollständig geladen ist
+    const priorityButton = document.querySelector(`#task-priority .prio-btn[data-prio="${priority}"]`);
+    
+    if (priorityButton) {
+        // Entferne die aktive Klasse von allen Buttons
+        document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
+        // Füge die aktive Klasse dem entsprechenden Button hinzu
+        priorityButton.classList.add("active");
+    } else {
+        console.log(`Kein Button mit der Priorität "${priority}" gefunden.`);
+    }
 }
 
 function taskEditTitle(task) {

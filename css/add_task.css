@@ -446,3 +446,7 @@ textarea::placeholder {
 .hidden {
     display: none;
 }
+.dropdown-content.visible {
+    display: flex; /* Überschreibt `display: none;` */
+    flex-direction: column;
+}

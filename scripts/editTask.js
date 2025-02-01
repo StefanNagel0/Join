@@ -193,24 +193,38 @@ function taskEditAssignedTo(task) {
 }
 
 function toggleEditTaskDropdown(event, toggle, options) {
-    event.stopPropagation(); // Verhindert, dass der Klick außerhalb das Dropdown schließt
-    const visible = options.classList.contains('visible'); // Prüft, ob es bereits sichtbar ist
-    options.classList.toggle('visible', !visible); // Fügt die 'visible'-Klasse hinzu oder entfernt sie
-    toggle.classList.toggle('open', !visible); // Fügt 'open'-Klasse hinzu, um das Pfeilsymbol zu toggeln
-}
+    event.stopPropagation(); // Verhindert, dass das Dropdown sofort wieder schließt
 
-function toggleEditTaskDropdown(event, toggle, options) {
-    // Prüfen, ob das Event ein echtes Event-Objekt ist
-    if (event && typeof event.stopPropagation === 'function') {
-        event.stopPropagation();
+    if (options.classList.contains("visible")) {
+        options.classList.remove("visible");
+    } else {
+        document.querySelectorAll(".dropdown-content.visible").forEach(dropdown => {
+            dropdown.classList.remove("visible"); // Schließt andere offene Dropdowns
+        });
+        options.classList.add("visible");
     }
-
-    // Überprüfen, ob das Dropdown sichtbar ist
-    const visible = options.classList.contains('visible');
-    options.classList.toggle('visible', !visible);
-    options.classList.toggle('hidden', visible);
-    toggle.classList.toggle('open', !visible);
 }
+
+
+// function toggleEditTaskDropdown(event, toggle, options) {
+//     event.stopPropagation(); // Verhindert, dass der Klick außerhalb das Dropdown schließt
+//     const visible = options.classList.contains('visible'); // Prüft, ob es bereits sichtbar ist
+//     options.classList.toggle('visible', !visible); // Fügt die 'visible'-Klasse hinzu oder entfernt sie
+//     toggle.classList.toggle('open', !visible); // Fügt 'open'-Klasse hinzu, um das Pfeilsymbol zu toggeln
+// }
+
+// function toggleEditTaskDropdown(event, toggle, options) {
+//     // Prüfen, ob das Event ein echtes Event-Objekt ist
+//     if (event && typeof event.stopPropagation === 'function') {
+//         event.stopPropagation();
+//     }
+
+//     // Überprüfen, ob das Dropdown sichtbar ist
+//     const visible = options.classList.contains('visible');
+//     options.classList.toggle('visible', !visible);
+//     options.classList.toggle('hidden', visible);
+//     toggle.classList.toggle('open', !visible);
+// }
 
 
 function toggleContactSelectionUI(container, contactName) {

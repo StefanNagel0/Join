@@ -5,6 +5,7 @@ function normalizePriority(priority) {
     return priority ? priority.toLowerCase() : ''; // Konvertiert die Priorität in Kleinbuchstaben
 }
 
+
 function editTask(taskId) {
     console.log("Aufruf von editTask mit Task ID:", taskId);
     if (!taskId) {
@@ -12,73 +13,36 @@ function editTask(taskId) {
         return;
     }
     const task = globalTasks[taskId];
+    detailTask = task;
     if (!task) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
         return;
     }
-
     console.log("Gefundene Task:", task);
-
-    // Lade das Overlay mit den bearbeitbaren Feldern
+    console.log("Subtasks:", task.subtasks);
     const overlayRef = document.querySelector(".openTaskOverlayMain");
     overlayRef.innerHTML = `
         <input id="editTitle" type="text" value="${task.title}">
         <textarea id="editDescription">${task.description}</textarea>
-        ${taskEditDate(task)}
-        ${taskEditPriority(task)}
-        ${taskEditAssignedTo(task)}
-        ${taskEditSubtasks(task, taskId)}
+        ${taskEditDate(task)} <!-- Datumseingabe-Funktion -->
+        ${taskEditPriority(task)} <!-- Priorität -->
+        ${taskEditAssignedTo(task)} <!-- Zuständige Personen -->
+        ${taskEditSubtasks(task, taskId)} <!-- Subtasks -->
         <button onclick="saveTask('${taskId}')">OK</button>
     `;
-
     applyActivePriorityButton(task.priority);
-    setupDateValidation(); // Jetzt auf das neue `editDueDate` anwenden!
+    document.querySelectorAll("#task-priority .prio-btn").forEach(button => {
+        button.onclick = function () {
+            // Entferne die aktive Klasse von allen Buttons
+            document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
+            // Setze die aktive Klasse auf den angeklickten Button
+            button.classList.add("active");
+            // Speichere die neue Priorität im `data-priority`-Attribut
+            document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
+        };
+    });
+    setupDateValidation(); // Datumseingabe validieren
 }
-
-
-
-// function editTask(taskId) {
-//     console.log("Aufruf von editTask mit Task ID:", taskId);  // Debugging
-//     if (!taskId) {
-//         console.error("Fehler: taskId ist undefined oder null!");
-//         return;
-//     }
-//     const task = globalTasks[taskId];
-//     detailTask = task;
-//     console.log(detailTask);
-//     if (!task) {
-//         console.error(`Task mit ID ${taskId} nicht gefunden.`);
-//         return;
-//     }
-//     console.log("Gefundene Task:", task);
-//     console.log("Subtasks:", task.subtasks);
-
-//     // Lade das Overlay mit den bearbeitbaren Feldern
-//     const overlayRef = document.querySelector(".openTaskOverlayMain");
-//     overlayRef.innerHTML = `
-//         <input id="editTitle" type="text" value="${task.title}">
-//         <textarea id="editDescription">${task.description}</textarea>
-//         <input id="editDueDate" type="date" value="${task.dueDate}">
-//         ${taskEditPriority(task)} <!-- Füge Priorität hinzu -->
-//         ${taskEditAssignedTo(task)} <!-- Füge Assigned to hinzu -->
-//         ${taskEditSubtasks(task, taskId)} <!-- Füge Subtasks hinzu und übergebe taskId -->
-//         <button onclick="saveTask('${taskId}')">OK</button>
-//     `;
-//     // Stelle sicher, dass der richtige Prioritätsbutton die 'active' Klasse bekommt
-//     applyActivePriorityButton(task.priority);
-//     // Füge Event-Listener für das Umschalten der Priorität hinzu
-//     document.querySelectorAll("#task-priority .prio-btn").forEach(button => {
-//         button.onclick = function () {
-//             // Entferne die aktive Klasse von allen Buttons
-//             document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
-//             // Setze die aktive Klasse auf den angeklickten Button
-//             button.classList.add("active");
-//             // Speichere die neue Priorität im `data-priority`-Attribut
-//             document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
-//         };
-//     });
-//     setupDateValidation();
-// }
 
 // Funktion, um die 'active' Klasse basierend auf der Priorität zu setzen
 function applyActivePriorityButton(priority) {

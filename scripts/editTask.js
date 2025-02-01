@@ -5,49 +5,80 @@ function normalizePriority(priority) {
     return priority ? priority.toLowerCase() : ''; // Konvertiert die Priorität in Kleinbuchstaben
 }
 
-
 function editTask(taskId) {
-    console.log("Aufruf von editTask mit Task ID:", taskId);  // Debugging
+    console.log("Aufruf von editTask mit Task ID:", taskId);
     if (!taskId) {
         console.error("Fehler: taskId ist undefined oder null!");
         return;
     }
     const task = globalTasks[taskId];
-    detailTask = task;
-    console.log(detailTask);
     if (!task) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
         return;
     }
+
     console.log("Gefundene Task:", task);
-    console.log("Subtasks:", task.subtasks);
 
     // Lade das Overlay mit den bearbeitbaren Feldern
     const overlayRef = document.querySelector(".openTaskOverlayMain");
     overlayRef.innerHTML = `
         <input id="editTitle" type="text" value="${task.title}">
         <textarea id="editDescription">${task.description}</textarea>
-        <input id="editDueDate" type="date" value="${task.dueDate}">
-        ${taskEditPriority(task)} <!-- Füge Priorität hinzu -->
-        ${taskEditAssignedTo(task)} <!-- Füge Assigned to hinzu -->
-        ${taskEditSubtasks(task, taskId)} <!-- Füge Subtasks hinzu und übergebe taskId -->
+        ${taskEditDate(task)}
+        ${taskEditPriority(task)}
+        ${taskEditAssignedTo(task)}
+        ${taskEditSubtasks(task, taskId)}
         <button onclick="saveTask('${taskId}')">OK</button>
     `;
-    // Stelle sicher, dass der richtige Prioritätsbutton die 'active' Klasse bekommt
+
     applyActivePriorityButton(task.priority);
-    // Füge Event-Listener für das Umschalten der Priorität hinzu
-    document.querySelectorAll("#task-priority .prio-btn").forEach(button => {
-        button.onclick = function () {
-            // Entferne die aktive Klasse von allen Buttons
-            document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
-            // Setze die aktive Klasse auf den angeklickten Button
-            button.classList.add("active");
-            // Speichere die neue Priorität im `data-priority`-Attribut
-            document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
-        };
-    });
-    setupDateValidation();
+    setupDateValidation(); // Jetzt auf das neue `editDueDate` anwenden!
 }
+
+
+
+// function editTask(taskId) {
+//     console.log("Aufruf von editTask mit Task ID:", taskId);  // Debugging
+//     if (!taskId) {
+//         console.error("Fehler: taskId ist undefined oder null!");
+//         return;
+//     }
+//     const task = globalTasks[taskId];
+//     detailTask = task;
+//     console.log(detailTask);
+//     if (!task) {
+//         console.error(`Task mit ID ${taskId} nicht gefunden.`);
+//         return;
+//     }
+//     console.log("Gefundene Task:", task);
+//     console.log("Subtasks:", task.subtasks);
+
+//     // Lade das Overlay mit den bearbeitbaren Feldern
+//     const overlayRef = document.querySelector(".openTaskOverlayMain");
+//     overlayRef.innerHTML = `
+//         <input id="editTitle" type="text" value="${task.title}">
+//         <textarea id="editDescription">${task.description}</textarea>
+//         <input id="editDueDate" type="date" value="${task.dueDate}">
+//         ${taskEditPriority(task)} <!-- Füge Priorität hinzu -->
+//         ${taskEditAssignedTo(task)} <!-- Füge Assigned to hinzu -->
+//         ${taskEditSubtasks(task, taskId)} <!-- Füge Subtasks hinzu und übergebe taskId -->
+//         <button onclick="saveTask('${taskId}')">OK</button>
+//     `;
+//     // Stelle sicher, dass der richtige Prioritätsbutton die 'active' Klasse bekommt
+//     applyActivePriorityButton(task.priority);
+//     // Füge Event-Listener für das Umschalten der Priorität hinzu
+//     document.querySelectorAll("#task-priority .prio-btn").forEach(button => {
+//         button.onclick = function () {
+//             // Entferne die aktive Klasse von allen Buttons
+//             document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
+//             // Setze die aktive Klasse auf den angeklickten Button
+//             button.classList.add("active");
+//             // Speichere die neue Priorität im `data-priority`-Attribut
+//             document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
+//         };
+//     });
+//     setupDateValidation();
+// }
 
 // Funktion, um die 'active' Klasse basierend auf der Priorität zu setzen
 function applyActivePriorityButton(priority) {
@@ -83,52 +114,61 @@ function taskEditDescription(task) {
 }
 
 function taskEditDate(task) {
-    return `
-    <div class="openEditTaskOverlayDueDate">
-        <label for="editDueDate">Due Date</label>
-        <input type="date" id="editDueDate" value="${task.dueDate}" />
-        <small id="dateError" style="color: red; display: none;">Datum muss zwischen heute und 100 Jahre in der Zukunft liegen</small>
-    </div>
-    `;
-}
-
-function setupDateValidation() {
-    const dateInput = document.getElementById("editDueDate");
-    const errorText = document.getElementById("dateError");
-    if (!dateInput) {
-        console.error("Fehler: Kein Eingabefeld für das Datum gefunden.");
-        return;
-    }
     const today = new Date().toISOString().split("T")[0];
     const maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() + 100);
     const maxDateString = maxDate.toISOString().split("T")[0];
-    dateInput.setAttribute("min", today);
-    dateInput.setAttribute("max", maxDateString);
-    dateInput.addEventListener("input", function () {
-        const selectedDate = new Date(dateInput.value);
-        const minDate = new Date(today);
-        if (selectedDate < minDate || selectedDate > maxDate) {
-            dateInput.style.border = "2px solid red";
-            errorText.style.display = "block";
-        } else {
-            dateInput.style.border = "";
-            errorText.style.display = "none";
-        }
-        dateInput.style.color = "black";
-    });
+    return `
+    <div class="openEditTaskOverlayDueDate">
+        <label for="editDueDate">Due Date</label>
+        <input 
+            type="date" 
+            id="editDueDate" 
+            value="${task.dueDate}" 
+            min="${today}" 
+            max="${maxDateString}" 
+        />
+        <small id="dateError" style="color: red; display: none;">
+            Datum muss zwischen heute und 100 Jahre in der Zukunft liegen
+        </small>
+    </div>
+    `;
 }
 
 
-// Hauptfunktion zum Erstellen des Bearbeitungsformulars für das Fälligkeitsdatum
-// function taskEditDate(task) {
-//     return `
-//     <div class="openEditTaskOverlayDueDate">
-//         <label for="editDueDate">Due Date</label>
-//         <input type="date" id="editDueDate" value="${task.dueDate}" />
-//     </div>
-//     `;
-// }
+function setupDateValidation() {
+    setTimeout(() => {
+        const dateInput = document.getElementById("editDueDate");
+        const errorText = document.getElementById("dateError");
+        if (!dateInput || !errorText) {
+            console.error("Fehlendes Element: 'editDueDate' oder 'dateError'");
+            return;
+        }
+        const today = new Date().toISOString().split("T")[0];
+        const maxDate = new Date();
+        maxDate.setFullYear(maxDate.getFullYear() + 100);
+        const maxDateString = maxDate.toISOString().split("T")[0];
+        dateInput.setAttribute("min", today);
+        dateInput.setAttribute("max", maxDateString);
+        dateInput.addEventListener("input", function () {
+            if (!dateInput.value) return;
+            const selectedDate = new Date(dateInput.value);
+            const minDate = new Date(today);
+            if (selectedDate < minDate) {
+                dateInput.style.border = "2px solid red";
+                errorText.textContent = "Das Datum darf nicht in der Vergangenheit liegen!";
+                errorText.style.display = "block";
+                setTimeout(() => {
+                    dateInput.value = today;
+                }, 500);
+            } else {
+                dateInput.style.border = "";
+                errorText.style.display = "none";
+            }
+        });
+    }, 100);
+}
+
 
 function taskEditPriority(task) {
     return `

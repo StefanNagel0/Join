@@ -47,7 +47,7 @@
     }
 
     .mobileadd {
-        display: block;
+        display: block !important;
         cursor: pointer;
     }
 
@@ -148,7 +148,7 @@
     }
     
     .delete-button, .edit-button {
-        background-color: white;
+        background-color: transparent !important;
     }
 
     .logoover {
@@ -244,6 +244,7 @@
         bottom: 90px;
         right: 20px;
         z-index: 900;
+        display: block !important;
     }
 
     .btnmob {
@@ -258,6 +259,7 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        
     }
 
     .btnmob:hover {
@@ -398,19 +400,15 @@
         transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
         background-color: white;
         border: 1px solid white;
-        border-radius: 5px;
+        border-radius: 20px 20px 0px 20px;
         width: 114px;
         margin-left: 85%;
         bottom: 150px;
         right: 20px;
         z-index: 900;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
       }
-  
-      .collapse-content.open {
-        transform: translateX(0);
-        opacity: 1;
-        position: fixed;
-    }
+
 
     .infom {
         display: flex;

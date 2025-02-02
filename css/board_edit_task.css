@@ -203,6 +203,24 @@
     background-color: #29ABE2;
 }
 
+.saveButtonOk {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 89px;
+    height: 57px;
+    padding: 16px;
+    margin-left: 350px;
+    gap: 8px;
+    border-radius: 10px;
+    background-color: rgb(42,54,71);
+    color: rgb(255, 255, 255);
+    border: none;
+}
+
+.saveButtonOk:hover {
+    background-color: #29ABE2;
+}
 
 .openEditTaskOverlayTitle label {
     font-size: 20px;

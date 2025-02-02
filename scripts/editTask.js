@@ -29,7 +29,7 @@ function editTask(taskId) {
         ${taskEditAssignedTo(task)} <!-- Zuständige Personen -->
         ${taskEditAddSubtask(task, taskId)} <!-- Subtask hinzufügen -->
         ${taskEditSubtasks(task, taskId)} <!-- Subtasks -->
-        <button onclick="saveTask('${taskId}')">OK</button>
+        <button class="saveButtonOk" onclick="saveTask('${taskId}')">OK <img src="../assets/svg/add_task/check.svg" alt=""></button>
     `;
     applyActivePriorityButton(task.priority);
     document.querySelectorAll("#task-priority .prio-btn").forEach(button => {

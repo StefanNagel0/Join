@@ -183,13 +183,10 @@
     display: flex;
 }
 
-
-
 .assigned-contact {
     position: relative;
     margin-left: -6px;
 }
-
 
 .assigned-contact:last-child {
     margin-left: -6px;

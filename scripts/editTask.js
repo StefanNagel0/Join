@@ -27,6 +27,7 @@ function editTask(taskId) {
         ${taskEditDate(task)} <!-- Datumseingabe-Funktion -->
         ${taskEditPriority(task)} <!-- Priorität -->
         ${taskEditAssignedTo(task)} <!-- Zuständige Personen -->
+        ${taskEditAddSubtask(task, taskId)} <!-- Subtask hinzufügen -->
         ${taskEditSubtasks(task, taskId)} <!-- Subtasks -->
         <button onclick="saveTask('${taskId}')">OK</button>
     `;
@@ -42,6 +43,7 @@ function editTask(taskId) {
         };
     });
     setupDateValidation(); // Datumseingabe validieren
+    initTaskEditAddSubtask();
 }
 
 // Funktion, um die 'active' Klasse basierend auf der Priorität zu setzen
@@ -214,15 +216,42 @@ function toggleContactSelectionUI(container, contactName) {
     toggleContactSelection({ name: contactName }, isSelected, selectedContactsContainer);
 }
 
-function taskEditAddSubtask(task) {
+function taskEditAddSubtask(task, taskId) {
+    return taskEditAddSubtaskTemplate(task, taskId);
+}
+
+function initTaskEditAddSubtask() {
+    const input = document.getElementById('newEditSubtask');
+    const addBtn = document.getElementById('addEditSubtask');
+    const clearBtn = document.getElementById('clearEditSubtask');
+    const list = document.getElementById('subtask-list');
+    if (!input || !addBtn || !clearBtn || !list) {
+        console.error("Einige Elemente für 'Add Subtask' wurden im DOM nicht gefunden.");
+        return;
+    }
+    input.oninput = () => {
+        clearBtn.classList.toggle('d-none', !input.value.trim());
+    };
+    clearBtn.onclick = () => {
+        input.value = '';
+        clearBtn.classList.add('d-none');
+    };
+    // Add Subtask noch umschreiben! Funktion wurde so aus Add Task Kopiert!
+    addBtn.onclick = () => addSubtask(input, list);
+    input.onkeydown = function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            addSubtask(input, list);
+        }
+    };
+}
+
+function taskEditAddSubtaskTemplate(task, taskId) {
     return `
-        <div class="gap_8">
-            <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
-            <div class="openTaskOverlaySubtaskContainer">
-                <div id="subtask-container-0" onmouseenter="hoverSubtask('${task.id}', 0)" onmouseleave="hoverOutSubtask('${task.id}', 0)">
-                    <label id="subtask-0">Subtask</label>
-                </div>
-            </div>
+        <div id="subtask-container">
+            <input maxlength="20" type="text" id="newEditSubtask" placeholder="Add new subtask">
+            <img id="clearEditSubtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg" alt="">
+            <img id="addEditSubtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
         </div>
     `;
 }
@@ -230,16 +259,14 @@ function taskEditAddSubtask(task) {
 function taskEditSubtasks(task, taskId) {
     if (!task || !task.subtasks) return '';
     console.log("task.id in taskEditSubtasks:", taskId);
-
     const subtasksHtml = task.subtasks.map((subtask, index, task) => {
         return `
             <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}" onmouseenter="hoverSubtask('${taskId}', ${index})" onmouseleave="hoverOutSubtask('${taskId}', ${index})">
-               <div class="editSubtaskPoint"><p>• </p><label id="subtask-${index}">${subtask.text}</label>
-                </div>
-               </div>
+
+            <div class="editSubtaskPoint"><p>• </p><label id="subtask-${index}">${subtask.text}</label></div>
+            </div>
         `;
     }).join("");
-
     return `
         <div class="openTaskOverlaySubtaskContainer">
             <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
@@ -296,6 +323,15 @@ function toggleEditSubtask(index, taskId) {
         <button data-task-id="${taskId}" onclick="saveEditedSubtask(${index}, this)">Save</button>
     `;
 }
+
+// function editSubtaskTemplate(index, text) {
+//     return `
+//         <div class="subtask-controls">
+//             <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
+//             <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
+//             <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
+//         </div>`;
+// }
 
 function subtaskCompletedCheckbox(index, completed) {
     return `

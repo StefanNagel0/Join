@@ -77,6 +77,7 @@ async function openTaskOverlay(taskId) {
     const removeClassStatus = document.getElementById("taskStatusID");
     if (removeClass && removeClassTemplate) {
         toggleCategory(taskId);
+        taskEditAddSubtask(taskId);
         removeClass.classList.remove("taskTitle");
         removeClass.classList.add("openTaskOverlayTitle");
         removeClassTemplate.classList.remove("taskDescription");

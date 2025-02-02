@@ -208,6 +208,9 @@ function taskEditTemplate(task, taskId) {
         <div class="openEditTaskOverlayAssigned">
             ${taskEditAssignedTo(task, taskId)}
         </div>
+        <div class="openEditAddSubtask">
+            ${taskEditAddSubtaskTemplate(task, taskId)}
+        </div>
         <div class="openEditTaskOverlaySubtasks">
             ${taskEditSubtasks(task, taskId)}
         </div>

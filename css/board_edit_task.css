@@ -7,9 +7,12 @@
     border: none;
 }
 
-#editTitle,.openEditTaskOverlayDescription input[type="text"],
-#editTitle,.openEditTaskOverlayDescription textarea,
-#editTitle,.openEditTaskOverlayDescription select {
+#editTitle,
+.openEditTaskOverlayDescription input[type="text"],
+#editTitle,
+.openEditTaskOverlayDescription textarea,
+#editTitle,
+.openEditTaskOverlayDescription select {
     border-radius: 10px;
     border: 1px solid #ccc;
     padding: 0px 0px 0px 10px;
@@ -129,15 +132,40 @@
     justify-content: space-between;
     align-items: center;
     max-width: calc(100% - 5px);
-    height: 24px;
+    height: 30px;
     gap: 25px;
     color: #42526E;
+}
+
+.hoverSubtask:hover  {
+    height: 30px;
+    width: 100%;
+    background-color: #f1f1f1;
+    border-radius: 10px;
 }
 
 .subtaskEditingContainer {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 0px;
+}
+
+.subtaskEditingContainer button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.subtaskEditingContainer img {
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+}
+
+.subtaskEditImg {
+    filter: grayscale(100%) brightness(0) sepia(100%) hue-rotate(180deg) saturate(1000%) contrast(100%) drop-shadow(0 0 0 #2A3647);
+    border-right: 1px solid #2A3647;
+    padding-right: 8px;
 }
 
 .openEditTaskSaveButtonSorting {

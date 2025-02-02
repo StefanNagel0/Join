@@ -48,7 +48,7 @@ function editTask(taskId) {
 function applyActivePriorityButton(priority) {
     // Warten Sie, bis das DOM vollständig geladen ist
     const priorityButton = document.querySelector(`#task-priority .prio-btn[data-prio="${priority}"]`);
-    
+
     if (priorityButton) {
         // Entferne die aktive Klasse von allen Buttons
         document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
@@ -219,18 +219,10 @@ function taskEditSubtasks(task, taskId) {
     if (!task || !task.subtasks) return ''; // Sicherstellen, dass task existiert
     console.log("task.id in taskEditSubtasks:", taskId);  // Debugging für task.id
 
-    const subtasksHtml = task.subtasks.map((subtask, index) => {
+    const subtasksHtml = task.subtasks.map((subtask, index, task) => {
         return `
-            <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}">
+            <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}" onmouseenter="hoverSubtask('${taskId}', ${index})" onmouseleave="hoverOutSubtask('${taskId}', ${index})">
                 <label id="subtask-${index}">${subtask.text}</label>
-                <div class="subtaskEditingContainer">
-                    <button onclick="toggleEditSubtask(${index}, '${taskId}')">
-                        <img src="../assets/svg/edit.svg" alt="">
-                    </button>
-                    <button onclick="deleteSubtask(${index}, '${taskId}')">
-                        <img src="../assets/svg/delete.svg" alt="">
-                    </button>
-                </div>
             </div>
         `;
     }).join("");
@@ -241,6 +233,42 @@ function taskEditSubtasks(task, taskId) {
             ${subtasksHtml}
         </div>
     `;
+}
+
+function hoverSubtask(taskId, index) {
+    const task = globalTasks[taskId];
+    if (!task || !task.subtasks || !task.subtasks[index]) {
+        console.error(`Task oder Subtask nicht gefunden: ${taskId}, Index: ${index}`);
+        return;
+    }
+    const subtaskElement = document.getElementById(`subtask-container-${index}`);
+    if (subtaskElement) {
+        subtaskElement.classList.add('hoverSubtask');
+        if (!subtaskElement.querySelector('.subtaskEditingContainer')) {
+            const subtaskEditingContainer = document.createElement('div');
+            subtaskEditingContainer.classList.add('subtaskEditingContainer');
+            subtaskEditingContainer.innerHTML = `
+                <button onclick="toggleEditSubtask(${index}, '${taskId}')">
+                    <img class="subtaskEditImg" src="../assets/svg/summary/pencil2.svg" alt="">    
+                </button>
+                <button onclick="deleteSubtask(${index}, '${taskId}')">
+                    <img src="../assets/svg/add_task/trash.svg" alt="">
+                </button>
+            `;
+            subtaskElement.appendChild(subtaskEditingContainer);
+        }
+    }
+}
+
+function hoverOutSubtask(taskId, index) {
+    const subtaskElement = document.getElementById(`subtask-container-${index}`);
+    if (subtaskElement) {
+        subtaskElement.classList.remove('hoverSubtask');
+        const editingContainer = subtaskElement.querySelector('.subtaskEditingContainer');
+        if (editingContainer) {
+            editingContainer.remove();
+        }
+    }
 }
 
 function toggleEditSubtask(index, taskId) {
@@ -331,7 +359,7 @@ async function saveTask(taskId) {
         task.title = document.getElementById("editTitle")?.value || task.title;
         task.description = document.getElementById("editDescription")?.value || task.description;
         task.dueDate = document.getElementById("editDueDate")?.value || task.dueDate;
-        
+
         // Aktualisiert die Priorität
         task.priority = document.getElementById("task-priority").dataset.priority || task.priority;
 

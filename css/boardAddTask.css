@@ -37,7 +37,7 @@
     padding-left: 30px;
 }
 
-.addTaskSuccessBox{
+.addTaskSuccessBox {
     display: none;
     justify-content: center;
     align-items: center;
@@ -401,7 +401,7 @@
     scrollbar-width: none;
 }
 
-.board_overlay_contact_box{
+.board_overlay_contact_box {
     display: flex;
     justify-content: left;
     align-items: center;
@@ -500,6 +500,15 @@
     height: 24px;
 }
 
+.openTaskOverlayDeleteButton:hover {
+    color: rgb(41, 171, 226);
+    font-weight: bold;
+}
+
+.openTaskOverlayDeleteButton:hover img {
+    content: url("../assets/svg/delete_blue.svg")
+}
+
 .openTaskOverlayEditButton {
     display: flex;
     align-items: center;
@@ -521,6 +530,15 @@
 .openTaskOverlayEditButton img {
     width: 24px;
     height: 24px;
+}
+
+.openTaskOverlayEditButton:hover img {
+    content: url("../assets/svg/edit_blue.svg")
+}
+
+.openTaskOverlayEditButton:hover {
+    color: rgb(41, 171, 226);
+    font-weight: bold;
 }
 
 .openTaskOverlaySubtask {

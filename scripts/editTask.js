@@ -89,6 +89,7 @@ function taskEditDate(task) {
         <label for="editDueDate">Due Date</label>
         <input 
             type="date" 
+            class="duoDateColor"
             id="editDueDate" 
             value="${task.dueDate}" 
             min="${today}" 
@@ -139,7 +140,7 @@ function setupDateValidation() {
 function taskEditPriority(task) {
     return `
         <div class="gap_8">
-            <p class="prio_text">Prio</p>
+            <p class="prioHeadline">Priority</p>
             <div id="task-priority" data-priority="${task.priority}">
                 <button type="button" class="prio-btn urgent" data-prio="Urgent">
                     Urgent <img src="../assets/svg/add_task/prio_urgent.svg" alt="">

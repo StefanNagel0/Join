@@ -21,7 +21,7 @@
     }
 
     .btns {
-        padding: 0;
+        padding: 0 !important;
         justify-content: center;
     }
 
@@ -137,7 +137,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: column;
+        flex-direction: column !important;
     }
 
     .btns {

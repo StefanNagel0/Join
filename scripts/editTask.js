@@ -205,7 +205,6 @@ function toggleEditTaskDropdown(event, toggle, options) {
     }
 }
 
-
 function toggleContactSelectionUI(container, contactName) {
     const checkbox = container.querySelector("input[type='checkbox']");
     const isSelected = checkbox.checked = !checkbox.checked; // Umschalten des Status
@@ -215,15 +214,29 @@ function toggleContactSelectionUI(container, contactName) {
     toggleContactSelection({ name: contactName }, isSelected, selectedContactsContainer);
 }
 
+function taskEditAddSubtask(task) {
+    return `
+        <div class="gap_8">
+            <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
+            <div class="openTaskOverlaySubtaskContainer">
+                <div id="subtask-container-0" onmouseenter="hoverSubtask('${task.id}', 0)" onmouseleave="hoverOutSubtask('${task.id}', 0)">
+                    <label id="subtask-0">Subtask</label>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function taskEditSubtasks(task, taskId) {
-    if (!task || !task.subtasks) return ''; // Sicherstellen, dass task existiert
-    console.log("task.id in taskEditSubtasks:", taskId);  // Debugging für task.id
+    if (!task || !task.subtasks) return '';
+    console.log("task.id in taskEditSubtasks:", taskId);
 
     const subtasksHtml = task.subtasks.map((subtask, index, task) => {
         return `
             <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}" onmouseenter="hoverSubtask('${taskId}', ${index})" onmouseleave="hoverOutSubtask('${taskId}', ${index})">
-                <label id="subtask-${index}">${subtask.text}</label>
-            </div>
+               <div class="editSubtaskPoint"><p>• </p><label id="subtask-${index}">${subtask.text}</label>
+                </div>
+               </div>
         `;
     }).join("");
 
@@ -330,17 +343,13 @@ async function fetchTaskFromFirebase(taskId) {
         console.error("Fehler: Task ID ist undefined!");
         return null;
     }
-
     const response = await fetch(`${BASE_URL}tasks/${taskId}.json`);
     const taskData = await response.json();
-
     console.log("Erhaltene Task-Daten:", taskData); // Debugging
-
     if (!taskData) {
         console.error("Task nicht gefunden in Firebase!");
         return null;
     }
-
     return { id: taskId, ...taskData };
 }
 

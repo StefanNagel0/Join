@@ -131,10 +131,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-left: 25px;
+    padding-right: 15px;
     max-width: calc(100% - 5px);
     height: 30px;
     gap: 25px;
     color: #42526E;
+}
+
+.editSubtaskPoint {
+    display: flex;
+    justify-content: flex-start !important;
+    align-items: center;
+    gap: 5px;
 }
 
 .hoverSubtask:hover  {
@@ -147,7 +156,6 @@
 .subtaskEditingContainer {
     display: flex;
     justify-content: flex-end;
-    gap: 0px;
 }
 
 .subtaskEditingContainer button {

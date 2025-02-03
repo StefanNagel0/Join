@@ -161,8 +161,8 @@ function updateSelectedContactsUI() {
 }
 
 
-function taskEditAddSubtask(task, taskId) {
-    return taskEditAddSubtaskTemplate(task, taskId);
+function taskEditAddSubtask() {
+    return taskEditAddSubtaskTemplate();
 }
 
 

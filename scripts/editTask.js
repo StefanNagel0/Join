@@ -41,19 +41,14 @@ function editTask(taskId) {
             document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
         };
     });
-    setupDateValidation(); // Datumseingabe validieren
+    setupDateValidation();
     initTaskEditAddSubtask();
 }
 
-// Funktion, um die 'active' Klasse basierend auf der Priorität zu setzen
 function applyActivePriorityButton(priority) {
-    // Warten Sie, bis das DOM vollständig geladen ist
     let priorityButton = document.querySelector(`#task-priority .prio-btn[data-prio="${priority}"]`);
-
     if (priorityButton) {
-        // Entferne die aktive Klasse von allen Buttons
         document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
-        // Füge die aktive Klasse dem entsprechenden Button hinzu
         priorityButton.classList.add("active");
     } else {
         console.log(`Kein Button mit der Priorität "${priority}" gefunden.`);
@@ -173,7 +168,6 @@ function taskEditAssignedTo(task, taskId) {
             </div>
         `;
     }).join("");
-
     return `
         <div id="task-assigned" class="dropdown-wrapper">
             <div class="dropdown-toggle" onclick="toggleEditTaskDropdown(event, this, document.querySelector('.dropdown-content'))">
@@ -198,7 +192,6 @@ function taskEditAssignedTo(task, taskId) {
 
 function toggleEditTaskDropdown(event, toggle, options) {
     event.stopPropagation();
-
     if (options.classList.contains("visible")) {
         options.classList.remove("visible");
     } else {
@@ -211,12 +204,37 @@ function toggleEditTaskDropdown(event, toggle, options) {
 
 function toggleContactSelectionUI(container, contactName) {
     let checkbox = container.querySelector("input[type='checkbox']");
-    let isSelected = checkbox.checked = !checkbox.checked; // Umschalten des Status
+    let isSelected = checkbox.checked = !checkbox.checked;
     container.classList.toggle("selected", isSelected);
-
     let selectedContactsContainer = document.getElementById('selected-contacts');
-    toggleContactSelection({ name: contactName }, isSelected, selectedContactsContainer);
+    let task = detailTask;
+    if (!task) {
+        console.error("Fehler: Keine Task gefunden!");
+        return;
+    }
+    if (isSelected) {
+        if (!task.assignedTo.includes(contactName)) {
+            task.assignedTo.push(contactName);
+        }
+    } else {
+        task.assignedTo = task.assignedTo.filter(name => name !== contactName);
+    }
+    updateSelectedContactsUI();
 }
+
+function updateSelectedContactsUI() {
+    let selectedContactsContainer = document.getElementById('selected-contacts');
+    if (!selectedContactsContainer) return;
+
+    selectedContactsContainer.innerHTML = detailTask.assignedTo.map(contactName => `
+        <div class="selected-contact" data-fullname="${contactName}">
+            <div class="initials-circle" style="background-color: ${getContactColor(contactName)}">
+                ${getInitials(contactName)}
+            </div>
+        </div>
+    `).join('');
+}
+
 
 function taskEditAddSubtask(task, taskId) {
     return taskEditAddSubtaskTemplate(task, taskId);
@@ -401,6 +419,8 @@ async function fetchTaskFromFirebase(taskId) {
 }
 
 
+
+
 async function saveTask(taskId) {
     let task = globalTasks[taskId];
     if (!task) {
@@ -416,9 +436,15 @@ async function saveTask(taskId) {
         task.dueDate = document.getElementById("editDueDate")?.value || task.dueDate;
         // Aktualisiert die Priorität
         task.priority = document.getElementById("task-priority").dataset.priority || task.priority;
-        // Holt die ausgewählten Kontakte
+        // Holt die aktuell ausgewählten Kontakte aus dem UI
         task.assignedTo = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
             .map(el => el.dataset.fullname);
+
+        // Stelle sicher, dass `task.assignedTo` nicht `undefined` wird, falls keine Kontakte ausgewählt sind
+        if (!task.assignedTo) {
+            task.assignedTo = [];
+        }
+
         // Verhindert das Überschreiben der Subtasks
         task.subtasks = subtasksFromDB;
 
@@ -435,52 +461,16 @@ async function saveTask(taskId) {
     }
 }
 
-
-// async function saveTask(taskId) {
-//     const task = globalTasks[taskId];
-//     if (!task) {
-//         console.error(`Task mit ID ${taskId} nicht gefunden.`);
-//         return;
-//     }
-//     try {
-//         const taskFromDB = await fetchTaskFromFirebase(taskId);
-//         const subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks;
-//         const titleInput = document.getElementById("editTitle");
-//         task.title = titleInput?.value || task.title;
-//         const descriptionInput = document.getElementById("editDescription");
-//         task.description = descriptionInput?.value || task.description;
-//         const dueDateInput = document.getElementById("editDueDate");
-//         task.dueDate = dueDateInput?.value || task.dueDate;
-//         const priorityElement = document.getElementById("task-priority");
-//         if (priorityElement) {
-//             task.priority = priorityElement.getAttribute("data-priority") || task.priority;
-//         }
-//         const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
-//             .map(el => el.dataset.fullname);
-//         task.assignedTo = selectedContacts;
-//         task.subtasks = subtasksFromDB;
-//         console.log("Updated Task ohne Subtasks-Überschreibung:", task);
-//         if (taskId in globalTasks) {
-//             await updateTaskInDatabase(taskId, task);
-//         }
-//         displayTasks(globalTasks);
-//         closeTaskOverlay();
-//     } catch (error) {
-//         console.error("Fehler beim Speichern der Aufgabe:", error);
-//     }
-// }
-
 /* edited task update to database */
 async function updateTaskInDatabase(taskId, task) {
     try {
         let response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
-            method: "PATCH",  // PATCH anstelle von PUT verwenden
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(task),
         });
-
         if (response.ok) {
             console.log("Task erfolgreich aktualisiert:", taskId);
         } else {
@@ -500,7 +490,7 @@ async function updateSubtaskDB(task, taskId) {
         },
         body: JSON.stringify({
             subtasks: task.subtasks
-        }) // Nur die Subtasks aktualisieren
+        })
     });
     if (!response.ok) {
         throw new Error(`Fehler beim Aktualisieren des Subtasks: ${response.statusText}`);

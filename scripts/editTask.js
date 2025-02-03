@@ -254,7 +254,6 @@ function addEditNewSubtask(input, list) {
     const subtaskElement = createSubtaskElement(task);
     list.appendChild(subtaskElement);
     input.value = '';
-    updateTaskInDatabase(taskId, task);
     // toggleClearButtonNewSubtaskVisibility();
 }
 // function toggleClearButtonNewSubtaskVisibility() {

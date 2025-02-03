@@ -230,11 +230,11 @@ function taskAssignedTemplateOverlay(task) {
         <div id="taskAssignedID" class="taskAssigned">
             ${task.assignedTo
                 .map(name => {
-                    const initials = name
+                    let initials = name
                         .split(" ")
                         .map(part => part.charAt(0))
                         .join("");
-                    const circleColor = getContactColor(name);
+                    let circleColor = getContactColor(name);
                     return `
                         <p class="board_overlay_contact_box">
                             <span class="initialsOverlay" style="background-color: ${circleColor};">
@@ -248,12 +248,12 @@ function taskAssignedTemplateOverlay(task) {
         </div>
         `;
     } else if (task.assignedTo && typeof task.assignedTo === 'string') {
-        const name = task.assignedTo;
-        const initials = name
+        let name = task.assignedTo;
+        let initials = name
             .split(" ")
             .map(part => part.charAt(0))
             .join("");
-        const circleColor = getContactColor(name);
+        let circleColor = getContactColor(name);
         return `
         <div id="taskAssignedID" class="taskAssigned">
             <p>

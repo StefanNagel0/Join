@@ -156,8 +156,10 @@ function taskEditPriority(task) {
     `;
 }
 
-function taskEditAssignedTo(task) {
-    const assignedContacts = task.assignedTo || []; // Bereits zugewiesene Kontakte
+function taskEditAssignedTo(task, taskId) {
+    const assignedContacts = task.assignedTo || [];
+    let maxDisplay = 8;
+    let displayedContacts = assignedContacts.slice(0, maxDisplay);
     const contactListHtml = contacts.map(contact => {
         const isSelected = assignedContacts.includes(contact.name);
         return `
@@ -183,12 +185,12 @@ function taskEditAssignedTo(task) {
                 ${contactListHtml}
             </div>
             <div id="selected-contacts" class="selected-contacts">
-                ${assignedContacts.map(contactName => `
-                    <div class="selected-contact" data-fullname="${contactName}">
-                        <div class="initials-circle" style="background-color: ${getContactColor(contactName)}">
-                            ${getInitials(contactName)}
-                        </div>
+                ${displayedContacts.map(contactName => `
+                <div class="selected-contact" data-fullname="${contactName}">
+                    <div class="initials-circle" style="background-color: ${getContactColor(contactName)}">
+                        ${getInitials(contactName)}
                     </div>
+                </div>
                 `).join('')}
             </div>
         </div>

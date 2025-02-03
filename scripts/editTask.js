@@ -42,7 +42,7 @@ function editTask(taskId) {
         };
     });
     setupDateValidation();
-    initTaskEditAddSubtask();
+    initTaskEditAddSubtask(taskId);
 }
 
 function applyActivePriorityButton(priority) {
@@ -236,11 +236,11 @@ function updateSelectedContactsUI() {
 }
 
 
-function taskEditAddSubtask(task, taskId) {
-    return taskEditAddSubtaskTemplate(task, taskId);
+function taskEditAddSubtask() {
+    return taskEditAddSubtaskTemplate();
 }
 
-function initTaskEditAddSubtask() {
+function initTaskEditAddSubtask(taskId, task) {
     let input = document.getElementById('newEditSubtask');
     let addBtn = document.getElementById('addEditSubtask');
     let clearBtn = document.getElementById('clearEditSubtask');
@@ -256,25 +256,62 @@ function initTaskEditAddSubtask() {
         input.value = '';
         clearBtn.classList.add('d-none');
     };
-    addBtn.onclick = () => addEditNewSubtask(input, list);
+    addBtn.onclick = () => addEditNewSubtask(input, list, taskId);
     input.onkeydown = function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-            addEditNewSubtask(input, list);
+            addEditNewSubtask(input, list, taskId, task);
         }
     };
 }
 
-function addEditNewSubtask(input, list) {
-    let task = input.value.trim();
-    if (!task) return;
-    const subtaskElement = createSubtaskElement(task);
+function addEditNewSubtask(input, list, taskId, task) {
+    let newEditSubtask = input.value.trim();
+    if (!newEditSubtask) return;
+    let subtaskElement = createEditSubtaskElement(newEditSubtask, taskId, task);
     list.appendChild(subtaskElement);
     input.value = '';
 }
 
+function createEditSubtaskElement(newEditSubtask, taskId, task) {
+    let subtaskElement = document.createElement('div');
+    subtaskElement.classList.add('openEditTaskOverlaySubtask');
+    subtaskElement.innerHTML = createNewEditSubtask(newEditSubtask, taskId, task);
+    taskEditSubtasks(newEditSubtask)
+    return subtaskElement;
+}
 
-function taskEditAddSubtaskTemplate(task, taskId) {
+// function createNewEditSubtask(task, taskId) {
+//     return `
+//     <div class="openEditTaskOverlaySubtask">
+
+//     <div class="editSubtaskPoint"><p>• </p><label>${task}</label></div>
+//     </div>
+// `;
+// }
+
+function createNewEditSubtask(newEditSubtask, taskId) {
+    // if (!task || !task.subtasks) return '';
+    // console.log("task.id in taskEditSubtasks:", taskId);
+    let subtasksHtml = task.subtasks.map((subtask, index, task) => {
+        return `
+            <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}" onmouseenter="hoverSubtask('${taskId}', ${index})" onmouseleave="hoverOutSubtask('${taskId}', ${index})">
+
+            <div class="editSubtaskPoint"><p>• </p><label id="subtask-${index}">${subtask.text} ${newEditSubtask}</label></div>
+            </div>
+        `;
+    }).join("");
+    return `
+        <div id="addEditSubtaskNew" class="openTaskOverlaySubtaskContainer">
+            <p class="openTaskOverlayEditSubtaskTitle">Subtasks</p>
+            ${taskEditAddSubtaskTemplate()}
+            ${subtasksHtml}
+        </div>
+    `;
+}
+
+
+function taskEditAddSubtaskTemplate() {
     return `
         <div class="openEditAddSubtask" id="subtask-container-edit">
             <input class="openEditAddSubtaskInput" maxlength="20" type="text" id="newEditSubtask" placeholder="Add new subtask">
@@ -298,7 +335,7 @@ function taskEditSubtasks(task, taskId) {
     return `
         <div id="addEditSubtaskNew" class="openTaskOverlaySubtaskContainer">
             <p class="openTaskOverlayEditSubtaskTitle">Subtasks</p>
-            ${taskEditAddSubtaskTemplate(task, taskId)}
+            ${taskEditAddSubtaskTemplate()}
             ${subtasksHtml}
         </div>
     `;

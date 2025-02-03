@@ -27,7 +27,6 @@ function editTask(taskId) {
         ${taskEditDate(task)} <!-- Datumseingabe-Funktion -->
         ${taskEditPriority(task)} <!-- Priorität -->
         ${taskEditAssignedTo(task)} <!-- Zuständige Personen -->
-        ${taskEditAddSubtask(task, taskId)} <!-- Subtask hinzufügen -->
         ${taskEditSubtasks(task, taskId)} <!-- Subtasks -->
         <button class="saveButtonOk" onclick="saveTask('${taskId}')">OK <img src="../assets/svg/add_task/check.svg" alt=""></button>
     `;
@@ -272,18 +271,13 @@ function addEditNewSubtask(input, list) {
     const subtaskElement = createSubtaskElement(task);
     list.appendChild(subtaskElement);
     input.value = '';
-    // toggleClearButtonNewSubtaskVisibility();
 }
-// function toggleClearButtonNewSubtaskVisibility() {
-//     const clearBtn = document.getElementById('clear-subtask');
-//     if (clearBtn) clearBtn.classList.add('d-none');
-// }
 
 
 function taskEditAddSubtaskTemplate(task, taskId) {
     return `
-        <div id="subtask-container">
-            <input maxlength="20" type="text" id="newEditSubtask" placeholder="Add new subtask">
+        <div class="openEditAddSubtask" id="subtask-container-edit">
+            <input class="openEditAddSubtaskInput" maxlength="20" type="text" id="newEditSubtask" placeholder="Add new subtask">
             <img id="clearEditSubtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg" alt="">
             <img id="addEditSubtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
         </div>
@@ -303,7 +297,8 @@ function taskEditSubtasks(task, taskId) {
     }).join("");
     return `
         <div id="addEditSubtaskNew" class="openTaskOverlaySubtaskContainer">
-            <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
+            <p class="openTaskOverlayEditSubtaskTitle">Subtasks</p>
+            ${taskEditAddSubtaskTemplate(task, taskId)}
             ${subtasksHtml}
         </div>
     `;

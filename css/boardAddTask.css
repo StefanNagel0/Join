@@ -212,6 +212,10 @@
     align-items: center;
 }
 
+.assignedHiddenCount {
+    margin-left: 5px;
+}
+
 .taskPriority {
     width: 32px;
     position: absolute;

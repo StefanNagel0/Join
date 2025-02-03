@@ -195,15 +195,18 @@ async function updateSubtaskDB(task, taskId) {
 /* Renders the assigned employees from the task */
 function taskAssignedTemplate(task) {
     if (Array.isArray(task.assignedTo) && task.assignedTo.length > 0) {
+        let maxDiplayed = 3;
+        let displayedAssignees = task.assignedTo.slice(0, maxDiplayed);
+        let hiddenCount = task.assignedTo.length - maxDiplayed;
         return `
         <div id="taskAssignedID" class="taskAssigned">
-            ${task.assignedTo
+            ${displayedAssignees
                 .map((name) => {
-                    const initials = name
+                    let initials = name
                         .split(" ")
                         .map(part => part.charAt(0).toUpperCase())
                         .join("");
-                    const circleColor = getContactColor(name);
+                    let circleColor = getContactColor(name);
                     return `
                         <div class="assigned-contact">
                             <div class="initials-circle-board" style="background-color: ${circleColor};">
@@ -213,6 +216,7 @@ function taskAssignedTemplate(task) {
                     `;
                 })
                 .join("")}
+            ${hiddenCount > 0 ? `<p class="assignedHiddenCount">+${hiddenCount}</p>` : ""}
         </div>
         `;
     }

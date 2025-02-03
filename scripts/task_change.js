@@ -179,7 +179,6 @@ function getSubtasks() {
 /**Handles the submission of the add-task form, collects task data*/
 function submitAddTask(event) {
     event.preventDefault();
-    // 1. Validierung der Kategorie
     let categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
     if (categoryText === 'Select task category') {
         document.getElementById('dropdown-toggle-category').classList.add('error');
@@ -189,14 +188,12 @@ function submitAddTask(event) {
         document.getElementById('dropdown-toggle-category').classList.remove('error');
         document.getElementById('category-error').classList.add('hidden');
     }
-    // 2. Erstelle das Task-Objekt
     let form = document.getElementById('task-form');
     let task = createTaskObject(form);
-    // 3. Task in die Datenbank speichern
     addTaskToFirebase(task).then(() => {
         console.log('Task erfolgreich hinzugefügt:', task);
-        // 4. Formular zurücksetzen und Benachrichtigung anzeigen
         resetFormAndNotify(form);
+        getToDoAddTaskPage(event);
     }).catch(error => {
         console.error('Fehler beim Hinzufügen des Tasks:', error);
     });

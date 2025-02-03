@@ -369,7 +369,7 @@ async function saveTask(taskId) {
     }
     try {
         let taskFromDB = await fetchTaskFromFirebase(taskId);
-        let subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks;
+        let subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks; // Subtask Problem beim Speichern! Funktion Prüfen!
         task.title = document.getElementById("editTitle")?.value || task.title;
         task.description = document.getElementById("editDescription")?.value || task.description;
         task.dueDate = document.getElementById("editDueDate")?.value || task.dueDate;

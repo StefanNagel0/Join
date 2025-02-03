@@ -135,7 +135,6 @@ function addSubtask(input, list) {
     toggleClearButtonVisibility();
 }
 
-
 /**Observes DOM changes and applies date validation for dynamically added date inputs.*/
 function createSubtaskElement(task) {
     const subtaskElement = document.createElement('li');

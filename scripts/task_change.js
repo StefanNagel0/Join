@@ -6,14 +6,10 @@ function onload() {
 /* global definition of task */
 let globalTasks = {};
 
-
-
-
 /* global definition of mainCategory */
 let mainCategory = '';
 
 /* define Firebase URL */
-
 const BASE_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**Loads tasks from a specified path and displays them.*/
@@ -40,17 +36,6 @@ function displayTasks(tasks) {
 
     emptyTaskContainer();
 }
-
-
-// function displayTasks(tasks) {
-//     clearTaskContainers();
-//     const taskArray = Object.entries(tasks);
-//     taskArray.forEach(([taskId, task]) => {
-//         const taskElement = createTaskElement(task, taskId);
-//         appendTaskToCategory(task, taskElement);
-//     });
-//     emptyTaskContainer();
-// }
 
 /**Clears all task containers.*/
 function clearTaskContainers() {
@@ -192,10 +177,8 @@ function getSubtasks() {
 }
 
 /**Handles the submission of the add-task form, collects task data*/
-
 function submitAddTask(event) {
     event.preventDefault();
-
     // 1. Validierung der Kategorie
     const categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
     if (categoryText === 'Select task category') {
@@ -206,15 +189,12 @@ function submitAddTask(event) {
         document.getElementById('dropdown-toggle-category').classList.remove('error');
         document.getElementById('category-error').classList.add('hidden');
     }
-
     // 2. Erstelle das Task-Objekt
     const form = document.getElementById('task-form');
     const task = createTaskObject(form);
-
     // 3. Task in die Datenbank speichern
     addTaskToFirebase(task).then(() => {
         console.log('Task erfolgreich hinzugefügt:', task);
-
         // 4. Formular zurücksetzen und Benachrichtigung anzeigen
         resetFormAndNotify(form);
     }).catch(error => {
@@ -244,23 +224,6 @@ async function addTaskToFirebase(task) {
         throw error; // Fehler weitergeben, falls benötigt
     }
 }
-
-
-// function submitAddTask(event) {
-//     event.preventDefault();
-//     const categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
-//     if (categoryText === 'Select task category') {
-//         document.getElementById('dropdown-toggle-category').classList.add('error');
-//         document.getElementById('category-error').classList.remove('hidden');
-//         return;
-//     } else {
-//         document.getElementById('dropdown-toggle-category').classList.remove('error');
-//         document.getElementById('category-error').classList.add('hidden');
-//     }
-//     const form = document.getElementById('task-form');
-//     const task = createTaskObject(form);
-//     resetFormAndNotify(form);
-// }
 
 /**Collects task data from the add-task form fields and constructs a task object.*/
 function collectTaskData() {

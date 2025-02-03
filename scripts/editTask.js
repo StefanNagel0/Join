@@ -198,13 +198,13 @@ function taskEditAssignedTo(task, taskId) {
 }
 
 function toggleEditTaskDropdown(event, toggle, options) {
-    event.stopPropagation(); // Verhindert, dass das Dropdown sofort wieder schließt
+    event.stopPropagation();
 
     if (options.classList.contains("visible")) {
         options.classList.remove("visible");
     } else {
         document.querySelectorAll(".dropdown-content.visible").forEach(dropdown => {
-            dropdown.classList.remove("visible"); // Schließt andere offene Dropdowns
+            dropdown.classList.remove("visible");
         });
         options.classList.add("visible");
     }
@@ -224,10 +224,10 @@ function taskEditAddSubtask(task, taskId) {
 }
 
 function initTaskEditAddSubtask() {
-    const input = document.getElementById('newEditSubtask');
-    const addBtn = document.getElementById('addEditSubtask');
-    const clearBtn = document.getElementById('clearEditSubtask');
-    const list = document.getElementById('subtask-list');
+    let input = document.getElementById('newEditSubtask');
+    let addBtn = document.getElementById('addEditSubtask');
+    let clearBtn = document.getElementById('clearEditSubtask');
+    let list = document.getElementById('addEditSubtaskNew');
     if (!input || !addBtn || !clearBtn || !list) {
         console.error("Einige Elemente für 'Add Subtask' wurden im DOM nicht gefunden.");
         return;
@@ -239,15 +239,29 @@ function initTaskEditAddSubtask() {
         input.value = '';
         clearBtn.classList.add('d-none');
     };
-    // Add Subtask noch umschreiben! Funktion wurde so aus Add Task Kopiert!
-    addBtn.onclick = () => addSubtask(input, list);
+    addBtn.onclick = () => addEditNewSubtask(input, list);
     input.onkeydown = function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-            addSubtask(input, list);
+            addEditNewSubtask(input, list);
         }
     };
 }
+
+function addEditNewSubtask(input, list) {
+    const task = input.value.trim();
+    if (!task) return;
+    const subtaskElement = createSubtaskElement(task);
+    list.appendChild(subtaskElement);
+    input.value = '';
+    updateTaskInDatabase(taskId, task);
+    // toggleClearButtonNewSubtaskVisibility();
+}
+// function toggleClearButtonNewSubtaskVisibility() {
+//     const clearBtn = document.getElementById('clear-subtask');
+//     if (clearBtn) clearBtn.classList.add('d-none');
+// }
+
 
 function taskEditAddSubtaskTemplate(task, taskId) {
     return `
@@ -271,7 +285,7 @@ function taskEditSubtasks(task, taskId) {
         `;
     }).join("");
     return `
-        <div class="openTaskOverlaySubtaskContainer">
+        <div id="addEditSubtaskNew" class="openTaskOverlaySubtaskContainer">
             <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
             ${subtasksHtml}
         </div>

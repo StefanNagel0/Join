@@ -42,7 +42,7 @@ function editTask(taskId) {
         };
     });
     setupDateValidation();
-    initTaskEditAddSubtask();
+    initTaskEditAddSubtask(taskId);
 }
 
 function applyActivePriorityButton(priority) {
@@ -53,47 +53,6 @@ function applyActivePriorityButton(priority) {
     } else {
         console.log(`Kein Button mit der Priorität "${priority}" gefunden.`);
     }
-}
-
-function taskEditTitle(task) {
-    return `
-    <div class="openEditTaskOverlayTitle">
-        <label for="editTitle">Title</label>
-        <input id="editTitle" type="text" value="${task.title}" />
-    </div>
-    `;
-}
-
-function taskEditDescription(task) {
-    return `
-    <div class="openEditTaskOverlayDescription">
-        <label for="editDescription">Description</label>
-        <textarea class="" maxlength="150" id="editDescription">${task.description}</textarea>
-    </div>
-    `;
-}
-
-function taskEditDate(task) {
-    let today = new Date().toISOString().split("T")[0];
-    let maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() + 100);
-    let maxDateString = maxDate.toISOString().split("T")[0];
-    return `
-    <div class="openEditTaskOverlayDueDate">
-        <label for="editDueDate">Due Date</label>
-        <input 
-            type="date" 
-            class="duoDateColor"
-            id="editDueDate" 
-            value="${task.dueDate}" 
-            min="${today}" 
-            max="${maxDateString}" 
-        />
-        <small id="dateError" style="color: red; display: none;">
-            Datum muss zwischen heute und 100 Jahre in der Zukunft liegen
-        </small>
-    </div>
-    `;
 }
 
 
@@ -131,43 +90,14 @@ function setupDateValidation() {
 }
 
 
-function taskEditPriority(task) {
-    return `
-        <div class="gap_8">
-            <p class="prioHeadline">Priority</p>
-            <div id="task-priority" data-priority="${task.priority}">
-                <button type="button" class="prio-btn urgent" data-prio="Urgent">
-                    Urgent <img src="../assets/svg/add_task/prio_urgent.svg" alt="">
-                </button>
-                <button type="button" class="prio-btn medium" data-prio="Medium">
-                    Medium <img src="../assets/svg/add_task/prio_medium.svg" alt="">
-                </button>
-                <button type="button" class="prio-btn low" data-prio="Low">
-                    Low <img src="../assets/svg/add_task/prio_low.svg" alt="">
-                </button>
-            </div>
-        </div>
-    `;
-}
-
 function taskEditAssignedTo(task, taskId) {
     let assignedContacts = task.assignedTo || [];
     let maxDisplay = 8;
     let displayedContacts = assignedContacts.slice(0, maxDisplay);
-    let contactListHtml = contacts.map(contact => {
-        const isSelected = assignedContacts.includes(contact.name);
-        return `
-            <div class="contact-item ${isSelected ? 'selected' : ''}" data-fullname="${contact.name}" onclick="toggleContactSelectionUI(this, '${contact.name}')">
-                <div class="contact-circle-label">
-                    <div class="initials-circle" style="background-color: ${getContactColor(contact.name)}">
-                        ${getInitials(contact.name)}
-                    </div>
-                    <span class="contact-label">${contact.name}</span>
-                </div>
-                <input type="checkbox" ${isSelected ? 'checked' : ''} />
-            </div>
-        `;
-    }).join("");
+    
+    const contactListHtml = createContactListHtml(assignedContacts);
+    const selectedContactsHtml = createSelectedContactsHtml(displayedContacts);
+
     return `
         <div id="task-assigned" class="dropdown-wrapper">
             <div class="dropdown-toggle" onclick="toggleEditTaskDropdown(event, this, document.querySelector('.dropdown-content'))">
@@ -178,17 +108,12 @@ function taskEditAssignedTo(task, taskId) {
                 ${contactListHtml}
             </div>
             <div id="selected-contacts" class="selected-contacts">
-                ${displayedContacts.map(contactName => `
-                <div class="selected-contact" data-fullname="${contactName}">
-                    <div class="initials-circle" style="background-color: ${getContactColor(contactName)}">
-                        ${getInitials(contactName)}
-                    </div>
-                </div>
-                `).join('')}
+                ${selectedContactsHtml}
             </div>
         </div>
     `;
 }
+
 
 function toggleEditTaskDropdown(event, toggle, options) {
     event.stopPropagation();
@@ -240,69 +165,83 @@ function taskEditAddSubtask(task, taskId) {
     return taskEditAddSubtaskTemplate(task, taskId);
 }
 
-function initTaskEditAddSubtask() {
-    let input = document.getElementById('newEditSubtask');
-    let addBtn = document.getElementById('addEditSubtask');
-    let clearBtn = document.getElementById('clearEditSubtask');
-    let list = document.getElementById('addEditSubtaskNew');
+
+
+function initTaskEditAddSubtask(taskId) {
+    const elements = getTaskEditElements();
+    if (!elements) return;
+
+    const { input, addBtn, clearBtn, list } = elements;
+    setInputEvents(input, clearBtn);
+    setButtonEvents(addBtn, input, list, taskId);
+    setKeyboardEvent(input, list, taskId);
+}
+
+function getTaskEditElements() {
+    const input = document.getElementById('newEditSubtask');
+    const addBtn = document.getElementById('addEditSubtask');
+    const clearBtn = document.getElementById('clearEditSubtask');
+    const list = document.getElementById('addEditSubtaskNew');
+    
     if (!input || !addBtn || !clearBtn || !list) {
         console.error("Einige Elemente für 'Add Subtask' wurden im DOM nicht gefunden.");
-        return;
+        return null;
     }
-    input.oninput = () => {
-        clearBtn.classList.toggle('d-none', !input.value.trim());
-    };
-    clearBtn.onclick = () => {
-        input.value = '';
-        clearBtn.classList.add('d-none');
-    };
-    addBtn.onclick = () => addEditNewSubtask(input, list);
+    return { input, addBtn, clearBtn, list };
+}
+
+function setInputEvents(input, clearBtn) {
+    input.oninput = () => clearBtn.classList.toggle('d-none', !input.value.trim());
+    clearBtn.onclick = () => { input.value = ''; clearBtn.classList.add('d-none'); };
+}
+
+function setButtonEvents(addBtn, input, list, taskId) {
+    addBtn.onclick = () => addEditNewSubtask(input, list, taskId);
+}
+
+function setKeyboardEvent(input, list, taskId) {
     input.onkeydown = function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-            addEditNewSubtask(input, list);
+            addEditNewSubtask(input, list, taskId);
         }
     };
 }
 
-function addEditNewSubtask(input, list) {
-    let task = input.value.trim();
-    if (!task) return;
-    const subtaskElement = createSubtaskElement(task);
+
+function addEditNewSubtask(input, list, taskId) {
+    let taskText = input.value.trim();
+    if (!taskText || !taskId) return console.error("Fehler: Kein gültiger taskId oder leerer Text.");
+    if (!globalTasks[taskId].subtasks) globalTasks[taskId].subtasks = [];
+    const index = addSubtaskToModel(taskId, taskText);
+    const subtaskElement = createSubtaskElement(taskText, index, taskId);
     list.appendChild(subtaskElement);
     input.value = '';
 }
 
-
-function taskEditAddSubtaskTemplate(task, taskId) {
-    return `
-        <div class="openEditAddSubtask" id="subtask-container-edit">
-            <input class="openEditAddSubtaskInput" maxlength="20" type="text" id="newEditSubtask" placeholder="Add new subtask">
-            <img id="clearEditSubtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg" alt="">
-            <img id="addEditSubtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
-        </div>
-    `;
+function addSubtaskToModel(taskId, taskText) {
+    globalTasks[taskId].subtasks.push({ text: taskText, completed: false });
+    return globalTasks[taskId].subtasks.length - 1;
 }
 
-function taskEditSubtasks(task, taskId) {
-    if (!task || !task.subtasks) return '';
-    console.log("task.id in taskEditSubtasks:", taskId);
-    let subtasksHtml = task.subtasks.map((subtask, index, task) => {
-        return `
-            <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}" onmouseenter="hoverSubtask('${taskId}', ${index})" onmouseleave="hoverOutSubtask('${taskId}', ${index})">
-
-            <div class="editSubtaskPoint"><p>• </p><label id="subtask-${index}">${subtask.text}</label></div>
-            </div>
-        `;
-    }).join("");
-    return `
-        <div id="addEditSubtaskNew" class="openTaskOverlaySubtaskContainer">
-            <p class="openTaskOverlayEditSubtaskTitle">Subtasks</p>
-            ${taskEditAddSubtaskTemplate(task, taskId)}
-            ${subtasksHtml}
-        </div>
-    `;
+function createSubtaskElement(taskText, index, taskId) {
+    const subtaskElement = document.createElement('div');
+    subtaskElement.classList.add('openEditTaskOverlaySubtask');
+    subtaskElement.id = `subtask-container-${index}`;
+    subtaskElement.appendChild(createSubtaskPoint(taskText, index));
+    subtaskElement.onmouseenter = () => hoverSubtask(taskId, index);
+    subtaskElement.onmouseleave = () => hoverOutSubtask(taskId, index);
+    subtaskElement.appendChild(createEditingContainer(index, taskId));
+    return subtaskElement;
 }
+
+function createSubtaskPoint(taskText, index) {
+    const subtaskPoint = document.createElement('div');
+    subtaskPoint.classList.add('editSubtaskPoint');
+    subtaskPoint.innerHTML = `<p>•</p><label id="subtask-${index}">${taskText}</label>`;
+    return subtaskPoint;
+}
+
 
 function hoverSubtask(taskId, index) {
     let task = globalTasks[taskId];
@@ -328,6 +267,7 @@ function hoverSubtask(taskId, index) {
         }
     }
 }
+
 
 function hoverOutSubtask(taskId, index) {
     let subtaskElement = document.getElementById(`subtask-container-${index}`);
@@ -430,30 +370,20 @@ async function saveTask(taskId) {
     try {
         let taskFromDB = await fetchTaskFromFirebase(taskId);
         let subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks;
-
         task.title = document.getElementById("editTitle")?.value || task.title;
         task.description = document.getElementById("editDescription")?.value || task.description;
         task.dueDate = document.getElementById("editDueDate")?.value || task.dueDate;
-        // Aktualisiert die Priorität
         task.priority = document.getElementById("task-priority").dataset.priority || task.priority;
-        // Holt die aktuell ausgewählten Kontakte aus dem UI
         task.assignedTo = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
             .map(el => el.dataset.fullname);
-
-        // Stelle sicher, dass `task.assignedTo` nicht `undefined` wird, falls keine Kontakte ausgewählt sind
         if (!task.assignedTo) {
             task.assignedTo = [];
         }
-
-        // Verhindert das Überschreiben der Subtasks
         task.subtasks = subtasksFromDB;
-
         console.log("Updated Task ohne Subtasks-Überschreibung:", task);
-
         if (taskId in globalTasks) {
             await updateTaskInDatabase(taskId, task);
         }
-
         displayTasks(globalTasks);
         closeTaskOverlay();
     } catch (error) {

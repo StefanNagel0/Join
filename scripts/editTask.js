@@ -214,7 +214,7 @@ function addEditNewSubtask(input, list, taskId) {
     if (!taskText || !taskId) return console.error("Fehler: Kein gültiger taskId oder leerer Text.");
     if (!globalTasks[taskId].subtasks) globalTasks[taskId].subtasks = [];
     const index = addSubtaskToModel(taskId, taskText);
-    const subtaskElement = createSubtaskElement(taskText, index, taskId);
+    const subtaskElement = createEditSubtaskElement(taskText, index, taskId);
     list.appendChild(subtaskElement);
     input.value = '';
 }
@@ -224,7 +224,7 @@ function addSubtaskToModel(taskId, taskText) {
     return globalTasks[taskId].subtasks.length - 1;
 }
 
-function createSubtaskElement(taskText, index, taskId) {
+function createEditSubtaskElement(taskText, index, taskId) {
     const subtaskElement = document.createElement('div');
     subtaskElement.classList.add('openEditTaskOverlaySubtask');
     subtaskElement.id = `subtask-container-${index}`;

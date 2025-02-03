@@ -168,14 +168,15 @@
 }
 
 #clearEditSubtask {
+    position: absolute;
     right: 40px;
     border-right: 1px solid #D1D1D1;
     padding-right: 4px;
 }
 
 #addEditSubtask {
-    position: inherit;
-    right: 30px;
+    position: absolute;
+    right: 10px;
 }
 
 .editSubtaskPoint {

@@ -12,7 +12,7 @@ function editTask(taskId) {
         console.error("Fehler: taskId ist undefined oder null!");
         return;
     }
-    const task = globalTasks[taskId];
+    let task = globalTasks[taskId];
     detailTask = task;
     if (!task) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
@@ -20,7 +20,7 @@ function editTask(taskId) {
     }
     console.log("Gefundene Task:", task);
     console.log("Subtasks:", task.subtasks);
-    const overlayRef = document.querySelector(".openTaskOverlayMain");
+    let overlayRef = document.querySelector(".openTaskOverlayMain");
     overlayRef.innerHTML = `
         <input id="editTitle" type="text" value="${task.title}">
         <textarea id="editDescription">${task.description}</textarea>
@@ -49,7 +49,7 @@ function editTask(taskId) {
 // Funktion, um die 'active' Klasse basierend auf der Priorität zu setzen
 function applyActivePriorityButton(priority) {
     // Warten Sie, bis das DOM vollständig geladen ist
-    const priorityButton = document.querySelector(`#task-priority .prio-btn[data-prio="${priority}"]`);
+    let priorityButton = document.querySelector(`#task-priority .prio-btn[data-prio="${priority}"]`);
 
     if (priorityButton) {
         // Entferne die aktive Klasse von allen Buttons
@@ -80,10 +80,10 @@ function taskEditDescription(task) {
 }
 
 function taskEditDate(task) {
-    const today = new Date().toISOString().split("T")[0];
-    const maxDate = new Date();
+    let today = new Date().toISOString().split("T")[0];
+    let maxDate = new Date();
     maxDate.setFullYear(maxDate.getFullYear() + 100);
-    const maxDateString = maxDate.toISOString().split("T")[0];
+    let maxDateString = maxDate.toISOString().split("T")[0];
     return `
     <div class="openEditTaskOverlayDueDate">
         <label for="editDueDate">Due Date</label>
@@ -105,22 +105,22 @@ function taskEditDate(task) {
 
 function setupDateValidation() {
     setTimeout(() => {
-        const dateInput = document.getElementById("editDueDate");
-        const errorText = document.getElementById("dateError");
+        let dateInput = document.getElementById("editDueDate");
+        let errorText = document.getElementById("dateError");
         if (!dateInput || !errorText) {
             console.error("Fehlendes Element: 'editDueDate' oder 'dateError'");
             return;
         }
-        const today = new Date().toISOString().split("T")[0];
-        const maxDate = new Date();
+        let today = new Date().toISOString().split("T")[0];
+        let maxDate = new Date();
         maxDate.setFullYear(maxDate.getFullYear() + 100);
-        const maxDateString = maxDate.toISOString().split("T")[0];
+        let maxDateString = maxDate.toISOString().split("T")[0];
         dateInput.setAttribute("min", today);
         dateInput.setAttribute("max", maxDateString);
         dateInput.addEventListener("input", function () {
             if (!dateInput.value) return;
-            const selectedDate = new Date(dateInput.value);
-            const minDate = new Date(today);
+            let selectedDate = new Date(dateInput.value);
+            let minDate = new Date(today);
             if (selectedDate < minDate) {
                 dateInput.style.border = "2px solid red";
                 errorText.textContent = "Das Datum darf nicht in der Vergangenheit liegen!";
@@ -157,10 +157,10 @@ function taskEditPriority(task) {
 }
 
 function taskEditAssignedTo(task, taskId) {
-    const assignedContacts = task.assignedTo || [];
+    let assignedContacts = task.assignedTo || [];
     let maxDisplay = 8;
     let displayedContacts = assignedContacts.slice(0, maxDisplay);
-    const contactListHtml = contacts.map(contact => {
+    let contactListHtml = contacts.map(contact => {
         const isSelected = assignedContacts.includes(contact.name);
         return `
             <div class="contact-item ${isSelected ? 'selected' : ''}" data-fullname="${contact.name}" onclick="toggleContactSelectionUI(this, '${contact.name}')">
@@ -211,11 +211,11 @@ function toggleEditTaskDropdown(event, toggle, options) {
 }
 
 function toggleContactSelectionUI(container, contactName) {
-    const checkbox = container.querySelector("input[type='checkbox']");
-    const isSelected = checkbox.checked = !checkbox.checked; // Umschalten des Status
+    let checkbox = container.querySelector("input[type='checkbox']");
+    let isSelected = checkbox.checked = !checkbox.checked; // Umschalten des Status
     container.classList.toggle("selected", isSelected);
 
-    const selectedContactsContainer = document.getElementById('selected-contacts');
+    let selectedContactsContainer = document.getElementById('selected-contacts');
     toggleContactSelection({ name: contactName }, isSelected, selectedContactsContainer);
 }
 
@@ -249,7 +249,7 @@ function initTaskEditAddSubtask() {
 }
 
 function addEditNewSubtask(input, list) {
-    const task = input.value.trim();
+    let task = input.value.trim();
     if (!task) return;
     const subtaskElement = createSubtaskElement(task);
     list.appendChild(subtaskElement);
@@ -275,7 +275,7 @@ function taskEditAddSubtaskTemplate(task, taskId) {
 function taskEditSubtasks(task, taskId) {
     if (!task || !task.subtasks) return '';
     console.log("task.id in taskEditSubtasks:", taskId);
-    const subtasksHtml = task.subtasks.map((subtask, index, task) => {
+    let subtasksHtml = task.subtasks.map((subtask, index, task) => {
         return `
             <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}" onmouseenter="hoverSubtask('${taskId}', ${index})" onmouseleave="hoverOutSubtask('${taskId}', ${index})">
 
@@ -292,16 +292,16 @@ function taskEditSubtasks(task, taskId) {
 }
 
 function hoverSubtask(taskId, index) {
-    const task = globalTasks[taskId];
+    let task = globalTasks[taskId];
     if (!task || !task.subtasks || !task.subtasks[index]) {
         console.error(`Task oder Subtask nicht gefunden: ${taskId}, Index: ${index}`);
         return;
     }
-    const subtaskElement = document.getElementById(`subtask-container-${index}`);
+    let subtaskElement = document.getElementById(`subtask-container-${index}`);
     if (subtaskElement) {
         subtaskElement.classList.add('hoverSubtask');
         if (!subtaskElement.querySelector('.subtaskEditingContainer')) {
-            const subtaskEditingContainer = document.createElement('div');
+            let subtaskEditingContainer = document.createElement('div');
             subtaskEditingContainer.classList.add('subtaskEditingContainer');
             subtaskEditingContainer.innerHTML = `
                 <button onclick="toggleEditSubtask(${index}, '${taskId}')">
@@ -317,10 +317,10 @@ function hoverSubtask(taskId, index) {
 }
 
 function hoverOutSubtask(taskId, index) {
-    const subtaskElement = document.getElementById(`subtask-container-${index}`);
+    let subtaskElement = document.getElementById(`subtask-container-${index}`);
     if (subtaskElement) {
         subtaskElement.classList.remove('hoverSubtask');
-        const editingContainer = subtaskElement.querySelector('.subtaskEditingContainer');
+        let editingContainer = subtaskElement.querySelector('.subtaskEditingContainer');
         if (editingContainer) {
             editingContainer.remove();
         }
@@ -357,7 +357,7 @@ function subtaskCompletedCheckbox(index, completed) {
 
 /* save the editing Subtask */
 async function saveEditedSubtask(index, buttonElement) {
-    const taskId = buttonElement.getAttribute('data-task-id'); // Hole die Task ID vom Button
+    let taskId = buttonElement.getAttribute('data-task-id'); // Hole die Task ID vom Button
     if (!taskId) return console.error("Task ID fehlt!"); // Debugging
     console.log("Task ID:", taskId); // Debugging
     let editedInput = document.getElementById(`edit-subtask-${index}`);
@@ -385,7 +385,7 @@ async function saveEditedSubtask(index, buttonElement) {
 }
 
 function toggleDeleteSubtask(task, index) {
-    const subtask = task.subtasks[index];
+    let subtask = task.subtasks[index];
 
 }
 
@@ -395,8 +395,8 @@ async function fetchTaskFromFirebase(taskId) {
         console.error("Fehler: Task ID ist undefined!");
         return null;
     }
-    const response = await fetch(`${BASE_URL}tasks/${taskId}.json`);
-    const taskData = await response.json();
+    let response = await fetch(`${BASE_URL}tasks/${taskId}.json`);
+    let taskData = await response.json();
     console.log("Erhaltene Task-Daten:", taskData); // Debugging
     if (!taskData) {
         console.error("Task nicht gefunden in Firebase!");
@@ -407,27 +407,23 @@ async function fetchTaskFromFirebase(taskId) {
 
 
 async function saveTask(taskId) {
-    const task = globalTasks[taskId];
+    let task = globalTasks[taskId];
     if (!task) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
         return;
     }
-
     try {
-        const taskFromDB = await fetchTaskFromFirebase(taskId);
-        const subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks;
+        let taskFromDB = await fetchTaskFromFirebase(taskId);
+        let subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks;
 
         task.title = document.getElementById("editTitle")?.value || task.title;
         task.description = document.getElementById("editDescription")?.value || task.description;
         task.dueDate = document.getElementById("editDueDate")?.value || task.dueDate;
-
         // Aktualisiert die Priorität
         task.priority = document.getElementById("task-priority").dataset.priority || task.priority;
-
         // Holt die ausgewählten Kontakte
         task.assignedTo = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))
             .map(el => el.dataset.fullname);
-
         // Verhindert das Überschreiben der Subtasks
         task.subtasks = subtasksFromDB;
 
@@ -482,7 +478,7 @@ async function saveTask(taskId) {
 /* edited task update to database */
 async function updateTaskInDatabase(taskId, task) {
     try {
-        const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+        let response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
             method: "PATCH",  // PATCH anstelle von PUT verwenden
             headers: {
                 "Content-Type": "application/json",
@@ -502,7 +498,7 @@ async function updateTaskInDatabase(taskId, task) {
 
 async function updateSubtaskDB(task, taskId) {
     if (!task || !taskId) return console.error("Task oder Task ID fehlen!");
-    const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+    let response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json"

@@ -21,7 +21,7 @@ function toggleBoardPage() {
 
 /** Displays a success message overlay when a task is added successfully. */
 function addTaskSuccess() {
-    const overlayRef = document.getElementById('addTaskSuccess');
+    let overlayRef = document.getElementById('addTaskSuccess');
     overlayRef.innerHTML = addTaskSuccessTemplate();
     overlayRef.style.display = "flex"; 
     setTimeout(() => {
@@ -131,13 +131,13 @@ async function deleteTask(taskId) {
         console.error("globalTasks ist nicht definiert oder hat das falsche Format.");
         return;
     }
-    const task = globalTasks[taskId];
+    let task = globalTasks[taskId];
     if (!task) {
         console.error("Task mit ID", taskId, "nicht gefunden.");
         return;
     }
     try {
-        const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+        let response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
             method: "DELETE"
         });
         if (!response.ok) {
@@ -154,14 +154,14 @@ async function deleteTask(taskId) {
 
 /* Task search */
 function searchTask() {
-    const searchTerm = document.getElementById("search").value.toLowerCase();
+    let searchTerm = document.getElementById("search").value.toLowerCase();
     if (!globalTasks || typeof globalTasks !== "object") {
         console.error("globalTasks ist nicht definiert oder hat das falsche Format.");
         return;
     }
-    const filteredTasks = Object.entries(globalTasks).filter(([id, task]) => {
-        const title = task.title?.toLowerCase() || "";
-        const description = task.description?.toLowerCase() || "";
+    let filteredTasks = Object.entries(globalTasks).filter(([id, task]) => {
+        let title = task.title?.toLowerCase() || "";
+        let description = task.description?.toLowerCase() || "";
         return title.includes(searchTerm) || description.includes(searchTerm);
     });
     displayTasks(Object.fromEntries(filteredTasks));
@@ -171,15 +171,15 @@ function searchTask() {
  * Validiert und formatiert das Fälligkeitsdatum.
  */
 function validateDueDate() {
-    const dateInput = document.getElementById('editDueDate').value;
-    const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d\d$/;
+    let dateInput = document.getElementById('editDueDate').value;
+    let datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d\d$/;
 
     if (!datePattern.test(dateInput)) {
         alert('Bitte gib das Datum im Format DD/MM/YYYY ein.');
     } else {
         // Datum ist gültig. Hier kannst du das Datum im gewünschten Format weiterverarbeiten.
-        const parts = dateInput.split('/');
-        const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD Format
+        let parts = dateInput.split('/');
+        let formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD Format
         alert(`Datum ist gültig: ${formattedDate}`);
     }
 }

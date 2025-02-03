@@ -23,14 +23,14 @@ async function loadTask(path = "/tasks") {
 
 function displayTasks(tasks) {
     clearTaskContainers();
-    const taskArray = Object.entries(tasks);
+    let taskArray = Object.entries(tasks);
 
     taskArray.forEach(([taskId, task]) => {
         if (!task.mainCategory) {
             console.warn(`Task ${taskId} hat keine mainCategory. Überspringen.`);
             return;
         }
-        const taskElement = createTaskElement(task, taskId);
+        let taskElement = createTaskElement(task, taskId);
         appendTaskToCategory(task, taskElement);
     });
 
@@ -47,7 +47,7 @@ function clearTaskContainers() {
 
 /**Creates a task element with the provided task data.*/
 function createTaskElement(task, taskId) {
-    const taskElement = document.createElement("div");
+    let taskElement = document.createElement("div");
     taskElement.className = "task";
     taskElement.innerHTML = `
         <div draggable="true" ondragstart="dragInit(event, '${taskId}')" class="taskContainer" onclick="openTaskOverlay('${taskId}')">
@@ -70,8 +70,8 @@ function createTaskElement(task, taskId) {
 
 /**Appends the task element to the correct category container.*/
 function appendTaskToCategory(task, taskElement) {
-    const category = task.mainCategory;
-    const containerId = `tasksContainer${category}`;
+    let category = task.mainCategory;
+    let containerId = `tasksContainer${category}`;
     document.getElementById(containerId).appendChild(taskElement);
 }
 
@@ -116,16 +116,16 @@ async function postTask() {
 
 /**Validates whether a valid category has been selected.*/
 function validateCategory() {
-    const categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
-    const isValid = categoryText !== 'Select task category';
+    let categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
+    let isValid = categoryText !== 'Select task category';
     toggleCategoryError(isValid);
     return isValid;
 }
 
 /**Toggles the error message for the category field.*/
 function toggleCategoryError(isValid) {
-    const categoryElement = document.getElementById('dropdown-toggle-category');
-    const errorElement = document.getElementById('category-error');
+    let categoryElement = document.getElementById('dropdown-toggle-category');
+    let errorElement = document.getElementById('category-error');
     categoryElement.classList.toggle('error', !isValid);
     errorElement.classList.toggle('hidden', isValid);
 }
@@ -180,7 +180,7 @@ function getSubtasks() {
 function submitAddTask(event) {
     event.preventDefault();
     // 1. Validierung der Kategorie
-    const categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
+    let categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
     if (categoryText === 'Select task category') {
         document.getElementById('dropdown-toggle-category').classList.add('error');
         document.getElementById('category-error').classList.remove('hidden');
@@ -190,8 +190,8 @@ function submitAddTask(event) {
         document.getElementById('category-error').classList.add('hidden');
     }
     // 2. Erstelle das Task-Objekt
-    const form = document.getElementById('task-form');
-    const task = createTaskObject(form);
+    let form = document.getElementById('task-form');
+    let task = createTaskObject(form);
     // 3. Task in die Datenbank speichern
     addTaskToFirebase(task).then(() => {
         console.log('Task erfolgreich hinzugefügt:', task);
@@ -205,7 +205,7 @@ function submitAddTask(event) {
 async function addTaskToFirebase(task) {
     const TASKS_URL = `${BASE_URL}tasks.json`; // Verwende die BASE_URL
     try {
-        const response = await fetch(TASKS_URL, {
+        let response = await fetch(TASKS_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -213,7 +213,7 @@ async function addTaskToFirebase(task) {
             body: JSON.stringify(task),
         });
         if (response.ok) {
-            const data = await response.json();
+            let data = await response.json();
             console.log('Task erfolgreich in Firebase gespeichert:', data);
             return data; // Rückgabe der Antwort (z. B. für Task-ID)
         } else {
@@ -244,7 +244,7 @@ function collectTaskData() {
 
 /** Displays a confirmation message to the user and redirects to the board page */
 function showConfirmationAndRedirect() {
-    const confirmationMessage = document.getElementById('confirmation-message');
+    let confirmationMessage = document.getElementById('confirmation-message');
     confirmationMessage.classList.add('show');
     setTimeout(() => {
         confirmationMessage.classList.remove('show');
@@ -254,7 +254,7 @@ function showConfirmationAndRedirect() {
 
 /**Sends task data to the server and saves it.*/
 async function postTaskToServer(taskData) {
-    const response = await fetch(`${BASE_URL}/tasks.json`, {
+    let response = await fetch(`${BASE_URL}/tasks.json`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -270,14 +270,14 @@ async function postTaskToServer(taskData) {
 
 /* empty task container */
 function emptyTaskContainer() {
-    const containers = [
+    let containers = [
         "tasksContainerAwaitFeedback",
         "tasksContainerInProgress",
         "tasksContainerDone",
         "tasksContainerToDo"
     ];
     containers.forEach(containerId => {
-        const container = document.getElementById(containerId);
+        let container = document.getElementById(containerId);
         if (container.innerHTML.trim() === "") {
             container.innerHTML = `<div class='noTasksParent'><p class='noTasksChild'>No tasks To do</p></div>`;
         }
@@ -286,7 +286,7 @@ function emptyTaskContainer() {
 
 /* add task to container */
 function addTaskToContainer(containerId, taskHTML) {
-    const container = document.getElementById(containerId);
+    let container = document.getElementById(containerId);
     if (container.innerHTML.trim() === `<div class='noTasksParent'><p class='noTasksChild'>No tasks To do</p></div>`) {
         container.innerHTML = "";
     }
@@ -294,10 +294,10 @@ function addTaskToContainer(containerId, taskHTML) {
 }
 
 async function fixTasksMainCategory() {
-    const response = await fetch(BASE_URL + "/tasks.json");
-    const tasks = await response.json();
+    let response = await fetch(BASE_URL + "/tasks.json");
+    let tasks = await response.json();
 
-    for (const [taskId, task] of Object.entries(tasks)) {
+    for (let [taskId, task] of Object.entries(tasks)) {
         if (!task.mainCategory) {
             task.mainCategory = 'ToDo'; // Standardwert setzen
             await fetch(`${BASE_URL}/tasks/${taskId}.json`, {

@@ -218,22 +218,28 @@ function preventFormSubmissionOnEnter() {
 function getSubtasksFromForm(form) {
     const subtaskList = form.querySelector('#subtask-list');
     const subtasks = [];
+
+    if (!subtaskList) {
+        console.warn('Subtask-Liste nicht gefunden!');
+        return subtasks;
+    }
+
     subtaskList.querySelectorAll('li').forEach((li) => {
-        const textElement = li.querySelector('.subtask-text');
-        if (textElement) {
+        const textElement = li.querySelector('.subtask-text') || li;
+        const text = textElement.textContent.trim();
+
+        if (text) {
             subtasks.push({
-                text: textElement.textContent.trim(),
-                completed: li.classList.contains('completed'), // Optional
+                text: text,
+                completed: li.classList.contains('completed'),
             });
         } else {
             console.warn('Subtask ohne Text-Element gefunden:', li);
         }
     });
+
     return subtasks;
 }
-
-
-
 
 
 // /** Create the task object from the form data */

@@ -87,14 +87,17 @@
         background-size: 20px;
     }
 
-    #password {
+    /* #password {
         background: url(../assets/svg/lock.svg) no-repeat;
         background-position: calc(100% - 14px) center;
         padding-left: 15px;
         background-size: 20px;
-    }
+    } */
 
     .signUpInput {
+        width: 100%;
+    }
+    .signUpInputPassword{
         width: 100%;
     }
 
@@ -104,11 +107,11 @@
         background-size: 20px;
     }
 
-    #confirmPassword {
+    /* #confirmPassword {
         background: url(../assets/svg/lock.svg) no-repeat;
         background-position: calc(100% - 14px) center;
         background-size: 20px;
-    }
+    } */
 
     .sectionOne {
         display: flex !important;

@@ -24,20 +24,17 @@ function editTask(taskId) {
     overlayRef.innerHTML = `
         <input id="editTitle" type="text" value="${task.title}">
         <textarea id="editDescription">${task.description}</textarea>
-        ${taskEditDate(task)} <!-- Datumseingabe-Funktion -->
-        ${taskEditPriority(task)} <!-- Priorität -->
-        ${taskEditAssignedTo(task)} <!-- Zuständige Personen -->
-        ${taskEditSubtasks(task, taskId)} <!-- Subtasks -->
+        ${taskEditDate(task)}
+        ${taskEditPriority(task)}
+        ${taskEditAssignedTo(task)}
+        ${taskEditSubtasks(task, taskId)}
         <button class="saveButtonOk" onclick="saveTask('${taskId}')">OK <img src="../assets/svg/add_task/check.svg" alt=""></button>
     `;
     applyActivePriorityButton(task.priority);
     document.querySelectorAll("#task-priority .prio-btn").forEach(button => {
         button.onclick = function () {
-            // Entferne die aktive Klasse von allen Buttons
             document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
-            // Setze die aktive Klasse auf den angeklickten Button
             button.classList.add("active");
-            // Speichere die neue Priorität im `data-priority`-Attribut
             document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
         };
     });
@@ -94,10 +91,8 @@ function taskEditAssignedTo(task, taskId) {
     let assignedContacts = task.assignedTo || [];
     let maxDisplay = 8;
     let displayedContacts = assignedContacts.slice(0, maxDisplay);
-    
     const contactListHtml = createContactListHtml(assignedContacts);
     const selectedContactsHtml = createSelectedContactsHtml(displayedContacts);
-
     return `
         <div id="task-assigned" class="dropdown-wrapper">
             <div class="dropdown-toggle" onclick="toggleEditTaskDropdown(event, this, document.querySelector('.dropdown-content'))">
@@ -182,7 +177,7 @@ function getTaskEditElements() {
     const addBtn = document.getElementById('addEditSubtask');
     const clearBtn = document.getElementById('clearEditSubtask');
     const list = document.getElementById('addEditSubtaskNew');
-    
+
     if (!input || !addBtn || !clearBtn || !list) {
         console.error("Einige Elemente für 'Add Subtask' wurden im DOM nicht gefunden.");
         return null;
@@ -207,7 +202,6 @@ function setKeyboardEvent(input, list, taskId) {
         }
     };
 }
-
 
 function addEditNewSubtask(input, list, taskId) {
     let taskText = input.value.trim();
@@ -246,7 +240,7 @@ function createSubtaskPoint(taskText, index) {
 function hoverSubtask(taskId, index) {
     let task = globalTasks[taskId];
     if (!task || !task.subtasks || !task.subtasks[index]) {
-        console.error(`Task oder Subtask nicht gefunden: ${taskId}, Index: ${index}`);
+        // console.error(`Task oder Subtask nicht gefunden: ${taskId}, Index: ${index}`);
         return;
     }
     let subtaskElement = document.getElementById(`subtask-container-${index}`);
@@ -257,17 +251,16 @@ function hoverSubtask(taskId, index) {
             subtaskEditingContainer.classList.add('subtaskEditingContainer');
             subtaskEditingContainer.innerHTML = `
                 <button onclick="toggleEditSubtask(${index}, '${taskId}')">
-                    <img class="subtaskEditImg" src="../assets/svg/summary/pencil2.svg" alt="">    
+                    <img id="subtaskEditIcon" class="subtaskEditImg" src="../assets/svg/summary/pencil2.svg" alt="">    
                 </button>
-                <button onclick="deleteSubtask(${index}, '${taskId}')">
-                    <img src="../assets/svg/add_task/trash.svg" alt="">
+                <button onclick="deleteEditSubtask(${index}, '${taskId}')">
+                    <img id="subtaskDeleteIcon" src="../assets/svg/add_task/trash.svg" alt="">
                 </button>
             `;
             subtaskElement.appendChild(subtaskEditingContainer);
         }
     }
 }
-
 
 function hoverOutSubtask(taskId, index) {
     let subtaskElement = document.getElementById(`subtask-container-${index}`);
@@ -281,26 +274,56 @@ function hoverOutSubtask(taskId, index) {
 }
 
 function toggleEditSubtask(index, taskId) {
-    console.log("taskId in toggleEditSubtask:", taskId);  // Debugging für taskId
+    console.log("taskId in toggleEditSubtask:", taskId);
     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
-    if (!subtaskContainer) return console.error("Subtask-Container nicht gefunden!");
     let subtaskLabel = document.getElementById(`subtask-${index}`);
-    if (!subtaskLabel) return console.error("Subtask-Label nicht gefunden!");
-    let currentText = subtaskLabel.innerText; // Aktueller Text des Subtasks
+    if (!subtaskContainer || !subtaskLabel) return console.error("Subtask-Element nicht gefunden!");
+    let currentText = subtaskLabel.innerText;
+    document.getElementById("subtaskDeleteIcon")?.classList.add("d-none");
+    document.getElementById("subtaskEditIcon")?.classList.add("d-none");
+    subtaskContainer.classList.remove('hoverSubtask');
+    subtaskContainer.onmouseenter = subtaskContainer.onmouseleave = null;
+    subtaskContainer.querySelector('.subtaskEditingContainer')?.remove();
     subtaskContainer.innerHTML = `
-        <input type="text" id="edit-subtask-${index}" value="${currentText}" />
-        <button data-task-id="${taskId}" onclick="saveEditedSubtask(${index}, this)">Save</button>
-    `;
+        <div class="subtaskEditingMainContainer">
+            <input class="subtaskEditingInput" type="text" id="edit-subtask-${index}" value="${currentText}" />
+            <div class="subtaskEditingImgMain">
+                <button class="subtaskEditReImg" onclick="deleteEditSubtask(${index}, '${taskId}')">
+                    <img src="../assets/svg/deletenew.svg" alt="">
+                </button>
+                <button class="subtaskEditReImg2" onclick="saveEditStaySubtask(${index}, '${taskId}')">
+                    <img src="../assets/svg/add_task/check_create_task.svg" alt="">    
+                </button>
+            </div>
+        </div>`;
 }
 
-// function editSubtaskTemplate(index, text) {
-//     return `
-//         <div class="subtask-controls">
-//             <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
-//             <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
-//             <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
-//         </div>`;
-// }
+function saveEditStaySubtask(index, taskId) {
+    let editedInput = document.getElementById(`edit-subtask-${index}`);
+    if (!editedInput) return console.error("Eingabefeld nicht gefunden!");
+    let newText = editedInput.value.trim();
+    if (!newText) return console.warn("Leere Eingabe, nichts wird gespeichert.");
+    let task = globalTasks[taskId];
+    if (task && task.subtasks && task.subtasks[index]) {
+        task.subtasks[index].text = newText;
+    }
+    let subtaskContainer = document.getElementById(`subtask-container-${index}`);
+    if (subtaskContainer) {
+        subtaskContainer.innerHTML = `
+            <div class="editSubtaskPoint">
+                <p>•</p><label id="subtask-${index}">${newText}</label>
+            </div>
+            <div class="subtaskEditingContainer">
+                <button onclick="toggleEditSubtask(${index}, '${taskId}')">
+                    <img id="subtaskEditIcon" class="subtaskEditImg" src="../assets/svg/summary/pencil2.svg" alt="">
+                </button>
+                <button onclick="deleteEditSubtask(${index}, '${taskId}')">
+                    <img id="subtaskDeleteIcon" src="../assets/svg/add_task/trash.svg" alt="">
+                </button>
+            </div>
+        `;
+    }
+}
 
 function subtaskCompletedCheckbox(index, completed) {
     return `
@@ -329,7 +352,7 @@ async function saveEditedSubtask(index, buttonElement) {
             <button onclick="toggleEditSubtask(${index}, '${taskId}')">
                 <img src="../assets/svg/edit.svg" alt="">
             </button>
-            <button onclick="deleteSubtask(${index}, '${taskId}')">
+            <button onclick="deleteEditSubtask(${index}, '${taskId}')">
                 <img src="../assets/svg/delete.svg" alt="">
             </button>
         </div>
@@ -337,9 +360,13 @@ async function saveEditedSubtask(index, buttonElement) {
     await updateSubtaskDB(task, taskId);
 }
 
-function toggleDeleteSubtask(task, index) {
-    let subtask = task.subtasks[index];
-
+function deleteEditSubtask(index, taskId) {
+    let task = globalTasks[taskId];
+    if (!task || !task.subtasks) return console.error("Task oder Subtasks nicht gefunden!");
+    task.subtasks.splice(index, 1);
+    let subtaskContainer = document.getElementById(`subtask-container-${index}`);
+    subtaskContainer.remove();
+    updateSubtaskDB(task, taskId);
 }
 
 async function fetchTaskFromFirebase(taskId) {
@@ -358,7 +385,6 @@ async function fetchTaskFromFirebase(taskId) {
     return { id: taskId, ...taskData };
 }
 
-
 async function saveTask(taskId) {
     let task = globalTasks[taskId];
     if (!task) {
@@ -367,7 +393,7 @@ async function saveTask(taskId) {
     }
     try {
         let taskFromDB = await fetchTaskFromFirebase(taskId);
-        let subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks;
+        let subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks; // Subtask Problem beim Speichern! Funktion Prüfen!
         task.title = document.getElementById("editTitle")?.value || task.title;
         task.description = document.getElementById("editDescription")?.value || task.description;
         task.dueDate = document.getElementById("editDueDate")?.value || task.dueDate;
@@ -377,7 +403,7 @@ async function saveTask(taskId) {
         if (!task.assignedTo) {
             task.assignedTo = [];
         }
-        task.subtasks = subtasksFromDB;
+        subtasksFromDB;
         console.log("Updated Task ohne Subtasks-Überschreibung:", task);
         if (taskId in globalTasks) {
             await updateTaskInDatabase(taskId, task);

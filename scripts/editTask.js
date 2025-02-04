@@ -24,20 +24,17 @@ function editTask(taskId) {
     overlayRef.innerHTML = `
         <input id="editTitle" type="text" value="${task.title}">
         <textarea id="editDescription">${task.description}</textarea>
-        ${taskEditDate(task)} <!-- Datumseingabe-Funktion -->
-        ${taskEditPriority(task)} <!-- Priorität -->
-        ${taskEditAssignedTo(task)} <!-- Zuständige Personen -->
-        ${taskEditSubtasks(task, taskId)} <!-- Subtasks -->
+        ${taskEditDate(task)}
+        ${taskEditPriority(task)}
+        ${taskEditAssignedTo(task)}
+        ${taskEditSubtasks(task, taskId)}
         <button class="saveButtonOk" onclick="saveTask('${taskId}')">OK <img src="../assets/svg/add_task/check.svg" alt=""></button>
     `;
     applyActivePriorityButton(task.priority);
     document.querySelectorAll("#task-priority .prio-btn").forEach(button => {
         button.onclick = function () {
-            // Entferne die aktive Klasse von allen Buttons
             document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
-            // Setze die aktive Klasse auf den angeklickten Button
             button.classList.add("active");
-            // Speichere die neue Priorität im `data-priority`-Attribut
             document.getElementById("task-priority").setAttribute("data-priority", button.getAttribute("data-prio"));
         };
     });
@@ -94,10 +91,8 @@ function taskEditAssignedTo(task, taskId) {
     let assignedContacts = task.assignedTo || [];
     let maxDisplay = 8;
     let displayedContacts = assignedContacts.slice(0, maxDisplay);
-
     const contactListHtml = createContactListHtml(assignedContacts);
     const selectedContactsHtml = createSelectedContactsHtml(displayedContacts);
-
     return `
         <div id="task-assigned" class="dropdown-wrapper">
             <div class="dropdown-toggle" onclick="toggleEditTaskDropdown(event, this, document.querySelector('.dropdown-content'))">
@@ -208,7 +203,6 @@ function setKeyboardEvent(input, list, taskId) {
     };
 }
 
-
 function addEditNewSubtask(input, list, taskId) {
     let taskText = input.value.trim();
     if (!taskText || !taskId) return console.error("Fehler: Kein gültiger taskId oder leerer Text.");
@@ -268,7 +262,6 @@ function hoverSubtask(taskId, index) {
     }
 }
 
-
 function hoverOutSubtask(taskId, index) {
     let subtaskElement = document.getElementById(`subtask-container-${index}`);
     if (subtaskElement) {
@@ -281,42 +274,29 @@ function hoverOutSubtask(taskId, index) {
 }
 
 function toggleEditSubtask(index, taskId) {
-    console.log("taskId in toggleEditSubtask:", taskId);  // Debugging für taskId
+    console.log("taskId in toggleEditSubtask:", taskId);
     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
-    if (!subtaskContainer) return console.error("Subtask-Container nicht gefunden!");
     let subtaskLabel = document.getElementById(`subtask-${index}`);
-    if (!subtaskLabel) return console.error("Subtask-Label nicht gefunden!");
-    let currentText = subtaskLabel.innerText; // Aktueller Text des Subtasks
-    let removeIcon = document.getElementById("subtaskDeleteIcon");
-    let editIcon = document.getElementById("subtaskEditIcon");
-    removeIcon.classList.add("d-none");
-    editIcon.classList.add("d-none");
-
-    subtaskContainer.onmouseenter = null;
-    subtaskContainer.onmouseleave = null;
+    if (!subtaskContainer || !subtaskLabel) return console.error("Subtask-Element nicht gefunden!");
+    let currentText = subtaskLabel.innerText;
+    document.getElementById("subtaskDeleteIcon")?.classList.add("d-none");
+    document.getElementById("subtaskEditIcon")?.classList.add("d-none");
     subtaskContainer.classList.remove('hoverSubtask');
-
-    let editingContainer = subtaskContainer.querySelector('.subtaskEditingContainer');
-    if (editingContainer) {
-        editingContainer.remove();
-    }
-
-
+    subtaskContainer.onmouseenter = subtaskContainer.onmouseleave = null;
+    subtaskContainer.querySelector('.subtaskEditingContainer')?.remove();
     subtaskContainer.innerHTML = `
-    <div class="subtaskEditingMainContainer">
-        <input class="subtaskEditingInput" type="text" id="edit-subtask-${index}" value="${currentText}" />
-        <div class="subtaskEditingImgMain">
-            <button class="subtaskEditReImg" onclick="deleteEditSubtask(${index}, '${taskId}')">
-                <img src="../assets/svg/deletenew.svg" alt="">
-            </button>
-            <button class="subtaskEditReImg2" onclick="saveEditStaySubtask(${index}, '${taskId}')">
-                <img src="../assets/svg/add_task/check_create_task.svg" alt="">    
-            </button>
-        </div>
-    <div>      
-    `;
+        <div class="subtaskEditingMainContainer">
+            <input class="subtaskEditingInput" type="text" id="edit-subtask-${index}" value="${currentText}" />
+            <div class="subtaskEditingImgMain">
+                <button class="subtaskEditReImg" onclick="deleteEditSubtask(${index}, '${taskId}')">
+                    <img src="../assets/svg/deletenew.svg" alt="">
+                </button>
+                <button class="subtaskEditReImg2" onclick="saveEditStaySubtask(${index}, '${taskId}')">
+                    <img src="../assets/svg/add_task/check_create_task.svg" alt="">    
+                </button>
+            </div>
+        </div>`;
 }
-
 
 function saveEditStaySubtask(index, taskId) {
     let editedInput = document.getElementById(`edit-subtask-${index}`);
@@ -344,15 +324,6 @@ function saveEditStaySubtask(index, taskId) {
         `;
     }
 }
-
-// function editSubtaskTemplate(index, text) {
-//     return `
-//         <div class="subtask-controls">
-//             <img src="../assets/svg/summary/pencil2.svg" alt="Edit" class="subtask-edit">
-//             <img src="../assets/svg/add_task/trash.svg" alt="Delete" class="subtask-trash">
-//             <img src="../assets/svg/add_task/check_create_task.svg" alt="Save" class="subtask-check d-none">
-//         </div>`;
-// }
 
 function subtaskCompletedCheckbox(index, completed) {
     return `
@@ -413,9 +384,6 @@ async function fetchTaskFromFirebase(taskId) {
     }
     return { id: taskId, ...taskData };
 }
-
-
-
 
 async function saveTask(taskId) {
     let task = globalTasks[taskId];

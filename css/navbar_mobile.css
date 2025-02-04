@@ -129,6 +129,10 @@
     .hlp {
         display: block
     }
+    #user-popup {
+        top: 68px;
+        margin-right: 8px;
+    }
 }
 
 @media(max-width:570px) {
@@ -161,6 +165,7 @@
     #user-popup {
         width: 128px;
         padding: 6px 0;
-        top: 86px;
+        top: 60px;
+        margin-right: 8px;
     }
 }

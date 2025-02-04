@@ -115,6 +115,9 @@
         justify-content: center !important;
         align-items: center;
     }
+    .errorMessage{
+        margin-top: 65px;
+    }
 
 }
 
@@ -143,5 +146,8 @@
 
     .signUpSuccessClass {
         margin-left: 27px;
+    }
+    .errorMessage{
+        max-width: 278px;
     }
 }

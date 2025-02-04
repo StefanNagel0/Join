@@ -96,6 +96,7 @@ async function initializeContactsDropdown() {
     wrapper.append(selectedContacts);
 }
 
+/** Adds a click listener that hides the `content` element */
 function addOutsideClickListener(wrapper, content) {
     document.addEventListener('click', (event) => {
         if (!wrapper.contains(event.target)) {

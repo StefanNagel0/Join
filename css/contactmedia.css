@@ -145,7 +145,11 @@
 }
 
 .flexdetails{
-  padding-left: 0 !important;
+  padding-left: 20px !important;
+}
+
+#contact-details {
+  margin-right: 0 !important;
 }
 
 }

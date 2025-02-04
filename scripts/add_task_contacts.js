@@ -111,7 +111,6 @@ function getContactColor(name) {
     if (contact && contact.color) {
         return contact.color; 
     } else {
-        console.warn(`Farbe für Kontakt ${name} nicht gefunden. Verwende Standardfarbe.`);
         return "#CCCCCC";
     }
 }

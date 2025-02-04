@@ -35,6 +35,7 @@
         bottom: 71px;
         left: 203px;
         position: relative;
+        display: block !important;
     }
 
     .overlay-content {

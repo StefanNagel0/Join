@@ -111,7 +111,7 @@
 }
 }
 
-@media screen and (max-width: 1100px){
+@media screen and (max-width: 1150px){
   .detailshead {
 
   flex-direction: column;
@@ -137,7 +137,11 @@
 }
 
 #contact-name, #contact-email, #contact-phone {
-  width: 339px;
+  width: 339px !important;
+}
+
+.contactmain {
+  gap: 0 !important;
 }
 
 }
@@ -154,7 +158,7 @@
 }
 
 
-@media screen and (max-width: 1080px) {
+@media screen and (max-width: 1150px) {
   .detailscircle {
     flex-direction: column;
   }

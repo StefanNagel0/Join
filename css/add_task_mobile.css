@@ -121,8 +121,20 @@
     }
 
     .dropdown-content {
-        width: 90%;
+        width: 88%;
     }
+}
+
+@media(max-width:600px){
+    .dropdown-content {
+        width: 85%;
+    }
+}
+
+@media(max-width:485px) {
+    .dropdown-content {
+        width: 82%;
+}
 }
 
 @media(max-width:400px) {
@@ -134,5 +146,9 @@
 
     .add_task_submit_btn span {
         font-size: 17px;
+    }
+
+    .dropdown-content {
+        width: 78%;
     }
 }

@@ -22,13 +22,15 @@ function editTask(taskId) {
     console.log("Subtasks:", task.subtasks);
     let overlayRef = document.querySelector(".openTaskOverlayMain");
     overlayRef.innerHTML = `
-        <input id="editTitle" type="text" value="${task.title}">
+        <input id="editTitle" type="text" maxlength="30" value="${task.title}">
         <textarea id="editDescription">${task.description}</textarea>
         ${taskEditDate(task)}
         ${taskEditPriority(task)}
         ${taskEditAssignedTo(task)}
         ${taskEditSubtasks(task, taskId)}
+        <div class="saveButtonMain">
         <button class="saveButtonOk" onclick="saveTask('${taskId}')">OK <img src="../assets/svg/add_task/check.svg" alt=""></button>
+        </div>
     `;
     applyActivePriorityButton(task.priority);
     document.querySelectorAll("#task-priority .prio-btn").forEach(button => {

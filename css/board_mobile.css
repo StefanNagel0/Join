@@ -135,10 +135,13 @@
         margin-bottom: 50px;
     }
 
-    .contentHeadingSearchSecond,
-    .contenHeadingSearchMain,
-    .contentHeadingSearch {
-        width: 180px;
+    .contentHeadingSearchStrich {
+        right: 10px;
+
+    }
+
+    .contentHeadingSearchImg {
+        left: 15px;
     }
 }
 
@@ -157,6 +160,11 @@
 
     .noTasksParent {
         width: calc(100vw - 150px);
+    }
+
+    .saveButtonMain {
+        display: flex;
+        justify-content: flex-end;
     }
 }
 
@@ -183,23 +191,15 @@
     }
 
     .miniAddTaskImg:hover {
-            background-color: rgb(41, 171, 226);
-            border: 1px solid rgb(41, 171, 226);
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: rgb(41, 171, 226);
+        border: 1px solid rgb(41, 171, 226);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
 
     .contentHeadingSmall {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        width: calc(100vw - 140px);
-    }
-
-    .addTaskButton {
-        display: none;
-    }
-
-    .contentHeadingSearchMain {
         width: calc(100vw - 140px);
     }
 
@@ -207,33 +207,39 @@
         margin-bottom: 100px;
     }
 
-    .contentHeadingSearchSecond,
-    .contenHeadingSearchMain,
-    .contentHeadingSearch {
-        width: calc(100vw - 220px);
+    .contentHeadingSearchStrich {
+        right: 10px;
+    }
+
+    .contentHeadingSearchImg {
+        right: 150px;
     }
 
     .contentHeadingOrder {
         flex-direction: column-reverse;
+        gap: 30px;
     }
+
+    .saveButtonOk {
+        margin-left: calc(100vw - 240px);
+    }
+
 }
 
 @media screen and (max-width: 410px) {
     .contentHeadingSmall {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         width: calc(100vw - 60px);
     }
 
-    .contentHeadingSearchMain {
-        width: calc(100vw - 60px);
+    .contentHeadingSearchStrich {
+        right: 10px;
     }
 
-    .contentHeadingSearchSecond,
-    .contenHeadingSearchMain,
-    .contentHeadingSearch {
-        width: calc(100vw - 180px);
+    .contentHeadingSearchImg {
+        right: 150px;
     }
 
     .boardColumnHeader,

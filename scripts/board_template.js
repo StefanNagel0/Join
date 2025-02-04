@@ -9,18 +9,12 @@ function boardTemplate() {
                 </div>
             </div>
             <div class="contentHeadingOrder">
-                <div class="contentHeadingSearchMain">
-                    <div class="contentHeadingSearchSecond">
-                        <div class="contenHeadingSearchMain">
-                            <input oninput="searchTask()" class="contentHeadingSearch" type="search" id="search"
-                                placeholder="Search Task">
-                        </div>
-                        <div>
-                            <img class="contentHeadingSearchImg" src="../assets/svg/searching.svg" alt="search">
-                        </div>
+                    <div class="contentHeadingSearchMain">
+                        <input oninput="searchTask()" class="contentHeadingSearch" type="search" id="search" placeholder="Search Task">
+                        <div class="contentHeadingSearchStrich"></div>
+                        <div class="contentHeadingSearchImg"></div>
                     </div>
-                </div>
-                <div class="contentHeadingRight">
+                        <div class="contentHeadingRight">
                     <div>
                         <Button id="addTaskButton" class="addTaskButton" onclick="getToDoButton()">
                             <p class="addTaskButtonText">Add Task</p>

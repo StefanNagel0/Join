@@ -2,7 +2,7 @@ function taskEditTitle(task) {
     return `
     <div class="openEditTaskOverlayTitle">
         <label for="editTitle">Title</label>
-        <input id="editTitle" type="text" value="${task.title}" />
+        <input id="editTitle" type="text" maxlength="30" value="${task.title}" />
     </div>
     `;
 }

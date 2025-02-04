@@ -61,20 +61,20 @@ function showOverlayTask() {
 async function openTaskOverlay(taskId) {
     console.log("Task mit ID", taskId, "wird geöffnet.");
     
-    const task = await getOneTask(taskId);
+    let task = await getOneTask(taskId);
     if (!task) {
         console.error("Task mit ID", taskId, "nicht gefunden.");
         return;
     }
-    const overlayRef = document.getElementById("taskOverlay");
+    let overlayRef = document.getElementById("taskOverlay");
     overlayRef.innerHTML = taskOverlayTemplate(task, taskId);
 
-    const removeClass = document.getElementById("taskTitleID");
-    const removeClassTemplate = document.getElementById("taskDescriptionID");
-    const removeClassDate = document.getElementById("taskDateID");
-    const removeClassAssigned = document.getElementById("taskAssignedID");
-    const removeClassPriority = document.getElementById("taskPriorityIDName");
-    const removeClassStatus = document.getElementById("taskStatusID");
+    let removeClass = document.getElementById("taskTitleID");
+    let removeClassTemplate = document.getElementById("taskDescriptionID");
+    let removeClassDate = document.getElementById("taskDateID");
+    let removeClassAssigned = document.getElementById("taskAssignedID");
+    let removeClassPriority = document.getElementById("taskPriorityIDName");
+    let removeClassStatus = document.getElementById("taskStatusID");
     if (removeClass && removeClassTemplate) {
         toggleCategory(taskId);
         removeClass.classList.remove("taskTitle");

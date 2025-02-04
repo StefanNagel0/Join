@@ -92,7 +92,7 @@ function createEditingContainer(index, taskId) {
         <button onclick="toggleEditSubtask(${index}, '${taskId}')">
             <img class="subtaskEditImg" src="../assets/svg/summary/pencil2.svg" alt="">
         </button>
-        <button onclick="deleteSubtask(${index}, '${taskId}')">
+        <button onclick="deleteEditSubtask(${index}, '${taskId}')">
             <img src="../assets/svg/add_task/trash.svg" alt="">
         </button>
     `;

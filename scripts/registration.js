@@ -111,6 +111,19 @@ function PasswordValid(password) {
     return true;
 }
 
+function togglePasswordVisibility(inputId, eyeIcon) {
+    const passwordField = document.getElementById(inputId);
+    const isPasswordHidden = passwordField.type === 'password';
+    passwordField.type = isPasswordHidden ? 'text' : 'password';
+    const newEyeSrc = isPasswordHidden ? '../assets/svg/regi_eye_open.svg' : '../assets/svg/regi_eye_closed.svg';
+    eyeIcon.src = newEyeSrc;
+    if (isPasswordHidden) {
+        eyeIcon.style.height = '13px';
+    } else {
+        eyeIcon.style.height = '';
+    }
+}
+
 /**Displays an error message.*/
 function showError(message) {
     const errorMessage = document.getElementById('signUpError');

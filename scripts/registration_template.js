@@ -15,10 +15,20 @@ function registrationTemplate() {
             </div>
             <div class="signUpInput"><input class="signUpInput2" type="email" id="email" placeholder="Email" required>
             </div>
-            <div class="signUpInput"><input class="signUpInput2" type="password" id="password" placeholder="Password"
-                    required></div>
-            <div class="signUpInput"><input class="signUpInput2" type="password" id="confirmPassword"
-                    placeholder="Confirm Password" required></div>
+            <div class="password_container">
+                <div class="password_registration">
+                    <div class="signUpInputPassword"><input class="signUpInput2" type="password" id="password" placeholder="Password"
+                        required>
+                        <img class="registration_eye_img" src="../assets/svg/regi_eye_closed.svg" alt="eye" onclick="togglePasswordVisibility('password', this)">
+                    </div>
+                </div>
+                <div class="password_registration">
+                    <div class="signUpInputPassword"><input class="signUpInput2" type="password" id="confirmPassword"
+                        placeholder="Confirm Password" required>
+                        <img class="registration_eye_img" src="../assets/svg/regi_eye_closed.svg" alt="eye" onclick="togglePasswordVisibility('confirmPassword', this)">
+                    </div>
+                </div>
+            </div>
             <div class="checkboxMain">
                 <input type="checkbox" id="checkbox" class="checkboxBox" onchange="toggleSignUpButton();">
                 <label for="checkbox" class="checkboxInput">I accept the <a class="privacyLink"

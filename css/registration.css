@@ -158,12 +158,14 @@ body {
     box-shadow: 0 0 3px rgba(23, 80, 26, 0.5);
 }
 
-.signUpInput {
+.signUpInput, .signUpInputPassword {
     width: 422px;
     height: 48px;
     gap: 8px;
     opacity: 1;
     color: rgb(221, 221, 221);
+    display: flex;
+    align-items: center;
 }
 
 .signUpInput2 {
@@ -191,17 +193,17 @@ body {
     background-size: 20px;
 }
 
-#password {
+/* #password {
     background: url(../assets/svg/lock.svg) no-repeat scroll 380px center;
     padding-left: 15px;
     background-size: 20px;
-}
+} */
 
-#confirmPassword {
+/* #confirmPassword {
     background: url(../assets/svg/lock.svg) no-repeat scroll 380px center;
     padding-left: 15px;
     background-size: 20px;
-}
+} */
 
 .checkboxMain {
     display: flex;
@@ -331,4 +333,23 @@ footer a:hover {
     cursor: pointer;
     color: rgba(41, 171, 226, 1);
     font-weight: 700;
+}
+.password_registration{
+    display: flex;
+    position: relative;
+}
+.registration_eye_img{
+    right: 10px;
+    height: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password_container{
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }

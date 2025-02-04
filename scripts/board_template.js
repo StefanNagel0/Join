@@ -1,3 +1,4 @@
+/** Generates the HTML template for the board view. */
 function boardTemplate() {
     return `
     <div class="mainContent">
@@ -68,6 +69,7 @@ function boardTemplate() {
 `
 }
 
+/** Generates the HTML template for adding a task from the board. */
 function boardAddTaskTemplate() {
     return `
 <section>
@@ -190,6 +192,7 @@ function taskOverlayTemplate(task, taskId) {
     `
 }
 
+/** Generates the HTML template for editing a task. */
 function taskEditTemplate(task, taskId) {
     return `
     <div class="openEditTaskOverlayMain">

@@ -15,7 +15,7 @@
 }
 
 
-@media screen and (max-width: 957px) {
+@media screen and (max-width: 1000px) {
     .form {
         flex-direction: column;
     }
@@ -30,7 +30,7 @@
     }
 }
 
-@media screen and (max-width: 940px) {
+@media screen and (max-width: 980px) {
     .navbar_main {
         position: fixed;
         bottom: 0;

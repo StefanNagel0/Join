@@ -79,7 +79,7 @@ async function initializeContactsDropdown() {
     const container = document.getElementById('task-assigned');
     if (!container) return console.error("#task-assigned not found.");
     if (!contacts || contacts.length === 0) {
-        await fetchContactsFromFirebase();
+        await updateContactInFirebase();
     }
     const { wrapper, content } = createDropdownWrapper();
     const selectedContacts = createElementWithClass('div', 'selected-contacts', '', [], 'selected-contacts');

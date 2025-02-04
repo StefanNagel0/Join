@@ -32,8 +32,6 @@
   }
 }
 
-
-
 .cont {
   max-height: 928px;
   width: 456px;
@@ -173,6 +171,11 @@
   border: 1px;
   margin: 22.5px 0;
 }
+
+.btncont:hover {
+  background-color: #29ABE2;
+  display: flex;
+} 
 
 .btnp {
   font-size: 21px;

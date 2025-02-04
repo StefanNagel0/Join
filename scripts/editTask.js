@@ -359,8 +359,6 @@ async function fetchTaskFromFirebase(taskId) {
 }
 
 
-
-
 async function saveTask(taskId) {
     let task = globalTasks[taskId];
     if (!task) {

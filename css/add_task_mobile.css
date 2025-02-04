@@ -52,8 +52,9 @@
     }
 
     .content_heading{
-        max-width: 440px;
         margin: auto;
+        max-width: 440px;
+        width: unset !important;
     }
 
     .add_task_form_box {

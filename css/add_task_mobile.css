@@ -83,6 +83,7 @@
 
     .add_task_right_box {
         max-width: none;
+        height: 494px;
     }
 
     .prio-btn {
@@ -96,6 +97,11 @@
 
     .add_task_required_info {
         display: none;
+    }
+
+    #subtask-list-container {
+        max-height: 90px;
+        min-height: 90px;
     }
 
     .add_task_required_info_overlay {

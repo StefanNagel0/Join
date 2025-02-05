@@ -356,28 +356,15 @@
 }
 
 .error {
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
-  display: block;
+    color: red;
+    font-size: 14px;
+    display: block;
+    margin-top: -47px;
+    padding-top: 19px;
+    position: relative !important;
 }
 
-.success {
-  color: green;
-  font-size: 14px;
-  margin-top: 5px;
-  display: block;
-}
-
-input {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
 
 input.error-border {
-  border: 1px solid red;
+  border: 1px solid red !important;
 }

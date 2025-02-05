@@ -234,6 +234,7 @@
         scrollbar-width: none;
         position: relative;
         z-index: 998;
+        height: 83vh !important;
     }
 
     .btnmobile {

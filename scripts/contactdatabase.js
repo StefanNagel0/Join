@@ -33,17 +33,17 @@ function validateEmail(event) {
 function validatePhone(event) {
   const phoneInput = event.target;
   const phoneError = document.getElementById("phone-error");
-  const phoneRegex = /^[0-9]{10}$/;
+  const phoneRegex = /^[0-9\s\+\-()]{7,15}$/; // Erlaubt 7-15 Ziffern + Sonderzeichen
 
   if (!phoneRegex.test(phoneInput.value)) {
-    phoneError.textContent = "Phone number must be exactly 10 digits.";
+    phoneError.textContent = "Phone number min 7 digits.";
     phoneError.style.display = "block";
     phoneInput.classList.add("error-border");
   } else {
     phoneError.style.display = "none";
     phoneInput.classList.remove("error-border");
   }
-} 
+}
 
 async function syncContacts() {
   try {

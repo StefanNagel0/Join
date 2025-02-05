@@ -122,9 +122,9 @@
                             <div class="form">
                                 <div class="circle overlaycirc"></div>
                                 <div class="formtext">
-                                    <input type="text" id="contact-name" placeholder="Name" maxlength="30" required />
-                                    <input type="email" id="contact-email" placeholder="Email" maxlength="50" required />
-                                    <input type="text" id="contact-phone" placeholder="Phone" maxlength="50" required />
+                                    <input type="text" id="contact-name" placeholder="Name" maxlength="20" required oninput="nameValidate(event)"/>
+                                    <input type="email" id="contact-email" placeholder="Email" maxlength="30" required />
+                                    <input type="text" id="contact-phone" placeholder="Phone" maxlength="10" required oninput="validateEmailInput(event)"/>
                                 </div>
                             </div>
                             <div class="btns">

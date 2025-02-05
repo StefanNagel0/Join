@@ -166,8 +166,7 @@ function createContactDiv(contact) {
   return contactDiv;
 }
 
-/* Displays the contact list and hides the details view. */
-function showContactList() {
+async function showContactList() {
   const contactList = document.querySelector(".scrolllist");
   const detailsDiv = document.getElementById("contact-details");
 
@@ -176,6 +175,40 @@ function showContactList() {
 
   detailsDiv.classList.add("hide");
   detailsDiv.classList.remove("show");
+
+  await syncContacts(); // Warte auf Synchronisation der Kontakte
+  showContacts(); // Kontakte neu laden
+
+  // Falls ein Kontakt offen ist, ihn sofort erneut laden
+  const openContactIndex = detailsDiv.getAttribute("data-contact-index");
+  if (openContactIndex !== null) {
+    const contactData = getContactByIndex(parseInt(openContactIndex)); // Die aktualisierten Kontaktdaten abrufen
+    if (contactData) {
+      updateContactDetails(contactData); // Die Detailansicht sofort aktualisieren
+    }
+    detailsDiv.classList.add("show");
+    detailsDiv.classList.remove("hide");
+  }
+}
+
+function showContactDetails(index) {
+  const detailsDiv = document.getElementById("contact-details");
+
+  // Neueste Kontakte holen (nach syncContacts() aktualisiert)
+  const contact = contacts[index];
+
+  if (!contact) return;
+
+  // Kontakt-Details sofort aktualisieren
+  detailsDiv.setAttribute("data-contact-index", index);
+  detailsDiv.innerHTML = `
+    <h2>${contact.name}</h2>
+    <p>Email: ${contact.email}</p>
+    <p>Telefon: ${contact.phone}</p>
+  `;
+
+  detailsDiv.classList.add("show");
+  detailsDiv.classList.remove("hide");
 }
 
 async function deleteContact(id) {
@@ -320,4 +353,22 @@ function selectContactMain(selectedElement) {
   if (!isSelected) {
     selectedElement.classList.add('selected');
   }
+}
+
+function validateEmailInput(event) {
+  const input = event.target;
+
+  input.value = input.value.replace(/[^a-zA-Z0-9@._-]/g, '');
+
+  const atCount = (input.value.match(/@/g) || []).length;
+  if (atCount > 1) {
+    input.value = input.value.slice(0, input.value.lastIndexOf('@'));
+  }
+  input.value = input.value.replace(/^[-_.]|[-_.]$/g, '');
+}
+
+
+function nameValidate(event) {
+  const input = event.target;
+  input.value = input.value.replace(/[^a-zA-Z ]/g, '');
 }

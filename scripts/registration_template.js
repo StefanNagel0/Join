@@ -30,9 +30,8 @@ function registrationTemplate() {
                 </div>
             </div>
             <div class="checkboxMain">
-                <input type="checkbox" id="checkbox" class="checkboxBox" onchange="toggleSignUpButton();">
-                <label for="checkbox" class="checkboxInput">I accept the <a class="privacyLink"
-                        href="../html/privacy_policy_not_loggedIn.html">Privacy Policy</label>
+                <input type="checkbox" id="checkbox" class="checkboxBox" onchange="toggleSignUpButton()">
+                <label for="checkbox" class="checkboxInput">I accept the <a class="privacyLink" href="../html/privacy_policy_not_loggedIn.html">Privacy Policy</a></label>
             </div>
             <div class="signUpButtonMain">
                 <button type="submit" class="signUpButton" disabled>Sign up</button>

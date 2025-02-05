@@ -13,8 +13,8 @@ function toggleSignUpPage() {
 
 /**Enables or disables the "Sign up" button based on the checkbox state.*/
 function toggleSignUpButton() {
-    const checkbox = document.getElementById('checkbox');
-    const signUpButton = document.querySelector('.signUpButton');
+    let checkbox = document.getElementById('checkbox');
+    let signUpButton = document.querySelector('.signUpButton');
     if (checkbox.checked) {
         signUpButton.disabled = false;
         signUpButton.style.cursor = 'pointer';
@@ -32,11 +32,11 @@ function toggleSignUpButton() {
 /**Handles the registration process by validating the input fields and submitting the form.*/
 function signUp(event) {
     event.preventDefault();
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const confirmPassword = document.getElementById("confirmPassword").value.trim();
-    const checkbox = document.getElementById("checkbox");
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value.trim();
+    let confirmPassword = document.getElementById("confirmPassword").value.trim();
+    let checkbox = document.getElementById("checkbox");
     if (!FieldsFilled(name, email, password, confirmPassword)) return;
     if (!PasswordsMatching(password, confirmPassword)) return;
     if (EmailTaken(email)) return;
@@ -112,10 +112,10 @@ function PasswordValid(password) {
 }
 
 function togglePasswordVisibility(inputId, eyeIcon) {
-    const passwordField = document.getElementById(inputId);
-    const isPasswordHidden = passwordField.type === 'password';
+    let passwordField = document.getElementById(inputId);
+    let isPasswordHidden = passwordField.type === 'password';
     passwordField.type = isPasswordHidden ? 'text' : 'password';
-    const newEyeSrc = isPasswordHidden ? '../assets/svg/regi_eye_open.svg' : '../assets/svg/regi_eye_closed.svg';
+    let newEyeSrc = isPasswordHidden ? '../assets/svg/regi_eye_open.svg' : '../assets/svg/regi_eye_closed.svg';
     eyeIcon.src = newEyeSrc;
     if (isPasswordHidden) {
         eyeIcon.style.height = '13px';
@@ -126,7 +126,7 @@ function togglePasswordVisibility(inputId, eyeIcon) {
 
 /**Displays an error message.*/
 function showError(message) {
-    const errorMessage = document.getElementById('signUpError');
+    let errorMessage = document.getElementById('signUpError');
     if (errorMessage) {
         errorMessage.textContent = message;
         errorMessage.style.display = 'block';

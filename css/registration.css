@@ -244,8 +244,6 @@ body {
 .privacyLink {
     width: 105px;
     height: 19px;
-    gap: 0px;
-    opacity: 0px;
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;

@@ -80,20 +80,18 @@ body {
 
 .mainLogin {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 652px;
-    height: 449px;
-    margin-top: 197px;
-    margin-left: 180px;
-    padding: 48px 115px 48px 115px;
-    gap: 32px;
-    border-radius: 30px;
-    border: 2px;
-    opacity: 1;
-    background-color: #ffffff;
-    box-shadow: 0px 0px 14px 3px #0000000A;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 652px;
+        height: 449px;
+        padding: 48px 50px 48px 50px;
+        gap: 32px;
+        border-radius: 30px;
+        border: 2px;
+        opacity: 1;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 14px 3px #0000000A;
 }
 
 .LoginCtn {
@@ -271,7 +269,6 @@ body {
     gap: 24px;
     opacity: 1;
     margin-top: 150px;
-    margin-left: 100px;
 }
 
 footer a {

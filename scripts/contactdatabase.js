@@ -1,5 +1,50 @@
 const CONTACTS_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/contacts";
 
+
+function nameValidate(event) {
+  const nameInput = event.target;
+  const nameError = document.getElementById("name-error");
+
+  if (nameInput.value.trim().length < 2) {
+    nameError.textContent = "Name must be at least 2 characters long.";
+    nameError.style.display = "block";
+    nameInput.classList.add("error-border");
+  } else {
+    nameError.style.display = "none";
+    nameInput.classList.remove("error-border");
+  }
+}
+
+function validateEmail(event) {
+  const emailInput = event.target;
+  const emailError = document.getElementById("email-error");
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|de|at|net|org|ch|uk)$/i;
+
+  if (!emailRegex.test(emailInput.value)) {
+    emailError.textContent = "Invalid email format (allowed: .com, .de, .at, etc.).";
+    emailError.style.display = "block";
+    emailInput.classList.add("error-border");
+  } else {
+    emailError.style.display = "none";
+    emailInput.classList.remove("error-border");
+  }
+}
+
+function validatePhone(event) {
+  const phoneInput = event.target;
+  const phoneError = document.getElementById("phone-error");
+  const phoneRegex = /^[0-9]{10}$/;
+
+  if (!phoneRegex.test(phoneInput.value)) {
+    phoneError.textContent = "Phone number must be exactly 10 digits.";
+    phoneError.style.display = "block";
+    phoneInput.classList.add("error-border");
+  } else {
+    phoneError.style.display = "none";
+    phoneInput.classList.remove("error-border");
+  }
+} 
+
 async function syncContacts() {
   try {
     const response = await fetch(`${CONTACTS_URL}.json`, { method: "GET" });
@@ -29,7 +74,6 @@ async function syncContacts() {
 /* Speichert einen neuen Kontakt oder aktualisiert einen bestehenden.*/
 async function saveContact(name, phone, email) {
   if (!name || !phone || !email) {
-    alert("Bitte fülle alle Felder aus.");
     return;
   }
 

@@ -124,9 +124,9 @@
                                 <div class="formtext">
                                     <input type="text" id="contact-name" placeholder="Name" maxlength="20" required oninput="nameValidate(event)"/>
                                     <p id="name-error" class="error" style="display: none;"></p>
-                                    <input type="email" id="contact-email" placeholder="Email" maxlength="30" required />
+                                    <input type="email" id="contact-email" placeholder="Email" maxlength="30" required oninput="validateEmail(event)"/>
                                     <p id="email-error" class="error" style="display: none;"></p>                                     
-                                    <input type="text" id="contact-phone" placeholder="Phone" maxlength="10" required oninput="validateEmailInput(event)"/>
+                                    <input type="text" id="contact-phone" placeholder="Phone" maxlength="10" required oninput="validatePhone(event)"/>
                                     <p id="phone-error" class="error" style="display: none;"></p>
                                 </div>
                             </div>

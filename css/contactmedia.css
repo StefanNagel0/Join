@@ -190,3 +190,41 @@
     text-align: center;
   }
 }
+
+@media screen and (max-width: 400px){
+  .overlay-left {
+    width: 276px !important;
+    text-align: center;
+    padding-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+  .closebutton {
+    left: 105px;
+    bottom: 0;
+  }
+  .overlaycirc {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  #contact-name, #contact-email, #contact-phone {
+    width: 250px !important;
+}
+
+.overlay-content {
+  width: 277px !important;
+}
+
+.overlay-content button {
+  width: 100px;
+  height: 50px;
+  font-size: 13px;
+}
+
+.line {
+  width: 163px;
+}
+}

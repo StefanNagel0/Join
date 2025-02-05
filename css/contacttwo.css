@@ -151,6 +151,7 @@
   align-items: center;
   padding: 15px 24px;
   gap: 35px;
+  width: 100%;
 }
 
 .name {
@@ -239,11 +240,6 @@
   display: none;
 }
 
-.contactmain:hover {
-  background: linear-gradient(90deg, #F9F9F9 0%, #F0F0F0 100%);
-  color: black;
-  border-radius: 10px;
-}
 
 .circle {
   border-color: white;
@@ -259,6 +255,12 @@
 }
 
 .selected {
+  background-color: #2A3647;
+  color: white !important; 
+  border-radius: 10px !important;
+}
+
+.selected:hover {
   background-color: #2A3647;
   color: white !important; 
   border-radius: 10px !important;

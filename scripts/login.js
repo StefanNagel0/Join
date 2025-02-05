@@ -1,3 +1,4 @@
+
 /** Initializes the login process by animating the logo. */
 function loginInit() {
     animateLogo();
@@ -31,25 +32,85 @@ function toggleLoginPage() {
     OverlayloginPage.style.display = 'block';
 }
 
+const REGI_URL = 'https://join-408-default-rtdb.europe-west1.firebasedatabase.app/registrations';
+
 /**Handles the login process, validates the inputs, checks user credentials, and redirects upon success.*/
 function login() {
-    const { email, password } = valueInput();
+    let {email, password} = valueInput();
     if (!inputValidation(email, password)) {
         return;
     }
-    if (isValidUser(email, password)) {
-        localStorage.setItem('loggedInEmail', email);
-        window.location.href = 'summary.html?showGreeting=true';
-    } else {
-        showError('E-Mail oder Passwort falsch.');
-        document.getElementById("email").style.borderColor="red";
-        document.getElementById("password").style.borderColor="red";
-        setTimeout(function() {
-            document.getElementById("email").style.borderColor="rgba(204, 204, 204, 1)";
-            document.getElementById("password").style.borderColor="rgba(204, 204, 204, 1)";
-        }, 2000);
+    if (validateFromDb(email, password)) {
+        if (validateFromDb = true) {
+            console.log("Login erfolgreich.");
+            // window.location.href = 'summary.html?showGreeting=true';
+        } else {
+            console.log("Login fehlgeschlagen.");
+        }
+        // localStorage.setItem('loggedInEmail', email);
+        // window.location.href = 'summary.html?showGreeting=true';
     }
 }
+
+/**Checks if the provided email and password match a valid user in the system.*/
+
+
+async function validateFromDb() {
+    try {
+        let registrationData = await loadRegistration();
+        console.log("Registrierungsdaten geladen:", registrationData);
+        let email = document.getElementById('email').value.trim();
+        let password = document.getElementById('password').value.trim();
+        if (emailValid(email) && passwordValid(password)) {
+            if (isValidUser(registrationData, email, password)) {
+                return true;
+            } else {
+                showError('E-Mail oder Passwort falsch.');
+                document.getElementById("email").style.borderColor="red";
+                document.getElementById("password").style.borderColor="red";
+                setTimeout(function() {
+                    document.getElementById("email").style.borderColor="rgba(204, 204, 204, 1)";
+                    document.getElementById("password").style.borderColor="rgba(204, 204, 204, 1)";
+                }, 2000);
+                return false;
+            }
+        }
+    } catch (error) {
+        console.error("Fehler beim Validieren des Users:", error);
+    }
+    return false;
+}
+
+async function loadRegistration() {
+    return fetch(REGI_URL + ".json").then((response) => response.json());
+}
+
+async function emailValid(email) {
+    return fetch(REGI_URL + ".json").then((response) => response.json()).then((registrations) => {
+        return Object.values(registrations).some((registration) => registration.email === email);
+    });
+}
+
+async function passwordValid(password) {
+    return fetch(REGI_URL + ".json").then((response) => response.json()).then((registrations) => {
+        return Object.values(registrations).some((registration) => registration.password === password);
+    });
+}
+
+function isValidUser(registrationData, email, password) {
+    if (!registrationData) return false;
+    for (let key in registrationData) {
+        let user = registrationData[key];
+        if (user.email === email && user.password === password) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// function isValidUser(email, password) {
+//     return users.some(user => user.email === email && user.password === password);
+// }
 
 /**Logs out the current user by removing stored data from localStorage and redirecting to the login page.*/
 function logout(event) {
@@ -96,9 +157,4 @@ function inputValidation(email, password) {
         return false;
     }
     return true;
-}
-
-/**Checks if the provided email and password match a valid user in the system.*/
-function isValidUser(email, password) {
-    return users.some(user => user.email === email && user.password === password);
 }

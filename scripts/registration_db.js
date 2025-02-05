@@ -37,17 +37,18 @@ async function saveRegistration() {
 }
 
 async function loadRegistration(data) {
+    console.log(data);
     return fetch(`${SINGUP_URL}registrations/${data}.json`).then((response) => response.json());
 }
 
 async function isUsernameTaken(username) {
-    return fetch(`${SINGUP_URL}registrations.json`).then((response) => response.json()).then((registrations) => {
+    return fetch(SINGUP_URL + ".json").then((response) => response.json()).then((registrations) => {
         return Object.values(registrations).some((registration) => registration.name === username);
     });
 }
 
 async function isEmailTaken(email) {
-    return fetch(`${SINGUP_URL}registrations.json`).then((response) => response.json()).then((registrations) => {
+    return fetch(SINGUP_URL + ".json").then((response) => response.json()).then((registrations) => {
         return Object.values(registrations).some((registration) => registration.email === email);
     });
 }
@@ -55,7 +56,7 @@ async function isEmailTaken(email) {
 function mainCheckTaken() {
     let regiForm = document.querySelector('.loginForm');
     let data = createRegistration(regiForm);
-
+    console.log(data);
     if (isUsernameTaken(data.name)) {
         showError('Diese Benutzername ist bereits vergeben.');
         return;

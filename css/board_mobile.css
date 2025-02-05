@@ -116,7 +116,8 @@
     .content {
         overflow-y: scroll;
         scrollbar-width: none;
-        height: 900px;
+        height: 833px;
+        /* height: 900px; */
         margin-top: 5px;
     }
 }
@@ -170,7 +171,13 @@
 
 @media screen and (max-width: 830px) {
     .content {
-        margin-bottom: 70px;
+        height: 768px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .content {
+        height: 768px;
     }
 }
 

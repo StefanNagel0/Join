@@ -6,7 +6,6 @@ function loginInit() {
 /**Animates the logo by fading it in, moving it, and then fading it out before toggling the login page.*/
 function animateLogo() {
     const logo = document.getElementById('logo');
-    
     setTimeout(() => {
         logo.style.opacity = '1';
     }, 100);
@@ -14,13 +13,13 @@ function animateLogo() {
         logo.style.top = '10%';
         logo.style.left = '20%';
         logo.style.transform = 'translate(0, 0)';
-    }, 1000);
+    }, 150);
     setTimeout(() => {
         logo.style.opacity = '0';
-    }, 2000);
+    }, 1500);
     setTimeout(() => {
         toggleLoginPage();
-    }, 3500);
+    }, 2500);
 }
 
 /**Toggles the login page by hiding the logo and displaying the login template.*/

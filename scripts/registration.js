@@ -58,11 +58,11 @@ function FieldsFilled(name, email, password, confirmPassword) {
 /**Checks if the password and confirmation password match.*/
 function PasswordsMatching(password, confirmPassword) {
     if (password !== confirmPassword) {
-        document.getElementById("password").style.borderColor="red";
-        document.getElementById("confirmPassword").style.borderColor="red";
-        setTimeout(function() {
-            document.getElementById("password").style.borderColor="rgba(204, 204, 204, 1)";
-            document.getElementById("confirmPassword").style.borderColor="rgba(204, 204, 204, 1)";
+        document.getElementById("password").style.borderColor = "red";
+        document.getElementById("confirmPassword").style.borderColor = "red";
+        setTimeout(function () {
+            document.getElementById("password").style.borderColor = "rgba(204, 204, 204, 1)";
+            document.getElementById("confirmPassword").style.borderColor = "rgba(204, 204, 204, 1)";
         }, 2000);
         showError('Passwörter stimmen nicht überein.');
         return false;
@@ -74,9 +74,9 @@ function PasswordsMatching(password, confirmPassword) {
 function EmailTaken(email) {
     if (users.some(user => user.email === email)) {
         showError('Diese E-Mail ist bereits vergeben.');
-        document.getElementById("email").style.borderColor="red";
-        setTimeout(function() {
-            document.getElementById("email").style.borderColor="rgba(204, 204, 204, 1)";
+        document.getElementById("email").style.borderColor = "red";
+        setTimeout(function () {
+            document.getElementById("email").style.borderColor = "rgba(204, 204, 204, 1)";
         }, 2000);
         return true;
     }
@@ -87,9 +87,9 @@ function EmailTaken(email) {
 function UsernameTaken(name) {
     if (users.some(user => user.name === name)) {
         showError('Dieser Benutzername ist bereits vergeben.');
-        document.getElementById("name").style.borderColor="red";
-        setTimeout(function() {
-            document.getElementById("name").style.borderColor="rgba(204, 204, 204, 1)";
+        document.getElementById("name").style.borderColor = "red";
+        setTimeout(function () {
+            document.getElementById("name").style.borderColor = "rgba(204, 204, 204, 1)";
         }, 2000);
         return true;
     }
@@ -99,11 +99,11 @@ function UsernameTaken(name) {
 /**Validates if the password meets the required complexity.*/
 function PasswordValid(password) {
     if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
-        document.getElementById("password").style.borderColor="red";
-        document.getElementById("confirmPassword").style.borderColor="red";
-        setTimeout(function() {
-            document.getElementById("password").style.borderColor="rgba(204, 204, 204, 1)";
-            document.getElementById("confirmPassword").style.borderColor="rgba(204, 204, 204, 1)";
+        document.getElementById("password").style.borderColor = "red";
+        document.getElementById("confirmPassword").style.borderColor = "red";
+        setTimeout(function () {
+            document.getElementById("password").style.borderColor = "rgba(204, 204, 204, 1)";
+            document.getElementById("confirmPassword").style.borderColor = "rgba(204, 204, 204, 1)";
         }, 2000);
         showError('Passwort: mind. 8 Zeichen, Groß-/Kleinbuchstabe, Zahl.');
         return false;

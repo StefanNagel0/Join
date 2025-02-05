@@ -15,18 +15,54 @@ async function updateRegistration(path = "/registrations", data) {
     }
 }
 
-async function saveRegistration(data) {
-    let registrationFromDb = await loadRegistration(data);
-    data.name = document.getElementById("name")?.value || data.name;
-    data.email = document.getElementById("email")?.value || data.email;
-    console.log(data);
-    console.log(data.name);
-    console.log(data.email);
-    
-    
-    await updateRegistration("/registrations", data);
+function createRegistration(regiForm) {
+    let data = {
+        name: regiForm.querySelector('#name').value.trim(),
+        email: regiForm.querySelector('#email').value.trim(),
+        password: regiForm.querySelector('#password').value.trim(),
+    };
+    return data;
+}
+
+async function saveRegistration() {
+    let regiForm = document.querySelector('.loginForm');
+    let data = createRegistration(regiForm);
+    updateRegistration("/registrations", data).then(() => {
+        console.log(data);
+        console.log("Registrierung erfolgreich gespeichert.");
+        userSuccessRegistration();
+    }).catch((error) => {
+        console.error("Fehler beim Speichern der Registrierung:", error);
+    });
 }
 
 async function loadRegistration(data) {
     return fetch(`${SINGUP_URL}registrations/${data}.json`).then((response) => response.json());
+}
+
+async function isUsernameTaken(username) {
+    return fetch(`${SINGUP_URL}registrations.json`).then((response) => response.json()).then((registrations) => {
+        return Object.values(registrations).some((registration) => registration.name === username);
+    });
+}
+
+async function isEmailTaken(email) {
+    return fetch(`${SINGUP_URL}registrations.json`).then((response) => response.json()).then((registrations) => {
+        return Object.values(registrations).some((registration) => registration.email === email);
+    });
+}
+
+function mainCheckTaken() {
+    let regiForm = document.querySelector('.loginForm');
+    let data = createRegistration(regiForm);
+
+    if (isUsernameTaken(data.name)) {
+        showError('Diese Benutzername ist bereits vergeben.');
+        return;
+    } else if (isEmailTaken(data.email)) {
+        showError('Diese E-Mail ist bereits vergeben.');
+        return;
+    } else {
+        saveRegistration();
+    }
 }

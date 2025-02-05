@@ -42,8 +42,9 @@ function signUp(event) {
     if (EmailTaken(email)) return;
     if (UsernameTaken(name)) return;
     if (!PasswordValid(password)) return;
-    users.push({ name, email, password });
-    userSuccessRegistration();
+    mainCheckTaken();
+    // saveRegistration(name, email, password);
+    // userSuccessRegistration();
 }
 
 /**Checks if all the required fields are filled.*/

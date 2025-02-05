@@ -9,7 +9,7 @@ header {
     justify-content: space-between;
     align-items: center;
     gap: 15px;
-    padding: 20px;
+    padding: 0px 20px;
 }
 
 header img {
@@ -87,10 +87,9 @@ body {
     align-items: center;
     width: 598px;
     height: 600px;
-    margin-top: 197px;
-    margin-left: 250px;
     padding-left: 88px;
     padding-right: 88px;
+    padding-top: 20px;
     gap: 32px;
     border-radius: 30px;
     opacity: 1;
@@ -314,7 +313,8 @@ body {
     bottom: 2px;
     gap: 24px;
     opacity: 1;
-    margin-top: 150px;
+    margin-top: 70px;
+    margin-bottom: 20px;
 
 }
 

@@ -355,3 +355,29 @@
   display: none;
 }
 
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
+.success {
+  color: green;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input.error-border {
+  border: 1px solid red;
+}

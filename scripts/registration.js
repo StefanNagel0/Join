@@ -146,5 +146,5 @@ function userSuccessRegistration() {
     setTimeout(() => {
         window.location.href = "login.html";
         overlayRef.style.display = "none";
-    }, 20000);
+    }, 4000);
 }

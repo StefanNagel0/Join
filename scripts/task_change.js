@@ -191,7 +191,6 @@ function submitAddTask(event) {
     let form = document.getElementById('task-form');
     let task = createTaskObject(form);
     addTaskToFirebase(task).then(() => {
-        console.log('Task erfolgreich hinzugefügt:', task);
         resetFormAndNotify(form);
         getToDoAddTaskPage(event);
     }).catch(error => {
@@ -211,7 +210,6 @@ async function addTaskToFirebase(task) {
         });
         if (response.ok) {
             let data = await response.json();
-            console.log('Task erfolgreich in Firebase gespeichert:', data);
             return data; // Rückgabe der Antwort (z. B. für Task-ID)
         } else {
             throw new Error(`Fehler beim Speichern des Tasks: ${response.statusText}`);
@@ -302,7 +300,6 @@ async function fixTasksMainCategory() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ mainCategory: 'ToDo' }),
             });
-            console.log(`Task ${taskId} aktualisiert.`);
         }
     }
 }

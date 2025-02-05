@@ -1,0 +1,147 @@
+@media(max-width:900px) {
+    .loginHeaderH1 {
+        font-size: 44px;
+        margin-bottom: 4px;
+    }
+
+    .loginLine {
+        margin-right: 113.5px;
+        margin-left: 113.5px;
+    }
+
+    .regiUser {
+        display: none;
+    }
+
+    .mobilelogin {
+        display: block;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 50px 0 0 0;
+    }
+
+    .registerMain {
+        margin: 0 0 0 30px !important;
+    }
+
+    .mainLogin {
+        width: 94%;
+        margin: auto;
+        padding: 24px 0px;
+        max-width: 440px;
+    }
+
+    .privacy {
+        margin-left: 0;
+    }
+
+    header img {
+        width: 64px;
+        height: 64px;
+        padding: 0 0 20px 20px;
+        margin: 0;
+    }
+
+    .signUpArrow {
+        margin-right: 400px;
+    }
+
+    .loginForm {
+        width: 90%;
+        margin: auto;
+    }
+
+    .loginEmail {
+        width: 100%;
+        margin: auto;
+        max-width: 440px;
+    }
+
+    .loginPassword {
+        width: 100%;
+        margin: auto;
+        max-width: 440px;
+    }
+
+    .loginButtons {
+        flex-direction: column;
+        gap: 21px;
+    }
+
+    .loginButton {
+        width: 180px;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .guestButton {
+        font-size: 18px;
+        justify-content: center;
+    }
+
+    #email {
+        background: url(../assets/svg/mail.svg) no-repeat;
+        background-position: calc(100% - 14px) center;
+        padding-left: 15px;
+        background-size: 20px;
+    }
+
+    #password {
+        background: url(../assets/svg/lock.svg) no-repeat;
+        background-position: calc(100% - 14px) center;
+        padding-left: 15px;
+        background-size: 20px;
+    }
+
+    .signUpInput {
+        width: 100%;
+    }
+
+    #name {
+        background: url(../assets/svg/mail.svg) no-repeat;
+        background-position: calc(100% - 14px) center;
+        background-size: 20px;
+    }
+
+    #confirmPassword {
+        background: url(../assets/svg/lock.svg) no-repeat;
+        background-position: calc(100% - 14px) center;
+        background-size: 20px;
+    }
+
+    .sectionOne {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center;
+    }
+
+}
+
+@media(min-width:901px) {
+    .mobilelogin {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 870px) {
+    .signUpSuccessClass {
+        margin-left: 292px;
+    }
+}
+
+@media screen and (max-width: 610px) {
+    .signUpSuccessClass {
+        margin-left: 163px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .signUpArrow{
+        margin-right: 303px !important;
+    }
+
+    .signUpSuccessClass {
+        margin-left: 27px;
+    }
+}

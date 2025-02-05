@@ -225,16 +225,14 @@ async function deleteContact(id) {
       const response = await fetch(`${CONTACTS_URL}/contacts/${contact.firebaseKey}.json`, {
         method: "DELETE",
       });
-
       if (response.ok) {
-        console.log(`Kontakt ${contact.name} erfolgreich gelöscht.`);
+        // console.log(`Kontakt ${contact.name} erfolgreich gelöscht.`);
       } else {
-        console.error(`Fehler beim Löschen des Kontakts ${contact.name}:`, response.status);
+        // console.error(`Fehler beim Löschen des Kontakts ${contact.name}:`, response.status);
       }
     }
 
     contacts.splice(contactIndex, 1);
-    console.log(`Kontakt mit ID ${id} wurde lokal gelöscht.`);
     if (typeof showContacts === "function") {
       showContacts();
     }

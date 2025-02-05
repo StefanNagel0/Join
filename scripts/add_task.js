@@ -256,8 +256,6 @@ function createTaskObject(form) {
         createdAt: new Date().toISOString(),
         mainCategory: 'ToDo', // Standardkategorie hinzufügen
     };
-
-    console.log('Erstelltes Task-Objekt:', task);
     return task;
 }
 

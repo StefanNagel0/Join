@@ -168,7 +168,6 @@ async function pushContactToFirebase(contact) {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(`Kontakt erfolgreich hochgeladen: ${contact.name}`);
       return data.name;
     }
   } catch (error) {

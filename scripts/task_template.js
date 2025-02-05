@@ -116,15 +116,6 @@ function openTaskOverlay(taskId) {
     overlayRef.classList.add('active'); // Beispiel, um das Overlay zu aktivieren
 }
 
-
-
-/* Renders the assigned employees from the task */
-// async function openTaskOverlay(taskId) {
-//     let task = await getOneTask(taskId);
-//     document.getElementById('taskOverlayContainer').innerHTML = taskSubtasksTemplateOverlay(task, taskId);
-//     document.getElementById('taskContainer').innerHTML = taskSubtasksTemplate(task, taskId);
-// }
-
 /* Fetches a single task from the database */
 async function getOneTask(taskId) {
     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`);
@@ -142,16 +133,12 @@ async function toggleSubtask(subtaskIndex, taskId) {
         return;
     }
     let task = await getOneTask(taskId);
-    console.log(task);
     if (!task) {
         console.error(`Task with ID ${taskId} not found`);
         return;
     }
     if (task.subtasks && task.subtasks[subtaskIndex]) {
         task.subtasks[subtaskIndex].completed = checkbox.checked;
-        console.log("Checkbox checked");
-        console.log(subtaskIndex);
-        console.log(globalTasks);
         await updateSubtaskDB(task, taskId);
         updateSubtaskProcess(taskId, task);
         openTaskOverlay(taskId);
@@ -179,7 +166,6 @@ async function updateSubtaskProcess(taskId, task) {
 
 /* Fetches all tasks from the database */
 async function updateSubtaskDB(task, taskId) {
-    console.log(task);
     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
         method: "PATCH",
         headers: {

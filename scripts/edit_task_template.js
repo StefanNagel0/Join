@@ -114,7 +114,6 @@ function taskEditAddSubtaskTemplate(task, taskId) {
 
 function taskEditSubtasks(task, taskId) {
     if (!task || !task.subtasks) return '';
-    console.log("task.id in taskEditSubtasks:", taskId);
     let subtasksHtml = task.subtasks.map((subtask, index, task) => {
         return `
             <div class="openEditTaskOverlaySubtask" id="subtask-container-${index}" onmouseenter="hoverSubtask('${taskId}', ${index})" onmouseleave="hoverOutSubtask('${taskId}', ${index})">

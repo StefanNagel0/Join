@@ -7,7 +7,6 @@ function normalizePriority(priority) {
 
 
 function editTask(taskId) {
-    console.log("Aufruf von editTask mit Task ID:", taskId);
     if (!taskId) {
         console.error("Fehler: taskId ist undefined oder null!");
         return;
@@ -18,8 +17,6 @@ function editTask(taskId) {
         console.error(`Task mit ID ${taskId} nicht gefunden.`);
         return;
     }
-    console.log("Gefundene Task:", task);
-    console.log("Subtasks:", task.subtasks);
     let overlayRef = document.querySelector(".openTaskOverlayMain");
     overlayRef.innerHTML = `
         <input id="editTitle" type="text" maxlength="30" value="${task.title}">
@@ -49,8 +46,6 @@ function applyActivePriorityButton(priority) {
     if (priorityButton) {
         document.querySelectorAll("#task-priority .prio-btn").forEach(btn => btn.classList.remove("active"));
         priorityButton.classList.add("active");
-    } else {
-        console.log(`Kein Button mit der Priorität "${priority}" gefunden.`);
     }
 }
 
@@ -276,7 +271,6 @@ function hoverOutSubtask(taskId, index) {
 }
 
 function toggleEditSubtask(index, taskId) {
-    console.log("taskId in toggleEditSubtask:", taskId);
     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
     let subtaskLabel = document.getElementById(`subtask-${index}`);
     if (!subtaskContainer || !subtaskLabel) return console.error("Subtask-Element nicht gefunden!");
@@ -336,18 +330,14 @@ function subtaskCompletedCheckbox(index, completed) {
 /* save the editing Subtask */
 async function saveEditedSubtask(index, buttonElement) {
     let taskId = buttonElement.getAttribute('data-task-id'); // Hole die Task ID vom Button
-    if (!taskId) return console.error("Task ID fehlt!"); // Debugging
-    console.log("Task ID:", taskId); // Debugging
     let editedInput = document.getElementById(`edit-subtask-${index}`);
     if (!editedInput) return console.error("Bearbeitungsfeld nicht gefunden!");
     let newText = editedInput.value.trim();
     if (newText === "") return console.warn("Leere Eingabe, nichts wird gespeichert.");
     let task = await fetchTaskFromFirebase(taskId);
     if (!task || !task.subtasks) return console.error("Task oder Subtasks nicht gefunden!");
-    console.log("Generiere Subtasks für Task:", task); // Debugging-Ausgabe
     task.subtasks[index].text = newText;
     let subtaskContainer = document.getElementById(`subtask-container-${index}`);
-    console.log(`Speichern der bearbeiteten Subtask: ${index}, Task ID: ${taskId}`);
     subtaskContainer.innerHTML = `
         <label id="subtask-${index}">${newText}</label>
         <div class="subtaskEditingContainer">
@@ -372,14 +362,12 @@ function deleteEditSubtask(index, taskId) {
 }
 
 async function fetchTaskFromFirebase(taskId) {
-    console.log("Abruf der Task mit ID:", taskId); // Debugging-Ausgabe
     if (!taskId) {
         console.error("Fehler: Task ID ist undefined!");
         return null;
     }
     let response = await fetch(`${BASE_URL}tasks/${taskId}.json`);
     let taskData = await response.json();
-    console.log("Erhaltene Task-Daten:", taskData); // Debugging
     if (!taskData) {
         console.error("Task nicht gefunden in Firebase!");
         return null;
@@ -406,7 +394,6 @@ async function saveTask(taskId) {
             task.assignedTo = [];
         }
         subtasksFromDB;
-        console.log("Updated Task ohne Subtasks-Überschreibung:", task);
         if (taskId in globalTasks) {
             await updateTaskInDatabase(taskId, task);
         }
@@ -427,11 +414,6 @@ async function updateTaskInDatabase(taskId, task) {
             },
             body: JSON.stringify(task),
         });
-        if (response.ok) {
-            console.log("Task erfolgreich aktualisiert:", taskId);
-        } else {
-            console.error("Fehler beim Aktualisieren des Tasks:", taskId);
-        }
     } catch (error) {
         console.error("Fehler beim Speichern des Tasks in der Datenbank:", error);
     }

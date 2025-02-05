@@ -59,8 +59,6 @@ function showOverlayTask() {
 
 /* Opening the task */
 async function openTaskOverlay(taskId) {
-    console.log("Task mit ID", taskId, "wird geöffnet.");
-    
     let task = await getOneTask(taskId);
     if (!task) {
         console.error("Task mit ID", taskId, "nicht gefunden.");
@@ -143,7 +141,6 @@ async function deleteTask(taskId) {
             throw new Error(`Fehler beim Löschen der Aufgabe: ${response.statusText}`);
         }
         delete globalTasks[taskId];
-        console.log("Task mit ID", taskId, "erfolgreich gelöscht.");
         displayTasks(globalTasks);
     } catch (error) {
         console.error("Fehler beim Löschen des Tasks:", error);

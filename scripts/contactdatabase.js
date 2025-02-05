@@ -1,6 +1,5 @@
 const CONTACTS_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/contacts";
 
-/*Synchronisiert die Kontakte mit Firebase und aktualisiert die UI.*/
 async function syncContacts() {
   try {
     const response = await fetch(`${CONTACTS_URL}.json`, { method: "GET" });
@@ -11,11 +10,13 @@ async function syncContacts() {
         : [];
       showContacts(); // UI aktualisieren
 
-      // Falls ein Kontakt offen ist, lade seine Details sofort neu
+      // Sicherstellen, dass das Element existiert, bevor getAttribute aufgerufen wird
       const detailsDiv = document.getElementById("contact-details");
-      const openContactIndex = detailsDiv.getAttribute("data-contact-index");
-      if (openContactIndex !== null) {
-        showContactDetails(parseInt(openContactIndex)); // Neu laden
+      if (detailsDiv) {
+        const openContactIndex = detailsDiv.getAttribute("data-contact-index");
+        if (openContactIndex !== null) {
+          showContactDetails(parseInt(openContactIndex)); // Neu laden
+        }
       }
     } else {
       console.error("Fehler beim Abrufen der Kontakte aus Firebase:", response.status);

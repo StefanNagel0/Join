@@ -1,5 +1,6 @@
 .privacy {
     padding-top: 110px;
+    height: calc(100vh - 96px);
 }
 
 .privacy h1 {

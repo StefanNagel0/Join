@@ -9,10 +9,16 @@ h1 {
     font-weight: 700;
 }
 
-.content {
-    height: 800px;
-}
-
 .content_legal{
     margin-left: 96px;
+}
+
+@media screen and (max-width: 900px) {
+    .end {
+        padding-bottom: 50px;
+    }
+    
+    .help {
+        padding-top: 50px !important;
+    }
 }

@@ -3,14 +3,13 @@
     display: flex;
     flex-direction: column;
     max-width: 1920px;
-    /* height: 900px; */
+    height: calc(100vh - 109px);
     flex: 1;
     overflow-x: hidden;
     overflow-y: scroll;
     scrollbar-width: none;
     margin-right: 100px;
     overflow-y: scroll;
-    height: 837px;
     padding-bottom: 40px;
 }
 
@@ -76,4 +75,14 @@
 }
 .content_help{
     margin-left: 96px;
+}
+
+@media screen and (max-width: 900px) {
+    .enjoy{
+        padding-bottom: 50px
+    }
+    
+    .help {
+        padding-top: 50px !important;
+    }
 }

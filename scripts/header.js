@@ -28,7 +28,7 @@ function getCurrentUserName() {
     return user ? user.name : "Guest";
 }
 
-/**Generates initials from a full name by taking the first letter of the first and last name.*/
+/**Generates initials from a name by taking the first letter of the first and last name.*/
 function getInitials(name) {
     if (!name) return '';
     const parts = name.trim().split(/\s+/);

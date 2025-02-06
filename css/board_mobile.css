@@ -105,7 +105,7 @@
     #tasksContainerAwaitFeedback,
     #tasksContainerDone {
         display: flex;
-        height: 300px;
+        height: 0px;
         gap: 20px;
     }
 
@@ -153,10 +153,12 @@
 
     .contentHeadingMain {
         width: calc(100vw - 150px);
+        margin-top: 20px;
     }
 
     .boardDropDown {
         width: calc(100vw - 150px);
+        margin-top: 10px;
     }
 
     .noTasksParent {
@@ -166,6 +168,10 @@
     .saveButtonMain {
         display: flex;
         justify-content: flex-end;
+    }
+
+    .taskContainer {
+        margin-top: 0px;
     }
 }
 
@@ -183,7 +189,7 @@
 
 @media screen and (max-width: 730px) {
     .content {
-        margin-bottom: 70px;
+        margin-bottom: 20px;
     }
 }
 

@@ -39,12 +39,9 @@ function signUp(event) {
     let checkbox = document.getElementById("checkbox");
     if (!FieldsFilled(name, email, password, confirmPassword)) return;
     if (!PasswordsMatching(password, confirmPassword)) return;
-    // if (EmailTaken(email)) return;
-    // if (UsernameTaken(name)) return;
     if (!PasswordValid(password)) return;
     mainCheckTaken();
-    // saveRegistration(name, email, password);
-    // userSuccessRegistration();
+    userSuccessRegistration();
 }
 
 /**Checks if all the required fields are filled.*/
@@ -70,32 +67,6 @@ function PasswordsMatching(password, confirmPassword) {
     }
     return true;
 }
-
-/**Checks if the provided email is already taken.*/
-// function EmailTaken(email) {
-//     if (users.some(user => user.email === email)) {
-//         showError('Diese E-Mail ist bereits vergeben.');
-//         document.getElementById("email").style.borderColor = "red";
-//         setTimeout(function () {
-//             document.getElementById("email").style.borderColor = "rgba(204, 204, 204, 1)";
-//         }, 2000);
-//         return true;
-//     }
-//     return false;
-// }
-
-/**Checks if the provided username is already taken.*/
-// function UsernameTaken(name) {
-//     if (users.some(user => user.name === name)) {
-//         showError('Dieser Benutzername ist bereits vergeben.');
-//         document.getElementById("name").style.borderColor = "red";
-//         setTimeout(function () {
-//             document.getElementById("name").style.borderColor = "rgba(204, 204, 204, 1)";
-//         }, 2000);
-//         return true;
-//     }
-//     return false;
-// }
 
 /**Validates if the password meets the required complexity.*/
 function PasswordValid(password) {

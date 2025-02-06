@@ -1,9 +1,9 @@
 /**URL of the Firebase Realtime Database.*/
-const SINGUP_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/";
-
+const REGISTRATIONCOMPLETE_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/";
+const REGISTRATION_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/registrations";
 /**Saves the registration data to the database.*/
 async function updateRegistration(path = "/registrations", data) {
-    let response = await fetch(SINGUP_URL + path + ".json", {
+    let response = await fetch(REGISTRATIONCOMPLETE_URL + path + ".json", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -28,42 +28,54 @@ async function saveRegistration() {
     let regiForm = document.querySelector('.loginForm');
     let data = createRegistration(regiForm);
     updateRegistration("/registrations", data).then(() => {
-        console.log(data);
-        console.log("Registrierung erfolgreich gespeichert.");
         userSuccessRegistration();
     }).catch((error) => {
         console.error("Fehler beim Speichern der Registrierung:", error);
     });
 }
 
-async function loadRegistration(data) {
-    console.log(data);
-    return fetch(`${SINGUP_URL}registrations/${data}.json`).then((response) => response.json());
+async function loadRegistration() {
+    return fetch(REGISTRATION_URL + ".json").then((userId) => userId.json());
 }
 
-async function isUsernameTaken(username) {
-    return fetch(SINGUP_URL + ".json").then((response) => response.json()).then((registrations) => {
-        return Object.values(registrations).some((registration) => registration.name === username);
-    });
+async function isNameTaken(name){
+    let usersId = loadRegistration();
+    console.log(usersId);
+    console.log(name);
+    if (usersId === name) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 async function isEmailTaken(email) {
-    return fetch(SINGUP_URL + ".json").then((response) => response.json()).then((registrations) => {
-        return Object.values(registrations).some((registration) => registration.email === email);
-    });
+    let usersId = loadRegistration();
+    console.log(usersId);
+    console.log(email);
+    if (usersId === email) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
-function mainCheckTaken() {
+async function mainCheckTaken() {
     let regiForm = document.querySelector('.loginForm');
     let data = createRegistration(regiForm);
-    console.log(data);
-    if (isUsernameTaken(data.name)) {
+    let nameIsTaken = await isNameTaken(data.name);
+    let emailIsTaken = await isEmailTaken(data.email);
+    if (nameIsTaken) {
         showError('Diese Benutzername ist bereits vergeben.');
         return;
-    } else if (isEmailTaken(data.email)) {
+    } else {
+        console.log("Name ist noch nicht vergeben.");
+    } 
+    if (emailIsTaken) {
         showError('Diese E-Mail ist bereits vergeben.');
         return;
     } else {
-        saveRegistration();
+        console.log("Email ist noch nicht vergeben.");
     }
+    saveRegistration();
 }

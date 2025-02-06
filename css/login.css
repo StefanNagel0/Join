@@ -175,7 +175,7 @@ body {
 }
 
 #password {
-    background: url(../assets/svg/lock.svg) no-repeat scroll 360px center;
+    background: url(../assets/svg/lock.svg) no-repeat scroll 380px center;
     padding-left: 15px;
     background-size: 20px;
 }

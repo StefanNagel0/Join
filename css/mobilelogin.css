@@ -21,10 +21,6 @@
         margin: 50px 0 0 0;
     }
 
-    .registerMain {
-        margin: 0 0 0 30px !important;
-    }
-
     .mainLogin {
         width: 94%;
         margin: auto;
@@ -106,12 +102,6 @@
         background-position: calc(100% - 14px) center;
         background-size: 20px;
     }
-
-    /* #confirmPassword {
-        background: url(../assets/svg/lock.svg) no-repeat;
-        background-position: calc(100% - 14px) center;
-        background-size: 20px;
-    } */
 
     .sectionOne {
         display: flex !important;

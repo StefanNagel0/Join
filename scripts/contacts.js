@@ -35,17 +35,24 @@ function openOverlay(mode, index = null) {
   }
 }
 
+function setNewContact() {
+  return {
+    title: document.querySelector(".overlay-left h1"),
+    description: document.querySelector(".description"),
+    nameInput: document.getElementById("contact-name"),
+    phoneInput: document.getElementById("contact-phone"),
+    emailInput: document.getElementById("contact-email"),
+    circleDiv: document.querySelector(".overlay-content .circle"),
+    submitButton: document.querySelector(".submit"),
+    cancelButton: document.querySelector(".cancel")
+  };
+}
+
 /* Sets up the overlay for editing an existing contact. */
 function setupEditContact(index) {
-  const title = document.querySelector(".overlay-left h1");
-  const description = document.querySelector(".description");
-  const nameInput = document.getElementById("contact-name");
-  const phoneInput = document.getElementById("contact-phone");
-  const emailInput = document.getElementById("contact-email");
-  const circleDiv = document.querySelector(".overlay-content .circle");
-  const submitButton = document.querySelector(".submit"); 
-  const cancelButton = document.querySelector(".cancel"); 
-
+  const {
+    title, description, nameInput, phoneInput, emailInput, circleDiv, submitButton, cancelButton
+  } = setNewContact();
   const contact = contacts[index];
   title.textContent = "Edit Contact";
   description.textContent = "";
@@ -55,7 +62,6 @@ function setupEditContact(index) {
   circleDiv.textContent = getInitials(contact.name);
   circleDiv.style.backgroundColor = contact.color || getRandomColor();
   submitButton.innerHTML = `Save <img class="check" src="../assets/icons/contact/check.png">`; 
-
   cancelButton.innerHTML = `Delete`;
   cancelButton.setAttribute("onclick", `deleteContact(${index})`);
   editIndex = index;
@@ -63,15 +69,9 @@ function setupEditContact(index) {
 
 /* Sets up the overlay for adding a new contact. */
 function setupNewContact() {
-  const title = document.querySelector(".overlay-left h1");
-  const description = document.querySelector(".description");
-  const nameInput = document.getElementById("contact-name");
-  const phoneInput = document.getElementById("contact-phone");
-  const emailInput = document.getElementById("contact-email");
-  const circleDiv = document.querySelector(".overlay-content .circle");
-  const submitButton = document.querySelector(".submit"); 
-  const cancelButton = document.querySelector(".cancel"); 
-
+  const {
+    title, description, nameInput, phoneInput, emailInput, circleDiv, submitButton, cancelButton
+  } = setNewContact();
   title.textContent = "Add Contact";
   description.textContent = "Tasks are better with a team!";
   nameInput.value = "";
@@ -80,7 +80,6 @@ function setupNewContact() {
   circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
   circleDiv.style.backgroundColor = "";
   submitButton.innerHTML = `Create contact <img class="check" src="../assets/icons/contact/check.png">`; 
-
   cancelButton.innerHTML = `Cancel <img class="cancelicon" src="../assets/icons/contact/cancel.png">`;
   cancelButton.setAttribute("onclick", "closeOverlay()");
   editIndex = null;
@@ -143,39 +142,8 @@ function appendContact(contact, groupDiv) {
   groupDiv.appendChild(contactDiv);
 }
 
-/* Creates a contact div element. */
-function createContactDiv(contact) {
-  const contactDiv = document.createElement("div");
-  contactDiv.classList.add("contact");
-
-  const initials = getInitials(contact.name);
-  contactDiv.innerHTML = `
-    <div class="contactmain" onclick="selectContactMain(this), showContactDetails(${contacts.indexOf(contact)})">
-      <div class="circle" style="background-color: ${contact.color};">
-        ${initials || `<img class="concircle" src="../assets/icons/contact/circledefault.png">`}
-      </div>
-      <div class="listdesign">
-        <p class="name" style="cursor: pointer;">
-          ${contact.name}
-        </p>
-        <p class="emails">${contact.email}</p>
-      </div>
-    </div>
-  `;
-
-  return contactDiv;
-}
-
 async function showContactList() {
-  const contactList = document.querySelector(".scrolllist");
-  const detailsDiv = document.getElementById("contact-details");
-
-  contactList.classList.add("show");
-  contactList.classList.remove("hide");
-
-  detailsDiv.classList.add("hide");
-  detailsDiv.classList.remove("show");
-
+  contactListAdd();
   await syncContacts(); // Warte auf Synchronisation der Kontakte
   showContacts(); // Kontakte neu laden
 
@@ -191,14 +159,24 @@ async function showContactList() {
   }
 }
 
-function showContactDetails(index) {
+
+function contactListAdd() {
+  const contactList = document.querySelector(".scrolllist");
   const detailsDiv = document.getElementById("contact-details");
 
+  contactList.classList.add("show");
+  contactList.classList.remove("hide");
+
+  detailsDiv.classList.add("hide");
+  detailsDiv.classList.remove("show");
+}
+
+
+function showContactDetails(index) {
+  const detailsDiv = document.getElementById("contact-details");
   // Neueste Kontakte holen (nach syncContacts() aktualisiert)
   const contact = contacts[index];
-
   if (!contact) return;
-
   // Kontakt-Details sofort aktualisieren
   detailsDiv.setAttribute("data-contact-index", index);
   detailsDiv.innerHTML = `
@@ -206,7 +184,6 @@ function showContactDetails(index) {
     <p>Email: ${contact.email}</p>
     <p>Telefon: ${contact.phone}</p>
   `;
-
   detailsDiv.classList.add("show");
   detailsDiv.classList.remove("hide");
 }
@@ -217,21 +194,15 @@ async function deleteContact(id) {
     console.error(`Kontakt mit ID ${id} nicht gefunden.`);
     return;
   }
-
   const contact = contacts[contactIndex];
-
   try {
     if (contact.firebaseKey) {
       const response = await fetch(`${CONTACTS_URL}/contacts/${contact.firebaseKey}.json`, {
         method: "DELETE",
       });
       if (response.ok) {
-        // console.log(`Kontakt ${contact.name} erfolgreich gelöscht.`);
-      } else {
-        // console.error(`Fehler beim Löschen des Kontakts ${contact.name}:`, response.status);
       }
     }
-
     contacts.splice(contactIndex, 1);
     if (typeof showContacts === "function") {
       showContacts();
@@ -289,7 +260,6 @@ function saveContact(name, phone, email) {
 /* Creates a success message and displays it temporarily. */
 function createSuccessMessage(message, targetClass) {
   const successDiv = document.querySelector(`.${targetClass}`);
-
   if (successDiv) {
     successDiv.textContent = message;
     successDiv.classList.remove("hide");
@@ -314,15 +284,12 @@ function initializeEventListeners() {
   const phoneInput = document.getElementById("contact-phone");
   const nameInput = document.getElementById("contact-name");
   const form = document.getElementById("contact-form");
-
   if (phoneInput) {
     phoneInput.addEventListener("input", validatePhoneInput);
   }
-
   if (nameInput) {
     nameInput.addEventListener("input", handleNameInput);
   }
-
   if (form) {
     form.addEventListener("submit", handleFormSubmit);
   }
@@ -351,22 +318,4 @@ function selectContactMain(selectedElement) {
   if (!isSelected) {
     selectedElement.classList.add('selected');
   }
-}
-
-function validateEmailInput(event) {
-  const input = event.target;
-
-  input.value = input.value.replace(/[^a-zA-Z0-9@._-]/g, '');
-
-  const atCount = (input.value.match(/@/g) || []).length;
-  if (atCount > 1) {
-    input.value = input.value.slice(0, input.value.lastIndexOf('@'));
-  }
-  input.value = input.value.replace(/^[-_.]|[-_.]$/g, '');
-}
-
-
-function nameValidate(event) {
-  const input = event.target;
-  input.value = input.value.replace(/[^a-zA-Z ]/g, '');
 }

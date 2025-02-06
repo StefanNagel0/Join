@@ -121,3 +121,26 @@ window.addEventListener("resize", () => {
 
     previousWidth = currentWidth;
 });
+
+/* Creates a contact div element. */
+function createContactDiv(contact) {
+    const contactDiv = document.createElement("div");
+    contactDiv.classList.add("contact");
+  
+    const initials = getInitials(contact.name);
+    contactDiv.innerHTML = `
+      <div class="contactmain" onclick="selectContactMain(this), showContactDetails(${contacts.indexOf(contact)})">
+        <div class="circle" style="background-color: ${contact.color};">
+          ${initials || `<img class="concircle" src="../assets/icons/contact/circledefault.png">`}
+        </div>
+        <div class="listdesign">
+          <p class="name" style="cursor: pointer;">
+            ${contact.name}
+          </p>
+          <p class="emails">${contact.email}</p>
+        </div>
+      </div>
+    `;
+  
+    return contactDiv;
+  }

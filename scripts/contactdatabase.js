@@ -1,17 +1,13 @@
 const CONTACTS_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/contacts";
 
-
 function nameValidate(event) {
   const nameInput = event.target;
   const nameError = document.getElementById("name-error");
 
   if (nameInput.value.trim().length < 2) {
-    nameError.textContent = "Name must be at least 2 characters long.";
-    nameError.style.display = "block";
-    nameInput.classList.add("error-border");
+    showError(nameError, "Name must be at least 2 characters long.", nameInput);
   } else {
-    nameError.style.display = "none";
-    nameInput.classList.remove("error-border");
+    hideError(nameError, nameInput);
   }
 }
 
@@ -20,188 +16,144 @@ function validateEmail(event) {
   const emailError = document.getElementById("email-error");
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|de|at|net|org|ch|uk)$/i;
 
-  if (!emailRegex.test(emailInput.value)) {
-    emailError.textContent = "Invalid email format (allowed: .com, .de, .at, etc.).";
-    emailError.style.display = "block";
-    emailInput.classList.add("error-border");
-  } else {
-    emailError.style.display = "none";
-    emailInput.classList.remove("error-border");
-  }
+  emailRegex.test(emailInput.value)
+    ? hideError(emailError, emailInput)
+    : showError(emailError, "Invalid email format.", emailInput);
 }
+
 
 function validatePhone(event) {
   const phoneInput = event.target;
   const phoneError = document.getElementById("phone-error");
-  const phoneRegex = /^[0-9\s\+\-()]{7,15}$/; // Erlaubt 7-15 Ziffern + Sonderzeichen
+  const phoneRegex = /^[0-9\s\+\-()]{7,15}$/;
 
-  if (!phoneRegex.test(phoneInput.value)) {
-    phoneError.textContent = "Phone number min 7 digits.";
-    phoneError.style.display = "block";
-    phoneInput.classList.add("error-border");
-  } else {
-    phoneError.style.display = "none";
-    phoneInput.classList.remove("error-border");
-  }
+  phoneRegex.test(phoneInput.value)
+    ? hideError(phoneError, phoneInput)
+    : showError(phoneError, "Phone number min 7 digits.", phoneInput);
+}
+
+function showError(element, message, input) {
+  element.textContent = message;
+  element.style.display = "block";
+  input.classList.add("error-border");
+}
+
+function hideError(element, input) {
+  element.style.display = "none";
+  input.classList.remove("error-border");
 }
 
 async function syncContacts() {
   try {
     const response = await fetch(`${CONTACTS_URL}.json`, { method: "GET" });
-    if (response.ok) {
-      const data = await response.json();
-      contacts = data
-        ? Object.entries(data).map(([key, value]) => ({ ...value, firebaseKey: key }))
-        : [];
-      showContacts(); // UI aktualisieren
+    if (!response.ok) return console.error("Fehler beim Abrufen der Kontakte");
 
-      // Sicherstellen, dass das Element existiert, bevor getAttribute aufgerufen wird
-      const detailsDiv = document.getElementById("contact-details");
-      if (detailsDiv) {
-        const openContactIndex = detailsDiv.getAttribute("data-contact-index");
-        if (openContactIndex !== null) {
-          showContactDetails(parseInt(openContactIndex)); // Neu laden
-        }
-      }
-    } else {
-      console.error("Fehler beim Abrufen der Kontakte aus Firebase:", response.status);
-    }
+    const data = await response.json();
+    contacts = data ? Object.entries(data).map(([key, value]) => ({ ...value, firebaseKey: key })) : [];
+
+    showContacts();
+    reloadOpenContact();
   } catch (error) {
     console.error("Netzwerkfehler beim Abrufen der Kontakte:", error);
   }
 }
 
-/* Speichert einen neuen Kontakt oder aktualisiert einen bestehenden.*/
+function reloadOpenContact() {
+  const detailsDiv = document.getElementById("contact-details");
+  if (!detailsDiv) return;
+
+  const openContactIndex = detailsDiv.getAttribute("data-contact-index");
+  if (openContactIndex !== null) showContactDetails(parseInt(openContactIndex));
+}
+
 async function saveContact(name, phone, email) {
-  if (!name || !phone || !email) {
-    return;
-  }
+  if (!name || !phone || !email) return;
 
-  let savedIndex = null;
-
-  if (editIndex !== null) {
-    const contact = contacts[editIndex];
-    contact.name = name;
-    contact.phone = phone;
-    contact.email = email;
-
-    if (contact.firebaseKey) {
-      await updateContactInFirebase(contact);
-      createSuccessMessage("Contact successfully updated", "successedit");
-    }
-    savedIndex = editIndex;
-    editIndex = null;
-  } else {
-    const newContact = { name, phone, email, color: getRandomColor() };
-    const isDuplicate = contacts.some(c => c.name === name && c.phone === phone);
-    if (isDuplicate) {
-      alert("Duplicate contact detected. The contact will not be added.");
-      return;
-    }
-
-    const firebaseKey = await pushContactToFirebase(newContact);
-    if (firebaseKey) {
-      newContact.firebaseKey = firebaseKey;
-      contacts.push(newContact);
-      savedIndex = contacts.length - 1;
-      createSuccessMessage("Contact successfully created", "successcreate");
-    }
-  }
+  const savedIndex = editIndex !== null ? await updateContact(name, phone, email) : await createNewContact(name, phone, email);
 
   await syncContacts();
-
-  // Falls ein Kontakt gespeichert wurde, lade ihn sofort in contact-details
-  if (savedIndex !== null) {
-    showContactDetails(savedIndex);
-  }
+  if (savedIndex !== null) showContactDetails(savedIndex);
 }
 
-/* Löscht einen Kontakt aus Firebase und der lokalen Liste. */
+async function createNewContact(name, phone, email) {
+  if (contacts.some(c => c.name === name && c.phone === phone)) {
+    alert("Duplicate contact detected.");
+    return null;
+  }
+
+  const newContact = { name, phone, email, color: getRandomColor() };
+  newContact.firebaseKey = await pushContactToFirebase(newContact);
+  contacts.push(newContact);
+  createSuccessMessage("Contact successfully created", "successcreate");
+
+  return contacts.length - 1;
+}
+
+async function updateContact(name, phone, email) {
+  const contact = contacts[editIndex];
+  if (!contact) return null;
+
+  Object.assign(contact, { name, phone, email });
+  if (contact.firebaseKey) await updateContactInFirebase(contact);
+
+  editIndex = null;
+  return editIndex;
+}
+
 async function deleteContact(index) {
-  try {
-    if (index < 0 || index >= contacts.length) return;
+  if (index < 0 || index >= contacts.length) return;
 
-    const contact = contacts[index];
-    if (!contact || !contact.firebaseKey) return;
+  const contact = contacts[index];
+  if (!contact || !contact.firebaseKey) return;
 
-    const deleteURL = `${CONTACTS_URL}/${contact.firebaseKey}.json`;
+  await deleteContactFromFirebase(contact.firebaseKey);
+  contacts = contacts.filter(c => c.firebaseKey !== contact.firebaseKey);
 
-    const response = await fetch(deleteURL, { method: "DELETE" });
-    if (!response.ok) return;
-
-    // Entferne den Kontakt aus der lokalen Liste
-    contacts = contacts.filter(c => c.firebaseKey !== contact.firebaseKey);
-
-    await syncContacts(); // Aktualisiere die Kontaktliste in der UI
-
-    // Bestimme den nächsten anzuzeigenden Kontakt
-    let nextIndex = index; // Versuche, den nächsten Kontakt anzuzeigen
-    if (nextIndex >= contacts.length) {
-      nextIndex = contacts.length - 1; // Falls letzter Kontakt gelöscht wurde, gehe einen zurück
-    }
-
-    // Falls noch Kontakte vorhanden sind, lade den nächsten Kontakt in `contact-details`
-    if (contacts.length > 0 && nextIndex >= 0) {
-      showContactDetails(nextIndex);
-    } else {
-      // Falls keine Kontakte mehr vorhanden sind, leere `contact-details`
-      const detailsDiv = document.getElementById("contact-details");
-      detailsDiv.innerHTML = "<p>Kein Kontakt ausgewählt.</p>";
-      detailsDiv.classList.add("hide");
-    }
-
-    showContacts(); // Aktualisiere die Anzeige der Kontaktliste
-
-  } catch (error) {
-    console.error("Fehler beim Löschen des Kontakts:", error);
-  }
+  await syncContacts();
+  showNextContact(index);
 }
 
-/* Speichert einen neuen Kontakt in Firebase. */
+async function deleteContactFromFirebase(firebaseKey) {
+  await fetch(`${CONTACTS_URL}/${firebaseKey}.json`, { method: "DELETE" });
+}
+
+function showNextContact(index) {
+  let nextIndex = index >= contacts.length ? contacts.length - 1 : index;
+  contacts.length > 0 && nextIndex >= 0 ? showContactDetails(nextIndex) : clearContactDetails();
+}
+
+function clearContactDetails() {
+  const detailsDiv = document.getElementById("contact-details");
+  detailsDiv.innerHTML = "<p>Kein Kontakt ausgewählt.</p>";
+  detailsDiv.classList.add("hide");
+}
+
 async function pushContactToFirebase(contact) {
-  try {
-    const response = await fetch(`${CONTACTS_URL}.json`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(contact),
-    });
+  const response = await fetch(`${CONTACTS_URL}.json`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(contact),
+  });
 
-    if (response.ok) {
-      const data = await response.json();
-      return data.name;
-    }
-  } catch (error) {
-    console.error("Fehler beim Hochladen des Kontakts:", error);
-  }
-  return null;
+  return response.ok ? (await response.json()).name : null;
 }
 
-/* Aktualisiert einen bestehenden Kontakt in Firebase. Das aktualisierte Kontakt-Objekt mit Firebase-Key.*/
 async function updateContactInFirebase(contact) {
-  if (!contact || !contact.firebaseKey) {
-    console.error("Fehler: Kontakt oder Firebase-Key fehlt.");
-    return;
-  }
+  if (!contact || !contact.firebaseKey) return;
 
-  try {
-    const updateURL = `${CONTACTS_URL}/${contact.firebaseKey}.json`;
-    const response = await fetch(updateURL, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(contact),
-    });
+  const updateURL = `${CONTACTS_URL}/${contact.firebaseKey}.json`;
+  const response = await fetch(updateURL, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(contact),
+  });
 
-    if (response.ok) {
-      createSuccessMessage("Contact successfully updated", "successedit");
-      await syncContacts(); // Firebase und UI synchronisieren
-    } else {
-      console.error(`Fehler beim Aktualisieren von ${contact.name}:`, response.status, await response.text());
-    }
-  } catch (error) {
-    console.error("Fehler beim Aktualisieren des Kontakts:", error);
+  if (response.ok) {
+    createSuccessMessage("Contact successfully updated", "successedit");
+    await syncContacts();
+  } else {
+    console.error(`Fehler beim Aktualisieren:`, response.status);
   }
 }
 
-
-/* Wird beim Laden der Seite aufgerufen, um die Kontakte zu synchronisieren. */
 document.addEventListener("DOMContentLoaded", syncContacts);

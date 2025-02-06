@@ -4,8 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchTasks();
 });
 
+
+const REGISTRATION_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/";
+
+
 /** Sets the greeting message based on the current time and user.*/
-function setGreetingMessage() {
+async function setGreetingMessage() {
     const greetingMessageDiv = document.getElementById('greeting-message');
     const userNameGreetingDiv = document.getElementById('user-name-greeting');
     const greetingMessageOverlay = document.getElementById('greeting-message-overlay');
@@ -15,7 +19,7 @@ function setGreetingMessage() {
         return;
     }
     const greeting = getGreetingBasedOnTime();
-    const userName = getUserName();
+    const userName = await getUserName();
     setGreetingForElements(greeting, userName, greetingMessageDiv, userNameGreetingDiv);
     setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userNameGreetingOverlay);
 }
@@ -29,7 +33,7 @@ function getGreetingBasedOnTime() {
 }
 
 /** Sets the greeting message for the main elements. */
-function setGreetingForElements(greeting, userName, greetingMessageDiv, userNameGreetingDiv) {
+async function setGreetingForElements(greeting, userName, greetingMessageDiv, userNameGreetingDiv) {
     if (userName && userName.toLowerCase() !== 'guest') {
         greetingMessageDiv.textContent = `${greeting},`;
         userNameGreetingDiv.textContent = `${userName}`;
@@ -116,15 +120,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/** Retrieves the user name from local storage and matches it to a user object. */
-function getUserName() {
+/* Retrieves the username of the currently logged-in user from Firebase.*/
+async function getUserName() {
     const loggedInEmail = localStorage.getItem('loggedInEmail');
     if (!loggedInEmail) {
         return '';
     }
-    const user = users.find(user => user.email === loggedInEmail);
-    return user ? user.name : '';
+    try {
+        const response = await fetch(`${BASE_URL}registrations.json`);
+        if (!response.ok) {
+            throw new Error('Fehler beim Abrufen der Benutzerdaten');
+        }
+        const users = await response.json();
+        if (users) {
+            const user = Object.values(users).find(user => user.email === loggedInEmail);
+            return user ? user.name : '';
+        }
+    } catch (error) {
+       return ''
+    }
 }
+
 
 /**Fetches and processes tasks from the server. */
 async function fetchTasks() {

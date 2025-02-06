@@ -1,36 +1,47 @@
-/**Initializes the header by setting up the user button.*/
+/** Initializes the header by setting up the user button. */
 function initHeader() {
     initializeUserButton();
 }
 
-/**Initializes the user button and sets the user initials.*/
-function initializeUserButton() {
+/** Initializes the user button and sets the user initials. */
+async function initializeUserButton() {
     const userInitialsButton = document.getElementById('user-initials-button');
-    setUserInitials(userInitialsButton);
+    await setUserInitials(userInitialsButton);
 }
 
-/*** Sets the user initials to the button text content.*/
-function setUserInitials(button) {
-    const userName = getCurrentUserName();
-    const initials = userName.toLowerCase() === "guest" 
+/** Sets the user initials to the button text content. */
+async function setUserInitials(button) {
+    const userName = await getCurrentUserName();
+    // Sicherstellen, dass userName ein String ist
+    const initials = (typeof userName === 'string' && userName.toLowerCase() === "guest") 
         ? "G" 
-        : getInitials(userName);
+        : getInitials(userName || "Guest"); // Fallback auf "Guest", falls userName undefined ist
     button.textContent = initials;
 }
 
-/**Retrieves the current user's name based on the logged-in email.*/
-function getCurrentUserName() {
+/** Retrieves the current user's name based on the logged-in email. */
+async function getCurrentUserName() {
     const loggedInEmail = localStorage.getItem('loggedInEmail');
     if (!loggedInEmail || loggedInEmail === 'guest@example.com') {
         return "Guest";
     }
-    const user = users.find(user => user.email === loggedInEmail);
-    return user ? user.name : "Guest";
+    try {
+        const response = await fetch(`${BASE_URL}registrations.json`);
+        if (!response.ok) throw new Error('Fehler beim Abrufen der Benutzerdaten');
+
+        const users = await response.json();
+        if (users) {
+            const user = Object.values(users).find(user => user.email === loggedInEmail);
+            return user ? user.name : "Guest";
+        }
+    } catch (error) {
+    }
+    return "Guest"; // Fallback, falls etwas schiefgeht
 }
 
-/**Generates initials from a name by taking the first letter of the first and last name.*/
+/** Generates initials from a name by taking the first letter of the first and last name. */
 function getInitials(name) {
-    if (!name) return '';
+    if (!name || typeof name !== 'string') return ''; // Sicherstellen, dass name ein String ist
     const parts = name.trim().split(/\s+/);
     if (parts.length === 1) {
         return parts[0][0].toUpperCase();
@@ -38,14 +49,14 @@ function getInitials(name) {
     return (parts[0][0] + parts[1][0]).toUpperCase();
 }
 
-/**Toggles the visibility of the user popup.*/
+/** Toggles the visibility of the user popup. */
 function toggleUserPopup(event) {
     const userPopup = document.getElementById('user-popup');
     event.stopPropagation();
     userPopup.classList.toggle('d-none');
 }
 
-/**Closes the user popup if the user clicks outside the popup or the user initials button.*/
+/** Closes the user popup if the user clicks outside the popup or the user initials button. */
 function closePopup(event) {
     const userPopup = document.getElementById('user-popup');
     const userInitialsButton = document.getElementById('user-initials-button');
@@ -55,5 +66,5 @@ function closePopup(event) {
     }
 }
 
-/**Initializes the header by calling the `initHeader` function when the document is loaded.*/
-document.onload = initHeader;
+/** Initializes the header by calling the `initHeader` function when the document is loaded. */
+document.addEventListener('DOMContentLoaded', initHeader);

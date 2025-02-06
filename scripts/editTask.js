@@ -296,9 +296,7 @@ function toggleEditSubtask(index, taskId) {
 
 function saveEditStaySubtask(index, taskId) {
     let editedInput = document.getElementById(`edit-subtask-${index}`);
-    if (!editedInput) return console.error("Eingabefeld nicht gefunden!");
     let newText = editedInput.value.trim();
-    if (!newText) return console.warn("Leere Eingabe, nichts wird gespeichert.");
     let task = globalTasks[taskId];
     if (task && task.subtasks && task.subtasks[index]) {
         task.subtasks[index].text = newText;
@@ -333,7 +331,6 @@ async function saveEditedSubtask(index, buttonElement) {
     let editedInput = document.getElementById(`edit-subtask-${index}`);
     if (!editedInput) return console.error("Bearbeitungsfeld nicht gefunden!");
     let newText = editedInput.value.trim();
-    if (newText === "") return console.warn("Leere Eingabe, nichts wird gespeichert.");
     let task = await fetchTaskFromFirebase(taskId);
     if (!task || !task.subtasks) return console.error("Task oder Subtasks nicht gefunden!");
     task.subtasks[index].text = newText;

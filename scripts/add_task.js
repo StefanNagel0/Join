@@ -218,32 +218,23 @@ function preventFormSubmissionOnEnter() {
 function getSubtasksFromForm(form) {
     const subtaskList = form.querySelector('#subtask-list');
     const subtasks = [];
-
     if (!subtaskList) {
-        console.warn('Subtask-Liste nicht gefunden!');
         return subtasks;
     }
-
     subtaskList.querySelectorAll('li').forEach((li) => {
         const textElement = li.querySelector('.subtask-text') || li;
         const text = textElement.textContent.trim();
-
         if (text) {
             subtasks.push({
                 text: text,
                 completed: li.classList.contains('completed'),
             });
-        } else {
-            console.warn('Subtask ohne Text-Element gefunden:', li);
         }
     });
-
     return subtasks;
 }
 
-
 // /** Create the task object from the form data */
-
 function createTaskObject(form) {
     const task = {
         title: form.querySelector('#task-title').value.trim(),

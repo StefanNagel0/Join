@@ -40,8 +40,6 @@ async function loadRegistration() {
 
 async function isNameTaken(name){
     let usersId = loadRegistration();
-    console.log(usersId);
-    console.log(name);
     if (usersId === name) {
         return true;
     } else {
@@ -51,8 +49,6 @@ async function isNameTaken(name){
 
 async function isEmailTaken(email) {
     let usersId = loadRegistration();
-    console.log(usersId);
-    console.log(email);
     if (usersId === email) {
         return true;
     } else {
@@ -68,14 +64,10 @@ async function mainCheckTaken() {
     if (nameIsTaken) {
         showError('Diese Benutzername ist bereits vergeben.');
         return;
-    } else {
-        console.log("Name ist noch nicht vergeben.");
-    } 
+    }
     if (emailIsTaken) {
         showError('Diese E-Mail ist bereits vergeben.');
         return;
-    } else {
-        console.log("Email ist noch nicht vergeben.");
     }
     saveRegistration();
 }

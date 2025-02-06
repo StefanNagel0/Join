@@ -43,17 +43,15 @@ async function login() {
         let emailIsInDb = await emailValid(email);
         let passwordIsInDb = await passwordValid(password, email);
         if (emailIsInDb) {
-            // console.log("Email ist in der Datenbank vorhanden.");
         } else {
             showError("Passwort oder Email falsch!");
         }
         if (passwordIsInDb) {
-            // console.log("Passwort ist in der Datenbank vorhanden.");
         } else {
             showError("Passwort oder Email falsch!");
         }
         if (emailIsInDb && passwordIsInDb) {
-            // localStorage.setItem('loggedInEmail', email);
+            localStorage.setItem('loggedInEmail', email);
             window.location.href = 'summary.html?showGreeting=true';
         } else {
             showError('Die eingegebenen Daten sind nicht korrekt.');

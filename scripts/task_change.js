@@ -27,7 +27,6 @@ function displayTasks(tasks) {
 
     taskArray.forEach(([taskId, task]) => {
         if (!task.mainCategory) {
-            console.warn(`Task ${taskId} hat keine mainCategory. Überspringen.`);
             return;
         }
         let taskElement = createTaskElement(task, taskId);

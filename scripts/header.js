@@ -31,8 +31,11 @@ function getCurrentUserName() {
 /**Generates initials from a full name by taking the first letter of the first and last name.*/
 function getInitials(name) {
     if (!name) return '';
-    const [firstName, lastName] = name.split(" ");
-    return `${firstName?.[0] || ""}${lastName?.[0] || ""}`;
+    const parts = name.trim().split(/\s+/);
+    if (parts.length === 1) {
+        return parts[0][0].toUpperCase();
+    }
+    return (parts[0][0] + parts[1][0]).toUpperCase();
 }
 
 /**Toggles the visibility of the user popup.*/

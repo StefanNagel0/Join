@@ -38,6 +38,7 @@ function signUp(event) {
     let confirmPassword = document.getElementById("confirmPassword").value.trim();
     let checkbox = document.getElementById("checkbox");
     if (!FieldsFilled(name, email, password, confirmPassword)) return;
+    if (!EmailValid(email)) return;
     if (!PasswordsMatching(password, confirmPassword)) return;
     if (!PasswordValid(password)) return;
     mainCheckTaken();
@@ -48,6 +49,21 @@ function signUp(event) {
 function FieldsFilled(name, email, password, confirmPassword) {
     if (!name || !email || !password || !confirmPassword) {
         showError('Bitte alle Felder ausfüllen.');
+        return false;
+    }
+    return true;
+}
+
+function EmailValid(email) {
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(email)) {
+        let emailInput = document.getElementById("email");
+        if (emailInput) {
+            emailInput.style.borderColor = "red";
+            setTimeout(() => {
+                emailInput.style.borderColor = "rgba(204, 204, 204, 1)";
+            }, 2000);
+        }
+        showError('Bitte geben Sie eine gültige E-Mail ein.');
         return false;
     }
     return true;

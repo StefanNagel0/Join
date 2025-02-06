@@ -37,7 +37,7 @@
 }
 
 .cont {
-  max-height: 928px;
+  height: calc(100vh - 96px);
   width: 456px;
   display: flex;
   justify-content: center;

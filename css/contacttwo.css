@@ -50,7 +50,6 @@
 }
 
 .scrolllist.show {
-  height: 89.5vh;
   width: 456px;
   display: flex;
   align-items: center;

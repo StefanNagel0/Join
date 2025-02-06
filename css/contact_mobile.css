@@ -28,6 +28,10 @@
     .overlay-content {
         width: 551px;
     }
+
+    .cont {
+        height: calc(100vh - 80px);
+    }
 }
 
 @media screen and (max-width: 980px) {

@@ -74,8 +74,6 @@ function guestLogin() {
 
 async function emailValid(email) {
     let usersId = await loadLoginDb();
-    console.log(usersId);
-    console.log(email);
     usrValidation = Object.values(usersId || {}).some(userObj => userObj.email === email);
     if (usrValidation) {
         return true;
@@ -86,9 +84,6 @@ async function emailValid(email) {
 
 async function passwordValid(password, email) {
     let usersId = await loadLoginDb();  
-    console.log(usersId);
-    console.log(password);
-    console.log(email);
     for (let userId in usersId) {
         let user = usersId[userId];
         if (user.password === password) {

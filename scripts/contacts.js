@@ -49,41 +49,61 @@ function setNewContact() {
 }
 
 /* Sets up the overlay for editing an existing contact. */
-function setupEditContact(index) {
-  const {
-    title, description, nameInput, phoneInput, emailInput, circleDiv, submitButton, cancelButton
-  } = setNewContact();
-  const contact = contacts[index];
-  title.textContent = "Edit Contact";
-  description.textContent = "";
-  nameInput.value = contact.name;
-  phoneInput.value = contact.phone;
-  emailInput.value = contact.email || "";
-  circleDiv.textContent = getInitials(contact.name);
-  circleDiv.style.backgroundColor = contact.color || getRandomColor();
-  submitButton.innerHTML = `Save <img class="check" src="../assets/icons/contact/check.png">`; 
-  cancelButton.innerHTML = `Delete`;
-  cancelButton.setAttribute("onclick", `deleteContact(${index})`);
-  editIndex = index;
-}
-
 /* Sets up the overlay for adding a new contact. */
 function setupNewContact() {
-  const {
-    title, description, nameInput, phoneInput, emailInput, circleDiv, submitButton, cancelButton
-  } = setNewContact();
+  const elements = setNewContact(); // Holt alle relevanten UI-Elemente
+  initializeNewContactUI(elements); // Setzt die UI-Texte und Buttons
+  resetContactInputs(elements); // Leert die Eingabefelder
+  editIndex = null; // Setzt den Bearbeitungsindex zurück
+}
+
+/* Aktualisiert die UI-Texte und Buttons für das Hinzufügen eines neuen Kontakts */
+function initializeNewContactUI({ title, description, circleDiv, submitButton, cancelButton }) {
   title.textContent = "Add Contact";
   description.textContent = "Tasks are better with a team!";
+  circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
+  circleDiv.style.backgroundColor = "";
+
+  submitButton.innerHTML = `Create contact <img class="check" src="../assets/icons/contact/check.png">`;
+  cancelButton.innerHTML = `Cancel <img class="cancelicon" src="../assets/icons/contact/cancel.png">`;
+  cancelButton.setAttribute("onclick", "closeOverlay()");
+}
+
+/* Setzt die Eingabefelder für Name, Telefon & E-Mail zurück */
+function resetContactInputs({ nameInput, phoneInput, emailInput }) {
   nameInput.value = "";
   phoneInput.value = "";
   emailInput.value = "";
+}
+
+
+/* Sets up the overlay for adding a new contact. */
+function setupNewContact() {
+  const elements = setNewContact(); // Holt alle relevanten UI-Elemente
+  initializeNewContactUI(elements); // Setzt die UI-Texte und Buttons
+  resetContactInputs(elements); // Leert die Eingabefelder
+  editIndex = null; // Setzt den Bearbeitungsindex zurück
+}
+
+/* Aktualisiert die UI-Texte und Buttons für das Hinzufügen eines neuen Kontakts */
+function initializeNewContactUI({ title, description, circleDiv, submitButton, cancelButton }) {
+  title.textContent = "Add Contact";
+  description.textContent = "Tasks are better with a team!";
   circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
   circleDiv.style.backgroundColor = "";
-  submitButton.innerHTML = `Create contact <img class="check" src="../assets/icons/contact/check.png">`; 
+
+  submitButton.innerHTML = `Create contact <img class="check" src="../assets/icons/contact/check.png">`;
   cancelButton.innerHTML = `Cancel <img class="cancelicon" src="../assets/icons/contact/cancel.png">`;
   cancelButton.setAttribute("onclick", "closeOverlay()");
-  editIndex = null;
 }
+
+/* Setzt die Eingabefelder für Name, Telefon & E-Mail zurück */
+function resetContactInputs({ nameInput, phoneInput, emailInput }) {
+  nameInput.value = "";
+  phoneInput.value = "";
+  emailInput.value = "";
+}
+
 
 /* Closes the overlay. */
 function closeOverlay() {
@@ -144,21 +164,26 @@ function appendContact(contact, groupDiv) {
 
 async function showContactList() {
   contactListAdd();
-  await syncContacts(); // Warte auf Synchronisation der Kontakte
-  showContacts(); // Kontakte neu laden
+  await syncContacts(); 
+  showContacts(); 
+  updateContactDetailsView(); 
+}
 
-  // Falls ein Kontakt offen ist, ihn sofort erneut laden
+/* Aktualisiert die Detailansicht, falls ein Kontakt geöffnet ist */
+function updateContactDetailsView() {
+  const detailsDiv = document.getElementById("contact-details");
+  if (!detailsDiv) return; 
+
   const openContactIndex = detailsDiv.getAttribute("data-contact-index");
   if (openContactIndex !== null) {
     const contactData = getContactByIndex(parseInt(openContactIndex)); // Die aktualisierten Kontaktdaten abrufen
     if (contactData) {
-      updateContactDetails(contactData); // Die Detailansicht sofort aktualisieren
+      updateContactDetails(contactData); 
     }
     detailsDiv.classList.add("show");
     detailsDiv.classList.remove("hide");
   }
 }
-
 
 function contactListAdd() {
   const contactList = document.querySelector(".scrolllist");
@@ -178,7 +203,7 @@ function showContactDetails(index) {
   const contact = contacts[index];
   if (!contact) return;
   // Kontakt-Details sofort aktualisieren
-  detailsDiv.setAttribute("data-contact-index", index);
+  detailsDiv.setAttribute(index);
   detailsDiv.innerHTML = `
     <h2>${contact.name}</h2>
     <p>Email: ${contact.email}</p>
@@ -191,24 +216,28 @@ function showContactDetails(index) {
 async function deleteContact(id) {
   const contactIndex = contacts.findIndex(contact => contact.id === id);
   if (contactIndex === -1) {
-    console.error(`Kontakt mit ID ${id} nicht gefunden.`);
     return;
   }
   const contact = contacts[contactIndex];
   try {
     if (contact.firebaseKey) {
-      const response = await fetch(`${CONTACTS_URL}/contacts/${contact.firebaseKey}.json`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-      }
+      await deleteContactFromFirebase(contact.firebaseKey); // Lösche aus Firebase
     }
-    contacts.splice(contactIndex, 1);
-    if (typeof showContacts === "function") {
-      showContacts();
+    contacts.splice(contactIndex, 1); // Entferne aus der lokalen Liste
+    showContacts(); // Aktualisiere die Anzeige
+  } catch (error) {
+  }
+}
+
+/* Löscht einen Kontakt aus Firebase */
+async function deleteContactFromFirebase(firebaseKey) {
+  try {
+    const response = await fetch(`${CONTACTS_URL}/contacts/${firebaseKey}.json`, { method: "DELETE" });
+    if (!response.ok) {
+      throw new Error(`Fehler beim Löschen von Firebase: ${response.status}`);
     }
   } catch (error) {
-    console.error("Fehler beim Löschen des Kontakts:", error);
+    console.error("Fehler beim Löschen des Kontakts in Firebase:", error);
   }
 }
 

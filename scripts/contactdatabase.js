@@ -147,7 +147,6 @@ async function updateContactInFirebase(contact) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(contact),
   });
-
   if (response.ok) {
     createSuccessMessage("Contact successfully updated", "successedit");
     await syncContacts();

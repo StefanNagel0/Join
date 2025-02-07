@@ -1,3 +1,8 @@
+// Globales Array, das alle aktuell ausgewählten Kontakte speichert
+let selectedContactsGlobal = [];
+
+
+
 /** Create an element with initials circle based on contact's name */
 function createInitialsCircle(contactName) {
     const circle = document.createElement('div');
@@ -28,23 +33,71 @@ function toggleContactDiv(container, checkbox, label, circle, contact) {
     toggleContactSelection(contact, checkbox.checked, document.getElementById('selected-contacts'));
 }
 
-/** Update the list of selected contacts */
+
 function toggleContactSelection(contact, isSelected, selectedContactsContainer) {
-    const circle = createInitialsCircle(contact.name);
     if (isSelected) {
-        const selectedContact = createElementWithClass('div', 'selected-contact');
-        selectedContact.dataset.fullname = contact.name;
-        selectedContact.append(circle);
-        selectedContactsContainer.append(selectedContact);
+        if (!selectedContactsGlobal.includes(contact.name)) {
+            selectedContactsGlobal.push(contact.name);
+        }
     } else {
-        const selectedCircles = selectedContactsContainer.querySelectorAll('.selected-contact');
-        selectedCircles.forEach(contactElement => {
-            if (contactElement.querySelector('.initials-circle').textContent === circle.textContent) {
-                selectedContactsContainer.removeChild(contactElement);
-            }
-        });
+        selectedContactsGlobal = selectedContactsGlobal.filter(name => name !== contact.name);
+    }
+    console.log("Aktuell ausgewählte Kontakte (global):", selectedContactsGlobal);
+    renderSelectedContacts(selectedContactsGlobal, selectedContactsContainer);
+}
+
+
+/** Update the list of selected contacts */
+// function toggleContactSelection(contact, isSelected, selectedContactsContainer) {
+//     const circle = createInitialsCircle(contact.name);
+//     if (isSelected) {
+//         const selectedContact = createElementWithClass('div', 'selected-contact');
+//         selectedContact.dataset.fullname = contact.name;
+//         selectedContact.append(circle);
+//         selectedContactsContainer.append(selectedContact);
+//     } else {
+//         const selectedCircles = selectedContactsContainer.querySelectorAll('.selected-contact');
+//         selectedCircles.forEach(contactElement => {
+//             if (contactElement.querySelector('.initials-circle').textContent === circle.textContent) {
+//                 selectedContactsContainer.removeChild(contactElement);
+//             }
+//         });
+//     }
+// }
+
+/**Renders selected contacts with a maximum of 4 visible circles.*/
+function renderSelectedContacts(selectedContacts, container) {
+    container.innerHTML = ''; // Container leeren
+    const maxDisplayed = 4;
+    const displayedContacts = selectedContacts.slice(0, maxDisplayed);
+    const hiddenCount = selectedContacts.length - maxDisplayed;
+    
+    // Anzeige der ersten maxDisplayed Kontakte
+    displayedContacts.forEach(contactName => {
+        const circle = createInitialsCircle(contactName);
+        const selectedContact = createElementWithClass('div', 'selected-contact');
+        selectedContact.dataset.fullname = contactName;
+        selectedContact.append(circle);
+        container.append(selectedContact);
+    });
+    
+    // Wenn es mehr als maxDisplayed Kontakte gibt, "+X" anzeigen
+    if (hiddenCount > 0) {
+        let extraIndicator = container.querySelector('.extra-contacts');
+        if (!extraIndicator) {
+            extraIndicator = createElementWithClass('div', 'extra-contacts');
+            container.append(extraIndicator);
+        }
+        extraIndicator.textContent = `+${hiddenCount}`;
+    } else {
+        let extraIndicator = container.querySelector('.extra-contacts');
+        if (extraIndicator) {
+            extraIndicator.remove();
+        }
     }
 }
+
+
 /** Retrieves the list of selected contacts' full names. */
 function getSelectedContacts() {
     const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))

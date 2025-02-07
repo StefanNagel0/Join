@@ -120,6 +120,11 @@ function closeTaskOverlay() {
     darkOverlay.classList.remove("show");
     overlayRef.classList.remove("show");
     overlayRef.innerHTML = "";
+    selectedContactsGlobal = [];
+    const selectedContactsContainer = document.getElementById('selected-contacts');
+    if (selectedContactsContainer) {
+        selectedContactsContainer.innerHTML = '';
+    }
 }
 
 /* Delete a task */

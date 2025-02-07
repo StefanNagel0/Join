@@ -13,9 +13,13 @@ function toggleSignUpPage() {
 
 /**Enables or disables the "Sign up" button based on the checkbox state.*/
 function toggleSignUpButton() {
-    let checkbox = document.getElementById('checkbox');
     let signUpButton = document.querySelector('.signUpButton');
-    if (checkbox.checked) {
+    let checkbox = document.getElementById('checkbox');
+    let name = document.getElementById('name').value;
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
+    let confirmPassword = document.getElementById('confirmPassword').value;
+    if (name && email && password && confirmPassword && checkbox.checked) {
         signUpButton.disabled = false;
         signUpButton.style.cursor = 'pointer';
         signUpButton.style.background = '#2A3647';
@@ -26,6 +30,17 @@ function toggleSignUpButton() {
         signUpButton.style.background = '#808080';
         signUpButton.classList.add('signUpButton');
     }
+    // if (checkbox.checked) {
+    //     signUpButton.disabled = false;
+    //     signUpButton.style.cursor = 'pointer';
+    //     signUpButton.style.background = '#2A3647';
+    //     signUpButton.style.color = 'white';
+    // } else {
+    //     signUpButton.disabled = true;
+    //     signUpButton.style.cursor = 'not-allowed';
+    //     signUpButton.style.background = '#808080';
+    //     signUpButton.classList.add('signUpButton');
+    // }
     return;
 }
 
@@ -77,7 +92,7 @@ function PasswordsMatching(password, confirmPassword) {
         setTimeout(function () {
             document.getElementById("password").style.borderColor = "rgba(204, 204, 204, 1)";
             document.getElementById("confirmPassword").style.borderColor = "rgba(204, 204, 204, 1)";
-        }, 2000);
+        }, 200000);
         showError('Passwörter stimmen nicht überein.');
         return false;
     }

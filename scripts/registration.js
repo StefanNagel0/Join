@@ -135,7 +135,7 @@ function showError(message) {
         errorMessage.style.display = 'block';
         setTimeout(() => {
             errorMessage.style.display = 'none';
-        }, 30000);
+        }, 3000);
     }
 }
 
@@ -146,7 +146,7 @@ function showErrorPassword(message) {
         errorMessage.style.display = 'block';
         setTimeout(() => {
             errorMessage.style.display = 'none';
-        }, 30000);
+        }, 3000);
     }
 }
 

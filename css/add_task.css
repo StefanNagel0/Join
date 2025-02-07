@@ -460,3 +460,8 @@ textarea::placeholder {
     height: 16px;
     line-height: 16px;
 }
+
+#submit-task-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

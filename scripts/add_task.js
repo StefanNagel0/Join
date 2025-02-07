@@ -360,30 +360,40 @@ function getToDoAddTaskPage(event) {
 /** Validates the task form fields (Title and Due Date) on submit. */
 function validateTaskForm(event) {
     event.preventDefault();
-    let isValid = true;
     const title = document.getElementById("task-title"),
-        dueDate = document.getElementById("task-date");
-    if (title.value.trim() === "") {
-        title.classList.add("input-error");
-        setErrorMessage(title, "Title is required");
-        isValid = false;
-    } else {
-        title.classList.remove("input-error");
-        clearErrorMessage(title);
-    }
-    if (dueDate.value.trim() === "") {
-        dueDate.classList.add("input-error");
-        setErrorMessage(dueDate, "Due Date is required");
-        isValid = false;
-    } else {
-        dueDate.classList.remove("input-error");
-        clearErrorMessage(dueDate);
-    }
-    if (isValid) {
-        submitAddTask(event);
-    }
+        dueDate = document.getElementById("task-date"),
+        submitButton = document.getElementById("submit-task-btn"),
+        categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
+    let isValid = validateField(title, "Title is required") &&
+                validateField(dueDate, "Due Date is required") &&
+                validateCategory(categoryText);
+    submitButton.disabled = !isValid;
+    if (isValid) submitAddTask(event);
+}
+/** hecks if an input field is empty, sets an error message, or removes it. */
+function validateField(field, message) {
+    if (field.value.trim() === "") return setErrorMessage(field, message), false;
+    clearErrorMessage(field);
+    return true;
 }
 
+/** Checks if a category is selected and shows/hides the error message. */
+function validateCategory(category) {
+    const errorEl = document.getElementById('category-error');
+    errorEl.classList.toggle('hidden', category !== 'Select task category');
+    return category !== 'Select task category';
+}
+
+/**  Updates the submit button state based on input field validation.  */
+function updateSubmitButtonState() {
+    const title = document.getElementById("task-title").value.trim();
+    const dueDate = document.getElementById("task-date").value.trim();
+    const categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
+    const submitButton = document.getElementById("submit-task-btn");
+
+    const isValid = title !== "" && dueDate !== "" && categoryText !== "Select task category";
+    submitButton.disabled = !isValid;
+}
 
 /** Sets an error message below the input element. */
 function setErrorMessage(element, message) {

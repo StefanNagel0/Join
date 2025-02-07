@@ -52,7 +52,8 @@ function signUp(event) {
     let password = document.getElementById("password").value.trim();
     let confirmPassword = document.getElementById("confirmPassword").value.trim();
     let checkbox = document.getElementById("checkbox");
-    if (!FieldsFilled(name, email, password, confirmPassword)) return;
+    // if (!FieldsFilled(name, email, password, confirmPassword)) return;
+    if (!nameValid(name)) return;
     if (!EmailValid(email)) return;
     if (!PasswordsMatching(password, confirmPassword)) return;
     if (!PasswordValid(password)) return;
@@ -60,10 +61,9 @@ function signUp(event) {
     userSuccessRegistration();
 }
 
-/**Checks if all the required fields are filled.*/
-function FieldsFilled(name, email, password, confirmPassword) {
-    if (!name || !email || !password || !confirmPassword) {
-        showError('Bitte alle Felder ausfüllen.');
+function nameValid(name) {
+    if (!/^[a-zA-Z]+$/g.test(name)) {
+        showError('Bitte geben Sie einen gültigen Namen ein.');
         return false;
     }
     return true;
@@ -92,7 +92,7 @@ function PasswordsMatching(password, confirmPassword) {
         setTimeout(function () {
             document.getElementById("password").style.borderColor = "rgba(204, 204, 204, 1)";
             document.getElementById("confirmPassword").style.borderColor = "rgba(204, 204, 204, 1)";
-        }, 200000);
+        }, 2000);
         showError('Passwörter stimmen nicht überein.');
         return false;
     }
@@ -108,7 +108,7 @@ function PasswordValid(password) {
             document.getElementById("password").style.borderColor = "rgba(204, 204, 204, 1)";
             document.getElementById("confirmPassword").style.borderColor = "rgba(204, 204, 204, 1)";
         }, 2000);
-        showError('Passwort: mind. 8 Zeichen, Groß-/Kleinbuchstabe, Zahl.');
+        showErrorPassword('Passwort: mind. 8 Zeichen, Groß-/Kleinbuchstabe, Zahl.');
         return false;
     }
     return true;
@@ -135,7 +135,18 @@ function showError(message) {
         errorMessage.style.display = 'block';
         setTimeout(() => {
             errorMessage.style.display = 'none';
-        }, 3000);
+        }, 30000);
+    }
+}
+
+function showErrorPassword(message) {
+    let errorMessage = document.getElementById('passwordError');
+    if (errorMessage) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+            errorMessage.style.display = 'none';
+        }, 30000);
     }
 }
 

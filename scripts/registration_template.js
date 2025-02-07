@@ -9,7 +9,7 @@ function registrationTemplate() {
             <h1 class="signUpHeaderH1">Sign up</h1>
             <div class="signUpLine"></div>
         </div>
-        <form onsubmit="signUp(event);" class="loginForm">
+        <form onsubmit="signUp(event);" class="loginForm" novalidate>
             <div class="signUpInput"><input type="name" id="name"
                     placeholder="Name" required>
             </div>
@@ -29,15 +29,16 @@ function registrationTemplate() {
                     </div>
                 </div>
             </div>
-            <div class="checkboxMain">
-                <input type="checkbox" id="checkbox" class="checkboxBox" onchange="toggleSignUpButton()">
-                <label for="checkbox" class="checkboxInput">I accept the <a class="privacyLink" href="../html/privacy_policy_not_loggedIn.html">Privacy Policy</a></label>
-            </div>
-            <div class="signUpButtonMain">
-                <button type="submit" class="signUpButton" disabled>Sign up</button>
-            </div>
             <div class="signUpErrorMain">
+                <div id="passwordError" class="errorPwMessage"></div>
                 <div id="signUpError" class="errorMessage"></div>
+            </div>
+            <div class="signUpMain">
+                <div class="checkboxMain">
+                    <input type="checkbox" id="checkbox" class="checkboxBox" onchange="toggleSignUpButton()">
+                    <label for="checkbox" class="checkboxInput">I accept the <a class="privacyLink" href="../html/privacy_policy_not_loggedIn.html">Privacy Policy</a></label>
+                </div>
+                <button type="submit" class="signUpButton signUpButtonMain" disabled>Sign up</button>
             </div>
         </form>
     </div>

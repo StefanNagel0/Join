@@ -45,7 +45,7 @@
 
     .loginForm {
         width: 90%;
-        margin: auto;
+        margin: 20px;
     }
 
     .loginEmail {
@@ -83,13 +83,6 @@
         background-size: 20px;
     }
 
-    /* #password {
-        background: url(../assets/svg/lock.svg) no-repeat;
-        background-position: calc(100% - 14px) center;
-        padding-left: 15px;
-        background-size: 20px;
-    } */
-
     .signUpInput {
         width: 100%;
     }
@@ -104,12 +97,21 @@
     }
 
     .sectionOne {
-        display: flex !important;
-        justify-content: center !important;
+        display: flex;
+        justify-content: center;
         align-items: center;
     }
-    .errorMessage{
-        margin-top: 65px;
+
+    .checkboxMain {
+        width: 250px;
+        height: 20px;
+    }
+
+    .signUpMain{
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        margin-right: 150px;
     }
 
 }
@@ -148,6 +150,22 @@
     .signUpArrow {
         margin-right: 300px;
     }
+}
+
+@media screen and (max-width: 400px) {
+    .checkboxMain {
+        width: 150px;
+        height: 20px;
+        padding-bottom: 15px;
+    }
+
+    .signUpMain{
+        justify-content: center;
+        align-items: center;
+        gap: 0px;
+        margin-right: 150px;
+    }
+    
 }
 
 @media screen and (max-width: 376px) {

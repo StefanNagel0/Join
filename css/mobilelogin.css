@@ -130,17 +130,32 @@
     .signUpSuccessClass {
         margin-left: 163px;
     }
+
+    .signUpArrow {
+        margin-right: 330px;
+    }
 }
 
 @media screen and (max-width: 426px) {
-    .signUpArrow{
-        margin-right: 303px !important;
-    }
 
     .signUpSuccessClass {
         margin-left: 27px;
     }
     .errorMessage{
         max-width: 278px;
+    }
+
+    .signUpArrow {
+        margin-right: 300px;
+    }
+}
+
+@media screen and (max-width: 376px) {
+    .signUpArrow {
+        margin-right: 250px;
+    }
+
+    .signUpHeaderH1 {
+        font-size: 50px;
     }
 }

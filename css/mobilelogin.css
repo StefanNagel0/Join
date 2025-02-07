@@ -4,6 +4,15 @@
         margin-bottom: 4px;
     }
 
+    .logo {
+        width: 50px;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0,75s ease-in-out;
+    }
+
     .loginLine {
         margin-right: 113.5px;
         margin-left: 113.5px;
@@ -33,10 +42,11 @@
     }
 
     header img {
-        width: 64px;
-        height: 64px;
+        width: 150px;
+        height: 150px;
         padding: 0 0 20px 20px;
-        margin: 0;
+        margin-top: 50px;
+        margin-left: 50px;
     }
 
     .signUpArrow {
@@ -45,7 +55,7 @@
 
     .loginForm {
         width: 90%;
-        margin: 20px;
+        margin: 0px;
     }
 
     .loginEmail {
@@ -60,9 +70,16 @@
         max-width: 440px;
     }
 
+    #password {
+        background: url(../assets/svg/lock.svg) no-repeat;
+        background-position: calc(100% - 14px) center;
+        padding-left: 15px;
+        background-size: 20px;
+    }
+
     .loginButtons {
         flex-direction: column;
-        gap: 21px;
+        gap: 10px;
     }
 
     .loginButton {
@@ -86,7 +103,8 @@
     .signUpInput {
         width: 100%;
     }
-    .signUpInputPassword{
+
+    .signUpInputPassword {
         width: 100%;
     }
 
@@ -107,7 +125,7 @@
         height: 20px;
     }
 
-    .signUpMain{
+    .signUpMain {
         display: flex;
         flex-direction: row;
         gap: 5px;
@@ -143,7 +161,8 @@
     .signUpSuccessClass {
         margin-left: 27px;
     }
-    .errorMessage{
+
+    .errorMessage {
         max-width: 278px;
     }
 
@@ -159,13 +178,13 @@
         padding-bottom: 15px;
     }
 
-    .signUpMain{
+    .signUpMain {
         justify-content: center;
         align-items: center;
         gap: 0px;
         margin-right: 150px;
     }
-    
+
 }
 
 @media screen and (max-width: 376px) {

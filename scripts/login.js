@@ -6,21 +6,48 @@ function loginInit() {
 
 /**Animates the logo by fading it in, moving it, and then fading it out before toggling the login page.*/
 function animateLogo() {
-    const logo = document.getElementById('logo');
-    setTimeout(() => {
-        logo.style.opacity = '1';
-    }, 100);
-    setTimeout(() => {
-        logo.style.top = '10%';
-        logo.style.left = '20%';
-        logo.style.transform = 'translate(0, 0)';
-    }, 150);
-    setTimeout(() => {
-        logo.style.opacity = '0';
-    }, 1500);
-    setTimeout(() => {
-        toggleLoginPage();
-    }, 2500);
+    let matchMedia = window.matchMedia("(min-width: 900px)")
+    if (matchMedia && matchMedia.matches) {
+        let logo = document.getElementById('logo');
+        setTimeout(() => {
+            logo.style.opacity = '1';
+        }, 100);
+        setTimeout(() => {
+            logo.style.top = '10%';
+            logo.style.left = '20%';
+            logo.style.transform = 'translate(0, 0)';
+        }, 150);
+        setTimeout(() => {
+            logo.style.opacity = '0';
+        }, 1500);
+        setTimeout(() => {
+            toggleLoginPage();
+        }, 2000);
+    } if (matchMedia && !matchMedia.matches) {
+        let backgroundColor = 'rgb(42,54,71)';
+        let logo = document.getElementById('logoSmall');
+        document.body.style.backgroundColor = backgroundColor;
+        setTimeout(() => {
+            logo.style.opacity = '1';
+        }, 100);
+        setTimeout(() => {
+            logo.setAttribute('src', '../assets/svg/logo.svg');
+            logo.style.top = '10%';
+            logo.style.left = '20%';
+            logo.style.transform = 'translate(0, 0)';
+            document.body.style.backgroundColor = backgroundColor;
+            setTimeout(() => {
+                document.body.style.transition = "background-color 1s ease";
+                document.body.style.backgroundColor = "transparent";
+            }, 500);
+        }, 150);
+        setTimeout(() => {
+            logo.style.opacity = '0';
+        }, 1000);
+        setTimeout(() => {
+            toggleLoginPage();
+        }, 1500);
+    }
 }
 
 /**Toggles the login page by hiding the logo and displaying the login template.*/
@@ -83,7 +110,7 @@ async function emailValid(email) {
 }
 
 async function passwordValid(password, email) {
-    let usersId = await loadLoginDb();  
+    let usersId = await loadLoginDb();
     for (let userId in usersId) {
         let user = usersId[userId];
         if (user.password === password) {
@@ -122,7 +149,7 @@ function logout(event) {
 
 /** Displays an error message for the login process. */
 function showError(message) {
-    const errorMessage = document.getElementById('loginError');
+    let errorMessage = document.getElementById('loginError');
     errorMessage.textContent = message;
     errorMessage.style.display = 'block';
 

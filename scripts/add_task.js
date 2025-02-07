@@ -388,17 +388,12 @@ function validateTaskForm(event) {
 /** Sets an error message below the input element. */
 function setErrorMessage(element, message) {
     let error = element.parentElement.querySelector(".error-message");
-    
     if (!error) {
-        // If there's no existing error message, create one
         error = document.createElement("span");
         error.className = "error-message";
         element.parentElement.appendChild(error);
     }
-
     error.textContent = message;
-
-    // Remove the error message and red border after 10 seconds
     setTimeout(() => {
         clearErrorMessage(element);
         element.classList.remove("input-error");

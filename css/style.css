@@ -12,3 +12,9 @@
     background-color: #081931;
     border-radius: 16px;
 }
+
+@media(max-height:900px){
+    .content_heading{
+        margin-top: 40px;
+    }
+}

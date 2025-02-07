@@ -10,11 +10,12 @@ header {
     align-items: center;
     gap: 15px;
     padding: 20px;
+    margin-bottom: 150px;
 }
 
 header img {
-    width: 100.03px;
-    height: 121.97px;
+    width: 150px;
+    height: 150px;
     margin-top: 80px;
     margin-left: 77px;
     gap: 0px;

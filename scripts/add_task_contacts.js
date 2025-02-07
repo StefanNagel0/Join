@@ -97,7 +97,6 @@ function renderSelectedContacts(selectedContacts, container) {
     }
 }
 
-
 /** Retrieves the list of selected contacts' full names. */
 function getSelectedContacts() {
     const selectedContacts = Array.from(document.querySelectorAll('#selected-contacts .selected-contact'))

@@ -33,7 +33,7 @@ function toggleContactDiv(container, checkbox, label, circle, contact) {
     toggleContactSelection(contact, checkbox.checked, document.getElementById('selected-contacts'));
 }
 
-
+/** Update the list of selected contacts */
 function toggleContactSelection(contact, isSelected, selectedContactsContainer) {
     if (isSelected) {
         if (!selectedContactsGlobal.includes(contact.name)) {
@@ -46,54 +46,20 @@ function toggleContactSelection(contact, isSelected, selectedContactsContainer) 
     renderSelectedContacts(selectedContactsGlobal, selectedContactsContainer);
 }
 
-
-/** Update the list of selected contacts */
-// function toggleContactSelection(contact, isSelected, selectedContactsContainer) {
-//     const circle = createInitialsCircle(contact.name);
-//     if (isSelected) {
-//         const selectedContact = createElementWithClass('div', 'selected-contact');
-//         selectedContact.dataset.fullname = contact.name;
-//         selectedContact.append(circle);
-//         selectedContactsContainer.append(selectedContact);
-//     } else {
-//         const selectedCircles = selectedContactsContainer.querySelectorAll('.selected-contact');
-//         selectedCircles.forEach(contactElement => {
-//             if (contactElement.querySelector('.initials-circle').textContent === circle.textContent) {
-//                 selectedContactsContainer.removeChild(contactElement);
-//             }
-//         });
-//     }
-// }
-
 /**Renders selected contacts with a maximum of 4 visible circles.*/
 function renderSelectedContacts(selectedContacts, container) {
-    container.innerHTML = ''; // Container leeren
-    const maxDisplayed = 4;
-    const displayedContacts = selectedContacts.slice(0, maxDisplayed);
-    const hiddenCount = selectedContacts.length - maxDisplayed;
-    
-    // Anzeige der ersten maxDisplayed Kontakte
-    displayedContacts.forEach(contactName => {
-        const circle = createInitialsCircle(contactName);
-        const selectedContact = createElementWithClass('div', 'selected-contact');
-        selectedContact.dataset.fullname = contactName;
-        selectedContact.append(circle);
-        container.append(selectedContact);
+    container.innerHTML = '';
+    const maxDisplayed = 4, displayed = selectedContacts.slice(0, maxDisplayed), hiddenCount = selectedContacts.length - maxDisplayed;
+    displayed.forEach(name => {
+        const circle = createInitialsCircle(name), sel = createElementWithClass('div', 'selected-contact');
+        sel.dataset.fullname = name; sel.append(circle); container.append(sel);
     });
-    
-    // Wenn es mehr als maxDisplayed Kontakte gibt, "+X" anzeigen
     if (hiddenCount > 0) {
-        let extraIndicator = container.querySelector('.extra-contacts');
-        if (!extraIndicator) {
-            extraIndicator = createElementWithClass('div', 'extra-contacts');
-            container.append(extraIndicator);
-        }
-        extraIndicator.textContent = `+${hiddenCount}`;
+        let extra = container.querySelector('.extra-contacts');
+        if (!extra) { extra = createElementWithClass('div', 'extra-contacts'); container.append(extra); }
+        extra.textContent = `+${hiddenCount}`;
     } else {
-        let extraIndicator = container.querySelector('.extra-contacts');
-        if (extraIndicator) {
-            extraIndicator.remove();
-        }
+        let extra = container.querySelector('.extra-contacts'); if (extra) extra.remove();
     }
 }
 
@@ -162,7 +128,7 @@ function addOutsideClickListener(wrapper, content) {
 function getContactColor(name) {
     const contact = contacts.find(contact => contact.name === name);
     if (contact && contact.color) {
-        return contact.color; 
+        return contact.color;
     } else {
         return "#CCCCCC";
     }

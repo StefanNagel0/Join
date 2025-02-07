@@ -11,39 +11,42 @@ function animateLogo() {
         logo.style.opacity = '1';
         setTimeout(() => {
             logo.style.top = '10%';
-            logo.style.left = '20%';
+            logo.style.left = '15%';
             logo.style.transform = 'translate(0, 0)';
         }, 150);
         setTimeout(() => {
             logo.style.opacity = '0';
-        }, 1500);
+        }, 1400);
         setTimeout(() => {
             toggleLoginPage();
-        }, 2000);
+        }, 1800);
     } else {
+        let logoMain = document.getElementById('logoMain');
         let backgroundColor = 'rgb(42,54,71)';
         let logoSmall = document.getElementById('logoSmall');
         let logoImg = logoSmall.querySelector('img');
         document.body.style.backgroundColor = backgroundColor;
+        // logoMain.style.opacity = '0';
         logoSmall.style.opacity = '1';
         setTimeout(() => {
-            logoSmall.style.top = '10%';
-            logoSmall.style.left = '20%';
+            logoSmall.style.top = '5%';
+            logoSmall.style.left = '10%';
             logoSmall.style.transform = 'translate(0, 0)';
             setTimeout(() => {
                 logoImg.src = '../assets/svg/logo.svg';
-            }, 375);
+            }, 150);
             setTimeout(() => {
                 document.body.style.transition = "background-color 1s ease";
                 document.body.style.backgroundColor = "transparent";
-            }, 500);
+            }, 200);
         }, 2000);
         setTimeout(() => {
+            // logoMain.style.opacity = '1';
             logoSmall.style.opacity = '0';
-        }, 3500);
+        }, 3000);
         setTimeout(() => {
             toggleLoginPage();
-        }, 4000);
+        }, 3200);
     }
 }
 

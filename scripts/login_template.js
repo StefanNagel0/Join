@@ -3,7 +3,7 @@ function loginTemplate() {
     return `
     <section class="max-width">
         <header>
-            <img src="../assets/svg/logo.svg" alt="">
+            <img id="logoMain" src="../assets/svg/logo.svg" alt="">
             <div class="regiUser">
                 <p class="registerButton">Not a Join user?</p>
                 <button class="SignUpButton" onclick="window.location.href = 'registration.html';">Sign up</button>

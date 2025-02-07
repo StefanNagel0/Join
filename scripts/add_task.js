@@ -356,3 +356,73 @@ function getToDoAddTaskPage(event) {
         window.location.href = 'board.html';
     }, 1500);
 }
+
+/** Validates the task form fields (Title and Due Date) on submit. */
+function validateTaskForm(event) {
+    event.preventDefault();
+    let isValid = true;
+    const title = document.getElementById("task-title"),
+        dueDate = document.getElementById("task-date");
+    if (title.value.trim() === "") {
+        title.classList.add("input-error");
+        setErrorMessage(title, "Title is required");
+        isValid = false;
+    } else {
+        title.classList.remove("input-error");
+        clearErrorMessage(title);
+    }
+    if (dueDate.value.trim() === "") {
+        dueDate.classList.add("input-error");
+        setErrorMessage(dueDate, "Due Date is required");
+        isValid = false;
+    } else {
+        dueDate.classList.remove("input-error");
+        clearErrorMessage(dueDate);
+    }
+    if (isValid) {
+        submitAddTask(event);
+    }
+}
+
+
+/** Sets an error message below the input element. */
+function setErrorMessage(element, message) {
+    let error = element.parentElement.querySelector(".error-message");
+    
+    if (!error) {
+        // If there's no existing error message, create one
+        error = document.createElement("span");
+        error.className = "error-message";
+        element.parentElement.appendChild(error);
+    }
+
+    error.textContent = message;
+
+    // Remove the error message and red border after 10 seconds
+    setTimeout(() => {
+        clearErrorMessage(element);
+        element.classList.remove("input-error");
+    }, 10000);
+}
+
+/** Clears the error message below the input element. */
+function clearErrorMessage(element) {
+    let error = element.parentElement.querySelector(".error-message");
+    if (error) {
+        error.remove();
+    }
+}
+
+/** Check for valid fields and remove error messages once fields are populated. */
+function clearErrorsOnValidInput() {
+    const title = document.getElementById("task-title"),
+        dueDate = document.getElementById("task-date");
+    if (title.value.trim() !== "") {
+        title.classList.remove("input-error");
+        clearErrorMessage(title);
+    }
+    if (dueDate.value.trim() !== "") {
+        dueDate.classList.remove("input-error");
+        clearErrorMessage(dueDate);
+    }
+}

@@ -110,7 +110,7 @@
                     <span>Task added to board</span>
                     <img src="../assets/icons/navbar/board.png" alt="board">
                 </div>
-                <form class="form_box" id="task-form" onsubmit="submitAddTask(event)">
+                <form class="form_box" id="task-form" onsubmit="validateTaskForm(event)">
                     <div class="content_heading">
                         <h2>Add Task</h2>
                     </div>
@@ -119,7 +119,7 @@
                             <div class="gap_8">
                                 <label for="task-title">Title <span class="red_star">*</span></label>
                                 <input maxlength="30" type="text" id="task-title" name="title"
-                                    placeholder="Enter a title" required>
+                                    placeholder="Enter a title">
                             </div>
                             <div class="gap_8">
                                 <label for="task-desc">Description</label>
@@ -148,7 +148,7 @@
                         <div class="add_task_right_box">
                             <div class="gap_8">
                                 <label for="task-date">Due Date <span class="red_star">*</span></label>
-                                <input type="date" class="task-date" id="task-date" name="dueDate" required>
+                                <input type="date" class="task-date" id="task-date" name="dueDate">
                             </div>
                             <div class="gap_8">
                                 <p class="prio_text">Prio</p>
@@ -179,9 +179,9 @@
                                                 Technical Task</li>
                                         </ul>
                                     </div>
-                                    <span id="category-error" class="error-message hidden">Please select a
-                                        category</span>
                                 </div>
+                                <span id="category-error" class="error-message hidden">Please select a
+                                    category</span>
                             </div>
                             <div class="gap_8">
                                 <label for="task-subtasks">Subtasks</label>

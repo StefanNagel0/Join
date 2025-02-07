@@ -186,6 +186,10 @@
     color: white;
 }
 
+.flex_content_summary {
+    display: flex;
+}
+
 .flex_content {
     display: flex;
 }

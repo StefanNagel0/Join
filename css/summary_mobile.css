@@ -1,4 +1,10 @@
 @media(max-width:1260px) {
+    .flex_content_summary {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
     .flex_content {
         display: flex;
         justify-content: center;
@@ -116,6 +122,11 @@
         display: none;
     }
 
+    .flex_content_summary{
+        height: calc(100vh - 160px);
+        margin-top: 80px;
+    }
+
     .overlay_message_container {
         display: flex;
         justify-content: center;
@@ -132,9 +143,6 @@
 }
 
 @media(max-width:570px) {
-    /* .flex_content{
-        height: 83vh;
-    } */
     .content_heading {
         display: flex;
         flex-direction: column;

@@ -10,7 +10,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        transition: all 0,75s ease-in-out;
+        transition: all 0, 75s ease-in-out;
     }
 
     .loginLine {
@@ -134,19 +134,19 @@
 
 }
 
-@media(min-width:901px) {
+@media (min-width:901px) {
     .mobilelogin {
         display: none;
     }
 }
 
-@media screen and (max-width: 870px) {
+@media (max-width: 870px) {
     .signUpSuccessClass {
         margin-left: 292px;
     }
 }
 
-@media screen and (max-width: 610px) {
+@media (max-width: 610px) {
     .signUpSuccessClass {
         margin-left: 163px;
     }
@@ -154,9 +154,45 @@
     .signUpArrow {
         margin-right: 330px;
     }
+
+    header {
+        gap: 15px;
+        padding: 20px;
+        margin-bottom: 75px;
+    }
+
+    header img {
+        width: 100px;
+        height: 100px;
+        padding: 0 0 20px 20px;
+        margin-top: 50px;
+        margin-left: 50px;
+    }
 }
 
-@media screen and (max-width: 426px) {
+@media (max-width: 480px) {
+    header {
+        gap: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    header img {
+        width: 75px;
+        height: 75px;
+        padding: 0 0 20px 20px;
+        margin-top: 25px;
+        margin-left: 25px;
+    }
+
+    .privacy {
+        margin-top: 20px;
+    }
+}
+
+
+
+@media (max-width: 426px) {
 
     .signUpSuccessClass {
         margin-left: 27px;
@@ -171,7 +207,7 @@
     }
 }
 
-@media screen and (max-width: 400px) {
+@media (max-width: 400px) {
     .checkboxMain {
         width: 150px;
         height: 20px;
@@ -187,7 +223,7 @@
 
 }
 
-@media screen and (max-width: 376px) {
+@media (max-width: 376px) {
     .signUpArrow {
         margin-right: 250px;
     }

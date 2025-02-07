@@ -4,14 +4,11 @@ function loginInit() {
     animateLogo();
 }
 
-/**Animates the logo by fading it in, moving it, and then fading it out before toggling the login page.*/
 function animateLogo() {
-    let matchMedia = window.matchMedia("(min-width: 900px)")
-    if (matchMedia && matchMedia.matches) {
+    let matchMedia = window.matchMedia("(min-width: 900px)");
+    if (matchMedia.matches) {
         let logo = document.getElementById('logo');
-        setTimeout(() => {
-            logo.style.opacity = '1';
-        }, 100);
+        logo.style.opacity = '1';
         setTimeout(() => {
             logo.style.top = '10%';
             logo.style.left = '20%';
@@ -23,30 +20,30 @@ function animateLogo() {
         setTimeout(() => {
             toggleLoginPage();
         }, 2000);
-    } if (matchMedia && !matchMedia.matches) {
+    } else {
         let backgroundColor = 'rgb(42,54,71)';
-        let logo = document.getElementById('logoSmall');
+        let logoSmall = document.getElementById('logoSmall');
+        let logoImg = logoSmall.querySelector('img');
         document.body.style.backgroundColor = backgroundColor;
+        logoSmall.style.opacity = '1';
         setTimeout(() => {
-            logo.style.opacity = '1';
-        }, 100);
-        setTimeout(() => {
-            logo.setAttribute('src', '../assets/svg/logo.svg');
-            logo.style.top = '10%';
-            logo.style.left = '20%';
-            logo.style.transform = 'translate(0, 0)';
-            document.body.style.backgroundColor = backgroundColor;
+            logoSmall.style.top = '10%';
+            logoSmall.style.left = '20%';
+            logoSmall.style.transform = 'translate(0, 0)';
+            setTimeout(() => {
+                logoImg.src = '../assets/svg/logo.svg';
+            }, 375);
             setTimeout(() => {
                 document.body.style.transition = "background-color 1s ease";
                 document.body.style.backgroundColor = "transparent";
             }, 500);
-        }, 150);
+        }, 2000);
         setTimeout(() => {
-            logo.style.opacity = '0';
-        }, 1000);
+            logoSmall.style.opacity = '0';
+        }, 3500);
         setTimeout(() => {
             toggleLoginPage();
-        }, 1500);
+        }, 4000);
     }
 }
 

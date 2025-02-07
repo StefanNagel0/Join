@@ -45,7 +45,7 @@
 
     .loginForm {
         width: 90%;
-        margin: 20px;
+        margin: 0px;
     }
 
     .loginEmail {
@@ -60,9 +60,16 @@
         max-width: 440px;
     }
 
+    #password {
+        background: url(../assets/svg/lock.svg) no-repeat;
+        background-position: calc(100% - 14px) center;
+        padding-left: 15px;
+        background-size: 20px;
+    }
+
     .loginButtons {
         flex-direction: column;
-        gap: 21px;
+        gap: 10px;
     }
 
     .loginButton {

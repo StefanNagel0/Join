@@ -41,7 +41,7 @@
 }
 
 .prio-btn.urgent.active {
-    background-color: rgb(255, 61, 0) !important; /* Füge !important hinzu, um Konflikte zu vermeiden */
+    background-color: rgb(255, 61, 0) !important;
 }
 
 .prio-btn.medium.active {
@@ -51,18 +51,6 @@
 .prio-btn.low.active {
     background-color: #7AE229 !important;
 }
-
-/* .prio-btn.urgent.active {
-    background-color: rgb(255, 61, 0);
-}
-
-.prio-btn.medium.active {
-    background-color: #FFA800;
-}
-
-.prio-btn.low.active {
-    background-color: #7AE229;
-} */
 
 .prio-btn.active img {
     filter: brightness(0) invert(1);
@@ -79,14 +67,16 @@
     height: 424px;
     margin-top: 48px;
     gap: 47px;
+    max-width: 970px;
 }
 
 .add_task_left_box {
     display: flex;
     flex-direction: column;
-    width: 440px;
+    max-width: 440px;
     height: 376px;
     justify-content: space-between;
+    width: 100%;
 }
 
 .add_task_left_box label {
@@ -118,6 +108,7 @@
     height: 516px;
     justify-content: space-between;
     max-width: 440px;
+    width: 100%;
 }
 
 input::placeholder,
@@ -358,7 +349,8 @@ textarea::placeholder {
     width: 110px;
     color: #2A3647;
 }
-.add_task_clear_btn:hover{
+
+.add_task_clear_btn:hover {
     border: 1px solid #28ABE2;
     color: #28ABE2;
     box-shadow: 0px 4px 4px 0px #00000040;
@@ -385,7 +377,7 @@ textarea::placeholder {
     align-items: center;
 }
 
-.add_task_submit_btn button:hover{
+.add_task_submit_btn button:hover {
     background-color: rgb(41, 171, 226);
     border: 1px solid rgb(41, 171, 226);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -442,6 +434,7 @@ textarea::placeholder {
 .hidden {
     display: none;
 }
+
 .dropdown-content.visible {
     display: flex;
     flex-direction: column;

@@ -85,4 +85,7 @@
     .help {
         padding-top: 50px !important;
     }
+    .content_help{
+        margin-top: 80px;
+    }
 }

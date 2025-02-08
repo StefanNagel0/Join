@@ -21,4 +21,7 @@ h1 {
     .help {
         padding-top: 50px !important;
     }
+    .content_legal{
+        margin-top: 80px;
+    }
 }

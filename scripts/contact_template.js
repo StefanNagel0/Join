@@ -53,7 +53,6 @@ function showContactDetails(index) {
         `;
         detailsDiv.classList.add("show");
         detailsDiv.classList.remove("hide");
-
         contactList.classList.add("hide");
         contactList.classList.remove("show");
     }
@@ -95,12 +94,8 @@ let previousWidth = window.innerWidth;
 window.addEventListener("resize", () => {
     const detailsDiv = document.getElementById("contact-details");
     const contactList = document.querySelector(".scrolllist");
-
     if (!detailsDiv) return;
-
     const currentWidth = window.innerWidth;
-
-    // Handle switch to mobile view
     if (currentWidth <= 900 && previousWidth > 900) {
         if (detailsDiv.classList.contains("show")) {
             detailsDiv.classList.add("hide");
@@ -114,7 +109,6 @@ window.addEventListener("resize", () => {
             detailsDiv.classList.remove("show");
             detailsDiv.classList.add("hide");
         }
-
         contactList.classList.add("show");
         contactList.classList.remove("hide");
     }

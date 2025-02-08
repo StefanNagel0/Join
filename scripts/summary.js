@@ -137,7 +137,7 @@ async function getUserName() {
             return user ? user.name : '';
         }
     } catch (error) {
-       return ''
+    return ''
     }
 }
 

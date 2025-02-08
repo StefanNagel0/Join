@@ -150,8 +150,9 @@
         align-items: center;
         padding: 0;
     }
-    
-    .delete-button, .edit-button {
+
+    .delete-button,
+    .edit-button {
         background-color: transparent !important;
     }
 
@@ -264,7 +265,7 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        
+
     }
 
     .btnmob:hover {
@@ -412,7 +413,7 @@
         right: 20px;
         z-index: 900;
         box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-      }
+    }
 
 
     .infom {

@@ -122,7 +122,7 @@
         display: none;
     }
 
-    .flex_content_summary{
+    .flex_content_summary {
         height: calc(100vh - 160px);
         margin-top: 80px;
     }

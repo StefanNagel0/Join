@@ -9,7 +9,7 @@ h1 {
     font-weight: 700;
 }
 
-.content_legal{
+.content_legal {
     margin-left: 96px;
 }
 
@@ -17,11 +17,12 @@ h1 {
     .end {
         padding-bottom: 50px;
     }
-    
+
     .help {
         padding-top: 50px !important;
     }
-    .content_legal{
+
+    .content_legal {
         margin-top: 80px;
     }
 }

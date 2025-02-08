@@ -1,4 +1,4 @@
-.boardDropDown{
+.boardDropDown {
     scrollbar-width: none;
     height: calc(100vh - 352px);
     max-height: 100vh;

@@ -90,36 +90,6 @@
     border:1px solid rgb(41, 171, 226);
 }
 
-/* .contentHeadingSearchStrich {
-    left: 200px;
-    position: relative;
-    background-image: url(../assets/svg/strich.svg);
-    width: 1px;
-    height: 32px;
-    gap: 5px;
-}
-
-.contentHeadingSearchImg {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    right: 13px;
-    width: 28px;
-    height: 28px;
-    cursor: pointer;
-    background-image: url(../assets/svg/lupeUnhover.svg);
-    background-size: cover;
-}
-
-.contentHeadingSearch:hover {
-    position: relative;
-    width: 28px;
-    height: 28px;
-    background-image: url(../assets/svg/lupeHover.svg);
-} */
-
 .addTaskButton {
     display: flex;
     justify-content: center;
@@ -236,14 +206,6 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-/* .contentHeadingRight {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    padding: 0px;
-    gap: 16px;
-} */
-
 .addBoard {
     display: flex;
     flex-direction: column;
@@ -324,15 +286,6 @@
     color: rgb(41, 171, 226);
     border: 2px solid rgb(41, 171, 226);
 }
-
-/* .baordAddTaskButtonImg {
-    width: 32px;
-    height: 32px;
-    top: 8px;
-    left: 112px;
-    opacity: 1;
-    color: white;
-} */
 
 .taskContainer:active {
     transform: rotate(5deg);

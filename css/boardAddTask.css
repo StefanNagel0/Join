@@ -241,7 +241,6 @@
     width: 113px;
     height: 27px;
     padding: 4px 16px 4px 16px;
-    /* margin-bottom: 20px; */
     border-radius: 8px;
     font-family: Inter;
     font-size: 16px;
@@ -272,7 +271,6 @@
 }
 
 /* Overlay */
-
 .openTaskOverlayMain {
     display: flex;
     flex-direction: column;
@@ -410,7 +408,6 @@
 }
 
 .initialsOverlay {
-    /* position: relative; */
     border-radius: 50%;
     color: #ffffff;
     text-align: center;
@@ -442,8 +439,6 @@
 .openTaskOverlaySubtaskTitle {
     width: 220px;
     height: 32px;
-    /* margin-top: 10px;
-    margin-bottom: 5px; */
     font-family: Inter;
     font-size: 24px;
     font-weight: 400;
@@ -474,7 +469,6 @@
     width: 450px;
     height: 24px;
     gap: 5px;
-    /* margin-top: 0px; */
 }
 
 .openTaskOverlayDeleteButton {

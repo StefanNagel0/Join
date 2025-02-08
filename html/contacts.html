@@ -23,7 +23,7 @@
     <!-- scripts -->
     <script src="../scripts/header.js" defer></script>
     <script src="../scripts/users.js" defer></script>
-    <script src="../scripts/task_change.js" defer></script>    
+    <script src="../scripts/task_change.js" defer></script>
     <script src="../scripts/contacts.js" defer></script>
     <script src="../scripts/navbar.js" defer></script>
     <script src="../scripts/contact_template.js" defer></script>
@@ -122,11 +122,14 @@
                             <div class="form">
                                 <div class="circle overlaycirc"></div>
                                 <div class="formtext">
-                                    <input type="text" id="contact-name" placeholder="Name" maxlength="20" required oninput="nameValidate(event)"/>
+                                    <input type="text" id="contact-name" placeholder="Name" maxlength="20" required
+                                        oninput="nameValidate(event)" />
                                     <p id="name-error" class="error" style="display: none;"></p>
-                                    <input type="email" id="contact-email" placeholder="Email" maxlength="30" required oninput="validateEmail(event)"/>
-                                    <p id="email-error" class="error" style="display: none;"></p>                                     
-                                    <input type="text" id="contact-phone" placeholder="Phone" maxlength="10" required oninput="validatePhone(event)"/>
+                                    <input type="email" id="contact-email" placeholder="Email" maxlength="30" required
+                                        oninput="validateEmail(event)" />
+                                    <p id="email-error" class="error" style="display: none;"></p>
+                                    <input type="text" id="contact-phone" placeholder="Phone" maxlength="10" required
+                                        oninput="validatePhone(event)" />
                                     <p id="phone-error" class="error" style="display: none;"></p>
                                 </div>
                             </div>
@@ -181,4 +184,5 @@
                 </div>
             </div>
 </body>
+
 </html>

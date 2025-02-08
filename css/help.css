@@ -13,7 +13,6 @@
     padding-bottom: 40px;
 }
 
-
 .arrow {
     background-color: transparent;
     color: rgb(18, 181, 235);
@@ -21,7 +20,7 @@
     border: none;
 }
 
-.howto{
+.howto {
     display: flex;
     justify-content: center;
     gap: 30px;
@@ -73,19 +72,21 @@
     font-size: 27px;
     font-weight: 700;
 }
-.content_help{
+
+.content_help {
     margin-left: 96px;
 }
 
 @media screen and (max-width: 900px) {
-    .enjoy{
+    .enjoy {
         padding-bottom: 50px
     }
-    
+
     .help {
         padding-top: 50px !important;
     }
-    .content_help{
+
+    .content_help {
         margin-top: 80px;
     }
 }

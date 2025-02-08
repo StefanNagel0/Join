@@ -31,6 +31,7 @@
     overflow-x: scroll !important;
     scrollbar-width: none;
     padding-bottom: 150px;
+    max-width: 1920px;
 }
 
 .arrow {

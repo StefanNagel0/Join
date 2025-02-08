@@ -127,6 +127,7 @@ textarea::placeholder {
 .add_task_right_box label {
     font-weight: 400;
     color: #2A3647;
+    margin-top: 16px;
 }
 
 #task-category:invalid {

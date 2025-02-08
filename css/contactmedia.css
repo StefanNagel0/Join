@@ -32,6 +32,11 @@
     margin: 0 0 20px 0;
   }
 
+  .contact-group {
+    margin-bottom: 20px;
+    width: 80%;
+  }
+
   .closebutton {
     bottom: 71px;
     left: 203px;

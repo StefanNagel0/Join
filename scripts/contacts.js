@@ -11,15 +11,7 @@ function getInitials(name) {
   return initials;
 }
 
-/* Generates a random color in hexadecimal format. */
-function getRandomColor() {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
+
 
 /* Opens an overlay for editing or adding a contact. */
 function openOverlay(mode, index = null) {
@@ -245,10 +237,9 @@ function handleNameInput(event) {
 function updateCirclePreview(name, circleDiv) {
   if (name) {
     circleDiv.textContent = getInitials(name);
-    circleDiv.style.backgroundColor = getRandomColor();
+    circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
   } else {
     circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
-    circleDiv.style.backgroundColor = "";
   }
 }
 
@@ -341,3 +332,25 @@ function selectContactMain(selectedElement) {
     selectedElement.classList.add('selected');
   }
 }
+const colors = [
+  "#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD",
+  "#2ECC71", "#E74C3C", "#3498DB", "#1ABC9C", "#D35400",
+  "#C0392B", "#9B59B6", "#1E8449", "#F39C12", "#34495E",
+  "#16A085"
+];
+
+let colorIndex = 0;
+let firstCall = true;
+
+function getRandomColor() {
+  if (firstCall) {
+    firstCall = false;
+    return colors[colorIndex]; // Beim ersten Aufruf nur die erste Farbe
+  }
+  colorIndex = (colorIndex + 1) % colors.length; // Danach zur nächsten Farbe wechseln
+  return colors[colorIndex];
+}
+
+console.log(getRandomColor()); // Erste Farbe
+console.log(getRandomColor()); // Zweite Farbe
+console.log(getRandomColor()); // Dritte Farbe

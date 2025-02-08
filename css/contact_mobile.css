@@ -235,11 +235,9 @@
     }
 
     .scrolllist {
-        margin-bottom: 70px;
         scrollbar-width: none;
         position: relative;
         z-index: 998;
-        height: 83vh !important;
     }
 
     .btnmobile {
@@ -251,6 +249,10 @@
         right: 20px;
         z-index: 900;
         display: block !important;
+    }
+
+    #contactlist {
+        width: 80%;
     }
 
     .btnmob {

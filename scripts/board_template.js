@@ -134,7 +134,7 @@ function boardAddTaskTemplate() {
                 <div class="gap_8">
                     <label for="task-subtasks">Subtasks</label>
                     <div id="subtask-container">
-                        <input maxlength="20" type="text" id="new-subtask" placeholder="Add new subtask">
+                        <input maxlength="40" type="text" id="new-subtask" placeholder="Add new subtask">
                         <img id="clear-subtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg" alt="">
                         <img id="add-subtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
                     </div>

@@ -18,7 +18,6 @@ function toggleBoardPage() {
     boardPage.style.display = 'block';
 }
 
-
 /** Displays a success message overlay when a task is added successfully. */
 function addTaskSuccess() {
     let overlayRef = document.getElementById('addTaskSuccess');
@@ -49,7 +48,6 @@ function closeBoardAddTask() {
     darkOverlay.classList.remove("show");
     closeTaskOverlay();
 }
-
 function showOverlayTask() {
     let showOverlay = document.getElementById("taskOverlay");
     let darkOverlay = document.getElementById("darkOverlay");
@@ -66,7 +64,6 @@ async function openTaskOverlay(taskId) {
     }
     let overlayRef = document.getElementById("taskOverlay");
     overlayRef.innerHTML = taskOverlayTemplate(task, taskId);
-
     let removeClass = document.getElementById("taskTitleID");
     let removeClassTemplate = document.getElementById("taskDescriptionID");
     let removeClassDate = document.getElementById("taskDateID");
@@ -100,10 +97,8 @@ function toggleCategory(taskId) {
         console.error();
         return;
     }
-
     let userStoryElement = taskElement.querySelector(".taskCategoryUserStory");
     let technicalElement = taskElement.querySelector(".taskCategoryTechnical");
-
     if (userStoryElement && userStoryElement.classList.contains('taskCategoryUserStory')) {
         userStoryElement.classList.remove('taskCategoryUserStory');
         userStoryElement.classList.add('openTaskOverlayCategoryUserStory');
@@ -168,19 +163,15 @@ function searchTask() {
     displayTasks(Object.fromEntries(filteredTasks));
 }
 
-/**
- * Validiert und formatiert das Fälligkeitsdatum.
- */
+/**Validiert und formatiert das Fälligkeitsdatum.*/
 function validateDueDate() {
     let dateInput = document.getElementById('editDueDate').value;
     let datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d\d$/;
-
     if (!datePattern.test(dateInput)) {
         alert('Bitte gib das Datum im Format DD/MM/YYYY ein.');
     } else {
-        // Datum ist gültig. Hier kannst du das Datum im gewünschten Format weiterverarbeiten.
         let parts = dateInput.split('/');
-        let formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD Format
+        let formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
         alert(`Datum ist gültig: ${formattedDate}`);
     }
 }

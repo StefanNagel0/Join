@@ -215,6 +215,7 @@ function preventFormSubmissionOnEnter() {
     };
 }
 
+/**Extracts subtasks from a form element.*/
 function getSubtasksFromForm(form) {
     const subtaskList = form.querySelector('#subtask-list');
     const subtasks = [];

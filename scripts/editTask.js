@@ -1,10 +1,8 @@
 let detailTask
 
-// Funktion zur Normalisierung der Priorität
 function normalizePriority(priority) {
-    return priority ? priority.toLowerCase() : ''; // Konvertiert die Priorität in Kleinbuchstaben
+    return priority ? priority.toLowerCase() : '';
 }
-
 
 function editTask(taskId) {
     if (!taskId) {
@@ -49,7 +47,6 @@ function applyActivePriorityButton(priority) {
     }
 }
 
-
 function setupDateValidation() {
     setTimeout(() => {
         let dateInput = document.getElementById("editDueDate");
@@ -83,7 +80,6 @@ function setupDateValidation() {
     }, 100);
 }
 
-
 function taskEditAssignedTo(task, taskId) {
     let assignedContacts = task.assignedTo || [];
     let maxDisplay = 8;
@@ -105,7 +101,6 @@ function taskEditAssignedTo(task, taskId) {
         </div>
     `;
 }
-
 
 function toggleEditTaskDropdown(event, toggle, options) {
     event.stopPropagation();
@@ -152,12 +147,9 @@ function updateSelectedContactsUI() {
     `).join('');
 }
 
-
 function taskEditAddSubtask() {
     return taskEditAddSubtaskTemplate();
 }
-
-
 
 function initTaskEditAddSubtask(taskId) {
     const elements = getTaskEditElements();
@@ -174,7 +166,6 @@ function getTaskEditElements() {
     const addBtn = document.getElementById('addEditSubtask');
     const clearBtn = document.getElementById('clearEditSubtask');
     const list = document.getElementById('addEditSubtaskNew');
-
     if (!input || !addBtn || !clearBtn || !list) {
         console.error("Einige Elemente für 'Add Subtask' wurden im DOM nicht gefunden.");
         return null;
@@ -237,7 +228,6 @@ function createSubtaskPoint(taskText, index) {
 function hoverSubtask(taskId, index) {
     let task = globalTasks[taskId];
     if (!task || !task.subtasks || !task.subtasks[index]) {
-        // console.error(`Task oder Subtask nicht gefunden: ${taskId}, Index: ${index}`);
         return;
     }
     let subtaskElement = document.getElementById(`subtask-container-${index}`);
@@ -327,7 +317,7 @@ function subtaskCompletedCheckbox(index, completed) {
 
 /* save the editing Subtask */
 async function saveEditedSubtask(index, buttonElement) {
-    let taskId = buttonElement.getAttribute('data-task-id'); // Hole die Task ID vom Button
+    let taskId = buttonElement.getAttribute('data-task-id');
     let editedInput = document.getElementById(`edit-subtask-${index}`);
     if (!editedInput) return console.error("Bearbeitungsfeld nicht gefunden!");
     let newText = editedInput.value.trim();
@@ -380,7 +370,7 @@ async function saveTask(taskId) {
     }
     try {
         let taskFromDB = await fetchTaskFromFirebase(taskId);
-        let subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks; // Subtask Problem beim Speichern! Funktion Prüfen!
+        let subtasksFromDB = taskFromDB ? taskFromDB.subtasks : task.subtasks;
         task.title = document.getElementById("editTitle")?.value || task.title;
         task.description = document.getElementById("editDescription")?.value || task.description;
         task.dueDate = document.getElementById("editDueDate")?.value || task.dueDate;

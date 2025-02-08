@@ -51,10 +51,10 @@ function setNewContact() {
 /* Sets up the overlay for editing an existing contact. */
 /* Sets up the overlay for adding a new contact. */
 function setupNewContact() {
-  const elements = setNewContact(); // Holt alle relevanten UI-Elemente
-  initializeNewContactUI(elements); // Setzt die UI-Texte und Buttons
-  resetContactInputs(elements); // Leert die Eingabefelder
-  editIndex = null; // Setzt den Bearbeitungsindex zurück
+  const elements = setNewContact();
+  initializeNewContactUI(elements);
+  resetContactInputs(elements);
+  editIndex = null;
 }
 
 /* Aktualisiert die UI-Texte und Buttons für das Hinzufügen eines neuen Kontakts */
@@ -63,7 +63,6 @@ function initializeNewContactUI({ title, description, circleDiv, submitButton, c
   description.textContent = "Tasks are better with a team!";
   circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
   circleDiv.style.backgroundColor = "";
-
   submitButton.innerHTML = `Create contact <img class="check" src="../assets/icons/contact/check.png">`;
   cancelButton.innerHTML = `Cancel <img class="cancelicon" src="../assets/icons/contact/cancel.png">`;
   cancelButton.setAttribute("onclick", "closeOverlay()");
@@ -79,10 +78,10 @@ function resetContactInputs({ nameInput, phoneInput, emailInput }) {
 
 /* Sets up the overlay for adding a new contact. */
 function setupNewContact() {
-  const elements = setNewContact(); // Holt alle relevanten UI-Elemente
-  initializeNewContactUI(elements); // Setzt die UI-Texte und Buttons
-  resetContactInputs(elements); // Leert die Eingabefelder
-  editIndex = null; // Setzt den Bearbeitungsindex zurück
+  const elements = setNewContact();
+  initializeNewContactUI(elements);
+  resetContactInputs(elements);
+  editIndex = null;
 }
 
 /* Aktualisiert die UI-Texte und Buttons für das Hinzufügen eines neuen Kontakts */
@@ -91,7 +90,6 @@ function initializeNewContactUI({ title, description, circleDiv, submitButton, c
   description.textContent = "Tasks are better with a team!";
   circleDiv.innerHTML = `<img class="concircle" src="../assets/icons/contact/circledefault.png">`;
   circleDiv.style.backgroundColor = "";
-
   submitButton.innerHTML = `Create contact <img class="check" src="../assets/icons/contact/check.png">`;
   cancelButton.innerHTML = `Cancel <img class="cancelicon" src="../assets/icons/contact/cancel.png">`;
   cancelButton.setAttribute("onclick", "closeOverlay()");
@@ -173,10 +171,9 @@ async function showContactList() {
 function updateContactDetailsView() {
   const detailsDiv = document.getElementById("contact-details");
   if (!detailsDiv) return; 
-
   const openContactIndex = detailsDiv.getAttribute("data-contact-index");
   if (openContactIndex !== null) {
-    const contactData = getContactByIndex(parseInt(openContactIndex)); // Die aktualisierten Kontaktdaten abrufen
+    const contactData = getContactByIndex(parseInt(openContactIndex));
     if (contactData) {
       updateContactDetails(contactData); 
     }
@@ -188,10 +185,8 @@ function updateContactDetailsView() {
 function contactListAdd() {
   const contactList = document.querySelector(".scrolllist");
   const detailsDiv = document.getElementById("contact-details");
-
   contactList.classList.add("show");
   contactList.classList.remove("hide");
-
   detailsDiv.classList.add("hide");
   detailsDiv.classList.remove("show");
 }
@@ -199,10 +194,8 @@ function contactListAdd() {
 
 function showContactDetails(index) {
   const detailsDiv = document.getElementById("contact-details");
-  // Neueste Kontakte holen (nach syncContacts() aktualisiert)
   const contact = contacts[index];
   if (!contact) return;
-  // Kontakt-Details sofort aktualisieren
   detailsDiv.setAttribute(index);
   detailsDiv.innerHTML = `
     <h2>${contact.name}</h2>
@@ -221,10 +214,10 @@ async function deleteContact(id) {
   const contact = contacts[contactIndex];
   try {
     if (contact.firebaseKey) {
-      await deleteContactFromFirebase(contact.firebaseKey); // Lösche aus Firebase
+      await deleteContactFromFirebase(contact.firebaseKey);
     }
-    contacts.splice(contactIndex, 1); // Entferne aus der lokalen Liste
-    showContacts(); // Aktualisiere die Anzeige
+    contacts.splice(contactIndex, 1);
+    showContacts();
   } catch (error) {
   }
 }

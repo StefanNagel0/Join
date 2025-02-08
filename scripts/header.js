@@ -12,10 +12,9 @@ async function initializeUserButton() {
 /** Sets the user initials to the button text content. */
 async function setUserInitials(button) {
     const userName = await getCurrentUserName();
-    // Sicherstellen, dass userName ein String ist
     const initials = (typeof userName === 'string' && userName.toLowerCase() === "guest") 
         ? "G" 
-        : getInitials(userName || "Guest"); // Fallback auf "Guest", falls userName undefined ist
+        : getInitials(userName || "Guest");
     button.textContent = initials;
 }
 
@@ -28,7 +27,6 @@ async function getCurrentUserName() {
     try {
         const response = await fetch(`${BASE_URL}registrations.json`);
         if (!response.ok) throw new Error('Fehler beim Abrufen der Benutzerdaten');
-
         const users = await response.json();
         if (users) {
             const user = Object.values(users).find(user => user.email === loggedInEmail);
@@ -41,7 +39,7 @@ async function getCurrentUserName() {
 
 /** Generates initials from a name by taking the first letter of the first and last name. */
 function getInitials(name) {
-    if (!name || typeof name !== 'string') return ''; // Sicherstellen, dass name ein String ist
+    if (!name || typeof name !== 'string') return '';
     const parts = name.trim().split(/\s+/);
     if (parts.length === 1) {
         return parts[0][0].toUpperCase();

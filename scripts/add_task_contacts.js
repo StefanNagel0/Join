@@ -1,7 +1,4 @@
-// Globales Array, das alle aktuell ausgewählten Kontakte speichert
 let selectedContactsGlobal = [];
-
-
 
 /** Create an element with initials circle based on contact's name */
 function createInitialsCircle(contactName) {
@@ -42,7 +39,6 @@ function toggleContactSelection(contact, isSelected, selectedContactsContainer) 
     } else {
         selectedContactsGlobal = selectedContactsGlobal.filter(name => name !== contact.name);
     }
-    console.log("Aktuell ausgewählte Kontakte (global):", selectedContactsGlobal);
     renderSelectedContacts(selectedContactsGlobal, selectedContactsContainer);
 }
 
@@ -92,26 +88,31 @@ function createDropdownToggle(dropdownContent) {
     return toggle;
 }
 
-/** Initialize the contacts dropdown with the contact list*/
+/** Initialize the contacts dropdown with the contact list */
 async function initializeContactsDropdown() {
     const container = document.getElementById('task-assigned');
     if (!container) return console.error("#task-assigned not found.");
-    if (!contacts || contacts.length === 0) {
-        await syncContacts();
-    }
+    if (!contacts || contacts.length === 0) await syncContacts();
     const { wrapper, content } = createDropdownWrapper();
-    const selectedContacts = createElementWithClass('div', 'selected-contacts', '', [], 'selected-contacts');
     contacts.forEach(contact => content.append(createContactDiv(contact)));
-    const dropdownToggle = wrapper.querySelector('.dropdown-toggle');
-    dropdownToggle.onclick = () => {
-        const dropdownContent = wrapper.querySelector('.dropdown-content');
-        const isVisible = dropdownContent.style.display === 'block';
-        dropdownContent.style.display = isVisible ? 'none' : 'block';
-        dropdownToggle.classList.toggle('open', !isVisible);
-    };
+    setupDropdownToggle(wrapper);
     addOutsideClickListener(wrapper, content);
     container.replaceWith(wrapper);
-    wrapper.append(selectedContacts);
+    wrapper.append(createElementWithClass('div', 'selected-contacts', '', [], 'selected-contacts'));
+}
+
+/** Sets up the dropdown toggle functionality */
+function setupDropdownToggle(wrapper) {
+    const dropdownToggle = wrapper.querySelector('.dropdown-toggle');
+    dropdownToggle.onclick = () => toggleDropdownContact(wrapper);
+}
+
+/** Toggles the visibility of the dropdown */
+function toggleDropdownContact(wrapper) {
+    const dropdownContent = wrapper.querySelector('.dropdown-content');
+    const isVisible = dropdownContent.style.display === 'block';
+    dropdownContent.style.display = isVisible ? 'none' : 'block';
+    wrapper.querySelector('.dropdown-toggle').classList.toggle('open', !isVisible);
 }
 
 /** Adds a click listener that hides the `content` element */

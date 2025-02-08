@@ -139,6 +139,7 @@ function showError(message) {
     }
 }
 
+/**Displays an error message.*/
 function showErrorPassword(message) {
     let errorMessage = document.getElementById('passwordError');
     if (errorMessage) {

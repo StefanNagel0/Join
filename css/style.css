@@ -1,4 +1,4 @@
-.content_heading{
+.content_heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -8,14 +8,14 @@
     width: 600px;
 }
 
-.nav_btn_dark_bg{
+.nav_btn_dark_bg {
     background-color: #081931;
     border-radius: 16px;
 }
 
-@media(max-height:900px){
-    .content_heading{
+@media(max-height:900px) {
+    .content_heading {
         margin-top: 40px;
     }
-    
+
 }

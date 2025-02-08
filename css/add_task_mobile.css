@@ -38,10 +38,18 @@
     .form_box {
         width: 90%;
         margin: auto;
+        height: calc(100vh - 244px);
+        margin-top: 80px;
+        overflow-y: auto;
+        scrollbar-width: none;
     }
 
     .add_task_form_box {
         flex-direction: column;
+    }
+
+    .add_task_left_box{
+        gap: 20px;
     }
 
     .add_task_mid_box {
@@ -57,10 +65,8 @@
     .add_task_form_box {
         height: 100vh;
         margin-bottom: 200px;
-        overflow-y: scroll;
         max-width: 440px;
         margin: auto;
-        scrollbar-width: none;
     }
 
     .add_task_form_box::-webkit-scrollbar {
@@ -74,6 +80,7 @@
     .add_task_right_box {
         max-width: none;
         height: 494px;
+        gap: 20px;
     }
 
     .prio-btn {

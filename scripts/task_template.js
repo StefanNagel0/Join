@@ -1,53 +1,36 @@
-/* Displays a confirmation when a task has been added. */
+/**Displays a confirmation when a task has been added.*/
 function addTaskSuccessTemplate() {
     return `
     <div class="addTaskSuccess" id="signUpSuccessID">
-        <p class="addTaskSuccessP">Task added to board  <img src="../assets/svg/add_task/addedTask.svg" alt=""></p>
+        <p class="addTaskSuccessP">Task added to board <img src="../assets/svg/add_task/addedTask.svg" alt=""></p>
     </div>
-    `
-}
-
-/* Renders the category of the task */
-function taskCategoryTemplate(task) {
-    if (task.category) {
-        task.category = task.category == "User Story" ? "User Story" : "Technical Task";
-        const categoryClass = task.category == "User Story" ? "taskCategoryUserStory" : "taskCategoryTechnical";
-        return `
-        <p id="taskCategoryID" class="taskDescription ${categoryClass}">${task.category}</p>
-        `;
-    } else {
-        return `
-        <p id="taskCategoryID" class="taskDescription taskCategoryTechnical">Technical Task</p>
-        `;
-    }
-}
-
-/* Renders the title of the task */
-function taskTitleTemplate(task) {
-    return `
-    <h3 id="taskTitleID" class="taskTitle">${task.title}</h3>
-    `
-}
-
-/* Renders the description of the task */
-
-function taskDescriptionTemplate(task) {
-    const truncatedDescription = task.description.length > 30 ? task.description.substring(0, 30) + '...' : task.description;
-    return `
-    <p id="taskDescriptionID" class="taskDescription">${truncatedDescription}</p>
     `;
 }
 
-/* Renders the date of the task */
-function taskDateTemplate(task) {
-    return `
-    <p id="taskDateID" class="taskDate"> ${task.dueDate || "No Date"}</p>
-    `
+/**Renders the category of the task.*/
+function taskCategoryTemplate(task) {
+    const category = task.category === "User Story" ? "User Story" : "Technical Task";
+    const categoryClass = category === "User Story" ? "taskCategoryUserStory" : "taskCategoryTechnical";
+    return `<p id="taskCategoryID" class="taskDescription ${categoryClass}">${category}</p>`;
 }
 
-// /* Renders the subtask of the task */
+/**Renders the title of the task.*/
+function taskTitleTemplate(task) {
+    return `<h3 id="taskTitleID" class="taskTitle">${task.title}</h3>`;
+}
 
+/**Renders the description of the task.*/
+function taskDescriptionTemplate(task) {
+    const truncated = task.description.length > 30 ? task.description.substring(0, 30) + "..." : task.description;
+    return `<p id="taskDescriptionID" class="taskDescription">${truncated}</p>`;
+}
 
+/**Renders the due date of the task.*/
+function taskDateTemplate(task) {
+    return `<p id="taskDateID" class="taskDate">${task.dueDate || "No Date"}</p>`;
+}
+
+/** Renders the subtask of the task */
 function taskSubtasksTemplate(task, taskId) {
     if (task.subtasks && task.subtasks.length > 0) {
         const completedSubtasks = task.subtasks.filter(subtask => subtask && subtask.completed).length;
@@ -59,15 +42,13 @@ function taskSubtasksTemplate(task, taskId) {
                 <div class="progressBar" style="width: ${progressPercent}%;"></div>
             </div>
             <p class="progressText">${completedSubtasks}/${totalSubtasks} Subtasks</p>
-        </div>
-        `;
+        </div>`;
     } else {
         return `<p>No Subtasks available</p>`;
     }
 }
 
-
-// /* Renders the subtask of the task in the overlay */
+/** Renders the subtask of the task in the overlay */
 function taskSubtasksTemplateOverlay(task, taskId) {
     if (task.subtasks && task.subtasks.length > 0) {
         const subtasksHtml = task.subtasks.map((subtask, index) => `
@@ -79,41 +60,36 @@ function taskSubtasksTemplateOverlay(task, taskId) {
         <div class="openTaskOverlaySubtaskContainer">
         <p class="openTaskOverlaySubtaskTitle">Subtasks</p>
             ${subtasksHtml}
-        </div>
-        `;
+        </div>`;
     } else {
         return ``;
     }
 }
 
 
+/**Opens the task overlay and populates it with task details.*/
 function openTaskOverlay(taskId) {
     const task = globalTasks[taskId];
-    if (!task) {
-        console.error(`Task mit ID ${taskId} nicht gefunden.`);
-        return;
-    }
-
-    // Stelle sicher, dass das Overlay existiert
+    if (!task) return console.error(`Task with ID ${taskId} not found.`);
     const overlayRef = document.querySelector(".openTaskOverlayMain");
-    if (!overlayRef) {
-        console.error("Overlay konnte nicht gefunden werden.");
-        return;
-    }
+    if (!overlayRef) return console.error("Overlay not found.");
+    overlayRef.innerHTML = getTaskOverlayContent(task, taskId);
+    overlayRef.classList.add('active');
+}
 
-    // Füge die HTML-Inhalte hinzu
-    overlayRef.innerHTML = `
+/**Generates the HTML content for the task overlay.*/
+function getTaskOverlayContent(task, taskId) {
+    return `
         <div>
             ${taskEditTitle(task)}
             ${taskEditDescription(task)}
             ${taskEditDate(task)}
             ${taskEditPriority(task)}
             ${taskEditAssignedTo(task)}
-            ${taskEditSubtasks(task)}  <!-- Unteraufgaben hinzufügen -->
+            ${taskEditSubtasks(task)}
             <button onclick="saveTask('${taskId}')">OK</button>
         </div>
     `;
-    overlayRef.classList.add('active'); // Beispiel, um das Overlay zu aktivieren
 }
 
 /* Fetches a single task from the database */
@@ -125,26 +101,19 @@ async function getOneTask(taskId) {
     return await response.json();
 }
 
-/* Toggles the subtask of the task in the overlay */
+/**Toggles the completion state of a subtask in the overlay.*/
 async function toggleSubtask(subtaskIndex, taskId) {
     const checkbox = document.getElementById(`subtask-${taskId}-${subtaskIndex}`);
-    if (!checkbox) {
-        console.error(`Checkbox element for subtask-${taskId}-${subtaskIndex} not found`);
-        return;
-    }
     let task = await getOneTask(taskId);
-    if (!task) {
-        console.error(`Task with ID ${taskId} not found`);
-        return;
-    }
-    if (task.subtasks && task.subtasks[subtaskIndex]) {
-        task.subtasks[subtaskIndex].completed = checkbox.checked;
-        await updateSubtaskDB(task, taskId);
-        updateSubtaskProcess(taskId, task);
-        openTaskOverlay(taskId);
-    } else {
-        console.error(`Subtask with index ${subtaskIndex} not found in task`);
-    }
+    task.subtasks[subtaskIndex].completed = checkbox.checked;
+    await updateSubtaskDB(task, taskId);
+    refreshTaskOverlay(taskId, task);
+}
+
+/**Updates the subtask progress and reopens the task overlay.*/
+function refreshTaskOverlay(taskId, task) {
+    updateSubtaskProcess(taskId, task);
+    openTaskOverlay(taskId);
 }
 
 /* Updates the subtask progress of the task */
@@ -164,7 +133,7 @@ async function updateSubtaskProcess(taskId, task) {
     await loadTask("/tasks");
 }
 
-/* Fetches all tasks from the database */
+/** Fetches all tasks from the database */
 async function updateSubtaskDB(task, taskId) {
     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
         method: "PATCH",
@@ -178,140 +147,77 @@ async function updateSubtaskDB(task, taskId) {
     }
 }
 
-/* Renders the assigned employees from the task */
+/**Renders the assigned employees from the task.*/
 function taskAssignedTemplate(task) {
-    if (Array.isArray(task.assignedTo) && task.assignedTo.length > 0) {
-        let maxDiplayed = 3;
-        let displayedAssignees = task.assignedTo.slice(0, maxDiplayed);
-        let hiddenCount = task.assignedTo.length - maxDiplayed;
-        return `
-        <div id="taskAssignedID" class="taskAssigned">
-            ${displayedAssignees
-                .map((name) => {
-                    let initials = name
-                        .split(" ")
-                        .map(part => part.charAt(0).toUpperCase())
-                        .join("");
-                    let circleColor = getContactColor(name);
-                    return `
-                        <div class="assigned-contact">
-                            <div class="initials-circle-board" style="background-color: ${circleColor};">
-                                ${initials}
-                            </div>
-                        </div>
-                    `;
-                })
-                .join("")}
-            ${hiddenCount > 0 ? `<p class="assignedHiddenCount">+${hiddenCount}</p>` : ""}
-        </div>
-        `;
-    }
-    return ``;
+    if (!Array.isArray(task.assignedTo) || task.assignedTo.length === 0) return "";
+    const displayed = task.assignedTo.slice(0, 3).map(renderAssignee).join("");
+    const hiddenCount = task.assignedTo.length - 3;
+    return `<div id="taskAssignedID" class="taskAssigned">${displayed}${hiddenCount > 0 ? `<p class="assignedHiddenCount">+${hiddenCount}</p>` : ""}</div>`;
 }
 
-/* Renders the assigned employees from the task in the overlay */
+/**Generates the HTML for an assigned employee.*/
+function renderAssignee(name) {
+    const initials = name.split(" ").map(part => part.charAt(0).toUpperCase()).join("");
+    return `<div class="assigned-contact"><div class="initials-circle-board" style="background-color: ${getContactColor(name)};">${initials}</div></div>`;
+}
+
+/**Renders the assigned employees from the task in the overlay.*/
 function taskAssignedTemplateOverlay(task) {
-    if (Array.isArray(task.assignedTo) && task.assignedTo.length > 0) {
-        return `
-        <div id="taskAssignedID" class="taskAssigned">
-            ${task.assignedTo
-                .map(name => {
-                    let initials = name
-                        .split(" ")
-                        .map(part => part.charAt(0))
-                        .join("");
-                    let circleColor = getContactColor(name);
-                    return `
-                        <p class="board_overlay_contact_box">
-                            <span class="initialsOverlay" style="background-color: ${circleColor};">
-                                ${initials}
-                            </span> 
-                            ${name}
-                        </p>
-                    `;
-                })
-                .join("")}
-        </div>
-        `;
-    } else if (task.assignedTo && typeof task.assignedTo === 'string') {
-        let name = task.assignedTo;
-        let initials = name
-            .split(" ")
-            .map(part => part.charAt(0))
-            .join("");
-        let circleColor = getContactColor(name);
-        return `
-        <div id="taskAssignedID" class="taskAssigned">
-            <p>
-                <span class="initialsOverlay" style="background-color: ${circleColor};">
-                    ${initials}
-                </span> 
-                - ${name}
-            </p>
-        </div>
-        `;
-    } else {
-        return ``;
-    }
+    if (!task.assignedTo) return "";
+    return `<div id="taskAssignedID" class="taskAssigned">
+                ${Array.isArray(task.assignedTo) ? task.assignedTo.map(renderOverlayAssignee).join("") : renderOverlayAssignee(task.assignedTo)}
+            </div>`;
 }
 
+/**Generates the HTML for an assigned employee in the overlay.*/
+function renderOverlayAssignee(name) {
+    const initials = name.split(" ").map(part => part.charAt(0)).join("");
+    return `<p class="board_overlay_contact_box">
+                <span class="initialsOverlay" style="background-color: ${getContactColor(name)};">${initials}</span> ${name}
+            </p>`;
+}
+
+/**Generates the HTML for assigned employees in the edit dropdown.*/
 function taskAssignedEdit(task) {
-    if (Array.isArray(task.assignedTo) && task.assignedTo.length > 0) {
-        return task.assignedTo
-            .map(name => {
-                return `
-                    <option value="${name}" selected>
-                        ${name}
-                    </option>
-                `;
-            })
-            .join("");
-    } else if (task.assignedTo && typeof task.assignedTo === 'string') {
-        const name = task.assignedTo;
-        return `
-            <option value="${name}" selected>
-                ${name}
-            </option>
-        `;
-    } else {
-        return ``;
-    }
+    if (!task.assignedTo) return "";
+    return Array.isArray(task.assignedTo) 
+        ? task.assignedTo.map(renderEditOption).join("") 
+        : renderEditOption(task.assignedTo);
 }
 
-/* Renders the priority of the task */
+/**Generates an option element for an assigned employee.*/
+function renderEditOption(name) {
+    return `<option value="${name}" selected>${name}</option>`;
+}
+
+/** Renders the priority of the task */
 function taskPriorityTemplate(task) {
     if (task.priority.toLowerCase() === "urgent") {
         return `
-        <p id="taskPriorityID" class="taskPriority  taskPriorityUrgent"><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
-        `
+        <p id="taskPriorityID" class="taskPriority  taskPriorityUrgent"><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>`
     } else if (task.priority.toLowerCase() === "medium") {
         return `
-        <p id="taskPriorityID" class="taskPriority data-priority taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
-        `
+        <p id="taskPriorityID" class="taskPriority data-priority taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>`
     } else if (task.priority.toLowerCase() === "low") {
         return `
-        <p id="taskPriorityID" class="taskPriority data-priority taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
-        `;
+        <p id="taskPriorityID" class="taskPriority data-priority taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>`;
     }
 }
 
-/* Renders the priority of the task in the overlay */
+/** Renders the priority of the task in the overlay */
 function taskPriorityTemplateName(task) {
     if (task.priority.toLowerCase() === "urgent") {
         return `
         <p id="taskPriorityIDName">Urgent</p>
-        <p id="taskPriorityIDName" data-priority="Urgent" class=""><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>
-        `
+        <p id="taskPriorityIDName" data-priority="Urgent" class=""><img src="../assets/svg/add_task/prio_urgent.svg" alt=""></p>`
     } else if (task.priority.toLowerCase() === "medium") {
         return `
         <p id="taskPriorityIDName">Medium</p>
-        <p id="taskPriorityIDName" data-priority="Medium" class="taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>
-        `
+        <p id="taskPriorityIDName" data-priority="Medium" class="taskPriorityMedium"><img src="../assets/svg/add_task/prio_medium.svg" alt=""></p>`
     } else if (task.priority.toLowerCase() === "low") {
         return `
         <p id="taskPriorityIDName">Low</p>
-        <p id="taskPriorityIDName" data-priority="Low" class="taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>
-        `
+        <p id="taskPriorityIDName" data-priority="Low" class="taskPriorityLow"><img src="../assets/svg/add_task/prio_low.svg" alt=""></p>`
     }
 }
 

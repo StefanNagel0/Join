@@ -59,7 +59,7 @@ function toggleLoginPage() {
     OverlayloginPage.style.display = 'block';
 }
 
-const LOGIN_URL = 'https://join-408-default-rtdb.europe-west1.firebasedatabase.app/registrations';
+const LOGIN_URL = 'https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/registrations';
 
 /**Handles the login process, validates the inputs, checks user credentials, and redirects upon success.*/
 async function login() {

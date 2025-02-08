@@ -1,4 +1,4 @@
-const CONTACTS_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/contacts";
+const CONTACTS_URL = "https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/contacts";
 
 function nameValidate(event) {
   const nameInput = event.target;

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-const REGISTRATION_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/";
+const REGISTRATION_URL = "https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
 /** Sets the greeting message based on the current time and user.*/

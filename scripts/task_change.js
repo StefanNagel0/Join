@@ -10,7 +10,7 @@ let globalTasks = {};
 let mainCategory = '';
 
 /* define Firebase URL */
-const BASE_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/";
+const BASE_URL = "https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**Loads tasks from a specified path and displays them.*/
 async function loadTask(path = "/tasks") {

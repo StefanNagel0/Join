@@ -1,6 +1,6 @@
 /**URL of the Firebase Realtime Database.*/
-const REGISTRATIONCOMPLETE_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/";
-const REGISTRATION_URL = "https://join-408-default-rtdb.europe-west1.firebasedatabase.app/registrations";
+const REGISTRATIONCOMPLETE_URL = "https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/";
+const REGISTRATION_URL = "https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/registrations";
 /**Saves the registration data to the database.*/
 async function updateRegistration(path = "/registrations", data) {
     let response = await fetch(REGISTRATIONCOMPLETE_URL + path + ".json", {

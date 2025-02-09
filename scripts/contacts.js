@@ -350,7 +350,3 @@ function getRandomColor() {
   colorIndex = (colorIndex + 1) % colors.length; // Danach zur nächsten Farbe wechseln
   return colors[colorIndex];
 }
-
-console.log(getRandomColor()); // Erste Farbe
-console.log(getRandomColor()); // Zweite Farbe
-console.log(getRandomColor()); // Dritte Farbe

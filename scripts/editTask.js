@@ -88,11 +88,11 @@ function taskEditAssignedTo(task, taskId) {
     const selectedContactsHtml = createSelectedContactsHtml(displayedContacts);
     return `
         <div id="task-assigned" class="dropdown-wrapper">
-            <div class="dropdown-toggle" onclick="toggleEditTaskDropdown(event, this, document.querySelector('.dropdown-content'))">
+            <div class="dropdown-toggle" onclick="toggleEditTaskDropdown(event, this, document.querySelector('.dropdown-content-edit'))">
                 <span>Select contacts to assign</span>
                 <span class="dropdown-arrow"></span>
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content-edit">
                 ${contactListHtml}
             </div>
             <div id="selected-contacts" class="selected-contacts">
@@ -107,7 +107,7 @@ function toggleEditTaskDropdown(event, toggle, options) {
     if (options.classList.contains("visible")) {
         options.classList.remove("visible");
     } else {
-        document.querySelectorAll(".dropdown-content.visible").forEach(dropdown => {
+        document.querySelectorAll(".dropdown-content-edit.visible").forEach(dropdown => {
             dropdown.classList.remove("visible");
         });
         options.classList.add("visible");

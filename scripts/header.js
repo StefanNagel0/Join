@@ -22,8 +22,7 @@ async function setUserInitials(button) {
 async function getCurrentUserName() {
     const loggedInEmail = localStorage.getItem('loggedInEmail');
     if (!loggedInEmail || loggedInEmail === 'guest@example.com') {
-        return "Guest";
-    }
+        return "Guest";}
     try {
         const response = await fetch(`${BASE_URL}registrations.json`);
         if (!response.ok) throw new Error('Fehler beim Abrufen der Benutzerdaten');
@@ -32,9 +31,8 @@ async function getCurrentUserName() {
             const user = Object.values(users).find(user => user.email === loggedInEmail);
             return user ? user.name : "Guest";
         }
-    } catch (error) {
-    }
-    return "Guest"; // Fallback, falls etwas schiefgeht
+    } catch (error) {}
+    return "Guest";
 }
 
 /** Generates initials from a name by taking the first letter of the first and last name. */

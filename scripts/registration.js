@@ -11,64 +11,41 @@ function toggleSignUpPage() {
     overlayRef.style.display = "block";
 }
 
-/**Enables or disables the "Sign up" button based on the checkbox state.*/
+/** Enables or disables the "Sign up" button based on the checkbox state. */
 function toggleSignUpButton() {
-    let signUpButton = document.querySelector('.signUpButton');
-    let checkbox = document.getElementById('checkbox');
-    let name = document.getElementById('name').value;
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
-    let confirmPassword = document.getElementById('confirmPassword').value;
+    const signUpButton = document.querySelector('.signUpButton');
+    const checkbox = document.getElementById('checkbox');
+    const [name, email, password, confirmPassword] = ['name', 'email', 'password', 'confirmPassword'].map(id => document.getElementById(id).value);
+    
     if (name && email && password && confirmPassword && checkbox.checked) {
         signUpButton.disabled = false;
-        signUpButton.style.cursor = 'pointer';
-        signUpButton.style.background = '#2A3647';
-        signUpButton.style.color = 'white';
+        signUpButton.style.cssText = 'cursor: pointer; background: #2A3647; color: white;';
     } else {
         signUpButton.disabled = true;
-        signUpButton.style.cursor = 'not-allowed';
-        signUpButton.style.background = '#808080';
-        signUpButton.classList.add('signUpButton');
+        signUpButton.style.cssText = 'cursor: not-allowed; background: #808080;';
     }
-    // if (checkbox.checked) {
-    //     signUpButton.disabled = false;
-    //     signUpButton.style.cursor = 'pointer';
-    //     signUpButton.style.background = '#2A3647';
-    //     signUpButton.style.color = 'white';
-    // } else {
-    //     signUpButton.disabled = true;
-    //     signUpButton.style.cursor = 'not-allowed';
-    //     signUpButton.style.background = '#808080';
-    //     signUpButton.classList.add('signUpButton');
-    // }
-    return;
 }
 
-/**Handles the registration process by validating the input fields and submitting the form.*/
+/** Handles the registration process by validating the input fields and submitting the form. */
 function signUp(event) {
     event.preventDefault();
-    let name = document.getElementById("name").value.trim();
-    let email = document.getElementById("email").value.trim();
-    let password = document.getElementById("password").value.trim();
-    let confirmPassword = document.getElementById("confirmPassword").value.trim();
-    let checkbox = document.getElementById("checkbox");
-    // if (!FieldsFilled(name, email, password, confirmPassword)) return;
-    if (!nameValid(name)) return;
-    if (!EmailValid(email)) return;
-    if (!PasswordsMatching(password, confirmPassword)) return;
-    if (!PasswordValid(password)) return;
+    const [name, email, password, confirmPassword] = ['name', 'email', 'password', 'confirmPassword'].map(id => document.getElementById(id).value.trim());
+    const checkbox = document.getElementById("checkbox");
+    if (![nameValid(name), EmailValid(email), PasswordsMatching(password, confirmPassword), PasswordValid(password)].every(Boolean)) return;
     mainCheckTaken();
     userSuccessRegistration();
 }
 
+/** Validates if the provided name contains only alphabetic characters.*/
 function nameValid(name) {
-    if (!/^[a-zA-Z]+$/g.test(name)) {
-        showError('Bitte geben Sie einen gültigen Namen ein.');
+    if (!/^[a-zA-Z\s]+$/g.test(name)) {
+        showError('Please enter a valid name.');
         return false;
     }
     return true;
 }
 
+/** Validates the format of an email address.*/
 function EmailValid(email) {
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(email)) {
         let emailInput = document.getElementById("email");
@@ -114,6 +91,7 @@ function PasswordValid(password) {
     return true;
 }
 
+/** Toggles the visibility of the password input field and updates the eye icon.*/
 function togglePasswordVisibility(inputId, eyeIcon) {
     let passwordField = document.getElementById(inputId);
     let isPasswordHidden = passwordField.type === 'password';

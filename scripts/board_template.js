@@ -164,7 +164,7 @@ function boardAddTaskTemplate() {
 `
 }
 
-/* Renders the overlay from the task */
+/** Renders the overlay from the task */
 function taskOverlayTemplate(task, taskId) {
     return `
     <div class="openTaskOverlayMain">

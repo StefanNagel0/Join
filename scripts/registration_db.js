@@ -15,6 +15,7 @@ async function updateRegistration(path = "/registrations", data) {
     }
 }
 
+/** Creates a registration object from a form.*/
 function createRegistration(regiForm) {
     let data = {
         name: regiForm.querySelector('#name').value.trim(),
@@ -23,6 +24,8 @@ function createRegistration(regiForm) {
     };
     return data;
 }
+
+/** Saves the registration data to the database. */
 
 async function saveRegistration() {
     let regiForm = document.querySelector('.loginForm');
@@ -34,10 +37,12 @@ async function saveRegistration() {
     });
 }
 
+/** Loads the registration database from the API.*/
 async function loadRegistration() {
     return fetch(REGISTRATION_URL + ".json").then((userId) => userId.json());
 }
 
+/** Checks if a username is already taken.*/
 async function isNameTaken(name){
     let usersId = loadRegistration();
     if (usersId === name) {
@@ -47,6 +52,7 @@ async function isNameTaken(name){
     }
 }
 
+/** Checks if an email is already taken.*/
 async function isEmailTaken(email) {
     let usersId = loadRegistration();
     if (usersId === email) {
@@ -56,6 +62,7 @@ async function isEmailTaken(email) {
     }
 }
 
+/** Checks if the username or email is already taken and saves the registration if available.*/
 async function mainCheckTaken() {
     let regiForm = document.querySelector('.loginForm');
     let data = createRegistration(regiForm);

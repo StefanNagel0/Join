@@ -66,7 +66,6 @@ function taskSubtasksTemplateOverlay(task, taskId) {
     }
 }
 
-
 /**Opens the task overlay and populates it with task details.*/
 function openTaskOverlay(taskId) {
     const task = globalTasks[taskId];
@@ -92,7 +91,7 @@ function getTaskOverlayContent(task, taskId) {
     `;
 }
 
-/* Fetches a single task from the database */
+/** Fetches a single task from the database */
 async function getOneTask(taskId) {
     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`);
     if (!response.ok) {
@@ -116,7 +115,7 @@ function refreshTaskOverlay(taskId, task) {
     openTaskOverlay(taskId);
 }
 
-/* Updates the subtask progress of the task */
+/** Updates the subtask progress of the task */
 async function updateSubtaskProcess(taskId, task) {
     if (!task || !task.subtasks) {
         console.error('Task or subtasks not defined');
@@ -147,7 +146,7 @@ async function updateSubtaskDB(task, taskId) {
     }
 }
 
-/**Renders the assigned employees from the task.*/
+/** Renders the assigned employees from the task.*/
 function taskAssignedTemplate(task) {
     if (!Array.isArray(task.assignedTo) || task.assignedTo.length === 0) return "";
     const displayed = task.assignedTo.slice(0, 3).map(renderAssignee).join("");
@@ -155,13 +154,13 @@ function taskAssignedTemplate(task) {
     return `<div id="taskAssignedID" class="taskAssigned">${displayed}${hiddenCount > 0 ? `<p class="assignedHiddenCount">+${hiddenCount}</p>` : ""}</div>`;
 }
 
-/**Generates the HTML for an assigned employee.*/
+/** Generates the HTML for an assigned employee.*/
 function renderAssignee(name) {
     const initials = name.split(" ").map(part => part.charAt(0).toUpperCase()).join("");
     return `<div class="assigned-contact"><div class="initials-circle-board" style="background-color: ${getContactColor(name)};">${initials}</div></div>`;
 }
 
-/**Renders the assigned employees from the task in the overlay.*/
+/** Renders the assigned employees from the task in the overlay.*/
 function taskAssignedTemplateOverlay(task) {
     if (!task.assignedTo) return "";
     return `<div id="taskAssignedID" class="taskAssigned">
@@ -169,7 +168,7 @@ function taskAssignedTemplateOverlay(task) {
             </div>`;
 }
 
-/**Generates the HTML for an assigned employee in the overlay.*/
+/** Generates the HTML for an assigned employee in the overlay.*/
 function renderOverlayAssignee(name) {
     const initials = name.split(" ").map(part => part.charAt(0)).join("");
     return `<p class="board_overlay_contact_box">
@@ -177,7 +176,7 @@ function renderOverlayAssignee(name) {
             </p>`;
 }
 
-/**Generates the HTML for assigned employees in the edit dropdown.*/
+/** Generates the HTML for assigned employees in the edit dropdown.*/
 function taskAssignedEdit(task) {
     if (!task.assignedTo) return "";
     return Array.isArray(task.assignedTo) 
@@ -185,7 +184,7 @@ function taskAssignedEdit(task) {
         : renderEditOption(task.assignedTo);
 }
 
-/**Generates an option element for an assigned employee.*/
+/** Generates an option element for an assigned employee.*/
 function renderEditOption(name) {
     return `<option value="${name}" selected>${name}</option>`;
 }
@@ -221,14 +220,14 @@ function taskPriorityTemplateName(task) {
     }
 }
 
-/* Renders the status of the task */
+/** Renders the status of the task */
 function taskStatusTemplate(task) {
     return `
     <p id="taskStatusID" class="taskStatus">${task.status}</p>
     `
 }
 
-/* editing priority */
+/** editing priority */
 function editingPriority(task) {
     const priorityOptions = ["Urgent", "Medium", "Low"];
     return priorityOptions.map(
@@ -237,7 +236,7 @@ function editingPriority(task) {
 
 }
 
-/* Renders the assigned employees from the task */
+/** Renders the assigned employees from the task */
 function getAssignedOptions(assignedTo, users) {
     if (!users || !Array.isArray(users)) {
         console.error("Users array is undefined or not an array.");

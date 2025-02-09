@@ -4,50 +4,39 @@ function loginInit() {
     animateLogo();
 }
 
+/** Animates the logo based on screen width */
 function animateLogo() {
-    let matchMedia = window.matchMedia("(min-width: 900px)");
-    if (matchMedia.matches) {
-        let logo = document.getElementById('logo');
-        logo.style.opacity = '1';
-        setTimeout(() => {
-            logo.style.top = '10%';
-            logo.style.left = '15%';
-            logo.style.transform = 'translate(0, 0)';
-        }, 150);
-        setTimeout(() => {
-            logo.style.opacity = '0';
-        }, 1400);
-        setTimeout(() => {
-            toggleLoginPage();
-        }, 1800);
-    } else {
-        let logoMain = document.getElementById('logoMain');
-        let backgroundColor = 'rgb(42,54,71)';
-        let logoSmall = document.getElementById('logoSmall');
-        let logoImg = logoSmall.querySelector('img');
-        document.body.style.backgroundColor = backgroundColor;
-        // logoMain.style.opacity = '0';
-        logoSmall.style.opacity = '1';
-        setTimeout(() => {
-            logoSmall.style.top = '5%';
-            logoSmall.style.left = '10%';
-            logoSmall.style.transform = 'translate(0, 0)';
-            setTimeout(() => {
-                logoImg.src = '../assets/svg/logo.svg';
-            }, 150);
-            setTimeout(() => {
-                document.body.style.transition = "background-color 1s ease";
-                document.body.style.backgroundColor = "transparent";
-            }, 200);
-        }, 2000);
-        setTimeout(() => {
-            // logoMain.style.opacity = '1';
-            logoSmall.style.opacity = '0';
-        }, 3000);
-        setTimeout(() => {
-            toggleLoginPage();
-        }, 3200);
-    }
+    let isLargeScreen = window.matchMedia("(min-width: 900px)").matches;
+    isLargeScreen ? animateLargeLogo() : animateSmallLogo();
+}
+
+/** Animation for large screens */
+function animateLargeLogo() {
+    let logo = document.getElementById('logo');
+    logo.style.opacity = '1';
+    setTimeout(() => moveLogo(logo, '10%', '15%'), 150);
+    setTimeout(() => logo.style.opacity = '0', 1400);
+    setTimeout(toggleLoginPage, 1800);
+}
+
+/** Animation for small screens */
+function animateSmallLogo() {
+    let logoSmall = document.getElementById('logoSmall');
+    let logoImg = logoSmall.querySelector('img');
+    document.body.style.backgroundColor = 'rgb(42,54,71)';
+    logoSmall.style.opacity = '1';
+    setTimeout(() => moveLogo(logoSmall, '5%', '10%'), 2000);
+    setTimeout(() => logoImg.src = '../assets/svg/logo.svg', 2150);
+    setTimeout(() => document.body.style.backgroundColor = "transparent", 2200);
+    setTimeout(() => logoSmall.style.opacity = '0', 3000);
+    setTimeout(toggleLoginPage, 3200);
+}
+
+/** Moves the logo to a new position */
+function moveLogo(logo, top, left) {
+    logo.style.top = top;
+    logo.style.left = left;
+    logo.style.transform = 'translate(0, 0)';
 }
 
 /**Toggles the login page by hiding the logo and displaying the login template.*/
@@ -61,29 +50,22 @@ function toggleLoginPage() {
 
 const LOGIN_URL = 'https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/registrations';
 
-/**Handles the login process, validates the inputs, checks user credentials, and redirects upon success.*/
+/** Handles user login */
 async function login() {
     let { email, password } = loginForm();
-    if (!loginFormValidation(email, password)) {
-        return;
-    } else {
-        let emailIsInDb = await emailValid(email);
-        let passwordIsInDb = await passwordValid(password, email);
-        if (emailIsInDb) {
-        } else {
-            showError("Passwort oder Email falsch!");
-        }
-        if (passwordIsInDb) {
-        } else {
-            showError("Passwort oder Email falsch!");
-        }
-        if (emailIsInDb && passwordIsInDb) {
-            localStorage.setItem('loggedInEmail', email);
-            window.location.href = 'summary.html?showGreeting=true';
-        } else {
-            showError('Die eingegebenen Daten sind nicht korrekt.');
-        }
+    if (!loginFormValidation(email, password)) return;
+    if (!(await validateCredentials(email, password))) {
+        return showError("Passwort oder Email falsch!");
     }
+    localStorage.setItem('loggedInEmail', email);
+    window.location.href = 'summary.html?showGreeting=true';
+}
+
+/** Validates email and password in the database */
+async function validateCredentials(email, password) {
+    let emailIsValid = await emailValid(email);
+    let passwordIsValid = await passwordValid(password, email);
+    return emailIsValid && passwordIsValid;
 }
 
 /**Retrieves and trims the values from the email and password input fields.*/
@@ -99,6 +81,7 @@ function guestLogin() {
     window.location.href = 'summary.html?showGreeting=true';
 }
 
+/** Prüft, ob eine E-Mail in der Datenbank existiert. */
 async function emailValid(email) {
     let usersId = await loadLoginDb();
     usrValidation = Object.values(usersId || {}).some(userObj => userObj.email === email);
@@ -109,6 +92,7 @@ async function emailValid(email) {
     }
 }
 
+/** Prüft, ob das Passwort mit einer E-Mail übereinstimmt. */
 async function passwordValid(password, email) {
     let usersId = await loadLoginDb();
     for (let userId in usersId) {
@@ -120,6 +104,7 @@ async function passwordValid(password, email) {
     return false;
 }
 
+/** Lädt die Login-Datenbank aus der API. */
 async function loadLoginDb() {
     return fetch(LOGIN_URL + ".json").then((userId) => userId.json());
 }
@@ -152,7 +137,6 @@ function showError(message) {
     let errorMessage = document.getElementById('loginError');
     errorMessage.textContent = message;
     errorMessage.style.display = 'block';
-
     setTimeout(() => {
         errorMessage.style.display = 'none';
     }, 2000);

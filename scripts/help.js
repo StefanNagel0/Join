@@ -3,25 +3,19 @@ function goBack() {
     window.location.href = 'summary.html';
   }
 
-/**Highlights the words "Join" and "Developer Akademie GmbH" in all paragraphs.*/
-  function highlightJoinInParagraphs() {
-    const paragraphs = document.querySelectorAll("p");
-  
-    paragraphs.forEach(paragraph => {
-      if (paragraph.textContent.includes("Join")) {
-        paragraph.innerHTML = paragraph.innerHTML.replace(
-          /Join/g,
-          '<span style="color: #29ABE2;">Join</span>'
-        );
-      }
-    });
-    paragraphs.forEach(paragraph => {
-      if (paragraph.textContent.includes("Developer Akademie GmbH")) {
-        paragraph.innerHTML = paragraph.innerHTML.replace(
-          /Developer Akademie GmbH/g,
-          '<span style="color: #29ABE2;">Developer Akademie GmbH</span>'
-        );
-      }
-    });
+/** Highlights specified words in all paragraphs */
+function highlightJoinInParagraphs() {
+  document.querySelectorAll("p").forEach(paragraph => {
+      highlightText(paragraph, "Join");
+      highlightText(paragraph, "Developer Akademie GmbH");
+  });
+}
+
+/** Replaces a word with a highlighted version */
+function highlightText(element, word) {
+  if (element.textContent.includes(word)) {
+      const regex = new RegExp(word, "g");
+      element.innerHTML = element.innerHTML.replace(regex, `<span style="color: #29ABE2;">${word}</span>`);
   }
+}
 highlightJoinInParagraphs();

@@ -165,33 +165,7 @@ function boardAddTaskTemplate() {
 `
 }
 
-/* Renders the overlay from the task */
-// function taskOverlayTemplate(task, taskId) {
-//     return `
-//     <div class="openTaskOverlayMain">
-//         ${taskCategoryTemplate(task)}
-//         ${taskTitleTemplate(task)}
-//         ${taskDescriptionTemplate(task)}
-//         <div class="openTaskOverlayDateContainer">
-//             Due Date: ${taskDateTemplate(task)}
-//         </div>
-//         <div class="openTaskOverlayPriorityContainer">
-//             Priority: ${taskPriorityTemplateName(task)}
-//         </div>
-//         <div class="openTaskOverlayAssignedContainer">
-//             Assigned to: ${taskAssignedTemplateOverlay(task)}
-//         </div>
-//         ${taskStatusTemplate(task)}
-//         ${taskSubtasksTemplateOverlay(task, taskId)}
-//         <div class="openTaskOverlayButtonContainer">
-//             <button class="openTaskOverlayDeleteButton" onclick="deleteTask('${taskId}')"><img src="../assets/svg/delete.svg" alt=""> Delete</button>
-//             <img src="../assets/svg/balken.svg"></img>
-//             <button class="openTaskOverlayEditButton" onclick="editTask('${taskId}')"><img src="../assets/svg/edit.svg" alt=""> Edit</button>
-//         </div>
-//     </div>
-//     `
-// }
-
+/** Renders the overlay from the task */
 function taskOverlayTemplate(task, taskId) {
     return `
     <div class="openTaskOverlayMain">

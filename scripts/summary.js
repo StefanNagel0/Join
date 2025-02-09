@@ -4,9 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchTasks();
 });
 
-
 const REGISTRATION_URL = "https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/";
-
 
 /** Sets the greeting message based on the current time and user.*/
 async function setGreetingMessage() {
@@ -60,8 +58,6 @@ function handleGreetingOverlay() {
     const overlay = document.getElementById('overlay_greeting');
     const greetingMessageOverlay = document.getElementById('greeting-message-overlay');
     const userNameGreetingOverlay = document.getElementById('user-name-greeting-overlay');
-    
-    // Überprüfen, ob die Breite <= 900px ist
     if (window.innerWidth <= 900 && shouldShowGreeting(showGreeting)) {
         const greeting = getGreetingFromDOM();
         const userName = getUserNameFromDOM();
@@ -86,7 +82,7 @@ function getUserNameFromDOM() {
     return document.getElementById('user-name-greeting').textContent;
 }
 
-// Begrüßung in das Overlay setzen
+/**Sets the greeting message and username in the overlay.*/
 function setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userNameGreetingOverlay) {
     greetingMessageOverlay.textContent = greeting;
     userNameGreetingOverlay.textContent = userName;
@@ -120,27 +116,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-/* Retrieves the username of the currently logged-in user from Firebase.*/
+/**Retrieves the username of the currently logged-in user from Firebase.*/
 async function getUserName() {
     const loggedInEmail = localStorage.getItem('loggedInEmail');
-    if (!loggedInEmail) {
-        return '';
-    }
+    if (!loggedInEmail) return '';
     try {
         const response = await fetch(`${BASE_URL}registrations.json`);
-        if (!response.ok) {
-            throw new Error('Fehler beim Abrufen der Benutzerdaten');
-        }
+        if (!response.ok) throw new Error('Fehler beim Abrufen der Benutzerdaten');
         const users = await response.json();
-        if (users) {
-            const user = Object.values(users).find(user => user.email === loggedInEmail);
-            return user ? user.name : '';
-        }
+        const user = Object.values(users).find(user => user.email === loggedInEmail);
+        return user ? user.name : '';
     } catch (error) {
-    return ''
+        return '';
     }
 }
-
 
 /**Fetches and processes tasks from the server. */
 async function fetchTasks() {
@@ -162,13 +151,11 @@ async function fetchTasks() {
 function countUrgentTasks(data) {
     const urgentTasks = filterUrgentTasks(data);
     sortUrgentTasks(urgentTasks);
-
     if (urgentTasks.length > 0) {
         const nextDueDate = urgentTasks[0].dueDate;
         const tasksWithNextDueDate = getTasksWithNextDueDate(urgentTasks, nextDueDate);
         return getTaskCountAndDueDate(tasksWithNextDueDate, nextDueDate);
     }
-    
     return {
         count: 0,
         dueDate: 'N/A',

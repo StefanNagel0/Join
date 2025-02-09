@@ -1,15 +1,15 @@
-/* tasks are loaded in */
+/** tasks are loaded in */
 function onload() {
     loadTask("/tasks");
 }
 
-/* global definition of task */
+/** global definition of task */
 let globalTasks = {};
 
-/* global definition of mainCategory */
+/** global definition of mainCategory */
 let mainCategory = '';
 
-/* define Firebase URL */
+/** define Firebase URL */
 const BASE_URL = "https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**Loads tasks from a specified path and displays them.*/
@@ -19,12 +19,11 @@ async function loadTask(path = "/tasks") {
     globalTasks = tasks;
     displayTasks(tasks);
 }
-/**Displays tasks in their corresponding containers.*/
 
+/**Displays tasks in their corresponding containers.*/
 function displayTasks(tasks) {
     clearTaskContainers();
     let taskArray = Object.entries(tasks);
-
     taskArray.forEach(([taskId, task]) => {
         if (!task.mainCategory) {
             return;
@@ -32,7 +31,6 @@ function displayTasks(tasks) {
         let taskElement = createTaskElement(task, taskId);
         appendTaskToCategory(task, taskElement);
     });
-
     emptyTaskContainer();
 }
 
@@ -74,11 +72,7 @@ function appendTaskToCategory(task, taskElement) {
     document.getElementById(containerId).appendChild(taskElement);
 }
 
-/**
- * Handles the click event for the "To Do" button.
- * Redirects to add_task.html if the window width is 900px or less.
- * Otherwise, sets the main category to "ToDo" and calls boardAddTask().
- */
+/**Handles the click event for the "To Do" button.*/
 function getToDoButton() {
     if (window.innerWidth <= 900) {
         window.location.href = './add_task.html';
@@ -88,19 +82,19 @@ function getToDoButton() {
     }
 };
 
-/* mainCategory assign */
+/**mainCategory assign */
 function getInProgressButton() {
     mainCategory = "InProgress";
     boardAddTask();
 }
 
-/* mainCategory assign */
+/** mainCategory assign */
 function getAwaitFeedbackButton() {
     mainCategory = "AwaitFeedback";
     boardAddTask();
 }
 
-/**Posts the task after validating the category.*/
+/** Posts the task after validating the category.*/
 async function postTask() {
     if (!validateCategory()) return;
     try {
@@ -176,48 +170,52 @@ function getSubtasks() {
     }));
 }
 
-/**Handles the submission of the add-task form, collects task data*/
+/** Handles task submission, validates category, and adds the task to Firebase.*/
 function submitAddTask(event) {
     event.preventDefault();
-    let categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
-    if (categoryText === 'Select task category') {
-        document.getElementById('dropdown-toggle-category').classList.add('error');
-        document.getElementById('category-error').classList.remove('hidden');
-        return;
-    } else {
-        document.getElementById('dropdown-toggle-category').classList.remove('error');
-        document.getElementById('category-error').classList.add('hidden');
-    }
-    let form = document.getElementById('task-form');
-    let task = createTaskObject(form);
+    if (!validateCategorySubmit()) return;
+    let task = createTaskObject(document.getElementById('task-form'));
     addTaskToFirebase(task).then(() => {
-        resetFormAndNotify(form);
+        resetFormAndNotify(document.getElementById('task-form'));
         getToDoAddTaskPage(event);
-    }).catch(error => {
-        console.error('Fehler beim Hinzufügen des Tasks:', error);
-    });
+    }).catch(console.error);
 }
 
-async function addTaskToFirebase(task) {
-    const TASKS_URL = `${BASE_URL}tasks.json`; // Verwende die BASE_URL
-    try {
-        let response = await fetch(TASKS_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(task),
-        });
-        if (response.ok) {
-            let data = await response.json();
-            return data; // Rückgabe der Antwort (z. B. für Task-ID)
-        } else {
-            throw new Error(`Fehler beim Speichern des Tasks: ${response.statusText}`);
-        }
-    } catch (error) {
-        console.error('Netzwerkfehler beim Speichern des Tasks:', error);
-        throw error; // Fehler weitergeben, falls benötigt
+/** Validates the selected category. */
+function validateCategorySubmit() {
+    let categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
+    let categoryError = document.getElementById('category-error');
+    if (categoryText === 'Select task category') {
+        document.getElementById('dropdown-toggle-category').classList.add('error');
+        categoryError.classList.remove('hidden');
+        return false;
     }
+    document.getElementById('dropdown-toggle-category').classList.remove('error');
+    categoryError.classList.add('hidden');
+    return true;
+}
+
+/** Adds a task to Firebase */
+async function addTaskToFirebase(task) {
+    try {
+        let response = await sendTaskToFirebase(task);
+        return await response.json();
+    } catch (error) {
+        console.error('Fehler beim Speichern des Tasks:', error);
+        throw error;
+    }
+}
+
+/** Sends the task data to Firebase */
+async function sendTaskToFirebase(task) {
+    const TASKS_URL = `${BASE_URL}tasks.json`;
+    let response = await fetch(TASKS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(task),
+    });
+    if (!response.ok) throw new Error(`Fehler: ${response.statusText}`);
+    return response;
 }
 
 /**Collects task data from the add-task form fields and constructs a task object.*/
@@ -263,7 +261,7 @@ async function postTaskToServer(taskData) {
     return await response.json();
 }
 
-/* empty task container */
+/** empty task container */
 function emptyTaskContainer() {
     let containers = [
         "tasksContainerAwaitFeedback",
@@ -279,7 +277,7 @@ function emptyTaskContainer() {
     });
 }
 
-/* add task to container */
+/** add task to container */
 function addTaskToContainer(containerId, taskHTML) {
     let container = document.getElementById(containerId);
     if (container.innerHTML.trim() === `<div class='noTasksParent'><p class='noTasksChild'>No tasks To do</p></div>`) {
@@ -288,13 +286,13 @@ function addTaskToContainer(containerId, taskHTML) {
     container.innerHTML += taskHTML;
 }
 
+/**Fixes missing main categories for tasks by setting a default value ('ToDo').*/
 async function fixTasksMainCategory() {
     let response = await fetch(BASE_URL + "/tasks.json");
     let tasks = await response.json();
-
     for (let [taskId, task] of Object.entries(tasks)) {
         if (!task.mainCategory) {
-            task.mainCategory = 'ToDo'; // Standardwert setzen
+            task.mainCategory = 'ToDo';
             await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },

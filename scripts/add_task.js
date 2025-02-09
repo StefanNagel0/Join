@@ -29,7 +29,7 @@ function getCurrentDate() {
 /** Returns a date string for a date 100 years in the future in YYYY-MM-DD format.*/
 function getMaxDateString() {
     const maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() + 100); // 100 Jahre in die Zukunft
+    maxDate.setFullYear(maxDate.getFullYear() + 100);
     return maxDate.toISOString().split('T')[0];
 }
 
@@ -215,24 +215,19 @@ function preventFormSubmissionOnEnter() {
     };
 }
 
-/**Extracts subtasks from a form element.*/
+/** Extracts subtasks from a form element. */
 function getSubtasksFromForm(form) {
     const subtaskList = form.querySelector('#subtask-list');
-    const subtasks = [];
-    if (!subtaskList) {
-        return subtasks;
-    }
-    subtaskList.querySelectorAll('li').forEach((li) => {
-        const textElement = li.querySelector('.subtask-text') || li;
-        const text = textElement.textContent.trim();
-        if (text) {
-            subtasks.push({
-                text: text,
-                completed: li.classList.contains('completed'),
-            });
-        }
-    });
-    return subtasks;
+    if (!subtaskList) return [];
+    return Array.from(subtaskList.querySelectorAll('li'))
+        .map(parseSubtask)
+        .filter(subtask => subtask.text);
+}
+
+/** Parses a subtask element into an object. */
+function parseSubtask(li) {
+    const textElement = li.querySelector('.subtask-text') || li;
+    return { text: textElement.textContent.trim(), completed: li.classList.contains('completed') };
 }
 
 // /** Create the task object from the form data */
@@ -243,10 +238,10 @@ function createTaskObject(form) {
         dueDate: form.querySelector('#task-date').value,
         priority: document.getElementById('task-priority').getAttribute('data-priority') || 'Medium',
         category: document.querySelector('#dropdown-toggle-category span').textContent,
-        assignedTo: getSelectedContacts(), // Hole die ausgewählten Kontakte
+        assignedTo: getSelectedContacts(),
         subtasks: getSubtasksFromForm(form),
         createdAt: new Date().toISOString(),
-        mainCategory: 'ToDo', // Standardkategorie hinzufügen
+        mainCategory: 'ToDo',
     };
     return task;
 }
@@ -264,21 +259,6 @@ function createElementWithClass(tagName, className, textContent = '', children =
     if (id) element.id = id;
     children.forEach(child => element.appendChild(child));
     return element;
-}
-
-/** Utility function: Generate a random color */
-function getRandomDarkColor() {
-    let color;
-    do {
-        color = Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-        const r = parseInt(color.substring(0, 2), 16);
-        const g = parseInt(color.substring(2, 4), 16);
-        const b = parseInt(color.substring(4, 6), 16);
-        if ((r * 0.299 + g * 0.587 + b * 0.114) < 128) {
-            break;
-        }
-    } while (true);
-    return `#${color}`;
 }
 
 /** Clear the task form by resetting all form fields and UI elements to their initial state */
@@ -366,11 +346,12 @@ function validateTaskForm(event) {
         submitButton = document.getElementById("submit-task-btn"),
         categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
     let isValid = validateField(title, "Title is required") &&
-                validateField(dueDate, "Due Date is required") &&
-                validateCategory(categoryText);
+        validateField(dueDate, "Due Date is required") &&
+        validateCategory(categoryText);
     submitButton.disabled = !isValid;
     if (isValid) submitAddTask(event);
 }
+
 /** hecks if an input field is empty, sets an error message, or removes it. */
 function validateField(field, message) {
     if (field.value.trim() === "") return setErrorMessage(field, message), false;
@@ -391,7 +372,6 @@ function updateSubmitButtonState() {
     const dueDate = document.getElementById("task-date").value.trim();
     const categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
     const submitButton = document.getElementById("submit-task-btn");
-
     const isValid = title !== "" && dueDate !== "" && categoryText !== "Select task category";
     submitButton.disabled = !isValid;
 }

@@ -69,7 +69,7 @@ function createContactListHtml(assignedContacts) {
                     </div>
                     <span class="contact-label">${contact.name}</span>
                 </div>
-                <input type="checkbox" ${isSelected ? 'checked' : ''} />
+                <input class="checkbox" type="checkbox" ${isSelected ? 'checked' : ''} />
             </div>
         `;
     }).join("");

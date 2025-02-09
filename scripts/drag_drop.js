@@ -1,18 +1,18 @@
 let currentDraggedElement;
 
-/* Initializes the drag process and saves the task ID */
+/** Initializes the drag process and saves the task ID */
 function dragInit(event, taskId) {
     currentDraggedElement = taskId;
     event.dataTransfer.setData("text/plain", taskId);
     startDrag(taskId);
 }
 
-/* Allows tasks to be placed in the target container */
+/** Allows tasks to be placed in the target container */
 function allowDrop(event) {
     event.preventDefault();
 }
 
-/* Handles the filing of tasks and updates the data structure */
+/** Handles the filing of tasks and updates the data structure */
 function drop(event, newStatus) {
     event.preventDefault();
     const taskId = event.dataTransfer.getData("text/plain");
@@ -20,7 +20,7 @@ function drop(event, newStatus) {
     endDrag();
 }
 
-/* Updates the task in the data structure and database */
+/** Updates the task in the data structure and database */
 function moveTaskToNewStatus(taskId, newStatus) {
     let task = globalTasks[taskId];
     task.mainCategory = newStatus;
@@ -28,19 +28,19 @@ function moveTaskToNewStatus(taskId, newStatus) {
     displayTasks(globalTasks);
 }
 
-/* Highlights the task visually while it is being dragged */
+/** Highlights the task visually while it is being dragged */
 function startDrag(taskId) {
     let taskElement = document.getElementById(`task-${taskId}`);
     if (taskElement) taskElement.classList.add("dragging");
 }
 
-/* Removes the visual highlighting when dragging ends */
+/** Removes the visual highlighting when dragging ends */
 function endDrag() {
     let taskElement = document.querySelector(".task.dragging");
     if (taskElement) taskElement.classList.remove("dragging");
 }
 
-/* Updates the task in the database */
+/** Updates the task in the database */
 async function updateTaskInDatabase(taskId, updatedTask) {
     let response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
         method: "PUT",

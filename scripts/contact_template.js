@@ -1,35 +1,24 @@
-/**
- * Shows contact details for a given index.
- * If the window width is <= 900px, the contact list is hidden and the contact
- * details are displayed in a special mobile view.
- */
+/** Displays the details of a specific contact. */
 function showContactDetails(index) {
-  let contact = contacts[index];
-  let contactList = document.querySelector(".scrolllist");
-  let detailsDiv = document.getElementById("contact-details");
+  const contact = contacts[index];
+  const contactList = document.querySelector(".scrolllist");
+  const detailsDiv = document.getElementById("contact-details");
 
+  // Show contact details in the details section
   detailsDiv.innerHTML = createContactDetails(contact);
   detailsDiv.classList.add("show");
   detailsDiv.classList.remove("hide");
 
+  // Hide details when switching to mobile view (only once)
   if (window.innerWidth <= 900 && !detailsDiv.dataset.hiddenOnce) {
-    detailsDiv.classList.add("hide");
-    detailsDiv.classList.remove("show");
-    detailsDiv.dataset.hiddenOnce = true;
+      detailsDiv.classList.add("hide");
+      detailsDiv.classList.remove("show");
+      detailsDiv.dataset.hiddenOnce = true;
   }
 
+  // Adjust layout for mobile view
   if (window.innerWidth <= 900) {
-    detailsDiv.innerHTML = getMobileContactDetailsHTML(contact, index);
-    detailsDiv.classList.add("show");
-    detailsDiv.classList.remove("hide");
-    contactList.classList.add("hide");
-    contactList.classList.remove("show");
-  }
-}
-
-/* Generates the HTML for the contact details in the mobile view. */
-function getMobileContactDetailsHTML(contact, index) {
-  return `
+      detailsDiv.innerHTML = `
       <div class="backto">
           <div class="detailsheader">
               <h1>Contacts</h1>
@@ -61,67 +50,75 @@ function getMobileContactDetailsHTML(contact, index) {
           </div>
           <div class="successedit hide"></div>
       </div>
-  `;
+      `;
+      detailsDiv.classList.add("show");
+      detailsDiv.classList.remove("hide");
+      contactList.classList.add("hide");
+      contactList.classList.remove("show");
+  }
 }
 
-/** Generates the HTML structure for contact details. */
+/* Generates the HTML structure for the details of a contact. */
 function createContactDetails(contact) {
-  return `
-    <div class="detailscircle">
-    <div class="circle circlecont" style="background-color: ${contact.color};">
-      ${getInitials(contact.name)}
-    </div>
-    <div class="editdelete">
-    <p class="contactnames">${contact.name}</p>
-    <div class="contbtn">
-    <button class="edit-button" onclick="openOverlay('edit', ${contacts.indexOf(contact)})">
-      <img src="../assets/icons/contact/edit.png">Edit
-    </button>
-    <button class="delete-button" onclick="deleteContact(${contacts.indexOf(contact)})">
-      <img src="../assets/icons/contact/delete.png">Delete
-    </button>
-    </div>
-    </div>
-    </div>
-    <div class="info">
-    <p class="infop">Contact Information</p>
-    <div>
-    <p class="infom"><strong class="topic">E-Mail</strong><a class="mail">${contact.email}</a></p>
-    <p class="infom"><strong class="topic">Phone</strong>${contact.phone}</p>
-    <div class="successedit"></div>
-    </div>
-    </div>
-  `;
+    return `
+      <div class="detailscircle">
+      <div class="circle circlecont" style="background-color: ${contact.color};">
+        ${getInitials(contact.name)}
+      </div>
+      <div class="editdelete">
+      <p class="contactnames">${contact.name}</p>
+      <div class="contbtn">
+      <button class="edit-button" onclick="openOverlay('edit', ${contacts.indexOf(contact)})">
+        <img src="../assets/icons/contact/edit.png">Edit
+      </button>
+      <button class="delete-button" onclick="deleteContact(${contacts.indexOf(contact)})">
+        <img src="../assets/icons/contact/delete.png">Delete
+      </button>
+      </div>
+      </div>
+      </div>
+      <div class="info">
+      <p class="infop">Contact Information</p>
+      <div>
+      <p class="infom"><strong class="topic">E-Mail</strong><a class="mail">${contact.email}</a></p>
+      <p class="infom"><strong class="topic">Phone</strong>${contact.phone}</p>
+      <div class="successedit"></div>
+      </div>
+      </div>
+    `;
 }
 
 /** Adjusts the visibility of the contact list on window resize. */
-let previousWidth = window.innerWidth;
+let previousWidth = window.innerWidth; 
 
 window.addEventListener("resize", () => {
   const detailsDiv = document.getElementById("contact-details");
   const contactList = document.querySelector(".scrolllist");
   if (!detailsDiv) return;
   const currentWidth = window.innerWidth;
+
   // Switches to mobile view and hides details
   if (currentWidth <= 900 && previousWidth > 900) {
-    if (detailsDiv.classList.contains("show")) {
-      detailsDiv.classList.add("hide");
-      detailsDiv.classList.remove("show");
-    }
+      if (detailsDiv.classList.contains("show")) {
+          detailsDiv.classList.add("hide");
+          detailsDiv.classList.remove("show");
+      }
   }
+
   // Switches to desktop view and shows contact list
   if (currentWidth > 900 && previousWidth <= 900) {
-    if (detailsDiv.classList.contains("show")) {
-      detailsDiv.classList.remove("show");
-      detailsDiv.classList.add("hide");
-    }
-    contactList.classList.add("show");
-    contactList.classList.remove("hide");
+      if (detailsDiv.classList.contains("show")) {
+          detailsDiv.classList.remove("show");
+          detailsDiv.classList.add("hide");
+      }
+      contactList.classList.add("show");
+      contactList.classList.remove("hide");
   }
+
   previousWidth = currentWidth;
 });
 
-/** Creates a contact element for the list. */
+/* Creates a contact div element. */
 function createContactDiv(contact) {
   const contactDiv = document.createElement("div");
   contactDiv.classList.add("contact");
@@ -140,5 +137,6 @@ function createContactDiv(contact) {
       </div>
     </div>
   `;
+
   return contactDiv;
 }

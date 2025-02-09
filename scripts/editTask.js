@@ -182,7 +182,7 @@ function setKeyboardEvent(input, list, taskId) {
 
 /* Adds a new subtask to the task edit overlay. */
 function addEditNewSubtask(input, list, taskId) {
-   let taskText = input.value.trim();
+    let taskText = input.value.trim();
     if (!taskText || !taskId) return console.error("Fehler: Kein gültiger taskId oder leerer Text.");
     if (!globalTasks[taskId].subtasks) globalTasks[taskId].subtasks = [];
     const index = addSubtaskToModel(taskId, taskText);

@@ -179,8 +179,8 @@ function renderOverlayAssignee(name) {
 /** Generates the HTML for assigned employees in the edit dropdown.*/
 function taskAssignedEdit(task) {
     if (!task.assignedTo) return "";
-    return Array.isArray(task.assignedTo) 
-        ? task.assignedTo.map(renderEditOption).join("") 
+    return Array.isArray(task.assignedTo)
+        ? task.assignedTo.map(renderEditOption).join("")
         : renderEditOption(task.assignedTo);
 }
 

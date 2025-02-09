@@ -43,7 +43,7 @@ async function loadRegistration() {
 }
 
 /** Checks if a username is already taken.*/
-async function isNameTaken(name){
+async function isNameTaken(name) {
     let usersId = loadRegistration();
     if (usersId === name) {
         return true;

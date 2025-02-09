@@ -22,7 +22,7 @@ function toggleBoardPage() {
 function addTaskSuccess() {
     let overlayRef = document.getElementById('addTaskSuccess');
     overlayRef.innerHTML = addTaskSuccessTemplate();
-    overlayRef.style.display = "flex"; 
+    overlayRef.style.display = "flex";
     setTimeout(() => {
         overlayRef.style.display = "none";
     }, 2000);
@@ -97,7 +97,8 @@ function toggleCategory(taskId) {
     let taskElement = document.querySelector(`#task-${taskId}`);
     if (!taskElement) {
         console.error();
-        return;}
+        return;
+    }
     let userStoryElement = taskElement.querySelector(".taskCategoryUserStory");
     let technicalElement = taskElement.querySelector(".taskCategoryTechnical");
     if (userStoryElement && userStoryElement.classList.contains('taskCategoryUserStory')) {

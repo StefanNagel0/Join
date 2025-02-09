@@ -12,8 +12,8 @@ async function initializeUserButton() {
 /** Sets the user initials to the button text content. */
 async function setUserInitials(button) {
     const userName = await getCurrentUserName();
-    const initials = (typeof userName === 'string' && userName.toLowerCase() === "guest") 
-        ? "G" 
+    const initials = (typeof userName === 'string' && userName.toLowerCase() === "guest")
+        ? "G"
         : getInitials(userName || "Guest");
     button.textContent = initials;
 }
@@ -22,7 +22,8 @@ async function setUserInitials(button) {
 async function getCurrentUserName() {
     const loggedInEmail = localStorage.getItem('loggedInEmail');
     if (!loggedInEmail || loggedInEmail === 'guest@example.com') {
-        return "Guest";}
+        return "Guest";
+    }
     try {
         const response = await fetch(`${BASE_URL}registrations.json`);
         if (!response.ok) throw new Error('Fehler beim Abrufen der Benutzerdaten');
@@ -31,7 +32,7 @@ async function getCurrentUserName() {
             const user = Object.values(users).find(user => user.email === loggedInEmail);
             return user ? user.name : "Guest";
         }
-    } catch (error) {}
+    } catch (error) { }
     return "Guest";
 }
 

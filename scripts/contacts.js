@@ -151,7 +151,7 @@ async function deleteContact(id) {
     if (contact.firebaseKey) await deleteContactFromFirebase(contact.firebaseKey);
     contacts.splice(contactIndex, 1);
     showContacts();
-  } catch (error) {}
+  } catch (error) { }
 }
 
 /** Deletes a contact from Firebase. */

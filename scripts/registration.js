@@ -16,7 +16,7 @@ function toggleSignUpButton() {
     const signUpButton = document.querySelector('.signUpButton');
     const checkbox = document.getElementById('checkbox');
     const [name, email, password, confirmPassword] = ['name', 'email', 'password', 'confirmPassword'].map(id => document.getElementById(id).value);
-    
+
     if (name && email && password && confirmPassword && checkbox.checked) {
         signUpButton.disabled = false;
         signUpButton.style.cssText = 'cursor: pointer; background: #2A3647; color: white;';

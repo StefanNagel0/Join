@@ -91,9 +91,9 @@ function setGreetingForOverlay(greeting, userName, greetingMessageOverlay, userN
 /** Shows the greeting overlay with a smooth transition. */
 function showOverlay(overlay) {
     overlay.style.display = 'flex';
-    setTimeout(() => { 
+    setTimeout(() => {
         overlay.classList.add('visible');
-    }, 1); 
+    }, 1);
 }
 
 /** Hides the greeting overlay after a timeout. */

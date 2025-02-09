@@ -13,17 +13,17 @@ function showContactDetails(index) {
   detailsDiv.classList.remove("hide");
 
   if (window.innerWidth <= 900 && !detailsDiv.dataset.hiddenOnce) {
-      detailsDiv.classList.add("hide");
-      detailsDiv.classList.remove("show");
-      detailsDiv.dataset.hiddenOnce = true;
+    detailsDiv.classList.add("hide");
+    detailsDiv.classList.remove("show");
+    detailsDiv.dataset.hiddenOnce = true;
   }
 
   if (window.innerWidth <= 900) {
-      detailsDiv.innerHTML = getMobileContactDetailsHTML(contact, index);
-      detailsDiv.classList.add("show");
-      detailsDiv.classList.remove("hide");
-      contactList.classList.add("hide");
-      contactList.classList.remove("show");
+    detailsDiv.innerHTML = getMobileContactDetailsHTML(contact, index);
+    detailsDiv.classList.add("show");
+    detailsDiv.classList.remove("hide");
+    contactList.classList.add("hide");
+    contactList.classList.remove("show");
   }
 }
 
@@ -95,7 +95,7 @@ function createContactDetails(contact) {
 }
 
 /** Adjusts the visibility of the contact list on window resize. */
-let previousWidth = window.innerWidth; 
+let previousWidth = window.innerWidth;
 
 window.addEventListener("resize", () => {
   const detailsDiv = document.getElementById("contact-details");
@@ -104,19 +104,19 @@ window.addEventListener("resize", () => {
   const currentWidth = window.innerWidth;
   // Switches to mobile view and hides details
   if (currentWidth <= 900 && previousWidth > 900) {
-      if (detailsDiv.classList.contains("show")) {
-          detailsDiv.classList.add("hide");
-          detailsDiv.classList.remove("show");
-      }
+    if (detailsDiv.classList.contains("show")) {
+      detailsDiv.classList.add("hide");
+      detailsDiv.classList.remove("show");
+    }
   }
   // Switches to desktop view and shows contact list
   if (currentWidth > 900 && previousWidth <= 900) {
-      if (detailsDiv.classList.contains("show")) {
-          detailsDiv.classList.remove("show");
-          detailsDiv.classList.add("hide");
-      }
-      contactList.classList.add("show");
-      contactList.classList.remove("hide");
+    if (detailsDiv.classList.contains("show")) {
+      detailsDiv.classList.remove("show");
+      detailsDiv.classList.add("hide");
+    }
+    contactList.classList.add("show");
+    contactList.classList.remove("hide");
   }
   previousWidth = currentWidth;
 });

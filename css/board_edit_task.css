@@ -24,9 +24,16 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    margin-top: 50px;
-    gap: 10px;
-    overflow-y: hidden;
+    position: relative;
+    padding-bottom: 70px;
+}
+
+.openEditTaskOverlayContent {
+    flex: 1;
+    max-height: 750px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    padding-bottom: 60px;
 }
 
 .editScrollbar {
@@ -109,6 +116,7 @@
     font-size: 16px;
     line-height: 19.2px;
     margin-top: 82px;
+    margin-bottom: 15px;
 }
 
 .openEditTaskOverlayPriority label {
@@ -266,9 +274,13 @@
 }
 
 .openEditTaskSaveButtonSorting {
+    position: absolute;
+    bottom: 0;
+    left: 350px;
+    right: 0;
     display: flex;
-    justify-content: flex-end;
-    padding: 20px;
+    justify-content: center;
+    padding: 10px;
 }
 
 .openEditTaskSaveButton {

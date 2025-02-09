@@ -191,6 +191,18 @@
     .content {
         margin-bottom: 20px;
     }
+
+    .openEditTaskOverlaySubtask {
+        inline-size: auto;
+        padding: 10px 0px 0px 0px;
+        gap: 10px;
+    }
+
+    .openTaskOverlaySubtaskContainer {
+        gap: 10px;
+        /* overflow-y: scroll;
+        scrollbar-width: none; */
+    }
 }
 
 @media screen and (max-width: 570px) {

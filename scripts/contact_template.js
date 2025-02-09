@@ -1,24 +1,35 @@
-/** Displays the details of a specific contact. */
+/**
+ * Shows contact details for a given index.
+ * If the window width is <= 900px, the contact list is hidden and the contact
+ * details are displayed in a special mobile view.
+ */
 function showContactDetails(index) {
-  const contact = contacts[index];
-  const contactList = document.querySelector(".scrolllist");
-  const detailsDiv = document.getElementById("contact-details");
+  let contact = contacts[index];
+  let contactList = document.querySelector(".scrolllist");
+  let detailsDiv = document.getElementById("contact-details");
 
-  // Show contact details in the details section
   detailsDiv.innerHTML = createContactDetails(contact);
   detailsDiv.classList.add("show");
   detailsDiv.classList.remove("hide");
 
-  // Hide details when switching to mobile view (only once)
   if (window.innerWidth <= 900 && !detailsDiv.dataset.hiddenOnce) {
       detailsDiv.classList.add("hide");
       detailsDiv.classList.remove("show");
       detailsDiv.dataset.hiddenOnce = true;
   }
 
-  // Adjust layout for mobile view
   if (window.innerWidth <= 900) {
-      detailsDiv.innerHTML = `
+      detailsDiv.innerHTML = getMobileContactDetailsHTML(contact, index);
+      detailsDiv.classList.add("show");
+      detailsDiv.classList.remove("hide");
+      contactList.classList.add("hide");
+      contactList.classList.remove("show");
+  }
+}
+
+/* Generates the HTML for the contact details in the mobile view. */
+function getMobileContactDetailsHTML(contact, index) {
+  return `
       <div class="backto">
           <div class="detailsheader">
               <h1>Contacts</h1>
@@ -50,12 +61,7 @@ function showContactDetails(index) {
           </div>
           <div class="successedit hide"></div>
       </div>
-      `;
-      detailsDiv.classList.add("show");
-      detailsDiv.classList.remove("hide");
-      contactList.classList.add("hide");
-      contactList.classList.remove("show");
-  }
+  `;
 }
 
 /** Generates the HTML structure for contact details. */
@@ -96,7 +102,6 @@ window.addEventListener("resize", () => {
   const contactList = document.querySelector(".scrolllist");
   if (!detailsDiv) return;
   const currentWidth = window.innerWidth;
-
   // Switches to mobile view and hides details
   if (currentWidth <= 900 && previousWidth > 900) {
       if (detailsDiv.classList.contains("show")) {
@@ -104,7 +109,6 @@ window.addEventListener("resize", () => {
           detailsDiv.classList.remove("show");
       }
   }
-
   // Switches to desktop view and shows contact list
   if (currentWidth > 900 && previousWidth <= 900) {
       if (detailsDiv.classList.contains("show")) {
@@ -114,7 +118,6 @@ window.addEventListener("resize", () => {
       contactList.classList.add("show");
       contactList.classList.remove("hide");
   }
-
   previousWidth = currentWidth;
 });
 
@@ -137,6 +140,5 @@ function createContactDiv(contact) {
       </div>
     </div>
   `;
-
   return contactDiv;
 }

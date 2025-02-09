@@ -107,14 +107,6 @@ async function postTask() {
     onload();
 }
 
-/**Validates whether a valid category has been selected.*/
-function validateCategory() {
-    let categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
-    let isValid = categoryText !== 'Select task category';
-    toggleCategoryError(isValid);
-    return isValid;
-}
-
 /**Toggles the error message for the category field.*/
 function toggleCategoryError(isValid) {
     let categoryElement = document.getElementById('dropdown-toggle-category');

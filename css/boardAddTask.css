@@ -272,6 +272,7 @@
 
 /* Overlay */
 .openTaskOverlayMain {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 525px;
@@ -285,6 +286,14 @@
     background: #FFFFFF;
     box-shadow: 0px 0px 4px 0px #00000029;
     transition: right 0.3s ease;
+}
+
+.openTaskOverlayContent {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 10px;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 .taskOverlay.show {
@@ -336,6 +345,7 @@
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     color: #000000;
+    overflow-wrap: break-word;
 }
 
 .openTaskOverlayDescription {
@@ -354,10 +364,11 @@
 
 .openTaskOverlayDateContainer {
     display: flex;
-    width: 445px;
+    width: 250px;
     height: 24px;
     gap: 25px;
     color: #42526E;
+    margin-bottom: 10px;
 }
 
 .openTaskOverlayDate {
@@ -379,6 +390,7 @@
     height: 24px;
     gap: 25px;
     color: #42526E;
+    margin-bottom: 10px;
 }
 
 .openTaskOverlayPriority {
@@ -391,7 +403,7 @@
 .openTaskOverlayAssignedContainer {
     display: flex;
     flex-direction: column;
-    width: 445px;
+    width: 250px;
     min-height: 150px;
     gap: 8px;
     color: #42526E;

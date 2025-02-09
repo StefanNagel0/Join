@@ -26,7 +26,6 @@ function animateLogo() {
         let logoSmall = document.getElementById('logoSmall');
         let logoImg = logoSmall.querySelector('img');
         document.body.style.backgroundColor = backgroundColor;
-        // logoMain.style.opacity = '0';
         logoSmall.style.opacity = '1';
         setTimeout(() => {
             logoSmall.style.top = '5%';
@@ -41,7 +40,6 @@ function animateLogo() {
             }, 200);
         }, 2000);
         setTimeout(() => {
-            // logoMain.style.opacity = '1';
             logoSmall.style.opacity = '0';
         }, 3000);
         setTimeout(() => {

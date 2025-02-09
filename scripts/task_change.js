@@ -171,7 +171,8 @@ function getCategory() {
 /**Collects the subtasks from the list and returns an array of objects.*/
 function getSubtasks() {
     return Array.from(document.querySelectorAll("#subtask-list li")).map(li => ({
-        text: li.textContent.trim(), completed: false
+        text: li.textContent.trim().replace('• ', ''),
+        completed: false
     }));
 }
 

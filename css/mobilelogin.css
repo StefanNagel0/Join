@@ -72,7 +72,6 @@
     }
 
     #password {
-        background: url(../assets/svg/lock.svg) no-repeat;
         background-position: calc(100% - 14px) center;
         padding-left: 15px;
         background-size: 20px;
@@ -199,7 +198,8 @@
     }
 
     .errorMessage {
-        max-width: 278px;
+        margin-bottom: 60px;
+        max-width: 350px;
     }
 
     .signUpArrow {

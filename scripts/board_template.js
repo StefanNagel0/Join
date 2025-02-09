@@ -138,7 +138,8 @@ function boardAddTaskTemplate() {
                         <img id="clear-subtask" class="d-none" src="../assets/svg/add_task/closeXSymbol.svg" alt="">
                         <img id="add-subtask" src="../assets/svg/add_task/add+symbol.svg" alt="">
                     </div>
-                    <ul id="subtask-list"></ul>
+                    <ul id="subtask-list">
+                    </ul>
                 </div>
             </div>
         </section>
@@ -165,37 +166,65 @@ function boardAddTaskTemplate() {
 }
 
 /* Renders the overlay from the task */
+// function taskOverlayTemplate(task, taskId) {
+//     return `
+//     <div class="openTaskOverlayMain">
+//         ${taskCategoryTemplate(task)}
+//         ${taskTitleTemplate(task)}
+//         ${taskDescriptionTemplate(task)}
+//         <div class="openTaskOverlayDateContainer">
+//             Due Date: ${taskDateTemplate(task)}
+//         </div>
+//         <div class="openTaskOverlayPriorityContainer">
+//             Priority: ${taskPriorityTemplateName(task)}
+//         </div>
+//         <div class="openTaskOverlayAssignedContainer">
+//             Assigned to: ${taskAssignedTemplateOverlay(task)}
+//         </div>
+//         ${taskStatusTemplate(task)}
+//         ${taskSubtasksTemplateOverlay(task, taskId)}
+//         <div class="openTaskOverlayButtonContainer">
+//             <button class="openTaskOverlayDeleteButton" onclick="deleteTask('${taskId}')"><img src="../assets/svg/delete.svg" alt=""> Delete</button>
+//             <img src="../assets/svg/balken.svg"></img>
+//             <button class="openTaskOverlayEditButton" onclick="editTask('${taskId}')"><img src="../assets/svg/edit.svg" alt=""> Edit</button>
+//         </div>
+//     </div>
+//     `
+// }
+
 function taskOverlayTemplate(task, taskId) {
     return `
     <div class="openTaskOverlayMain">
-        ${taskCategoryTemplate(task)}
-        ${taskTitleTemplate(task)}
-        ${taskDescriptionTemplate(task)}
-        <div class="openTaskOverlayDateContainer">
-            Due Date: ${taskDateTemplate(task)}
+        <div class="openTaskOverlayContent">
+            ${taskCategoryTemplate(task)}
+            ${taskTitleTemplate(task)}
+            ${taskDescriptionTemplate(task)}
+            <div class="openTaskOverlayDateContainer">
+                Due Date: ${taskDateTemplate(task)}
+            </div>
+            <div class="openTaskOverlayPriorityContainer">
+                Priority: ${taskPriorityTemplateName(task)}
+            </div>
+            <div class="openTaskOverlayAssignedContainer">
+                Assigned to: ${taskAssignedTemplateOverlay(task)}
+            </div>
+            ${taskStatusTemplate(task)}
+            ${taskSubtasksTemplateOverlay(task, taskId)}
         </div>
-        <div class="openTaskOverlayPriorityContainer">
-            Priority: ${taskPriorityTemplateName(task)}
-        </div>
-        <div class="openTaskOverlayAssignedContainer">
-            Assigned to: ${taskAssignedTemplateOverlay(task)}
-        </div>
-        ${taskStatusTemplate(task)}
-        ${taskSubtasksTemplateOverlay(task, taskId)}
         <div class="openTaskOverlayButtonContainer">
             <button class="openTaskOverlayDeleteButton" onclick="deleteTask('${taskId}')"><img src="../assets/svg/delete.svg" alt=""> Delete</button>
             <img src="../assets/svg/balken.svg"></img>
             <button class="openTaskOverlayEditButton" onclick="editTask('${taskId}')"><img src="../assets/svg/edit.svg" alt=""> Edit</button>
         </div>
     </div>
-    `
+    `;
 }
 
 /** Generates the HTML template for editing a task. */
 function taskEditTemplate(task, taskId) {
     return `
     <div class="openEditTaskOverlayMain">
-        ${taskEditTitel(task, taskId)}
+        ${taskEditTitle(task, taskId)}
         ${taskEditDescription(task, taskId)}
         ${taskEditDate(task, taskId)}
         <div class="openEditTaskOverlayPriority">

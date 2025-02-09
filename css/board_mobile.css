@@ -153,7 +153,7 @@
 
     .contentHeadingMain {
         width: calc(100vw - 150px);
-        margin-top: 20px;
+        margin-top: 120px;
     }
 
     .boardDropDown {
@@ -189,7 +189,7 @@
 
 @media screen and (max-width: 730px) {
     .content {
-        margin-bottom: 20px;
+        margin-bottom: 40px;
     }
 
     .openEditTaskOverlaySubtask {

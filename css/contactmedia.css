@@ -242,3 +242,9 @@
     width: 163px;
   }
 }
+
+@media screen and (max-width: 360px) {
+  #contactlist {
+    width: 100%;
+  }
+}

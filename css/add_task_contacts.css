@@ -157,3 +157,7 @@
     align-items: center;
     justify-content: center;
 }
+
+.contact-item input[type="checkbox"] {
+    pointer-events: none;
+}

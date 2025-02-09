@@ -27,6 +27,7 @@ function openOverlay(mode, index = null) {
   }
 }
 
+/* New Contact */
 function setNewContact() {
   return {
     title: document.querySelector(".overlay-left h1"),
@@ -174,6 +175,7 @@ function updateContactDetailsView() {
   }
 }
 
+/* gives the contact data for a given index */
 function contactListAdd() {
   const contactList = document.querySelector(".scrolllist");
   const detailsDiv = document.getElementById("contact-details");
@@ -183,7 +185,7 @@ function contactListAdd() {
   detailsDiv.classList.remove("show");
 }
 
-
+/* Updates the contact details view with the given contact data. */
 function showContactDetails(index) {
   const detailsDiv = document.getElementById("contact-details");
   const contact = contacts[index];
@@ -198,6 +200,7 @@ function showContactDetails(index) {
   detailsDiv.classList.remove("hide");
 }
 
+/* Sets up the overlay for editing an existing contact. */
 async function deleteContact(id) {
   const contactIndex = contacts.findIndex(contact => contact.id === id);
   if (contactIndex === -1) {
@@ -210,10 +213,11 @@ async function deleteContact(id) {
     }
     contacts.splice(contactIndex, 1);
     showContacts();
-  } catch (error) {}
+  } catch (error) {
+  }
 }
 
-/* Löscht einen Kontakt aus Firebase */
+/* deletes a Contact from Firebase */
 async function deleteContactFromFirebase(firebaseKey) {
   try {
     const response = await fetch(`${CONTACTS_URL}/contacts/${firebaseKey}.json`, { method: "DELETE" });
@@ -280,9 +284,7 @@ function createSuccessMessage(message, targetClass) {
       successDiv.classList.remove("show");
       successDiv.classList.add("hide");
     }, 3000);
-  } else {
-    console.error(`Keine \`div\` mit der Klasse '${targetClass}' gefunden.`);
-  }
+  } 
 }
 
 /* Validates the phone input field, allowing only numbers. */
@@ -308,3 +310,46 @@ function initializeEventListeners() {
 }
 
 document.addEventListener("DOMContentLoaded", initializeEventListeners);
+
+/* Toggles the collapse state of additional contact options. */
+function toggleCollapse() {
+  const content = document.getElementById("collapseContent");
+  const button = document.querySelector(".collapse-button");
+
+  if (content.classList.contains("open")) {
+    content.classList.remove("open");
+  } else {
+    content.classList.add("open");
+  }
+}
+
+/* Sets up the overlay for editing an existing contact. */
+function selectContactMain(selectedElement) {
+  const isSelected = selectedElement.classList.contains('selected');
+  const allContacts = document.querySelectorAll('.contactmain');
+  allContacts.forEach((element) => {
+    element.classList.remove('selected');
+  });
+  if (!isSelected) {
+    selectedElement.classList.add('selected');
+  }
+}
+const colors = [
+  "#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD",
+  "#2ECC71", "#E74C3C", "#3498DB", "#1ABC9C", "#D35400",
+  "#C0392B", "#9B59B6", "#1E8449", "#F39C12", "#34495E",
+  "#16A085"
+];
+
+let colorIndex = 0;
+let firstCall = true;
+
+/* Returns a random color from the colors array. */
+function getRandomColor() {
+  if (firstCall) {
+    firstCall = false;
+    return colors[colorIndex]; 
+  }
+  colorIndex = (colorIndex + 1) % colors.length; 
+  return colors[colorIndex];
+}

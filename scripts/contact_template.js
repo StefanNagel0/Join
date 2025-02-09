@@ -25,7 +25,7 @@ function showContactDetails(index) {
               <p>Better with a team</p>
               <hr style="width: 90px; height: 0; border: 3px solid; border-color: #29ABE2;">
           </div>
-          <button class="back-button arrow" onclick="showContactList()">←</button>
+          <button class="back-button arrow" onclick="showContactList()"><img src="../assets/svg/arrow-left-line.svg"></button>
       </div>
       <div class="details-container">
           <div class="detailscircle">

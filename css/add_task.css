@@ -283,6 +283,7 @@ textarea::placeholder {
     min-height: 100px;
     overflow-y: auto;
     margin-top: 8px;
+    scrollbar-width: none;
 }
 
 #subtask-list {
@@ -314,7 +315,7 @@ textarea::placeholder {
     display: flex;
     justify-content: space-between;
     max-width: 959px;
-    margin-top: 70px;
+    margin-top: 85px;
     align-items: end;
 }
 

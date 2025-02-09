@@ -198,21 +198,23 @@ function taskOverlayTemplate(task, taskId) {
 function taskEditTemplate(task, taskId) {
     return `
     <div class="openEditTaskOverlayMain">
-        ${taskEditTitle(task, taskId)}
-        ${taskEditDescription(task, taskId)}
-        ${taskEditDate(task, taskId)}
-        <div class="openEditTaskOverlayPriority">
-            ${taskEditPriority(task, taskId)}
-        </div>
-        <div class="openEditTaskOverlayAssigned">
-            ${taskEditAssignedTo(task, taskId)}
-        </div>
-        <div class="openEditTaskOverlaySubtasks">
-            ${taskEditSubtasks(task, taskId)}
+        <div class="openEditTaskOverlayContent">
+            ${taskEditTitle(task, taskId)}
+            ${taskEditDescription(task, taskId)}
+            ${taskEditDate(task, taskId)}
+            <div class="openEditTaskOverlayPriority">
+                ${taskEditPriority(task, taskId)}
+            </div>
+            <div class="openEditTaskOverlayAssigned">
+                ${taskEditAssignedTo(task, taskId)}
+            </div>
+            <div class="openEditTaskOverlaySubtasks">
+                ${taskEditSubtasks(task, taskId)}
+            </div>
         </div>
         <div class="openEditTaskSaveButtonSorting">
             <button class="openEditTaskSaveButton" onclick="saveTask('${taskId}')">Ok<img src="../assets/svg/add_task/check.svg" alt=""></button>
         </div>
     </div>
-    `
+    `;
 }

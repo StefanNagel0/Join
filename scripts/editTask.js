@@ -16,17 +16,10 @@ function editTask(taskId) {
         return;
     }
     let overlayRef = document.querySelector(".openTaskOverlayMain");
-    overlayRef.innerHTML = `
-        <input id="editTitle" type="text" maxlength="30" value="${task.title}">
-        <textarea id="editDescription">${task.description}</textarea>
-        ${taskEditDate(task)}
-        ${taskEditPriority(task)}
-        ${taskEditAssignedTo(task)}
-        ${taskEditSubtasks(task, taskId)}
-        <div class="saveButtonMain">
-        <button class="saveButtonOk" onclick="saveTask('${taskId}')">OK <img src="../assets/svg/add_task/check.svg" alt=""></button>
-        </div>
-    `;
+    overlayRef.innerHTML = taskEditTemplate(task, taskId);
+    document.querySelectorAll('.selected-contacts').forEach(element => {
+        element.style.position = 'static';
+    });
     applyActivePriorityButton(task.priority);
     document.querySelectorAll("#task-priority .prio-btn").forEach(button => {
         button.onclick = function () {

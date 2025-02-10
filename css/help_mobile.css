@@ -2,6 +2,8 @@
     .content{
         width: 100%;
         margin-left: 0;
+        height: calc(100vh - 162px);
+        margin-top: 82px;
     }
     .help{
         width: 90%;

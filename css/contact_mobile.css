@@ -38,7 +38,7 @@
     }
 }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 1000px) {
     .navbar_main {
         position: fixed;
         bottom: 0;
@@ -256,7 +256,7 @@
     }
 
     #contactlist {
-        width: 80%;
+        width: 100%;
     }
 
     .btnmob {

@@ -11,7 +11,50 @@ function getInitials(name) {
   return initials;
 }
 
+/* Edit Contact */
+function setupEditContact(index) {
+  const elements = setNewContact();
+  if (!contacts[index]) return; 
+  const contact = contacts[index];
+  populateEditContactFields(elements, contact);
+  updateCircleAppearance(elements.circleDiv, contact);
+  editIndex = index;
+  updateContactDetailsAfterEdit()
+}
 
+/* populates the edit contact fields with the given contact data. */
+function populateEditContactFields(elements, contact) {
+  elements.title.textContent = "Edit Contact";
+  elements.nameInput.value = contact.name;
+  elements.phoneInput.value = contact.phone;
+  elements.emailInput.value = contact.email;
+
+  elements.submitButton.innerHTML = `Save changes <img class="check" src="../assets/icons/contact/check.png">`;
+  elements.cancelButton.innerHTML = `Cancel <img class="cancelicon" src="../assets/icons/contact/cancel.png">`;
+  elements.cancelButton.setAttribute("onclick", "closeOverlay()"); 
+}
+
+/* Updates the circle appearance with initials and color. */
+function updateCircleAppearance(circleDiv, contact) {
+  circleDiv.textContent = getInitials(contact.name);
+  if (!contact.color) {
+    contact.color = getRandomColor();
+  }
+  circleDiv.style.backgroundColor = contact.color; 
+}
+
+/*After editing a contact, update the contact details view. */
+function updateContactDetailsAfterEdit() {
+  const detailsDiv = document.getElementById("contact-details");
+  if (!detailsDiv) return;
+  const openContactIndex = detailsDiv.getAttribute("data-contact-index");
+  if (openContactIndex !== null) {
+    const contactData = contacts[parseInt(openContactIndex)];
+    if (contactData) {
+      showContactDetails(parseInt(openContactIndex));
+    }
+  }
+}
 
 /* Opens an overlay for editing or adding a contact. */
 function openOverlay(mode, index = null) {
@@ -61,7 +104,7 @@ function initializeNewContactUI({ title, description, circleDiv, submitButton, c
   cancelButton.setAttribute("onclick", "closeOverlay()");
 }
 
-/* Setzt die Eingabefelder für Name, Telefon & E-Mail zurück */
+/* Input Reset */
 function resetContactInputs({ nameInput, phoneInput, emailInput }) {
   nameInput.value = "";
   phoneInput.value = "";
@@ -77,7 +120,7 @@ function setupNewContact() {
   editIndex = null;
 }
 
-/* Aktualisiert die UI-Texte und Buttons für das Hinzufügen eines neuen Kontakts */
+/* UI updates for adding a new contact. */
 function initializeNewContactUI({ title, description, circleDiv, submitButton, cancelButton }) {
   title.textContent = "Add Contact";
   description.textContent = "Tasks are better with a team!";
@@ -160,7 +203,7 @@ async function showContactList() {
   updateContactDetailsView(); 
 }
 
-/* Aktualisiert die Detailansicht, falls ein Kontakt geöffnet ist */
+/* Updates the contact details view with the given contact data. */
 function updateContactDetailsView() {
   const detailsDiv = document.getElementById("contact-details");
   if (!detailsDiv) return; 
@@ -190,15 +233,21 @@ function showContactDetails(index) {
   const detailsDiv = document.getElementById("contact-details");
   const contact = contacts[index];
   if (!contact) return;
-  detailsDiv.setAttribute(index);
+
+  // Setzt das Attribut korrekt (vorher war es falsch)
+  detailsDiv.setAttribute("data-contact-index", index);
+
+  // Aktualisiert die Detailansicht mit den neuen Daten
   detailsDiv.innerHTML = `
     <h2>${contact.name}</h2>
     <p>Email: ${contact.email}</p>
     <p>Telefon: ${contact.phone}</p>
   `;
+
   detailsDiv.classList.add("show");
   detailsDiv.classList.remove("hide");
 }
+
 
 /* Sets up the overlay for editing an existing contact. */
 async function deleteContact(id) {
@@ -263,14 +312,45 @@ function handleFormSubmit(event) {
 }
 
 /* Saves a new or edited contact. */
-function saveContact(name, phone, email) {
+async function saveContact(name, phone, email) {
+  let savedIndex = editIndex;
   if (editIndex !== null) {
-    contacts[editIndex] = { ...contacts[editIndex], name, phone, email };
-    createSuccessMessage("Contact successfully updated", "successedit");
+    await updateExistingContact(name, phone, email);
   } else {
-    contacts.push({ name, phone, email, color: getRandomColor() });
-    createSuccessMessage("Contact successfully created", "successcreate");
+    savedIndex = await createNewContact(name, phone, email); 
   }
+  closeOverlay(); 
+  showContacts();
+  if (savedIndex !== null) {
+    showContactDetails(savedIndex);
+  }
+}
+
+/* updates an existing contact with new data */
+async function updateExistingContact(name, phone, email) {
+  contacts[editIndex].name = name;
+  contacts[editIndex].phone = phone;
+  contacts[editIndex].email = email;
+
+  // Update Firebase entry if applicable
+  if (contacts[editIndex].firebaseKey) {
+    await updateContactInFirebase(contacts[editIndex].firebaseKey, { name, phone, email });
+  }
+
+  createSuccessMessage("Contact successfully updated", "successedit");
+}
+/* creates a new contact and adds it to the contacts array */
+function createNewContact(name, phone, email) {
+  const newContact = { 
+    id: generateUniqueId(), 
+    name, 
+    phone, 
+    email, 
+    color: getRandomColor() 
+  };
+
+  contacts.push(newContact);
+  createSuccessMessage("Contact successfully created", "successcreate");
 }
 
 /* Creates a success message and displays it temporarily. */

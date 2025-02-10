@@ -17,7 +17,7 @@
 }
 
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 1000px) {
   .infom {
     display: flex;
     align-items: flex-start;
@@ -106,6 +106,10 @@
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
   }
 
+  .bigletter {
+    padding: 0;
+  }
+
   .successcreate.show,
   .successedit.show {
     transform: translateX(0);
@@ -152,6 +156,7 @@
 
   .contactmain {
     gap: 0 !important;
+    padding: 15px 0 !important;
   }
 
   .flexdetails {

@@ -147,6 +147,7 @@
 @media screen and (max-width: 480px) {
   .overlay-left {
     width: 370px !important;
+    
   }
 
   .overlay-content {

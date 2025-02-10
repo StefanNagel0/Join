@@ -271,17 +271,17 @@
         bottom: 0px;
     }
 
-    .checkboxMain {
+    .checkboxMain{
         bottom: 0px;
     }
 
-    .loginHeaderH1 {
+    /* .loginHeaderH1 {
         font-size: 35px;
         margin-bottom: 4px;
     }
 
     .mobilelogin {
-        margin: 0px;
+        margin: 5px;
     }
 
     .loginForm {
@@ -295,5 +295,5 @@
     .rememberMeCtn {
         position: relative;
         bottom: 12px;
-    }
+    } */
 }

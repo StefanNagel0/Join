@@ -14,7 +14,7 @@ function animateLogo() {
 function animateLargeLogo() {
     let logo = document.getElementById('logo');
     logo.style.opacity = '1';
-    setTimeout(() => moveLogo(logo, '10%', '15%'), 150);
+    setTimeout(() => moveLogo(logo, '10%', '25%'), 150);
     setTimeout(() => logo.style.opacity = '0', 1400);
     setTimeout(toggleLoginPage, 1800);
 }
@@ -25,7 +25,7 @@ function animateSmallLogo() {
     let logoImg = logoSmall.querySelector('img');
     document.body.style.backgroundColor = 'rgb(42,54,71)';
     logoSmall.style.opacity = '1';
-    setTimeout(() => moveLogo(logoSmall, '5%', '10%'), 2000);
+    setTimeout(() => moveLogo(logoSmall, '0%', '10%', 0.5), 2000);
     setTimeout(() => logoImg.src = '../assets/svg/logo.svg', 2150);
     setTimeout(() => document.body.style.backgroundColor = "transparent", 2200);
     setTimeout(() => logoSmall.style.opacity = '0', 3000);
@@ -33,10 +33,10 @@ function animateSmallLogo() {
 }
 
 /** Moves the logo to a new position */
-function moveLogo(logo, top, left) {
+function moveLogo(logo, top, left, scale = 1) {
     logo.style.top = top;
     logo.style.left = left;
-    logo.style.transform = 'translate(0, 0)';
+    logo.style.transform = `translate(0, 0) scale(${scale})`;
 }
 
 /**Toggles the login page by hiding the logo and displaying the login template.*/

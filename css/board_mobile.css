@@ -88,6 +88,7 @@
         width: calc(100vw - 400px);
         overflow-x: scroll;
         height: 300px;
+        margin-top: 0px;
     }
 
     .board {
@@ -171,6 +172,15 @@
 
     .taskContainer {
         margin-top: 0px;
+    }
+
+    .taskCategorySwitchContainer {
+        flex-direction: row-reverse;
+    }
+
+    .openTaskOverlayChangeButton {
+        display: flex;
+        z-index: 100;
     }
 }
 

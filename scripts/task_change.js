@@ -49,7 +49,7 @@ function createTaskElement(task, taskId) {
     taskElement.innerHTML = `
         <div draggable="true" ondragstart="dragInit(event, '${taskId}')" class="taskContainer" onclick="openTaskOverlay('${taskId}')">
             <div class="taskChildContainer">
-                ${taskCategoryTemplate(task)}
+                ${taskCategoryTemplate(task, taskId)}
                 <div class="taskTitleContainer">
                     ${taskTitleTemplate(task)}
                     ${taskDescriptionTemplate(task)}
@@ -294,3 +294,52 @@ async function fixTasksMainCategory() {
     }
 }
 fixTasksMainCategory();
+
+/**
+ * Toggles the display of the task switch overlay for a given task.
+ * Updates the overlay content with task switch options.
+ */
+function taskSwitchMainCategory(taskId, task) {
+    console.log(taskId, task);
+    let overlayRef = document.getElementById("openTaskSwitchOverlay");
+    overlayRef.innerHTML = taskSwitchTemplate(task, taskId);
+}
+
+/**
+ * Generates an HTML template for task status change buttons.
+ * The buttons allow users to move a task between different stages:
+ * ToDo, In Progress, Await Feedback, and Done.
+ * */
+function taskSwitchTemplate(task, taskId) {
+    return `
+        <div class="taskSwitchContainer">
+            <button onclick="event.stopPropagation(), moveToCategory('${taskId}', 'ToDo')">ToDo</button>
+            <button onclick="event.stopPropagation(), moveToCategory('${taskId}', 'InProgress')">In Progress</button>
+            <button onclick="event.stopPropagation(), moveToCategory('${taskId}', 'AwaitFeedback')">Await Feedback</button>
+            <button onclick="event.stopPropagation(), moveToCategory('${taskId}', 'Done')">Done</button>
+        </div>
+    `;
+}
+
+/**
+ * Toggles the visibility of the task switch overlay for a specific task.
+ */
+function taskSwitchMainCategory(taskId, currentCategory) {
+    let overlayRef = document.getElementById(`taskSwitchOverlay-${taskId}`);
+    overlayRef.style.display = overlayRef.style.display === "none" ? "block" : "none";
+}
+
+/**
+ * Moves a task to a new category.
+ * Updates the main category of the task with the given taskId,
+ * saves the changes to the database, and refreshes the task display.
+ * Logs an error if the task is not found.
+*/
+async function moveToCategory(taskId, newCategory) {
+    let task = globalTasks[taskId];
+    if (!task) return console.error(`Task with ID ${taskId} not found.`);
+    task.mainCategory = newCategory;
+    await updateTaskInDatabase(taskId, task);
+    displayTasks(globalTasks);
+    closeTaskOverlay();
+}

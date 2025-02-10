@@ -11,7 +11,17 @@ function addTaskSuccessTemplate() {
 function taskCategoryTemplate(task, taskId) {
     let category = task.category === "User Story" ? "User Story" : "Technical Task";
     let categoryClass = category === "User Story" ? "taskCategoryUserStory" : "taskCategoryTechnical";
-    return `<button class="openTaskOverlayChangeButton" onclick="taskSwitchStatusTemplate(${taskId}, ${task})"><img src="../assets/svg/add_task/closeXSymbol.svg" alt=""></button><p id="taskCategoryID" class="taskDescription ${categoryClass}">${category}</p>`;
+    return `
+    <div class="taskCategorySwitchContainer">
+        <button class="openTaskOverlayChangeButton" onclick="event.stopPropagation(), taskSwitchMainCategory('${taskId}', '${task.mainCategory}')">
+            <img src="../assets/svg/add_task/closeXSymbol.svg" alt="">
+        </button>
+        <div id="taskSwitchOverlay-${taskId}" class="taskSwitchOverlay" style="display: none;">
+            ${taskSwitchTemplate(task.mainCategory, taskId)}
+        </div>
+    <p id="taskCategoryID" class="taskDescription ${categoryClass}">${category}</p>
+    </div>
+    `;
 }
 
 /**Renders the title of the task.*/

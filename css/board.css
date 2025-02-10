@@ -57,7 +57,7 @@
     padding: 8px 16px 8px 16px;
     gap: 10px;
     border-radius: 10px;
-    background: rgb(246,247,248);
+    background: rgb(246, 247, 248);
 }
 
 .contentHeadingSearch {
@@ -81,13 +81,13 @@
     background-size: 28px;
 }
 
-.contentHeadingSearch::-webkit-search-cancel-button{
+.contentHeadingSearch::-webkit-search-cancel-button {
     -webkit-appearance: none;
 }
 
 .contentHeadingSearch:focus {
     outline: none !important;
-    border:1px solid rgb(41, 171, 226);
+    border: 1px solid rgb(41, 171, 226);
 }
 
 .addTaskButton {
@@ -308,4 +308,52 @@
     border-radius: 10px;
     border: 1px solid #D1D1D1;
     color: #D1D1D1;
+}
+
+.taskSwitchOverlay {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 1000;
+}
+
+.taskSwitchContainer button {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+}
+
+.taskSwitchContainer button:hover {
+    background-color: #e0e0e0;
+}
+
+.openTaskOverlayChangeButton img {
+    width: 20px;
+    height: 20px;
+}
+
+.openTaskOverlayChangeButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    line-height: 25.2px;
+    border: 2px solid #2A3647;
+    color: #2A3647;
+    cursor: pointer;
+    display: none;
+}
+
+.taskCategorySwitchContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
 }

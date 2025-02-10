@@ -170,7 +170,8 @@ function taskOverlayTemplate(task, taskId) {
     return `
     <div class="openTaskOverlayMain">
         <div class="openTaskOverlayContent">
-            ${taskCategoryTemplate(task)}
+        <div id="openTaskSwitchOverlay"></div>
+            ${taskCategoryTemplate(task, taskId)}
             ${taskTitleTemplate(task)}
             ${taskDescriptionTemplate(task)}
             <div class="openTaskOverlayDateContainer">

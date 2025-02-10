@@ -27,13 +27,14 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        margin: 50px 0 0 0;
+        margin: 20px 0 0 0;
     }
 
     .mainLogin {
         width: 94%;
         margin: auto;
-        padding: 24px 0px;
+        height: 510px;
+        padding: 5px 0px;
         max-width: 440px;
     }
 
@@ -51,7 +52,8 @@
     }
 
     .signUpArrow {
-        margin-right: 350px;
+        margin-right: 300px;
+        margin-top: 50px;
     }
 
     .loginForm {
@@ -120,16 +122,24 @@
         align-items: center;
     }
 
+    .errorMessage {
+        margin-bottom: 60px;
+        max-width: 350px;
+    }
+
     .checkboxMain {
         width: 250px;
         height: 20px;
     }
 
     .signUpMain {
+        position: relative;
         display: flex;
         flex-direction: row;
+        bottom: 40px;
         gap: 5px;
         margin-right: 150px;
+        margin-bottom: 40px;
     }
 }
 
@@ -151,7 +161,7 @@
     }
 
     .signUpArrow {
-        margin-right: 330px;
+        margin-right: 350px;
     }
 
     header {
@@ -172,8 +182,8 @@
 @media (max-width: 480px) {
     header {
         gap: 15px;
-        padding: 20px;
-        margin-bottom: 30px;
+        padding: 0px;
+        margin-bottom: 0px;
     }
 
     header img {
@@ -185,11 +195,10 @@
     }
 
     .privacy {
-        margin-top: 20px;
+        margin-top: 10px;
+        margin-bottom: 0px;
     }
 }
-
-
 
 @media (max-width: 426px) {
 
@@ -209,6 +218,8 @@
 
 @media (max-width: 400px) {
     .checkboxMain {
+        position: relative;
+        bottom: 0px;
         width: 150px;
         height: 20px;
         padding-bottom: 15px;
@@ -224,11 +235,41 @@
 }
 
 @media (max-width: 376px) {
+    .signUpCtn {
+        position: relative;
+        bottom: 0px;
+
+    }
+
+    .signUpMain {
+        position: relative;
+        bottom: 40px;
+    }
+
+    .signUpErrorMain {
+        position: relative;
+        bottom: 0px;
+        min-width: 300px;
+        min-height: 40px;
+        margin-bottom: 10px;
+    }
+
     .signUpArrow {
         margin-right: 250px;
+        margin-bottom: 370px;
     }
 
     .signUpHeaderH1 {
+        position: relative;
         font-size: 50px;
+        bottom: 0px;
+    }
+
+    .signUpButton {
+        bottom: 0px;
+    }
+
+    .checkboxMain{
+        bottom: 0px;
     }
 }

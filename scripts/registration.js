@@ -13,9 +13,9 @@ function toggleSignUpPage() {
 
 /** Enables or disables the "Sign up" button based on the checkbox state. */
 function toggleSignUpButton() {
-    const signUpButton = document.querySelector('.signUpButton');
-    const checkbox = document.getElementById('checkbox');
-    const [name, email, password, confirmPassword] = ['name', 'email', 'password', 'confirmPassword'].map(id => document.getElementById(id).value);
+    let signUpButton = document.querySelector('.signUpButton');
+    let checkbox = document.getElementById('checkbox');
+    let [name, email, password, confirmPassword] = ['name', 'email', 'password', 'confirmPassword'].map(id => document.getElementById(id).value);
 
     if (name && email && password && confirmPassword && checkbox.checked) {
         signUpButton.disabled = false;
@@ -29,8 +29,8 @@ function toggleSignUpButton() {
 /** Handles the registration process by validating the input fields and submitting the form. */
 function signUp(event) {
     event.preventDefault();
-    const [name, email, password, confirmPassword] = ['name', 'email', 'password', 'confirmPassword'].map(id => document.getElementById(id).value.trim());
-    const checkbox = document.getElementById("checkbox");
+    let [name, email, password, confirmPassword] = ['name', 'email', 'password', 'confirmPassword'].map(id => document.getElementById(id).value.trim());
+    let checkbox = document.getElementById("checkbox");
     if (![nameValid(name), EmailValid(email), PasswordsMatching(password, confirmPassword), PasswordValid(password)].every(Boolean)) return;
     mainCheckTaken();
     userSuccessRegistration();
@@ -78,14 +78,16 @@ function PasswordsMatching(password, confirmPassword) {
 
 /**Validates if the password meets the required complexity.*/
 function PasswordValid(password) {
-    if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
+    // (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password))
+    if (password.length < 8) {
         document.getElementById("password").style.borderColor = "red";
         document.getElementById("confirmPassword").style.borderColor = "red";
         setTimeout(function () {
             document.getElementById("password").style.borderColor = "rgba(204, 204, 204, 1)";
             document.getElementById("confirmPassword").style.borderColor = "rgba(204, 204, 204, 1)";
         }, 2000);
-        showErrorPassword('Passwort: mind. 8 Zeichen, Groß-/Kleinbuchstabe, Zahl.');
+        // showErrorPassword('Passwort: mind. 8 Zeichen, Groß-/Kleinbuchstabe, Zahl.');
+        showErrorPassword('Passwort: mind. 8 Zeichen.');
         return false;
     }
     return true;

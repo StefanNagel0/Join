@@ -8,10 +8,10 @@ function addTaskSuccessTemplate() {
 }
 
 /**Renders the category of the task.*/
-function taskCategoryTemplate(task) {
-    const category = task.category === "User Story" ? "User Story" : "Technical Task";
-    const categoryClass = category === "User Story" ? "taskCategoryUserStory" : "taskCategoryTechnical";
-    return `<p id="taskCategoryID" class="taskDescription ${categoryClass}">${category}</p>`;
+function taskCategoryTemplate(task, taskId) {
+    let category = task.category === "User Story" ? "User Story" : "Technical Task";
+    let categoryClass = category === "User Story" ? "taskCategoryUserStory" : "taskCategoryTechnical";
+    return `<button class="openTaskOverlayChangeButton" onclick="taskSwitchStatusTemplate(${taskId}, ${task})"><img src="../assets/svg/add_task/closeXSymbol.svg" alt=""></button><p id="taskCategoryID" class="taskDescription ${categoryClass}">${category}</p>`;
 }
 
 /**Renders the title of the task.*/
@@ -21,7 +21,7 @@ function taskTitleTemplate(task) {
 
 /**Renders the description of the task.*/
 function taskDescriptionTemplate(task) {
-    const truncated = task.description.length > 30 ? task.description.substring(0, 30) + "..." : task.description;
+    let truncated = task.description.length > 30 ? task.description.substring(0, 30) + "..." : task.description;
     return `<p id="taskDescriptionID" class="taskDescription">${truncated}</p>`;
 }
 
@@ -33,9 +33,9 @@ function taskDateTemplate(task) {
 /** Renders the subtask of the task */
 function taskSubtasksTemplate(task, taskId) {
     if (task.subtasks && task.subtasks.length > 0) {
-        const completedSubtasks = task.subtasks.filter(subtask => subtask && subtask.completed).length;
-        const totalSubtasks = task.subtasks.filter(subtask => subtask).length;
-        const progressPercent = (completedSubtasks / totalSubtasks) * 100;
+        let completedSubtasks = task.subtasks.filter(subtask => subtask && subtask.completed).length;
+        let totalSubtasks = task.subtasks.filter(subtask => subtask).length;
+        let progressPercent = (completedSubtasks / totalSubtasks) * 100;
         return `
         <div class="taskSubtaskContainer">
             <div class="progressBarContainer">
@@ -68,9 +68,9 @@ function taskSubtasksTemplateOverlay(task, taskId) {
 
 /**Opens the task overlay and populates it with task details.*/
 function openTaskOverlay(taskId) {
-    const task = globalTasks[taskId];
+    let task = globalTasks[taskId];
     if (!task) return console.error(`Task with ID ${taskId} not found.`);
-    const overlayRef = document.querySelector(".openTaskOverlayMain");
+    let overlayRef = document.querySelector(".openTaskOverlayMain");
     if (!overlayRef) return console.error("Overlay not found.");
     overlayRef.innerHTML = getTaskOverlayContent(task, taskId);
     overlayRef.classList.add('active');
@@ -93,7 +93,7 @@ function getTaskOverlayContent(task, taskId) {
 
 /** Fetches a single task from the database */
 async function getOneTask(taskId) {
-    const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`);
+    let response = await fetch(`${BASE_URL}/tasks/${taskId}.json`);
     if (!response.ok) {
         throw new Error(`Fehler beim Laden der Aufgabe: ${response.statusText}`);
     }
@@ -121,11 +121,11 @@ async function updateSubtaskProcess(taskId, task) {
         console.error('Task or subtasks not defined');
         return;
     }
-    const completedSubtasks = task.subtasks.filter(sub => sub.completed).length;
-    const totalSubtasks = task.subtasks.length;
-    const progressPercent = (completedSubtasks / totalSubtasks) * 100;
-    const progressBar = document.querySelector(`.progressBar[data-task-id="${taskId}"]`);
-    const progressText = document.querySelector(`.progressText[data-task-id="${taskId}"]`);
+    let completedSubtasks = task.subtasks.filter(sub => sub.completed).length;
+    let totalSubtasks = task.subtasks.length;
+    let progressPercent = (completedSubtasks / totalSubtasks) * 100;
+    let progressBar = document.querySelector(`.progressBar[data-task-id="${taskId}"]`);
+    let progressText = document.querySelector(`.progressText[data-task-id="${taskId}"]`);
     if (progressBar) progressBar.style.width = `${progressPercent}%`;
     if (progressText) progressText.textContent = `${completedSubtasks}/${totalSubtasks} Subtasks`;
     taskSubtasksTemplate(taskId, task);
@@ -156,7 +156,7 @@ function taskAssignedTemplate(task) {
 
 /** Generates the HTML for an assigned employee.*/
 function renderAssignee(name) {
-    const initials = name.split(" ").map(part => part.charAt(0).toUpperCase()).join("");
+    let initials = name.split(" ").map(part => part.charAt(0).toUpperCase()).join("");
     return `<div class="assigned-contact"><div class="initials-circle-board" style="background-color: ${getContactColor(name)};">${initials}</div></div>`;
 }
 
@@ -170,7 +170,7 @@ function taskAssignedTemplateOverlay(task) {
 
 /** Generates the HTML for an assigned employee in the overlay.*/
 function renderOverlayAssignee(name) {
-    const initials = name.split(" ").map(part => part.charAt(0)).join("");
+    let initials = name.split(" ").map(part => part.charAt(0)).join("");
     return `<p class="board_overlay_contact_box">
                 <span class="initialsOverlay" style="background-color: ${getContactColor(name)};">${initials}</span> ${name}
             </p>`;

@@ -116,6 +116,10 @@
     .dropdown-content {
         width: 100%;
     }
+
+    .task_date_margin{
+        margin-top: 46px;
+    }
 }
 
 @media(max-width:400px) {

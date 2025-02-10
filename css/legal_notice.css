@@ -24,5 +24,8 @@ h1 {
 
     .content_legal {
         margin-top: 80px;
+        height: calc(100vh - 159px);
+        overflow-y: auto;
+        padding: 12px;
     }
 }

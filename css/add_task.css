@@ -91,6 +91,7 @@
     border: 1px solid #D1D1D1;
     max-width: 440px;
     max-height: 132px;
+    resize: none;
 }
 
 #task-title {
@@ -127,7 +128,7 @@ textarea::placeholder {
 .add_task_right_box label {
     font-weight: 400;
     color: #2A3647;
-    margin-top: 16px;
+    /* margin-top: 16px; */
 }
 
 #task-category:invalid {

@@ -299,6 +299,7 @@
     max-width: 100%;
     min-width: 100%;
     min-height: 102px;
+    resize: none;
 }
 
 #editDueDate {

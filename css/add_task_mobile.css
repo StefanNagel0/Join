@@ -129,3 +129,9 @@
         font-size: 17px;
     }
 }
+
+@media(max-height:705px) {
+    .dropdown-content {
+        max-height: calc(100vh - 460px);
+    }
+}

@@ -1,3 +1,7 @@
+/**
+ * URL for Firebase Realtime Database.
+ * @constant {string}
+ */
 const CONTACTS_URL = "https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/contacts";
 
 /**

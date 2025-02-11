@@ -1,4 +1,7 @@
-/**Generates and returns an HTML login template string.*/
+/**
+ * Generates the HTML template for the login page.
+ * @returns {string} the HTML template for the login page
+ */
 function loginTemplate() {
     return `
     <section class="max-width">

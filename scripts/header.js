@@ -1,15 +1,24 @@
-/** Initializes the header by setting up the user button. */
+/**
+ * Initializes the header by setting up the user button with the user's initials.
+ */
 function initHeader() {
     initializeUserButton();
 }
 
-/** Initializes the user button and sets the user initials. */
+/**
+ * Initializes the user button by setting up the user's initials.
+ * @async
+ */
 async function initializeUserButton() {
     const userInitialsButton = document.getElementById('user-initials-button');
     await setUserInitials(userInitialsButton);
 }
 
-/** Sets the user initials to the button text content. */
+/**
+ * Sets the user's initials in the given button element.
+ * @param {HTMLElement} button the button element to set the initials in
+ * @returns {Promise<void>}
+ */
 async function setUserInitials(button) {
     const userName = await getCurrentUserName();
     const initials = (typeof userName === 'string' && userName.toLowerCase() === "guest")
@@ -18,7 +27,10 @@ async function setUserInitials(button) {
     button.textContent = initials;
 }
 
-/** Retrieves the current user's name based on the logged-in email. */
+/**
+ * Retrieves the user name of the currently logged-in user from the database.
+ * @returns {Promise<string>} the user name of the currently logged-in user, or "Guest" if the user is not logged in or the retrieval fails.
+ */
 async function getCurrentUserName() {
     const loggedInEmail = localStorage.getItem('loggedInEmail');
     if (!loggedInEmail || loggedInEmail === 'guest@example.com') {
@@ -36,7 +48,11 @@ async function getCurrentUserName() {
     return "Guest";
 }
 
-/** Generates initials from a name by taking the first letter of the first and last name. */
+/**
+ * Generates initials from a name by taking the first letter of the first and last name.
+ * @param {string} name - The name from which to extract the initials.
+ * @returns {string} The initials of the given name.
+ */
 function getInitials(name) {
     if (!name || typeof name !== 'string') return '';
     const parts = name.trim().split(/\s+/);
@@ -46,14 +62,22 @@ function getInitials(name) {
     return (parts[0][0] + parts[1][0]).toUpperCase();
 }
 
-/** Toggles the visibility of the user popup. */
+/**
+ * Toggles the visibility of the user popup.
+ * Stops the event from propagating to parent elements and toggles
+ * the 'd-none' class on the user popup element to show or hide it.
+ * @param {Event} event - The event object associated with the toggle action.
+ */
 function toggleUserPopup(event) {
     const userPopup = document.getElementById('user-popup');
     event.stopPropagation();
     userPopup.classList.toggle('d-none');
 }
 
-/** Closes the user popup if the user clicks outside the popup or the user initials button. */
+/**
+ * Closes the user popup if it is currently open and the event target is not the user popup or its toggle button.
+ * @param {Event} event - The event object associated with the close action.
+ */
 function closePopup(event) {
     const userPopup = document.getElementById('user-popup');
     const userInitialsButton = document.getElementById('user-initials-button');
@@ -62,6 +86,4 @@ function closePopup(event) {
         userPopup.classList.add('d-none');
     }
 }
-
-/** Initializes the header by calling the `initHeader` function when the document is loaded. */
 document.addEventListener('DOMContentLoaded', initHeader);

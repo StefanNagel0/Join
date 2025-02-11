@@ -1,17 +1,27 @@
-/**Initializes the registration page and button state.*/
+/**
+ * Initializes the registration page by displaying the registration page overlay
+ * and enabling or disabling the "Sign up" button based on the checkbox state.
+ */
 function reginit() {
     toggleSignUpPage();
     toggleSignUpButton();
 }
 
-/**Displays the registration page and injects the registration template.*/
+/**
+ * Displays the registration page overlay.
+ * @return {void} - The function does not return a value.
+ */
 function toggleSignUpPage() {
     let overlayRef = document.getElementById("registrationPage");
     overlayRef.innerHTML = registrationTemplate();
     overlayRef.style.display = "block";
 }
 
-/** Enables or disables the "Sign up" button based on the checkbox state. */
+/**
+ * Toggles the "Sign up" button's enabled state and styling based on the input fields' values
+ * and the checkbox state. If all input fields are filled and the checkbox is checked, the 
+ * button is enabled with active styling. Otherwise, it is disabled and styled accordingly.
+ */
 function toggleSignUpButton() {
     let signUpButton = document.querySelector('.signUpButton');
     let checkbox = document.getElementById('checkbox');
@@ -26,7 +36,10 @@ function toggleSignUpButton() {
     }
 }
 
-/** Handles the registration process by validating the input fields and submitting the form. */
+/**
+ * Handles the sign up form submission.
+ * @param {Event} event - The form submission event.
+ */
 function signUp(event) {
     event.preventDefault();
     let [name, email, password, confirmPassword] = ['name', 'email', 'password', 'confirmPassword'].map(id => document.getElementById(id).value.trim());
@@ -36,7 +49,12 @@ function signUp(event) {
     userSuccessRegistration();
 }
 
-/** Validates if the provided name contains only alphabetic characters.*/
+/**
+ * Checks if the given name is valid.
+ * A name is considered valid if it only contains letters and whitespace.
+ * @param {string} name - The name to validate.
+ * @returns {boolean} - True if the name is valid, false otherwise.
+ */
 function nameValid(name) {
     if (!/^[a-zA-Z\s]+$/g.test(name)) {
         showError('Please enter a valid name.');
@@ -45,7 +63,12 @@ function nameValid(name) {
     return true;
 }
 
-/** Validates the format of an email address.*/
+/**
+ * Checks if the given email is valid.
+ * An email is considered valid if it matches the given regular expression.
+ * @param {string} email - The email to validate.
+ * @returns {boolean} - True if the email is valid, false otherwise.
+ */
 function EmailValid(email) {
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(email)) {
         let emailInput = document.getElementById("email");
@@ -61,7 +84,14 @@ function EmailValid(email) {
     return true;
 }
 
-/**Checks if the password and confirmation password match.*/
+/**
+ * Checks if the given password and confirm password match.
+ * If they don't match, sets the border color of the password and confirm password input fields to red and shows an error message.
+ * After 2 seconds, resets the border color of the input fields back to default.
+ * @param {string} password - The password to compare.
+ * @param {string} confirmPassword - The confirm password to compare.
+ * @returns {boolean} - True if the passwords match, false otherwise.
+ */
 function PasswordsMatching(password, confirmPassword) {
     if (password !== confirmPassword) {
         document.getElementById("password").style.borderColor = "red";
@@ -76,7 +106,14 @@ function PasswordsMatching(password, confirmPassword) {
     return true;
 }
 
-/**Validates if the password meets the required complexity.*/
+/**
+ * Checks if the given password is valid.
+ * A password is considered valid if it is at least 8 characters long.
+ * If the password is invalid, sets the border color of the password and confirm password input fields to red and shows an error message.
+ * After 2 seconds, resets the border color of the input fields back to default.
+ * @param {string} password - The password to validate.
+ * @returns {boolean} - True if the password is valid, false otherwise.
+ */
 function PasswordValid(password) {
     // (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password))
     if (password.length < 8) {
@@ -93,7 +130,13 @@ function PasswordValid(password) {
     return true;
 }
 
-/** Toggles the visibility of the password input field and updates the eye icon.*/
+/**
+ * Toggles the visibility of the given password input field.
+ * If the password is currently hidden, it is shown as plain text and the eye icon is changed to an open eye.
+ * If the password is currently visible, it is hidden and the eye icon is changed to a closed eye.
+ * @param {string} inputId - The ID of the password input field to toggle.
+ * @param {HTMLElement} eyeIcon - The eye icon element that is used to toggle the password visibility.
+ */
 function togglePasswordVisibility(inputId, eyeIcon) {
     let passwordField = document.getElementById(inputId);
     let isPasswordHidden = passwordField.type === 'password';
@@ -107,7 +150,12 @@ function togglePasswordVisibility(inputId, eyeIcon) {
     }
 }
 
-/**Displays an error message.*/
+/**
+ * Displays an error message in the registration page.
+ * Retrieves the error message element and displays the message, then
+ * sets a timeout to hide the message after 3 seconds.
+ * @param {string} message - The error message to display.
+ */
 function showError(message) {
     let errorMessage = document.getElementById('signUpError');
     if (errorMessage) {
@@ -119,7 +167,12 @@ function showError(message) {
     }
 }
 
-/**Displays an error message.*/
+/**
+ * Displays an error message for the password input on the registration page.
+ * Sets the error message text content and makes it visible.
+ * After 3 seconds, the error message is hidden.
+ * @param {string} message - The error message to display.
+ */
 function showErrorPassword(message) {
     let errorMessage = document.getElementById('passwordError');
     if (errorMessage) {
@@ -131,7 +184,12 @@ function showErrorPassword(message) {
     }
 }
 
-/**Displays a success message upon successful registration and hides the registration page.*/
+/**
+ * Displays a success message after a user has successfully signed up.
+ * Retrieves the overlay element and sets its innerHTML to the success message.
+ * Sets the display of the overlay element to block and the display of the registration page to none.
+ * After 4 seconds, redirects the user to the login page and sets the display of the overlay element back to none.
+ */
 function userSuccessRegistration() {
     let overlayRef = document.getElementById("signUpSuccess");
     overlayRef.innerHTML = signUpSuccess();

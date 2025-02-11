@@ -1,4 +1,8 @@
-/** tasks are loaded in */
+/**
+ * Executes when the document is fully loaded.
+ * Initiates the loading of tasks from the specified path.
+ */
+
 function onload() {
     loadTask("/tasks");
 }

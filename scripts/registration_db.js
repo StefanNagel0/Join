@@ -1,7 +1,16 @@
-/**URL of the Firebase Realtime Database.*/
 const REGISTRATIONCOMPLETE_URL = "https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/";
 const REGISTRATION_URL = "https://secret-27a6b-default-rtdb.europe-west1.firebasedatabase.app/registrations";
-/**Saves the registration data to the database.*/
+
+/**
+ * Sends registration data to the specified path in the Firebase database.
+ * Uses the POST method to store the data.
+ * Throws an error if the request fails or the response is not OK.
+ * 
+ * @param {string} path - The path to which the registration data will be sent. Defaults to "/registrations".
+ * @param {Object} data - The registration data to be sent.
+ * @throws {Error} If the request fails, or the response is not OK.
+ * @returns {Promise<void>} - A promise that resolves when the registration data has been successfully sent.
+ */
 async function updateRegistration(path = "/registrations", data) {
     let response = await fetch(REGISTRATIONCOMPLETE_URL + path + ".json", {
         method: "POST",
@@ -15,7 +24,11 @@ async function updateRegistration(path = "/registrations", data) {
     }
 }
 
-/** Creates a registration object from a form.*/
+/**
+ * Retrieves the registration data from the registration form and returns it as an object.
+ * @param {HTMLFormElement} regiForm - The registration form from which to retrieve the data.
+ * @returns {{name: string, email: string, password: string}} - An object with the registration data.
+ */
 function createRegistration(regiForm) {
     let data = {
         name: regiForm.querySelector('#name').value.trim(),
@@ -25,8 +38,14 @@ function createRegistration(regiForm) {
     return data;
 }
 
-/** Saves the registration data to the database. */
-
+/**
+ * Saves the registration data from the registration form to the Firebase database.
+ * Retrieves the registration data from the registration form, and sends it to the Firebase database using the POST method.
+ * Calls the userSuccessRegistration function when the registration data has been successfully sent.
+ * Logs an error if the request fails or the response is not OK.
+ * @throws {Error} If the request fails, or the response is not OK.
+ * @returns {Promise<void>} - A promise that resolves when the registration data has been successfully sent.
+ */
 async function saveRegistration() {
     let regiForm = document.querySelector('.loginForm');
     let data = createRegistration(regiForm);
@@ -37,12 +56,21 @@ async function saveRegistration() {
     });
 }
 
-/** Loads the registration database from the API.*/
+/**
+ * Retrieves the registration data from the Firebase database.
+ * Makes a GET request to the REGISTRATION_URL, and returns the response as a JSON object.
+ * @returns {Promise<Object>} - A promise that resolves with the registration data.
+ */
 async function loadRegistration() {
     return fetch(REGISTRATION_URL + ".json").then((userId) => userId.json());
 }
 
-/** Checks if a username is already taken.*/
+/**
+ * Checks if a name is already taken.
+ * Makes a GET request to the REGISTRATION_URL, and checks if the response contains the given name.
+ * @param {string} name - The name to check.
+ * @returns {Promise<boolean>} - A promise that resolves with true if the name is taken, or false otherwise.
+ */
 async function isNameTaken(name) {
     let usersId = loadRegistration();
     if (usersId === name) {
@@ -52,7 +80,13 @@ async function isNameTaken(name) {
     }
 }
 
-/** Checks if an email is already taken.*/
+/**
+ * Checks if the given email is already taken in the registration database.
+ * Makes a GET request to the REGISTRATION_URL and verifies if the 
+ * response contains the provided email.
+ * @param {string} email - The email address to check.
+ * @returns {Promise<boolean>} - A promise resolving to true if the email is taken, or false otherwise.
+ */
 async function isEmailTaken(email) {
     let usersId = loadRegistration();
     if (usersId === email) {
@@ -62,7 +96,12 @@ async function isEmailTaken(email) {
     }
 }
 
-/** Checks if the username or email is already taken and saves the registration if available.*/
+/**
+ * Checks if the name and email are already taken in the registration database.
+ * If the name or email is taken, shows an error message and returns.
+ * Otherwise, saves the registration data in the database.
+ * @returns {void} - The function does not return a value.
+ */
 async function mainCheckTaken() {
     let regiForm = document.querySelector('.loginForm');
     let data = createRegistration(regiForm);

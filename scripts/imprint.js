@@ -1,4 +1,7 @@
-/**Highlights the keywords in the text by wrapping them in a `<span>` element
+/**
+ * Highlights all occurrences of the given keywords in the text element.
+ *
+ * @param {array} keywords - An array of keywords to highlight.
  */
 function highlightKeywords() {
     let text = textElement.innerHTML;

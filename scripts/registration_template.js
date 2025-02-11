@@ -1,4 +1,10 @@
-/**Generates the HTML template for the registration page.*/
+/**
+ * Generates the HTML template for the registration page.
+ * Includes input fields for name, email, password, and password confirmation.
+ * Contains a checkbox for accepting the privacy policy and a submit button.
+ * Provides error message elements for password and signup errors.
+ * @returns {string} The HTML template for the registration page.
+ */
 function registrationTemplate() {
     return `
     <div class="sectionOne">
@@ -46,7 +52,12 @@ function registrationTemplate() {
     `
 }
 
-/**Generates the HTML template for a successful registration message.*/
+/**
+ * Returns an HTML string that displays a success message after a user has
+ * successfully signed up.
+ *
+ * @return {string} The HTML string.
+ */
 function signUpSuccess() {
     return `
     <div class="signUpSuccessClass" id="signUpSuccessID">

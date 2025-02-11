@@ -170,7 +170,8 @@ function taskOverlayTemplate(task, taskId) {
     return `
     <div class="openTaskOverlayMain">
         <div class="openTaskOverlayContent">
-        <div id="openTaskSwitchOverlay"></div>
+            <div id="openTaskSwitchOverlay"></div>
+            <button class="taskSwitchCancel" id="taskSwitchCancelMain" onclick="event.stopPropagation(), closeTaskOverlay('${taskId}')"><img src="../assets/svg/add_task/closeXSymbol.svg" alt=""></button> 
             ${taskCategoryTemplate(task, taskId)}
             ${taskTitleTemplate(task)}
             ${taskDescriptionTemplate(task)}

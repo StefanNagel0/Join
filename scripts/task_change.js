@@ -317,7 +317,8 @@ function taskSwitchTemplate(task, taskId) {
             <button onclick="event.stopPropagation(), moveToCategory('${taskId}', 'InProgress')">In Progress</button>
             <button onclick="event.stopPropagation(), moveToCategory('${taskId}', 'AwaitFeedback')">Await Feedback</button>
             <button onclick="event.stopPropagation(), moveToCategory('${taskId}', 'Done')">Done</button>
-        </div>
+            <button id="taskSwitchCancel" onclick="event.stopPropagation(), closeTaskSwitchTemplate('${taskId}'), closeTaskOverlay()">X</button>
+            </div>
     `;
 }
 
@@ -342,4 +343,9 @@ async function moveToCategory(taskId, newCategory) {
     await updateTaskInDatabase(taskId, task);
     displayTasks(globalTasks);
     closeTaskOverlay();
+}
+
+function closeTaskSwitchTemplate(taskId) {
+    let overlayRef = document.getElementById(`taskSwitchOverlay-${taskId}`);
+    overlayRef.style.display = "none";
 }

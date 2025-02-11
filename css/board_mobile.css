@@ -182,6 +182,10 @@
         display: flex;
         z-index: 100;
     }
+
+    .taskSwitchCancel {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 830px) {
@@ -204,10 +208,6 @@
     .openEditTaskOverlaySubtask {
         inline-size: auto;
         padding: 10px 0px 0px 0px;
-        gap: 10px;
-    }
-
-    .openTaskOverlaySubtaskContainer {
         gap: 10px;
     }
 }

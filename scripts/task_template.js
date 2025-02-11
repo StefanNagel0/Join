@@ -14,7 +14,7 @@ function taskCategoryTemplate(task, taskId) {
     return `
     <div class="taskCategorySwitchContainer">
         <button class="openTaskOverlayChangeButton" onclick="event.stopPropagation(), taskSwitchMainCategory('${taskId}', '${task.mainCategory}')">
-            <img src="../assets/svg/add_task/closeXSymbol.svg" alt="">
+            <img class="openTaskOverlayChangeButtonImg" src="../assets/img/changeMainCategory.png" alt="">
         </button>
         <div id="taskSwitchOverlay-${taskId}" class="taskSwitchOverlay" style="display: none;">
             ${taskSwitchTemplate(task.mainCategory, taskId)}

@@ -2,7 +2,11 @@ let tasks = [];
 const contactColors = new Map();
 let selectedPriority = null;
 
-/** Initialize the application by setting up necessary components */
+/**
+ * Initializes the application by setting up the contacts dropdown,
+ * priority buttons, subtasks, date validation, and clear button. 
+ * Prevents form submission on pressing Enter and initializes the header.
+ */
 function initializeApp() {
     initializeContactsDropdown();
     initializePriorityButtons();
@@ -13,49 +17,42 @@ function initializeApp() {
     initHeader()
 }
 
-/** Set validation for the date input to ensure it's not in the past */
-function setDateValidation() {
-    const today = getCurrentDate();
-    const maxDateString = getMaxDateString();
-    applyValidation(today, maxDateString);
-    observeDomChanges(today, maxDateString);
-}
-
-/** Returns the current date in YYYY-MM-DD format. */
+/**
+ * Retrieves the current date in the ISO format (YYYY-MM-DD).
+ * @returns {String} The current date in the ISO format.
+ */
 function getCurrentDate() {
     return new Date().toISOString().split('T')[0];
 }
 
-/** Returns a date string for a date 100 years in the future in YYYY-MM-DD format.*/
-function getMaxDateString() {
-    const maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() + 100);
-    return maxDate.toISOString().split('T')[0];
-}
-
-/** Applies date validation to all task date input fields. */
-function applyValidation(today, maxDateString) {
-    const dateInputs = document.querySelectorAll('.task-date');
-    dateInputs.forEach(dateInput => {
-        setDateAttributes(dateInput, today, maxDateString);
-        handleInputColorChange(dateInput);
-    });
-}
-
-/** Sets the min and max attributes for a given date input. */
+/**
+ * Sets the minimum and maximum date attributes for the given date input element.
+ * The minimum date is set to the current date and the maximum date is set to 100 years from the current date.
+ * @param {HTMLElement} dateInput - The date input element to update.
+ * @param {String} today - The current date in ISO format (YYYY-MM-DD).
+ * @param {String} maxDateString - The maximum date in ISO format (YYYY-MM-DD).
+ */
 function setDateAttributes(dateInput, today, maxDateString) {
     dateInput.setAttribute('min', today);
     dateInput.setAttribute('max', maxDateString);
 }
 
-/**Changes the color of the date input based on its value.*/
+/**
+ * Handles the input color change for the given date input element.
+ * The input color is set to black if the date input has a value, otherwise it is set to an empty string.
+ * @param {HTMLElement} dateInput - The date input element to update.
+ */
 function handleInputColorChange(dateInput) {
     dateInput.oninput = function () {
         dateInput.style.color = dateInput.value ? 'black' : '';
     };
 }
 
-/** Observes DOM changes and applies date validation for dynamically added date inputs. */
+/**
+ * Observes changes in the DOM and reapplies date validation to dynamically added date inputs.
+ * @param {String} today - The current date in ISO format (YYYY-MM-DD).
+ * @param {String} maxDateString - The maximum date in ISO format (YYYY-MM-DD).
+ */
 function observeDomChanges(today, maxDateString) {
     const observer = new MutationObserver(() => {
         applyValidation(today, maxDateString);
@@ -63,7 +60,10 @@ function observeDomChanges(today, maxDateString) {
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
-/** Initialize the subtasks input, add button, and clear button behaviors */
+/**
+ * Initializes the 'Add Subtask' elements in the add task overlay.
+ * Retrieves the HTML elements, sets input and button events and a keyboard event.
+ */
 function initializeSubtasks() {
     const input = document.getElementById('new-subtask');
     const addBtn = document.getElementById('add-subtask');
@@ -80,7 +80,13 @@ function initializeSubtasks() {
     };
 }
 
-/**Create an icon element with specified attributes */
+/**
+ * Creates an image element with the given source, alt text and class name.
+ * @param {String} src - The source URL for the image.
+ * @param {String} alt - The alt text for the image.
+ * @param {String} className - The CSS class name for the image.
+ * @returns {HTMLImageElement} The created image element.
+ */
 function createIcon(src, alt, className) {
     const icon = document.createElement('img');
     icon.src = src;
@@ -89,7 +95,15 @@ function createIcon(src, alt, className) {
     return icon;
 }
 
-/** Toggle visibility of edit, delete, and save icons for subtasks */
+/**
+ * Toggles the visibility of the edit and delete icons, and the save icon.
+ * If `editMode` is true, the pencil and trash icons are hidden, and the check icon is shown.
+ * If `editMode` is false, the pencil and trash icons are shown, and the check icon is hidden.
+ * @param {HTMLElement} pencilIcon - The pencil edit icon element.
+ * @param {HTMLElement} trashIcon - The trash delete icon element.
+ * @param {HTMLElement} checkIcon - The check save icon element.
+ * @param {Boolean} editMode - Whether the subtask is in edit mode or not.
+ */
 function toggleIcons(pencilIcon, trashIcon, checkIcon, editMode) {
     if (editMode) {
         pencilIcon.classList.add('d-none');
@@ -102,7 +116,14 @@ function toggleIcons(pencilIcon, trashIcon, checkIcon, editMode) {
     }
 }
 
-/** Edit the subtask in the subtask list */
+/**
+ * Puts the subtask in edit mode. Hides the pencil and trash icons, and shows the check icon.
+ * Sets the subtask element's contentEditable property to true and focuses it.
+ * @param {HTMLElement} subtaskElement - The subtask element to be put in edit mode.
+ * @param {HTMLElement} pencilIcon - The pencil edit icon element.
+ * @param {HTMLElement} trashIcon - The trash delete icon element.
+ * @param {HTMLElement} checkIcon - The check save icon element.
+ */
 function editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     subtaskElement.classList.add('editing');
     pencilIcon.classList.add('d-none');
@@ -114,7 +135,17 @@ function editSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     if (marker) marker.style.display = "none";
 }
 
-/** Save the edited subtask */
+/**
+ * Exits the edit mode for a subtask.
+ * Removes the 'editing' class from the subtask element and displays the pencil and trash icons while hiding the check icon.
+ * Sets the subtask element's contentEditable property to false.
+ * Displays the subtask marker if it exists.
+ * 
+ * @param {HTMLElement} subtaskElement - The subtask element to be saved.
+ * @param {HTMLElement} pencilIcon - The pencil edit icon element.
+ * @param {HTMLElement} trashIcon - The trash delete icon element.
+ * @param {HTMLElement} checkIcon - The check save icon element.
+ */
 function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     subtaskElement.classList.remove('editing');
     pencilIcon.classList.remove('d-none');
@@ -125,7 +156,14 @@ function saveSubtask(subtaskElement, pencilIcon, trashIcon, checkIcon) {
     if (marker) marker.style.display = 'inline';
 }
 
-/** Add a subtask to the list */
+/**
+ * Adds a new subtask to the task list.
+ * Retrieves the text from the given input element, trims it and checks if it is not empty.
+ * If the text is not empty, a new subtask element is created and appended to the given list.
+ * The input element is cleared and the "clear" button visibility is toggled.
+ * @param {HTMLElement} input - The input element containing the new subtask text.
+ * @param {HTMLElement} list - The list element to which the new subtask element is appended.
+ */
 function addSubtask(input, list) {
     const task = input.value.trim();
     if (!task) return;
@@ -135,7 +173,15 @@ function addSubtask(input, list) {
     toggleClearButtonVisibility();
 }
 
-/**Observes DOM changes and applies date validation for dynamically added date inputs.*/
+/**
+ * Creates a subtask element with the given task text.
+ * The subtask element contains three icons: edit, trash and check.
+ * The edit icon puts the subtask element in edit mode.
+ * The trash icon deletes the subtask element.
+ * The check icon saves the subtask element.
+ * @param {string} task - The text for the subtask element.
+ * @returns {HTMLElement} - The created subtask element.
+ */
 function createSubtaskElement(task) {
     const subtaskElement = document.createElement('li');
     subtaskElement.classList.add('subtask-item');
@@ -149,13 +195,21 @@ function createSubtaskElement(task) {
     return subtaskElement;
 }
 
-/**Hides the "clear" button for subtasks.*/
+/**
+ * Toggles the visibility of the clear button in the "Add Subtask" input field.
+ * Hides the clear button if it exists.
+ */
 function toggleClearButtonVisibility() {
     const clearBtn = document.getElementById('clear-subtask');
     if (clearBtn) clearBtn.classList.add('d-none');
 }
 
-/** Initialize the priority buttons */
+/**
+ * Initializes the priority buttons by adding an event listener to each.
+ * When a priority button is clicked, all other priority buttons are deselected
+ * and the clicked button is selected. The selected priority is stored in the
+ * selectedPriority variable. The medium priority button is selected by default.
+ */
 function initializePriorityButtons() {
     document.querySelectorAll('.prio-btn').forEach(btn =>
         btn.onclick = () => {
@@ -171,7 +225,13 @@ function initializePriorityButtons() {
     }
 }
 
-/** Toggle dropdown visibility */
+/**
+ * Toggles the visibility of the dropdown menu.
+ * Prevents event propagation and updates the dropdown's visibility and state.
+ * @param {Event} event - The event that triggers the toggle action.
+ * @param {HTMLElement} toggle - The element that toggles the dropdown.
+ * @param {HTMLElement} options - The dropdown content element whose visibility is toggled.
+ */
 function toggleDropdown(event, toggle, options) {
     event.stopPropagation();
     const visible = options.classList.contains('visible');
@@ -180,7 +240,12 @@ function toggleDropdown(event, toggle, options) {
     toggle.classList.toggle('open', !visible);
 }
 
-/** Initialize the category dropdown functionality */
+/**
+ * Initializes the category dropdown by setting up the toggle button event listener.
+ * The event listener toggles the visibility of the dropdown content and updates
+ * the toggle button's state (open or closed).
+ * @returns {void}
+ */
 function initializeCategoryDropdown() {
     const categoryToggle = document.getElementById('dropdown-toggle-category');
     const categoryContent = document.getElementById('dropdown-options-category');
@@ -193,7 +258,16 @@ function initializeCategoryDropdown() {
     };
 }
 
-// /** Select a dropdown option */
+/**
+ * Handles the selection of a dropdown option in the category dropdown.
+ * Updates the toggle button text with the selected category, removes the error
+ * class from the toggle button, and hides the dropdown content.
+ * @param {Event} event - The event that triggers the option selection.
+ * @param {HTMLElement} dropdown - The dropdown element containing the toggle
+ * button and dropdown content.
+ * @param {HTMLElement} option - The selected option element.
+ * @returns {void}
+ */
 function selectDropdownOption(event, dropdown, option) {
     const selectedCategory = option.getAttribute('data-category');
     dropdown.querySelector('span').textContent = selectedCategory;
@@ -205,7 +279,12 @@ function selectDropdownOption(event, dropdown, option) {
     dropdown.classList.remove('open');
 }
 
-/** Prevent form submission when Enter is pressed */
+/**
+ * Prevents form submission when the Enter key is pressed.
+ * Attaches a keydown event listener to the form with the ID 'task-form'
+ * and calls preventDefault() on the event when the Enter key is detected,
+ * thus stopping the default form submission behavior.
+ */
 function preventFormSubmissionOnEnter() {
     const form = document.getElementById('task-form');
     form.onkeydown = function (event) {
@@ -215,7 +294,13 @@ function preventFormSubmissionOnEnter() {
     };
 }
 
-/** Extracts subtasks from a form element. */
+/**
+ * Retrieves the subtasks from a form element. If the form does not contain a
+ * subtask list, an empty array is returned. Otherwise, the subtasks are parsed
+ * from the list items and filtered to only include the ones with a text value.
+ * @param {HTMLFormElement} form - The form element containing the subtask list.
+ * @returns {Array<Object>} The parsed and filtered subtasks.
+ */
 function getSubtasksFromForm(form) {
     const subtaskList = form.querySelector('#subtask-list');
     if (!subtaskList) return [];
@@ -224,13 +309,21 @@ function getSubtasksFromForm(form) {
         .filter(subtask => subtask.text);
 }
 
-/** Parses a subtask element into an object. */
+/**
+ * Parses a list item element representing a subtask and extracts its text and completion status.
+ * @param {HTMLElement} li - The list item element containing the subtask information.
+ * @returns {Object} An object with the subtask's text and a boolean indicating if it's completed.
+ */
 function parseSubtask(li) {
     const textElement = li.querySelector('.subtask-text') || li;
     return { text: textElement.textContent.trim(), completed: li.classList.contains('completed') };
 }
 
-// /** Create the task object from the form data */
+/**
+ * Creates a task object from a form by extracting its title, description, due date, priority, category, assigned contacts, subtasks, and creation date.
+ * @param {HTMLFormElement} form - The form element containing the task information.
+ * @returns {Object} The created task object.
+ */
 function createTaskObject(form) {
     const task = {
         title: form.querySelector('#task-title').value.trim(),
@@ -246,12 +339,17 @@ function createTaskObject(form) {
     return task;
 }
 
-/** Reset the form and show a notification */
-function resetFormAndNotify(form) {
-    form.reset();
-}
-
-/** Utility function to create an element with class */
+/**
+ * Creates a new DOM element with the specified tag name and class.
+ * Optionally sets the element's text content, appends child elements, and assigns an ID.
+ * 
+ * @param {string} tagName - The type of element to be created (e.g., 'div', 'span').
+ * @param {string} className - The class to be assigned to the element. If not provided, no class is added.
+ * @param {string} [textContent=''] - The text content to be set for the element. Defaults to an empty string if not provided.
+ * @param {Array<HTMLElement>} [children=[]] - An array of child elements to append to the created element. Defaults to an empty array.
+ * @param {string} [id=''] - An ID to be assigned to the element. If not provided, no ID is added.
+ * @returns {HTMLElement} The newly created DOM element with the specified properties.
+ */
 function createElementWithClass(tagName, className, textContent = '', children = [], id = '') {
     const element = document.createElement(tagName);
     if (className) element.classList.add(className);
@@ -261,73 +359,12 @@ function createElementWithClass(tagName, className, textContent = '', children =
     return element;
 }
 
-/** Clear the task form by resetting all form fields and UI elements to their initial state */
-function clearForm() {
-    resetField('task-title');
-    resetField('task-desc');
-    resetField('task-date');
-    resetPriority();
-    resetCategory();
-    resetSubtasks();
-    resetContacts();
-    resetDropdown();
-}
-
-/** Resets the value of a given form field by its ID.*/
-function resetField(id) {
-    const field = document.getElementById(id);
-    if (field) field.value = '';
-}
-
-/**Resets the priority of the task to "medium".*/
-function resetPriority() {
-    document.querySelectorAll('.prio-btn').forEach(btn => btn.classList.remove('active'));
-    const mediumBtn = document.querySelector('.prio-btn[data-prio="medium"]');
-    if (mediumBtn) {
-        mediumBtn.classList.add('active');
-        selectedPriority = mediumBtn.dataset.prio;
-    }
-}
-
-/**Resets the task category dropdown to its default value.*/
-function resetCategory() {
-    const categoryText = document.querySelector('#dropdown-toggle-category span');
-    if (categoryText) categoryText.textContent = 'Select task category';
-}
-
-/**Resets the list of subtasks to an empty state.*/
-function resetSubtasks() {
-    const subtaskList = document.getElementById('subtask-list');
-    if (subtaskList) subtaskList.innerHTML = '';
-}
-
-/**Resets the selected contacts container to an empty state.*/
-function resetContacts() {
-    const selectedContactsContainer = document.getElementById('selected-contacts');
-    if (selectedContactsContainer) selectedContactsContainer.innerHTML = '';
-}
-
-/**Resets the task category dropdown and hides the dropdown content.*/
-function resetDropdown() {
-    const dropdownToggle = document.getElementById('dropdown-toggle');
-    if (dropdownToggle) {
-        const span = dropdownToggle.querySelector('span');
-        if (span) span.textContent = 'Select contacts to assign';
-    }
-    const dropdownContent = document.getElementById('dropdown-content');
-    if (dropdownContent) dropdownContent.style.display = 'none';
-}
-
-/** Initialize the "Clear" button behavior*/
-function initializeClearButton() {
-    const clearButton = document.querySelector('.add_task_clear_btn');
-    clearButton.onclick = (event) => {
-        event.preventDefault();
-        clearForm();
-    };
-}
-
-/**Displays a confirmation message and redirects to the "board.html" page after 1.5 seconds.*/
+/**
+ * Handles the click event for the 'To Do' button on the add task page.
+ * Shows a confirmation message and redirects the user to the board page after 1.5 seconds.
+ * @param {Event} event The click event.
+ * @returns {void}
+ */
 function getToDoAddTaskPage(event) {
     event.preventDefault();
     const confirmationMessage = document.getElementById('confirmation-message');
@@ -338,35 +375,11 @@ function getToDoAddTaskPage(event) {
     }, 1500);
 }
 
-/** Validates the task form fields (Title and Due Date) on submit. */
-function validateTaskForm(event) {
-    event.preventDefault();
-    const title = document.getElementById("task-title"),
-        dueDate = document.getElementById("task-date"),
-        submitButton = document.getElementById("submit-task-btn"),
-        categoryText = document.querySelector('#dropdown-toggle-category span').textContent;
-    let isValid = validateField(title, "Title is required") &&
-        validateField(dueDate, "Due Date is required") &&
-        validateCategory(categoryText);
-    submitButton.disabled = !isValid;
-    if (isValid) submitAddTask(event);
-}
-
-/** hecks if an input field is empty, sets an error message, or removes it. */
-function validateField(field, message) {
-    if (field.value.trim() === "") return setErrorMessage(field, message), false;
-    clearErrorMessage(field);
-    return true;
-}
-
-/** Checks if a category is selected and shows/hides the error message. */
-function validateCategory(category) {
-    const errorEl = document.getElementById('category-error');
-    errorEl.classList.toggle('hidden', category !== 'Select task category');
-    return category !== 'Select task category';
-}
-
-/**  Updates the submit button state based on input field validation.  */
+/**
+ * Updates the submit button's disabled state based on the validity of the task title, due date, and category.
+ * The button is enabled if all fields are valid, otherwise it is disabled.
+ * @returns {void}
+ */
 function updateSubmitButtonState() {
     const title = document.getElementById("task-title").value.trim();
     const dueDate = document.getElementById("task-date").value.trim();
@@ -374,41 +387,4 @@ function updateSubmitButtonState() {
     const submitButton = document.getElementById("submit-task-btn");
     const isValid = title !== "" && dueDate !== "" && categoryText !== "Select task category";
     submitButton.disabled = !isValid;
-}
-
-/** Sets an error message below the input element. */
-function setErrorMessage(element, message) {
-    let error = element.parentElement.querySelector(".error-message");
-    if (!error) {
-        error = document.createElement("span");
-        error.className = "error-message";
-        element.parentElement.appendChild(error);
-    }
-    error.textContent = message;
-    setTimeout(() => {
-        clearErrorMessage(element);
-        element.classList.remove("input-error");
-    }, 10000);
-}
-
-/** Clears the error message below the input element. */
-function clearErrorMessage(element) {
-    let error = element.parentElement.querySelector(".error-message");
-    if (error) {
-        error.remove();
-    }
-}
-
-/** Check for valid fields and remove error messages once fields are populated. */
-function clearErrorsOnValidInput() {
-    const title = document.getElementById("task-title"),
-        dueDate = document.getElementById("task-date");
-    if (title.value.trim() !== "") {
-        title.classList.remove("input-error");
-        clearErrorMessage(title);
-    }
-    if (dueDate.value.trim() !== "") {
-        dueDate.classList.remove("input-error");
-        clearErrorMessage(dueDate);
-    }
 }

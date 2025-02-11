@@ -1,4 +1,14 @@
-/** Generates the HTML template for the board view. */
+/**
+ * Generates the HTML template for the board page.
+ * 
+ * The template consists of a main content section with a heading and several columns.
+ * Each column represents a different task status: "To do", "In progress", "Await feedback", and "Done".
+ * The heading includes a search input for filtering tasks and a button to add new tasks.
+ * Tasks can be dragged and dropped between columns.
+ * 
+ * @returns {string} The HTML template for the board page.
+ */
+
 function boardTemplate() {
     return `
     <div class="mainContent">
@@ -69,7 +79,11 @@ function boardTemplate() {
 `
 }
 
-/** Generates the HTML template for adding a task from the board. */
+
+/**
+ * Generates the HTML template for the task overlay.
+ * @returns {string} the HTML template for the task overlay
+ */
 function boardAddTaskTemplate() {
     return `
 <section>
@@ -165,7 +179,13 @@ function boardAddTaskTemplate() {
 `
 }
 
-/** Renders the overlay from the task */
+
+/**
+ * Generates the HTML template for the task overlay.
+ * @param {Object} task the task for which the overlay is generated
+ * @param {string} taskId the id of the task
+ * @returns {string} the HTML template for the task overlay
+ */
 function taskOverlayTemplate(task, taskId) {
     return `
     <div class="openTaskOverlayMain">
@@ -196,7 +216,13 @@ function taskOverlayTemplate(task, taskId) {
     `;
 }
 
-/** Generates the HTML template for editing a task. */
+
+/**
+ * Generates the HTML template for the task edit overlay.
+ * @param {Object} task the task for which the overlay is generated
+ * @param {string} taskId the id of the task
+ * @returns {string} the HTML template for the task edit overlay
+ */
 function taskEditTemplate(task, taskId) {
     return `
     <div class="openEditTaskOverlayMain">

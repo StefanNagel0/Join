@@ -1,4 +1,8 @@
-/** Create the HTML for a subtask element */
+/**
+ * Generates the HTML template for a single subtask in the 'Add Task' view.
+ * @param {string} task the text of the subtask
+ * @returns {string} the HTML template for the subtask
+ */
 function createSubtaskHTML(task) {
     return `
     <div>

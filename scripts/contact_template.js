@@ -1,22 +1,20 @@
-/** Displays the details of a specific contact. */
+/**
+ * Displays the contact details for the given index in the contact list.
+ * @param {number} index The index of the contact to display
+ * @returns {void}
+ */
 function showContactDetails(index) {
   const contact = contacts[index];
   const contactList = document.querySelector(".scrolllist");
   const detailsDiv = document.getElementById("contact-details");
-
-  // Show contact details in the details section
   detailsDiv.innerHTML = createContactDetails(contact);
   detailsDiv.classList.add("show");
   detailsDiv.classList.remove("hide");
-
-  // Hide details when switching to mobile view (only once)
   if (window.innerWidth <= 900 && !detailsDiv.dataset.hiddenOnce) {
       detailsDiv.classList.add("hide");
       detailsDiv.classList.remove("show");
       detailsDiv.dataset.hiddenOnce = true;
   }
-
-  // Adjust layout for mobile view
   if (window.innerWidth <= 900) {
       detailsDiv.innerHTML = `
       <div class="backto">
@@ -58,7 +56,15 @@ function showContactDetails(index) {
   }
 }
 
-/* Generates the HTML structure for the details of a contact. */
+/**
+ * Generates an HTML string for displaying detailed information about a contact.
+ * The HTML includes the contact's initials within a colored circle, the contact's
+ * name, email, and phone number. It also provides edit and delete buttons for
+ * modifying or removing the contact.
+ * 
+ * @param {object} contact - The contact object containing the details to be displayed.
+ * @returns {string} - A string of HTML representing the contact details.
+ */
 function createContactDetails(contact) {
     return `
       <div class="detailscircle">
@@ -88,24 +94,21 @@ function createContactDetails(contact) {
     `;
 }
 
-/** Adjusts the visibility of the contact list on window resize. */
+
 let previousWidth = window.innerWidth; 
+
 
 window.addEventListener("resize", () => {
   const detailsDiv = document.getElementById("contact-details");
   const contactList = document.querySelector(".scrolllist");
   if (!detailsDiv) return;
   const currentWidth = window.innerWidth;
-
-  // Switches to mobile view and hides details
   if (currentWidth <= 900 && previousWidth > 900) {
       if (detailsDiv.classList.contains("show")) {
           detailsDiv.classList.add("hide");
           detailsDiv.classList.remove("show");
       }
   }
-
-  // Switches to desktop view and shows contact list
   if (currentWidth > 900 && previousWidth <= 900) {
       if (detailsDiv.classList.contains("show")) {
           detailsDiv.classList.remove("show");
@@ -118,7 +121,13 @@ window.addEventListener("resize", () => {
   previousWidth = currentWidth;
 });
 
-/* Creates a contact div element. */
+/**
+ * Generates an HTML element for a contact item in the contact list.
+ * The element consists of a circle with the contact's initials, a label with the contact's name, and a paragraph with the contact's email.
+ * The element is clickable and toggles the selected class on the element. The function takes a contact object as an argument and returns the generated HTML element.
+ * @param {object} contact The contact object to generate the element for
+ * @returns {HTMLElement} The generated HTML element
+ */
 function createContactDiv(contact) {
   const contactDiv = document.createElement("div");
   contactDiv.classList.add("contact");
@@ -137,6 +146,5 @@ function createContactDiv(contact) {
       </div>
     </div>
   `;
-
   return contactDiv;
 }

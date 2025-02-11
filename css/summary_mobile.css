@@ -187,7 +187,7 @@
     }
 
     .inner_first_line_box {
-        width: 110px;
+        width: 130px;
         height: 90px;
         border-radius: 20px;
         margin: auto;
@@ -198,8 +198,8 @@
     }
 
     .ellipse_box {
-        height: 40px;
-        width: 40px;
+        height: 45px;
+        width: 45px;
     }
 
     .inner_first_line_img {
@@ -231,6 +231,7 @@
 
     .summary_number {
         font-size: 30px;
+        width: 40px;
     }
 
     .urgent_text {

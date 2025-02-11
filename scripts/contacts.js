@@ -489,7 +489,6 @@ async function saveContact(name, phone, email) {
   }
 }
 
-<<<<<<< HEAD
 /**
  * Updates the contact at the index given by the editIndex variable with the given name, phone and email.
  * If the contact has a Firebase key, updates the corresponding entry in the Firebase database.
@@ -646,5 +645,3 @@ function getRandomColor() {
   colorIndex = (colorIndex + 1) % colors.length; 
   return colors[colorIndex];
 }
-=======
->>>>>>> e0075dfcfc48d2ee54c1aff8c42df10d41ea43bc

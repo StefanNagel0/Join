@@ -1,17 +1,30 @@
-/* Array of contact objects. */
+/**
+ * Array of contact objects.
+ * @type {Array<{id: number, name: string, phone: string, email: string, color?: string, firebaseKey?: string}>}
+ */
 let contacts = [];
 
-/* @type {number|null} Index of the currently edited contact. */
+/**
+ * Index of the currently edited contact.
+ * @type {number|null}
+ */
 let editIndex = null;
 
-/* Extracts the initials from a name string. */
+/**
+ * Extracts the initials from a name string.
+ * @param {string} name - The full name of the contact.
+ * @returns {string} The initials in uppercase.
+ */
 function getInitials(name) {
   const parts = name.split(" ");
   const initials = parts.map(part => part[0]).join("").toUpperCase();
   return initials;
 }
 
-/* Edit Contact */
+/**
+ * Sets up the edit contact overlay.
+ * @param {number} index - Index of the contact to edit.
+ */
 function setupEditContact(index) {
   const elements = setNewContact();
   if (!contacts[index]) return; 
@@ -22,7 +35,11 @@ function setupEditContact(index) {
   updateContactDetailsAfterEdit()
 }
 
-/* populates the edit contact fields with the given contact data. */
+/**
+ * Populates the edit contact fields with the given contact data.
+ * @param {Object} elements - UI elements for editing.
+ * @param {Object} contact - Contact data.
+ */
 function populateEditContactFields(elements, contact) {
   elements.title.textContent = "Edit Contact";
   elements.nameInput.value = contact.name;
@@ -34,7 +51,11 @@ function populateEditContactFields(elements, contact) {
   elements.cancelButton.setAttribute("onclick", "closeOverlay()"); 
 }
 
-/* Updates the circle appearance with initials and color. */
+/**
+ * Updates the contact's display circle with initials and color.
+ * @param {HTMLElement} circleDiv - The circle element.
+ * @param {Object} contact - Contact data.
+ */
 function updateCircleAppearance(circleDiv, contact) {
   circleDiv.textContent = getInitials(contact.name);
   if (!contact.color) {
@@ -43,7 +64,11 @@ function updateCircleAppearance(circleDiv, contact) {
   circleDiv.style.backgroundColor = contact.color; 
 }
 
-/*After editing a contact, update the contact details view. */
+/**
+ * Opens an overlay for editing or adding a contact.
+ * @param {string} mode - Mode of the overlay ("edit" or "new").
+ * @param {number|null} [index=null] - Index of the contact to edit (if applicable).
+ */
 function updateContactDetailsAfterEdit() {
   const detailsDiv = document.getElementById("contact-details");
   if (!detailsDiv) return;
@@ -56,7 +81,10 @@ function updateContactDetailsAfterEdit() {
   }
 }
 
-/* Opens an overlay for editing or adding a contact. */
+/**
+ * Returns an object containing references to new contact form elements.
+ * @returns {Object} UI elements for new contact form.
+ */
 function openOverlay(mode, index = null) {
   const overlay = document.getElementById("overlay");
   overlay.classList.remove("hide");
@@ -70,7 +98,9 @@ function openOverlay(mode, index = null) {
   }
 }
 
-/* New Contact */
+/**
+ * Sets up the overlay for adding a new contact.
+ */
 function setNewContact() {
   return {
     title: document.querySelector(".overlay-left h1"),
@@ -84,8 +114,10 @@ function setNewContact() {
   };
 }
 
-/* Sets up the overlay for editing an existing contact. */
-/* Sets up the overlay for adding a new contact. */
+/**
+ * Initializes UI elements for adding a new contact.
+ * @param {Object} elements - UI elements for contact form.
+ */
 function setupNewContact() {
   const elements = setNewContact();
   initializeNewContactUI(elements);
@@ -93,7 +125,10 @@ function setupNewContact() {
   editIndex = null;
 }
 
-/* Aktualisiert die UI-Texte und Buttons für das Hinzufügen eines neuen Kontakts */
+/**
+ * Resets the contact input fields.
+ * @param {Object} elements - UI elements containing input fields.
+ */
 function initializeNewContactUI({ title, description, circleDiv, submitButton, cancelButton }) {
   title.textContent = "Add Contact";
   description.textContent = "Tasks are better with a team!";
@@ -104,7 +139,10 @@ function initializeNewContactUI({ title, description, circleDiv, submitButton, c
   cancelButton.setAttribute("onclick", "closeOverlay()");
 }
 
-/* Input Reset */
+/**
+ * Resets the contact input fields.
+ * @param {Object} elements - UI elements containing input fields.
+ */
 function resetContactInputs({ nameInput, phoneInput, emailInput }) {
   nameInput.value = "";
   phoneInput.value = "";
@@ -112,7 +150,9 @@ function resetContactInputs({ nameInput, phoneInput, emailInput }) {
 }
 
 
-/* Sets up the overlay for adding a new contact. */
+/**
+ * Displays the list of contacts.
+ */
 function setupNewContact() {
   const elements = setNewContact();
   initializeNewContactUI(elements);
@@ -120,7 +160,11 @@ function setupNewContact() {
   editIndex = null;
 }
 
-/* UI updates for adding a new contact. */
+/**
+ * Groups contacts alphabetically.
+ * @param {Array} contacts - Array of contacts.
+ * @returns {Object} Contacts grouped by first letter.
+ */
 function initializeNewContactUI({ title, description, circleDiv, submitButton, cancelButton }) {
   title.textContent = "Add Contact";
   description.textContent = "Tasks are better with a team!";
@@ -131,7 +175,10 @@ function initializeNewContactUI({ title, description, circleDiv, submitButton, c
   cancelButton.setAttribute("onclick", "closeOverlay()");
 }
 
-/* Setzt die Eingabefelder für Name, Telefon & E-Mail zurück */
+/**
+ * Resets the contact input fields.
+ * @param {Object} elements - UI elements containing input fields.
+ */
 function resetContactInputs({ nameInput, phoneInput, emailInput }) {
   nameInput.value = "";
   phoneInput.value = "";
@@ -149,7 +196,11 @@ function closeOverlay() {
   }, 300);
 }
 
-/* Displays the contact list. */
+/**
+ * Groups contacts alphabetically.
+ * @param {Array} contacts - Array of contacts.
+ * @returns {Object} Contacts grouped by first letter.
+ */
 function showContacts() {
   const contactList = document.getElementById("contactlist");
   if (!contactList) {
@@ -160,7 +211,11 @@ function showContacts() {
   displayGroupedContacts(groupedContacts, contactList);
 }
 
-/* Groups contacts by the first letter of their name.*/
+/**
+ * Displays grouped contacts in the DOM.
+ * @param {Object} groupedContacts - Object with grouped contacts.
+ * @param {HTMLElement} contactList - The contact list container.
+ */
 function groupContactsByLetter(contacts) {
   return contacts.reduce((groups, contact) => {
     const letter = contact.name.charAt(0).toUpperCase();
@@ -233,11 +288,7 @@ function showContactDetails(index) {
   const detailsDiv = document.getElementById("contact-details");
   const contact = contacts[index];
   if (!contact) return;
-
-  // Setzt das Attribut korrekt (vorher war es falsch)
   detailsDiv.setAttribute("data-contact-index", index);
-
-  // Aktualisiert die Detailansicht mit den neuen Daten
   detailsDiv.innerHTML = `
     <h2>${contact.name}</h2>
     <p>Email: ${contact.email}</p>
@@ -326,110 +377,3 @@ async function saveContact(name, phone, email) {
   }
 }
 
-/* updates an existing contact with new data */
-async function updateExistingContact(name, phone, email) {
-  contacts[editIndex].name = name;
-  contacts[editIndex].phone = phone;
-  contacts[editIndex].email = email;
-
-  // Update Firebase entry if applicable
-  if (contacts[editIndex].firebaseKey) {
-    await updateContactInFirebase(contacts[editIndex].firebaseKey, { name, phone, email });
-  }
-
-  createSuccessMessage("Contact successfully updated", "successedit");
-}
-/* creates a new contact and adds it to the contacts array */
-function createNewContact(name, phone, email) {
-  const newContact = { 
-    id: generateUniqueId(), 
-    name, 
-    phone, 
-    email, 
-    color: getRandomColor() 
-  };
-
-  contacts.push(newContact);
-  createSuccessMessage("Contact successfully created", "successcreate");
-}
-
-/* Creates a success message and displays it temporarily. */
-function createSuccessMessage(message, targetClass) {
-  const successDiv = document.querySelector(`.${targetClass}`);
-  if (successDiv) {
-    successDiv.textContent = message;
-    successDiv.classList.remove("hide");
-    successDiv.classList.add("show");
-    setTimeout(() => {
-      successDiv.classList.remove("show");
-      successDiv.classList.add("hide");
-    }, 3000);
-  } 
-}
-
-/* Validates the phone input field, allowing only numbers. */
-function validatePhoneInput(event) {
-  const input = event.target;
-  input.value = input.value.replace(/[^0-9]/g, '');
-}
-
-/* Initializes event listeners for form inputs and submission. */
-function initializeEventListeners() {
-  const phoneInput = document.getElementById("contact-phone");
-  const nameInput = document.getElementById("contact-name");
-  const form = document.getElementById("contact-form");
-  if (phoneInput) {
-    phoneInput.addEventListener("input", validatePhoneInput);
-  }
-  if (nameInput) {
-    nameInput.addEventListener("input", handleNameInput);
-  }
-  if (form) {
-    form.addEventListener("submit", handleFormSubmit);
-  }
-}
-
-document.addEventListener("DOMContentLoaded", initializeEventListeners);
-
-/* Toggles the collapse state of additional contact options. */
-function toggleCollapse() {
-  const content = document.getElementById("collapseContent");
-  const button = document.querySelector(".collapse-button");
-
-  if (content.classList.contains("open")) {
-    content.classList.remove("open");
-  } else {
-    content.classList.add("open");
-  }
-}
-
-/* Sets up the overlay for editing an existing contact. */
-function selectContactMain(selectedElement) {
-  const isSelected = selectedElement.classList.contains('selected');
-  const allContacts = document.querySelectorAll('.contactmain');
-  allContacts.forEach((element) => {
-    element.classList.remove('selected');
-  });
-  if (!isSelected) {
-    selectedElement.classList.add('selected');
-  }
-}
-const colors = [
-  "#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD",
-  "#2ECC71", "#E74C3C", "#3498DB", "#1ABC9C", "#D35400",
-  "#C0392B", "#9B59B6", "#1E8449", "#F39C12", "#34495E",
-  "#16A085"
-];
-
-let colorIndex = 0;
-let firstCall = true;
-
-/* Returns a random color from the colors array. */
-function getRandomColor() {
-  if (firstCall) {
-    firstCall = false;
-    return colors[colorIndex]; 
-  }
-  colorIndex = (colorIndex + 1) % colors.length; 
-  return colors[colorIndex];
-}

@@ -198,6 +198,15 @@
     width: 392px;
   }
 
+  .flexdetails {
+    overflow-y: scroll;
+    padding-left: 28px !important;
+    padding-top: 70px !important;
+    height: calc(100vh - 96px);
+    width: 100%;
+    scrollbar-width: none;
+  }
+ 
 }
 
 

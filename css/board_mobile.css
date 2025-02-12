@@ -188,22 +188,16 @@
     }
 }
 
-@media screen and (max-width: 830px) {
-    .content {
-        height: 768px;
-    }
-}
+
 
 @media screen and (max-width: 900px) {
     .content {
         height: 768px;
+        margin-bottom: 40px;
     }
 }
 
 @media screen and (max-width: 730px) {
-    .content {
-        margin-bottom: 40px;
-    }
 
     .openEditTaskOverlaySubtask {
         inline-size: auto;

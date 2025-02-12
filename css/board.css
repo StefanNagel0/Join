@@ -293,12 +293,12 @@
 
 #editDescription {
     height: 102px;
-    padding: 18px 16px;
+    padding: 10px 10px;
     border-radius: 10px;
     border: 1px solid #D1D1D1;
     max-width: 100%;
     min-width: 100%;
-    min-height: 102px;
+    min-height: 50px;
     resize: none;
 }
 

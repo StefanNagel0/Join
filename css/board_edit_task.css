@@ -34,6 +34,7 @@
     overflow-y: scroll;
     scrollbar-width: none;
     padding-bottom: 60px;
+    overscroll-behavior: contain;
 }
 
 .editScrollbar {
@@ -167,7 +168,7 @@
     align-items: center;
 }
 
-.openEditAddSubtaskInput{
+.openEditAddSubtaskInput {
     width: 100%;
     padding: 10px 40px 10px 10px;
     font-size: 16px;
@@ -233,7 +234,7 @@
 .subtaskEditingInput {
     border-right: none;
     border-left: none;
-    border-bottom: 1px solid rgb(40,171,226);
+    border-bottom: 1px solid rgb(40, 171, 226);
     border-top: none;
     width: 100%;
     height: 30px;
@@ -259,7 +260,7 @@
     border-top: none;
     padding-right: 30px;
     background-color: transparent;
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .subtaskEditReImg2 {
@@ -269,8 +270,8 @@
     width: 25px;
     height: 100%;
     background-color: transparent;
-	border: none;
-	cursor: pointer;
+    border: none;
+    cursor: pointer;
 }
 
 .openEditTaskSaveButtonSorting {
@@ -278,6 +279,8 @@
     bottom: 0;
     left: 350px;
     right: 0;
+    top: 685px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     padding: 10px;
@@ -361,4 +364,43 @@
 .low:active {
     background-color: #7AE229;
     color: white;
+}
+
+@media screen and (max-height: 1000px) {
+    .openEditTaskOverlayContent {
+        max-height: 650px;
+        overflow-y: scroll;
+        scrollbar-width: none;
+        padding-bottom: 20px;
+        overscroll-behavior: contain;
+    }
+
+    .openEditTaskSaveButtonSorting {
+        bottom: 0;
+        left: 350px;
+        right: 0;
+        top: 590px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .add_task_required_info_box_overlay {
+        margin-top: calc(150px - 0px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
+
+@media screen and (max-height: 840px) {
+    .openEditTaskOverlayContent {
+        padding-bottom: 10px;
+    }
+
+    .openEditTaskSaveButtonSorting {
+        left: 350px;
+        top: 560px;
+        padding: 10px;
+    }
 }

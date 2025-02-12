@@ -257,7 +257,7 @@ function getSubtaskHTML(index, newText, taskId) {
 function getEditSubtaskHTML(index, currentText, taskId) {
     return `
         <div class="subtaskEditingMainContainer">
-            <input class="subtaskEditingInput" type="text" id="edit-subtask-${index}" value="${currentText}" />
+            <input class="subtaskEditingInput" maxlength="25" type="text" id="edit-subtask-${index}" value="${currentText}" />
             <div class="subtaskEditingImgMain">
                 <button class="subtaskEditReImg" onclick="deleteEditSubtask(${index}, '${taskId}')">
                     <img src="../assets/svg/deletenew.svg" alt="">

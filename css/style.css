@@ -15,7 +15,12 @@
 
 @media(max-height:900px) {
     .content_heading {
-        margin-top: 40px;
+        margin-top: 20px;
     }
+}
 
+@media(max-height:920px) {
+    .add_task_required_info_box {
+        margin-top: 20px;
+    }
 }

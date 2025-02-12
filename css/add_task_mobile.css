@@ -16,10 +16,11 @@
         font-size: 14px;
     }
 
-    .add_task_required_info_box{
+    .add_task_required_info_box {
         padding: 20px;
     }
-    #task-priority{
+
+    #task-priority {
         justify-content: space-evenly;
     }
 }
@@ -44,7 +45,7 @@
         flex-direction: column;
     }
 
-    .add_task_left_box{
+    .add_task_left_box {
         gap: 20px;
     }
 
@@ -52,7 +53,7 @@
         display: none;
     }
 
-    .content_heading{
+    .content_heading {
         margin: auto;
         max-width: 440px;
         width: unset !important;
@@ -117,8 +118,23 @@
         width: 100%;
     }
 
-    .task_date_margin{
+    .task_date_margin {
         margin-top: 46px;
+    }
+}
+
+@media (max-height:900px) {
+    #addTaskContentId{
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+}
+
+
+
+@media(max-height:705px) {
+    .dropdown-content {
+        max-height: calc(100vh - 460px);
     }
 }
 
@@ -131,11 +147,5 @@
 
     .add_task_submit_btn span {
         font-size: 17px;
-    }
-}
-
-@media(max-height:705px) {
-    .dropdown-content {
-        max-height: calc(100vh - 460px);
     }
 }

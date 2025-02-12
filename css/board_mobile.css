@@ -117,7 +117,7 @@
     .content {
         overflow-y: scroll;
         scrollbar-width: none;
-        height: 833px;
+        height:calc(100vh - 150px);
         margin-top: 5px;
     }
 }

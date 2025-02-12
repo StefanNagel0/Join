@@ -1,17 +1,38 @@
-/* updates an existing contact with new data */
+/**
+ * Updates an existing contact with new data.
+ *
+ * This asynchronous function updates the contact at the current edit index in the `contacts` array.
+ * If the contact has an associated Firebase key, it also updates the contact in Firebase.
+ * After updating, it displays a success message.
+ *
+ * @async
+ * @function updateExistingContact
+ * @param {string} name - The new name of the contact.
+ * @param {string} phone - The new phone number of the contact.
+ * @param {string} email - The new email address of the contact.
+ * @returns {Promise<void>} A promise that resolves once the update (and Firebase update, if applicable) is complete.
+ */
 async function updateExistingContact(name, phone, email) {
     contacts[editIndex].name = name;
     contacts[editIndex].phone = phone;
     contacts[editIndex].email = email;
-  
-    // Update Firebase entry if applicable
     if (contacts[editIndex].firebaseKey) {
       await updateContactInFirebase(contacts[editIndex].firebaseKey, { name, phone, email });
     }
   
     createSuccessMessage("Contact successfully updated", "successedit");
   }
-  /* creates a new contact and adds it to the contacts array */
+/**
+ * Creates a new contact and adds it to the contacts array.
+ *
+ * This function generates a new contact object with a unique ID, name, phone, email, and a random color.
+ * It then pushes the new contact into the global `contacts` array and displays a success message.
+ *
+ * @function createNewContact
+ * @param {string} name - The name of the new contact.
+ * @param {string} phone - The phone number of the new contact.
+ * @param {string} email - The email address of the new contact.
+ */
   function createNewContact(name, phone, email) {
     const newContact = { 
       id: generateUniqueId(), 
@@ -25,7 +46,15 @@ async function updateExistingContact(name, phone, email) {
     createSuccessMessage("Contact successfully created", "successcreate");
   }
   
-  /* Creates a success message and displays it temporarily. */
+/**
+ * Validates the phone input field by allowing only numeric characters.
+ *
+ * This function listens for input events on the phone input field and removes any non-digit characters,
+ * ensuring that only numbers are entered.
+ *
+ * @function validatePhoneInput
+ * @param {Event} event - The input event triggered on the phone input field.
+ */
   function createSuccessMessage(message, targetClass) {
     const successDiv = document.querySelector(`.${targetClass}`);
     if (successDiv) {
@@ -45,7 +74,17 @@ async function updateExistingContact(name, phone, email) {
     input.value = input.value.replace(/[^0-9]/g, '');
   }
   
-  /* Initializes event listeners for form inputs and submission. */
+
+/**
+ * Initializes event listeners for the contact form inputs and submission.
+ *
+ * This function sets up:
+ * - An input event listener on the phone input to validate the phone number.
+ * - An input event listener on the name input for custom handling (via `handleNameInput`).
+ * - A submit event listener on the form to handle form submission (via `handleFormSubmit`).
+ *
+ * @function initializeEventListeners
+ */
   function initializeEventListeners() {
     const phoneInput = document.getElementById("contact-phone");
     const nameInput = document.getElementById("contact-name");
@@ -63,7 +102,15 @@ async function updateExistingContact(name, phone, email) {
   
   document.addEventListener("DOMContentLoaded", initializeEventListeners);
   
-  /* Toggles the collapse state of additional contact options. */
+ /**
+ * Toggles the collapse state of additional contact options.
+ *
+ * This function toggles the "open" class on the element with the ID "collapseContent",
+ * effectively showing or hiding additional options. It also references a button element,
+ * which could be used for further interactions or visual feedback.
+ *
+ * @function toggleCollapse
+ */
   function toggleCollapse() {
     const content = document.getElementById("collapseContent");
     const button = document.querySelector(".collapse-button");

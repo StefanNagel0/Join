@@ -200,6 +200,7 @@
     .ellipse_box {
         height: 45px;
         width: 45px;
+        padding: 10px;
     }
 
     .inner_first_line_img {

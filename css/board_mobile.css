@@ -188,9 +188,14 @@
     }
 }
 
+/* @media screen and (max-width: 900px), (min-height: 1400px) {
+    .content {
+        height: calc(100vh - 130px);
+        margin-bottom: 40px;
+    }
+} */
 
-
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 900px), (min-height: 900px) {
     .content {
         height: 768px;
         margin-bottom: 40px;

@@ -28,7 +28,6 @@
         width: calc(100vw - 50px);
         min-width: 340px;
         max-width: 360px;
-        height: calc(100vh - 50px);
         margin-left: auto;
         margin-right: auto;
         top: 10px;
@@ -43,10 +42,7 @@
     }
 
     .openEditTaskSaveButtonSorting {
-        position: absolute;
-        bottom: 0px;
-        left: 200px !important;
-        right: 0 !important;
+        position: relative;
         padding: 10px;
     }
 
@@ -77,11 +73,11 @@
 @media screen and (max-width: 380px) {
     .openTaskOverlayMain {
         width: calc(100vw - 40px);
-        min-width: 300px;
-        max-width: 700px;
-        height: calc(100vh - 30px);
+        min-width: 340px;
+        max-width: 360px;
         margin-left: auto;
         margin-right: auto;
+        height: 650px;
         left: 10px;
         right: 10px;
     }
@@ -97,5 +93,17 @@
 
     .openTaskOverlaySubtask {
         font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .openTaskOverlayMain {
+        width: calc(100vw - 40px);
+        min-width: 340px;
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 20px 10px 10px 10px;
+        margin-top: 25px;
     }
 }

@@ -24,7 +24,7 @@
     }
 
     .boardColumn {
-        width: 280px;
+        width: 275px;
     }
 
     .contentBoard {
@@ -56,7 +56,7 @@
 
 @media screen and (max-width: 1460px) {
     .content {
-        margin-left: 0px;
+        margin-left: -15px;
     }
 
     .boardAddTaskOverlay {
@@ -148,7 +148,7 @@
 
 @media screen and (max-width: 900px) {
     .boardColumnHeader {
-        width: calc(100vw - 150px);
+        width: calc(100vw - 80px);
     }
 
     .contentHeadingMain {
@@ -157,7 +157,7 @@
     }
 
     .boardDropDown {
-        width: calc(100vw - 150px);
+        width: calc(100vw - 80px);
         margin-top: 10px;
     }
 
